@@ -1,3 +1,5 @@
+> **Modified fork** of [superset-sh/superset](https://github.com/superset-sh/superset) under the Elastic License 2.0. See [FORK.md](./FORK.md) for changes and Windows build steps.
+
 <div align="center">
 
 <img src="apps/desktop/src/resources/build/icons/icon.png" alt="Paradev app icon" width="96" height="96" />
