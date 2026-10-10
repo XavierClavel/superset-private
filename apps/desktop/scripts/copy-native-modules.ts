@@ -33,6 +33,12 @@ import { requiredMaterializedNodeModules } from "../runtime-dependencies";
 const TARGET_ARCH = process.env.TARGET_ARCH || process.arch;
 const TARGET_PLATFORM = process.env.TARGET_PLATFORM || process.platform;
 
+// Windows cannot create the nested Bun symlinks without admin rights.
+const COPY_OPTIONS = {
+	recursive: true,
+	dereference: process.platform === "win32",
+};
+
 function getWorkspaceRootNodeModulesDir(nodeModulesDir: string): string {
 	return join(nodeModulesDir, "..", "..", "..", "node_modules");
 }
@@ -76,7 +82,7 @@ function copyModuleIfSymlink(
 		if (existsSync(bunFlatModulePath)) {
 			console.log(`  ${moduleName}: materializing from Bun store index`);
 			mkdirSync(dirname(modulePath), { recursive: true });
-			cpSync(realpathSync(bunFlatModulePath), modulePath, { recursive: true });
+			cpSync(realpathSync(bunFlatModulePath), modulePath, COPY_OPTIONS);
 			console.log(`    Copied to: ${modulePath}`);
 			return true;
 		}
@@ -100,7 +106,7 @@ function copyModuleIfSymlink(
 		rmSync(modulePath);
 
 		// Copy the actual files
-		cpSync(realPath, modulePath, { recursive: true });
+		cpSync(realPath, modulePath, COPY_OPTIONS);
 
 		console.log(`    Copied to: ${modulePath}`);
 	} else {
@@ -197,7 +203,7 @@ function copyAstGrepPlatformPackages(nodeModulesDir: string): void {
 			if (existsSync(sourcePath)) {
 				console.log(`  ${platformPkg.name}: copying from Bun store`);
 				mkdirSync(dirname(destPath), { recursive: true });
-				cpSync(sourcePath, destPath, { recursive: true });
+				cpSync(sourcePath, destPath, COPY_OPTIONS);
 				if (isTargetPkg) resolvedTargetPackage = true;
 				continue;
 			}
@@ -283,7 +289,7 @@ function copyParcelWatcherPlatformPackages(nodeModulesDir: string): void {
 
 		console.log(`  ${platformPkg.name}: copying from Bun store`);
 		mkdirSync(dirname(destPath), { recursive: true });
-		cpSync(sourcePath, destPath, { recursive: true });
+		cpSync(sourcePath, destPath, COPY_OPTIONS);
 		resolvedPlatformPackage = true;
 	}
 
