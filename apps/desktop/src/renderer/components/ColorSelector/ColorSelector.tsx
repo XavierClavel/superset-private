@@ -17,10 +17,16 @@ interface ColorSelectorProps {
 	includeDefault?: boolean;
 	/** Disable all swatches (e.g. while a selection is persisting). */
 	disabled?: boolean;
+	/** Maps a stored color to the color its swatch shows. */
+	toSwatchColor?: (color: string) => string;
 	className?: string;
 }
 
-function renderColorSwatch(colorValue: string, variant: ColorSelectorVariant) {
+function renderColorSwatch(
+	colorValue: string,
+	variant: ColorSelectorVariant,
+	toSwatchColor: (color: string) => string,
+) {
 	const isDefault = colorValue === PROJECT_COLOR_DEFAULT;
 
 	return (
@@ -30,7 +36,9 @@ function renderColorSwatch(colorValue: string, variant: ColorSelectorVariant) {
 				variant === "inline" ? "size-5" : "size-3.5",
 				isDefault ? "border-border bg-background" : "border-border/50",
 			)}
-			style={isDefault ? undefined : { backgroundColor: colorValue }}
+			style={
+				isDefault ? undefined : { backgroundColor: toSwatchColor(colorValue) }
+			}
 		>
 			{isDefault ? (
 				<span
@@ -50,6 +58,7 @@ export function ColorSelector({
 	variant = "inline",
 	includeDefault = false,
 	disabled = false,
+	toSwatchColor = (color) => color,
 	className,
 }: ColorSelectorProps) {
 	const { t } = useLingui();
@@ -84,7 +93,7 @@ export function ColorSelector({
 							onSelect={() => onSelectColor(color.value)}
 							className="flex items-center gap-2"
 						>
-							{renderColorSwatch(color.value, variant)}
+							{renderColorSwatch(color.value, variant, toSwatchColor)}
 							<span>{color.name}</span>
 							{isSelected ? (
 								<HiCheck className="ml-auto size-3.5 text-muted-foreground" />
@@ -119,7 +128,7 @@ export function ColorSelector({
 							isSelected ? "scale-110 border-foreground" : "border-transparent",
 						)}
 					>
-						{renderColorSwatch(color.value, variant)}
+						{renderColorSwatch(color.value, variant, toSwatchColor)}
 					</button>
 				);
 			})}

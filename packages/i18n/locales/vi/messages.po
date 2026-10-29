@@ -1487,6 +1487,9 @@ msgstr "Tôi có thói quen khó bỏ là tỉnh giấc giữa đêm với một
 msgid "A host must have at least one owner."
 msgstr "Mỗi host phải có ít nhất một chủ sở hữu."
 
+msgid "A label with this name already exists"
+msgstr "Đã có nhãn với tên này"
+
 msgid "A living reference of every component exported from"
 msgstr "Tài liệu tham chiếu sống của mọi component được export từ"
 
@@ -4803,6 +4806,9 @@ msgstr "Không thể đính kèm tệp"
 msgid "Could not branch the chat"
 msgstr "Không thể phân nhánh cuộc trò chuyện"
 
+msgid "Could not change the label color"
+msgstr "Không thể đổi màu nhãn"
+
 msgid "Could not change the mode"
 msgstr "Không thể đổi chế độ"
 
@@ -4850,6 +4856,9 @@ msgstr "Không thể xóa tài khoản"
 
 msgid "Could not delete file"
 msgstr "Không thể xóa tệp"
+
+msgid "Could not delete the label"
+msgstr "Không thể xóa nhãn"
 
 msgid "Could not delete this page"
 msgstr "Không thể xóa trang này"
@@ -4984,6 +4993,9 @@ msgstr "Không thể tiếp tục"
 msgid "Could not resume the chat"
 msgstr "Không thể tiếp tục cuộc trò chuyện"
 
+msgid "Could not save the label"
+msgstr "Không thể lưu nhãn"
+
 msgid "Could not send"
 msgstr "Không thể gửi"
 
@@ -5037,6 +5049,9 @@ msgstr "Không thể cập nhật skill"
 
 msgid "Could not update the branch"
 msgstr "Không thể cập nhật nhánh"
+
+msgid "Could not update the workspace labels"
+msgstr "Không thể cập nhật nhãn của không gian làm việc"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -5814,6 +5829,10 @@ msgstr "Xóa host"
 
 msgid "Delete image"
 msgstr "Xóa hình ảnh"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Xóa nhãn \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Xóa nhánh cục bộ khi gỡ workspace"
@@ -9195,12 +9214,22 @@ msgstr "Nhãn"
 msgid "Label change"
 msgstr "Thay đổi nhãn"
 
+msgid "Label created but could not be assigned"
+msgstr "Đã tạo nhãn nhưng không thể gán"
+
 msgid "Label is required."
 msgstr "Bắt buộc phải có nhãn."
+
+msgid "Label name"
+msgstr "Tên nhãn"
 
 msgid "Label name..."
 msgstr "Tên nhãn..."
 
+msgid "Labels"
+msgstr "Nhãn"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Nhãn"
 
@@ -10492,6 +10521,12 @@ msgstr "Nhóm mới từ workspace"
 msgid "New issue"
 msgstr "Issue mới"
 
+msgid "New label"
+msgstr "Nhãn mới"
+
+msgid "New label…"
+msgstr "Nhãn mới…"
+
 msgid "New page"
 msgstr "Trang mới"
 
@@ -11188,6 +11223,10 @@ msgstr "Chưa cấu hình lệnh chạy cho workspace"
 
 msgid "No workspaces found."
 msgstr "Không tìm thấy workspace nào."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Không có workspace nào có nhãn {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Dự án này chưa có không gian làm việc nào."
@@ -13674,6 +13713,9 @@ msgstr "Đổi tên nhóm"
 msgid "Rename host"
 msgstr "Đổi tên host"
 
+msgid "Rename label"
+msgstr "Đổi tên nhãn"
+
 msgid "Rename page"
 msgstr "Đổi tên trang"
 
@@ -13688,6 +13730,9 @@ msgstr "Đổi tên workspace"
 
 msgid "Rename..."
 msgstr "Đổi tên..."
+
+msgid "Rename…"
+msgstr "Đổi tên…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Đang đổi tên nhánh thành {newName}..."
@@ -17065,6 +17110,9 @@ msgstr "Con người đọc từng dòng trước khi merge."
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "Mô tả công việc thay đổi. Kỹ sư thôi làm thợ gõ phím có gu và trở thành người điều phối có gu: chia nhỏ công việc, phân về các đội agent, phân xử xung đột giữa những agent cùng chạm vào một module."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Nhãn sẽ bị gỡ khỏi mọi workspace. Bản thân các workspace không bị ảnh hưởng."
 
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "Các cập nhật, cải tiến và tính năng mới nhất trong Superset."

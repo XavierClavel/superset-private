@@ -1487,6 +1487,9 @@ msgstr "Gece yarısı bir fikirle uyanıp uygulamayı açmak gibi suçlu hissett
 msgid "A host must have at least one owner."
 msgstr "Bir host'un en az bir sahibi olmalıdır."
 
+msgid "A label with this name already exists"
+msgstr "Bu ada sahip bir etiket zaten var"
+
 msgid "A living reference of every component exported from"
 msgstr "Şuradan dışa aktarılan her bileşenin canlı referansı:"
 
@@ -4803,6 +4806,9 @@ msgstr "Dosyalar eklenemedi"
 msgid "Could not branch the chat"
 msgstr "Sohbet dallandırılamadı"
 
+msgid "Could not change the label color"
+msgstr "Etiket rengi değiştirilemedi"
+
 msgid "Could not change the mode"
 msgstr "Mod değiştirilemedi"
 
@@ -4850,6 +4856,9 @@ msgstr "Hesap silinemedi"
 
 msgid "Could not delete file"
 msgstr "Dosya silinemedi"
+
+msgid "Could not delete the label"
+msgstr "Etiket silinemedi"
 
 msgid "Could not delete this page"
 msgstr "Bu sayfa silinemedi"
@@ -4984,6 +4993,9 @@ msgstr "Devam ettirilemedi"
 msgid "Could not resume the chat"
 msgstr "Sohbete devam edilemedi"
 
+msgid "Could not save the label"
+msgstr "Etiket kaydedilemedi"
+
 msgid "Could not send"
 msgstr "Gönderilemedi"
 
@@ -5037,6 +5049,9 @@ msgstr "Beceri güncellenemedi"
 
 msgid "Could not update the branch"
 msgstr "Dal güncellenemedi"
+
+msgid "Could not update the workspace labels"
+msgstr "Çalışma alanı etiketleri güncellenemedi"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -5814,6 +5829,10 @@ msgstr "Host'u sil"
 
 msgid "Delete image"
 msgstr "Görseli sil"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "\"{0}\" etiketi silinsin mi?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Çalışma alanı kaldırılırken yerel dalı sil"
@@ -9195,12 +9214,22 @@ msgstr "Etiket"
 msgid "Label change"
 msgstr "Etiket değişikliği"
 
+msgid "Label created but could not be assigned"
+msgstr "Etiket oluşturuldu ancak atanamadı"
+
 msgid "Label is required."
 msgstr "Etiket gereklidir."
+
+msgid "Label name"
+msgstr "Etiket adı"
 
 msgid "Label name..."
 msgstr "Etiket adı..."
 
+msgid "Labels"
+msgstr "Etiketler"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Etiketler"
 
@@ -10492,6 +10521,12 @@ msgstr "Çalışma alanından yeni grup"
 msgid "New issue"
 msgstr "Yeni issue"
 
+msgid "New label"
+msgstr "Yeni etiket"
+
+msgid "New label…"
+msgstr "Yeni etiket…"
+
 msgid "New page"
 msgstr "Yeni sayfa"
 
@@ -11188,6 +11223,10 @@ msgstr "Yapılandırılmış çalışma alanı çalıştırma komutu yok"
 
 msgid "No workspaces found."
 msgstr "Çalışma alanı bulunamadı."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Hiçbir çalışma alanında {0} etiketi yok"
 
 msgid "No workspaces in this project yet."
 msgstr "Bu projede henüz çalışma alanı yok."
@@ -13674,6 +13713,9 @@ msgstr "Grubu yeniden adlandır"
 msgid "Rename host"
 msgstr "Host'u yeniden adlandır"
 
+msgid "Rename label"
+msgstr "Etiketi yeniden adlandır"
+
 msgid "Rename page"
 msgstr "Sayfayı yeniden adlandır"
 
@@ -13688,6 +13730,9 @@ msgstr "Çalışma alanını yeniden adlandır"
 
 msgid "Rename..."
 msgstr "Yeniden adlandır..."
+
+msgid "Rename…"
+msgstr "Yeniden adlandır…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Dal {newName} olarak yeniden adlandırılıyor..."
@@ -17065,6 +17110,9 @@ msgstr "İnsan, birleştirilmeden önce her satırı okur."
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "İş tanımı değişir. Mühendisler zevk sahibi daktilocular olmayı bırakıp zevk sahibi dağıtıcılar olur: işi parçalara ayırır, filolara yönlendirir ve aynı modüle dokunan iki ajan arasındaki çakışmalara hakemlik eder."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Etiket tüm çalışma alanlarından kaldırılır. Çalışma alanlarının kendisi etkilenmez."
 
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "Superset'teki en son güncellemeler, iyileştirmeler ve yeni özellikler."

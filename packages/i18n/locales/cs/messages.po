@@ -1487,6 +1487,9 @@ msgstr "Mám takový zlozvyk: probudím se uprostřed noci s nápadem a otevřu 
 msgid "A host must have at least one owner."
 msgstr "Host musí mít alespoň jednoho vlastníka."
 
+msgid "A label with this name already exists"
+msgstr "Štítek s tímto názvem již existuje"
+
 msgid "A living reference of every component exported from"
 msgstr "Živá reference všech komponent exportovaných z"
 
@@ -4803,6 +4806,9 @@ msgstr "Soubory se nepodařilo přiložit"
 msgid "Could not branch the chat"
 msgstr "Chat se nepodařilo rozvětvit"
 
+msgid "Could not change the label color"
+msgstr "Barvu štítku se nepodařilo změnit"
+
 msgid "Could not change the mode"
 msgstr "Režim se nepodařilo změnit"
 
@@ -4850,6 +4856,9 @@ msgstr "Účet se nepodařilo smazat"
 
 msgid "Could not delete file"
 msgstr "Soubor se nepodařilo smazat"
+
+msgid "Could not delete the label"
+msgstr "Štítek se nepodařilo smazat"
 
 msgid "Could not delete this page"
 msgstr "Tuto stránku se nepodařilo smazat"
@@ -4984,6 +4993,9 @@ msgstr "Pokračování se nezdařilo"
 msgid "Could not resume the chat"
 msgstr "V chatu se nepodařilo pokračovat"
 
+msgid "Could not save the label"
+msgstr "Štítek se nepodařilo uložit"
+
 msgid "Could not send"
 msgstr "Nepodařilo se odeslat"
 
@@ -5037,6 +5049,9 @@ msgstr "Skill se nepodařilo aktualizovat"
 
 msgid "Could not update the branch"
 msgstr "Nepodařilo se aktualizovat větev"
+
+msgid "Could not update the workspace labels"
+msgstr "Štítky pracovního prostoru se nepodařilo aktualizovat"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -5814,6 +5829,10 @@ msgstr "Smazat hosta"
 
 msgid "Delete image"
 msgstr "Smazat obrázek"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Smazat štítek \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Smazat lokální větev při odstranění pracovního prostoru"
@@ -9195,12 +9214,22 @@ msgstr "Popisek"
 msgid "Label change"
 msgstr "Změna štítku"
 
+msgid "Label created but could not be assigned"
+msgstr "Štítek byl vytvořen, ale nepodařilo se ho přiřadit"
+
 msgid "Label is required."
 msgstr "Popisek je povinný."
+
+msgid "Label name"
+msgstr "Název štítku"
 
 msgid "Label name..."
 msgstr "Název štítku..."
 
+msgid "Labels"
+msgstr "Štítky"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Štítky"
 
@@ -10492,6 +10521,12 @@ msgstr "Nová skupina z pracovního prostoru"
 msgid "New issue"
 msgstr "Nová issue"
 
+msgid "New label"
+msgstr "Nový štítek"
+
+msgid "New label…"
+msgstr "Nový štítek…"
+
 msgid "New page"
 msgstr "Nová stránka"
 
@@ -11188,6 +11223,10 @@ msgstr "Není nastavený žádný spouštěcí příkaz pracovního prostoru"
 
 msgid "No workspaces found."
 msgstr "Nenalezeny žádné pracovní prostory."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Žádný pracovní prostor nemá štítek {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "V tomto projektu zatím nejsou žádné pracovní prostory."
@@ -13674,6 +13713,9 @@ msgstr "Přejmenovat skupinu"
 msgid "Rename host"
 msgstr "Přejmenovat hosta"
 
+msgid "Rename label"
+msgstr "Přejmenovat štítek"
+
 msgid "Rename page"
 msgstr "Přejmenovat stránku"
 
@@ -13688,6 +13730,9 @@ msgstr "Přejmenovat pracovní prostor"
 
 msgid "Rename..."
 msgstr "Přejmenovat..."
+
+msgid "Rename…"
+msgstr "Přejmenovat…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Přejmenovávám větev na {newName}..."
@@ -17065,6 +17110,9 @@ msgstr "Člověk přečte každý řádek, než se sloučí."
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "Popis práce se posouvá. Z inženýrů přestávají být písaři s vkusem a stávají se dispečery s vkusem: rozkládají práci, směrují ji flotilám a rozsuzují konflikty mezi agenty, kteří sáhli na stejný modul."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Štítek bude odebrán ze všech pracovních prostorů. Samotné pracovní prostory zůstanou beze změny."
 
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "Nejnovější aktualizace, vylepšení a nové funkce v Supersetu."

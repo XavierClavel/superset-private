@@ -58,6 +58,7 @@ export interface NewWorkspaceDraft {
 	linkedPR: LinkedPR | null;
 	selectedAgentId: string | null;
 	attachments: DraftAttachment[];
+	labelIds: string[];
 }
 
 interface NewWorkspaceDraftState extends NewWorkspaceDraft {
@@ -90,6 +91,7 @@ function buildInitialDraft(): NewWorkspaceDraft {
 		linkedPR: null,
 		selectedAgentId: null,
 		attachments: [],
+		labelIds: [],
 	};
 }
 

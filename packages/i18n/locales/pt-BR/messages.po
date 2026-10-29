@@ -1487,6 +1487,9 @@ msgstr "Tenho o mau hábito de acordar com uma ideia no meio da noite e abrir o 
 msgid "A host must have at least one owner."
 msgstr "Um host precisa ter pelo menos um proprietário."
 
+msgid "A label with this name already exists"
+msgstr "Já existe um marcador com este nome"
+
 msgid "A living reference of every component exported from"
 msgstr "Uma referência viva de todos os componentes exportados de"
 
@@ -4803,6 +4806,9 @@ msgstr "Não foi possível anexar os arquivos"
 msgid "Could not branch the chat"
 msgstr "Não foi possível ramificar o chat"
 
+msgid "Could not change the label color"
+msgstr "Não foi possível alterar a cor do rótulo"
+
 msgid "Could not change the mode"
 msgstr "Não foi possível mudar o modo"
 
@@ -4850,6 +4856,9 @@ msgstr "Não foi possível excluir a conta"
 
 msgid "Could not delete file"
 msgstr "Não foi possível excluir o arquivo"
+
+msgid "Could not delete the label"
+msgstr "Não foi possível excluir o rótulo"
 
 msgid "Could not delete this page"
 msgstr "Não foi possível excluir esta página"
@@ -4984,6 +4993,9 @@ msgstr "Não foi possível retomar"
 msgid "Could not resume the chat"
 msgstr "Não foi possível retomar o chat"
 
+msgid "Could not save the label"
+msgstr "Não foi possível salvar o marcador"
+
 msgid "Could not send"
 msgstr "Não foi possível enviar"
 
@@ -5037,6 +5049,9 @@ msgstr "Não foi possível atualizar a skill"
 
 msgid "Could not update the branch"
 msgstr "Não foi possível atualizar a branch"
+
+msgid "Could not update the workspace labels"
+msgstr "Não foi possível atualizar os rótulos do espaço de trabalho"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -5814,6 +5829,10 @@ msgstr "Excluir host"
 
 msgid "Delete image"
 msgstr "Excluir imagem"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Excluir o marcador \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Excluir a branch local ao remover a área de trabalho"
@@ -9195,14 +9214,24 @@ msgstr "Rótulo"
 msgid "Label change"
 msgstr "Mudança de label"
 
+msgid "Label created but could not be assigned"
+msgstr "Rótulo criado, mas não foi possível atribuí-lo"
+
 msgid "Label is required."
 msgstr "O rótulo é obrigatório."
+
+msgid "Label name"
+msgstr "Nome do marcador"
 
 msgid "Label name..."
 msgstr "Nome do rótulo..."
 
 msgid "Labels"
 msgstr "Labels"
+
+msgctxt "personal workspace labels"
+msgid "Labels"
+msgstr "Marcadores"
 
 msgid "Lanes"
 msgstr "Faixas"
@@ -10492,6 +10521,12 @@ msgstr "Novo grupo a partir da área de trabalho"
 msgid "New issue"
 msgstr "Nova issue"
 
+msgid "New label"
+msgstr "Novo marcador"
+
+msgid "New label…"
+msgstr "Novo marcador…"
+
 msgid "New page"
 msgstr "Nova página"
 
@@ -11188,6 +11223,10 @@ msgstr "Nenhum comando de execução configurado para a área de trabalho"
 
 msgid "No workspaces found."
 msgstr "Nenhuma área de trabalho encontrada."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Nenhuma área de trabalho tem o marcador {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Este projeto ainda não tem espaços de trabalho."
@@ -13674,6 +13713,9 @@ msgstr "Renomear grupo"
 msgid "Rename host"
 msgstr "Renomear host"
 
+msgid "Rename label"
+msgstr "Renomear marcador"
+
 msgid "Rename page"
 msgstr "Renomear página"
 
@@ -13688,6 +13730,9 @@ msgstr "Renomear área de trabalho"
 
 msgid "Rename..."
 msgstr "Renomear..."
+
+msgid "Rename…"
+msgstr "Renomear…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Renomeando a branch para {newName}..."
@@ -17065,6 +17110,9 @@ msgstr "A pessoa lê cada linha antes do merge."
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "A descrição do cargo muda. Quem desenvolve deixa de ser digitador com bom gosto e vira despachante com bom gosto: decompõe o trabalho, direciona para as frotas e arbitra conflitos entre agentes que mexeram no mesmo módulo."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "O marcador é removido de todas as áreas de trabalho. As áreas de trabalho em si não são afetadas."
 
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "As atualizações, melhorias e novidades mais recentes do Superset."

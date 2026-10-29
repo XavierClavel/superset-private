@@ -8,12 +8,14 @@ import {
 	useRef,
 	useState,
 } from "react";
+import type { WorkspaceLabel } from "renderer/hooks/workspace-labels/useWorkspaceLabels";
 import { useOptimisticActions } from "renderer/routes/_authenticated/hooks/useOptimisticActions";
 import { RenameBranchDialog } from "renderer/screens/main/components/WorkspaceSidebar/WorkspaceListItem/components";
 import {
 	useDashboardSidebarHoverActions,
 	useDashboardSidebarIsHovered,
 } from "../../providers/DashboardSidebarHoverProvider";
+import { useDashboardSidebarLabelsByWorkspace } from "../../providers/DashboardSidebarLabelsProvider";
 import type { WorkspaceSelectionEvent } from "../../providers/DashboardSidebarSelectionProvider";
 import { useSidebarWorkspaceStatus } from "../../providers/DashboardSidebarWorkspaceStatusProvider";
 import type {
@@ -28,6 +30,8 @@ import {
 } from "./components/DashboardSidebarWorkspaceBulkContextMenu";
 import { DashboardSidebarWorkspaceContextMenu } from "./components/DashboardSidebarWorkspaceContextMenu/DashboardSidebarWorkspaceContextMenu";
 import { useDashboardSidebarWorkspaceItemActions } from "./hooks/useDashboardSidebarWorkspaceItemActions";
+
+const EMPTY_LABELS: WorkspaceLabel[] = [];
 
 interface DashboardSidebarWorkspaceItemProps {
 	workspace: DashboardSidebarWorkspace;
@@ -70,6 +74,8 @@ export function DashboardSidebarWorkspaceItem({
 		pullRequest,
 	} = workspace;
 	const isSessionWorkspace = workspace.type === "session";
+	const labelsByWorkspaceId = useDashboardSidebarLabelsByWorkspace();
+	const labels = labelsByWorkspaceId.get(id) ?? EMPTY_LABELS;
 	const { status: workspaceStatus, diffStats } = useSidebarWorkspaceStatus(id);
 	const {
 		cancelRename,
@@ -307,6 +313,7 @@ export function DashboardSidebarWorkspaceItem({
 		>
 			<DashboardSidebarExpandedWorkspaceRow
 				workspace={displayWorkspace}
+				labels={labels}
 				isActive={isActive}
 				isRenaming={isRenaming}
 				renameValue={renameValue}
