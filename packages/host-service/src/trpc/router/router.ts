@@ -31,6 +31,7 @@ import { usageRouter } from "./usage";
 import { workspaceRouter } from "./workspace";
 import { workspaceCleanupRouter } from "./workspace-cleanup";
 import { workspaceCreationRouter } from "./workspace-creation";
+import { workspaceLabelsRouter } from "./workspace-labels";
 import { workspacesRouter } from "./workspaces";
 
 export const appRouter = router({
@@ -53,6 +54,7 @@ export const appRouter = router({
 	pullRequests: pullRequestsRouter,
 	project: projectRouter,
 	tagFolders: tagFoldersRouter,
+	workspaceLabels: workspaceLabelsRouter,
 	pageWatch: pageWatchRouter,
 	panes: panesRouter,
 	ports: portsRouter,

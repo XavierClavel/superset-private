@@ -9,12 +9,25 @@ import {
 } from "@testing-library/react";
 import { env } from "renderer/env.renderer";
 import { DashboardSidebarHoverProvider } from "../../../../providers/DashboardSidebarHoverProvider";
+import { DashboardSidebarLabelsValueProvider } from "../../../../providers/DashboardSidebarLabelsProvider";
 import { DashboardSidebarWorkspaceContextMenu } from "./DashboardSidebarWorkspaceContextMenu";
 
 afterEach(cleanup);
 
 const WORKSPACE_ID = "b502bf30-8693-4815-be65-795035e0ce5f";
 const noop = () => {};
+const NO_LABELS = {
+	labels: [],
+	labelsByWorkspaceId: new Map(),
+	activeFilterLabel: null,
+	setActiveFilterLabelId: noop,
+	createLabel: async () => {
+		throw new Error("not in this test");
+	},
+	updateLabel: async () => {},
+	deleteLabel: async () => {},
+	setWorkspaceLabels: async () => {},
+};
 
 const KINDS = [
 	{ kind: "local", isLocalWorkspace: true, isCloudWorkspace: false },
@@ -33,29 +46,31 @@ for (const { kind, isLocalWorkspace, isCloudWorkspace } of KINDS) {
 		try {
 			render(
 				<QueryClientProvider client={new QueryClient()}>
-					<DashboardSidebarHoverProvider>
-						<DashboardSidebarWorkspaceContextMenu
-							workspaceId={WORKSPACE_ID}
-							projectId="project-1"
-							isLocalWorkspace={isLocalWorkspace}
-							isCloudWorkspace={isCloudWorkspace}
-							isPinned={false}
-							isUnread={false}
-							hasStatus={false}
-							hasPullRequest={false}
-							onTogglePin={noop}
-							onCreateSection={noop}
-							onMoveToSection={noop}
-							onCopyPath={noop}
-							onCopyBranchName={noop}
-							onCopyWorkspaceId={noop}
-							onToggleUnread={noop}
-							onClearStatus={noop}
-							onRemovePullRequest={noop}
-						>
-							<span>workspace row</span>
-						</DashboardSidebarWorkspaceContextMenu>
-					</DashboardSidebarHoverProvider>
+					<DashboardSidebarLabelsValueProvider value={NO_LABELS}>
+						<DashboardSidebarHoverProvider>
+							<DashboardSidebarWorkspaceContextMenu
+								workspaceId={WORKSPACE_ID}
+								projectId="project-1"
+								isLocalWorkspace={isLocalWorkspace}
+								isCloudWorkspace={isCloudWorkspace}
+								isPinned={false}
+								isUnread={false}
+								hasStatus={false}
+								hasPullRequest={false}
+								onTogglePin={noop}
+								onCreateSection={noop}
+								onMoveToSection={noop}
+								onCopyPath={noop}
+								onCopyBranchName={noop}
+								onCopyWorkspaceId={noop}
+								onToggleUnread={noop}
+								onClearStatus={noop}
+								onRemovePullRequest={noop}
+							>
+								<span>workspace row</span>
+							</DashboardSidebarWorkspaceContextMenu>
+						</DashboardSidebarHoverProvider>
+					</DashboardSidebarLabelsValueProvider>
 				</QueryClientProvider>,
 			);
 			fireEvent.contextMenu(screen.getByText("workspace row"));

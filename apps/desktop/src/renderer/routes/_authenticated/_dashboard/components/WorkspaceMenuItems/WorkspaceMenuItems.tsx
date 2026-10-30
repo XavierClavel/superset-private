@@ -70,6 +70,8 @@ interface WorkspaceMenuItemsProps {
 	openInItem?: ReactNode;
 	/** Items above the shared ones, with their own separator. */
 	leadingItems?: ReactNode;
+	/** Placed right after Pin. */
+	afterPinItem?: ReactNode;
 	/** Items between the status group and Move to, with their own separator. */
 	groupItems?: ReactNode;
 	/** Items right after Move, with their own separator. */
@@ -85,6 +87,7 @@ export function WorkspaceMenuItems({
 	move,
 	leadingItems,
 	openInItem,
+	afterPinItem,
 	groupItems,
 	afterMoveItems,
 	showDeleteHotkey = false,
@@ -122,6 +125,7 @@ export function WorkspaceMenuItems({
 					</>
 				)}
 			</Item>
+			{afterPinItem}
 			{actions.onRename && (
 				<Item onSelect={actions.onRename}>
 					<LuPencil className={icon} />

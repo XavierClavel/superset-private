@@ -1807,6 +1807,9 @@ msgstr "夜中にアイデアが浮かんで目が覚めると、ついアプリ
 msgid "A host must have at least one owner."
 msgstr "ホストには少なくとも1人のオーナーが必要です。"
 
+msgid "A label with this name already exists"
+msgstr "この名前のラベルはすでに存在します"
+
 msgid "A living reference of every component exported from"
 msgstr "エクスポートされる全コンポーネントの最新リファレンス。対象は"
 
@@ -5724,6 +5727,9 @@ msgstr "チャットを分岐できませんでした"
 msgid "Could not change access"
 msgstr "アクセスを変更できませんでした"
 
+msgid "Could not change the label color"
+msgstr "ラベルの色を変更できませんでした"
+
 msgid "Could not change the mode"
 msgstr "モードを変更できませんでした"
 
@@ -5777,6 +5783,9 @@ msgstr "アカウントを削除できませんでした"
 
 msgid "Could not delete file"
 msgstr "ファイルを削除できませんでした"
+
+msgid "Could not delete the label"
+msgstr "ラベルを削除できませんでした"
 
 msgid "Could not delete this page"
 msgstr "このページを削除できませんでした"
@@ -5959,6 +5968,9 @@ msgstr "チャットを再開できませんでした"
 msgid "Could not save the change."
 msgstr "変更を保存できませんでした。"
 
+msgid "Could not save the label"
+msgstr "ラベルを保存できませんでした"
+
 msgid "Could not send"
 msgstr "送信できませんでした"
 
@@ -6030,6 +6042,9 @@ msgstr "スキルを更新できませんでした"
 
 msgid "Could not update the branch"
 msgstr "ブランチを更新できませんでした"
+
+msgid "Could not update the workspace labels"
+msgstr "ワークスペースのラベルを更新できませんでした"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6987,6 +7002,13 @@ msgstr "ホストを削除"
 
 msgid "Delete image"
 msgstr "画像を削除"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "ラベル「{0}」を削除しますか？"
+
+msgid "Delete local branch on workspace removal"
+msgstr "ワークスペース削除時にローカルブランチも削除"
 
 msgid "Delete message"
 msgstr "メッセージを削除"
@@ -10929,9 +10951,22 @@ msgstr "ラベル"
 msgid "Label change"
 msgstr "ラベル変更"
 
+msgid "Label created but could not be assigned"
+msgstr "ラベルを作成しましたが、割り当てできませんでした"
+
+msgid "Label is required."
+msgstr "ラベルは必須です。"
+
+msgid "Label name"
+msgstr "ラベル名"
+
 msgid "Label name..."
 msgstr "ラベル名..."
 
+msgid "Labels"
+msgstr "ラベル"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "ラベル"
 
@@ -12458,6 +12493,11 @@ msgstr "新規issue"
 
 msgid "New layout"
 msgstr "新しいレイアウト"
+msgid "New label"
+msgstr "新しいラベル"
+
+msgid "New label…"
+msgstr "新しいラベル…"
 
 msgid "New messages"
 msgstr "新着メッセージ"
@@ -13267,6 +13307,10 @@ msgstr "ワークスペース実行コマンドが設定されていません"
 
 msgid "No workspaces found."
 msgstr "ワークスペースが見つかりません。"
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "ラベル {0} が付いたワークスペースはありません"
 
 msgid "No workspaces in this project yet."
 msgstr "このプロジェクトにはまだワークスペースがありません。"
@@ -16390,6 +16434,9 @@ msgstr "グループ名を変更"
 msgid "Rename host"
 msgstr "ホストの名前を変更"
 
+msgid "Rename label"
+msgstr "ラベルの名前を変更"
+
 msgid "Rename page"
 msgstr "ページの名前を変更"
 
@@ -16407,6 +16454,9 @@ msgstr "ワークスペースの名前を変更"
 
 msgid "Rename..."
 msgstr "名前を変更..."
+
+msgid "Rename…"
+msgstr "名前を変更…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "ブランチ名を{newName}に変更中..."
@@ -20150,6 +20200,9 @@ msgstr "含まれる GB 時間と超過分の GB 時間は、現在の期間の�
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "職務の中身が変わります。エンジニアは審美眼のあるタイピストであることをやめ、審美眼のあるディスパッチャーになります。作業を分解し、フリートに割り振り、同じモジュールに触れたエージェント同士の衝突を裁く役です。"
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "ラベルはすべてのワークスペースから削除されます。ワークスペース自体には影響しません。"
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Paradevの最新のアップデート、改善、新機能。"

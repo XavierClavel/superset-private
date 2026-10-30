@@ -64,6 +64,7 @@ export function useDashboardNewWorkspaceDraft() {
 			branchNameFromProvider: store.branchNameFromProvider,
 			selectedAgentId: store.selectedAgentId,
 			promptAttachments: store.promptAttachments,
+			labelIds: store.labelIds,
 		})),
 	);
 	const updateDraft = useNewWorkspaceDraftStore((store) => store.updateDraft);

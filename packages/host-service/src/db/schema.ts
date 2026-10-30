@@ -371,6 +371,46 @@ export const workspaceTags = sqliteTable(
 	],
 );
 
+export const workspaceLabels = sqliteTable(
+	"workspace_labels",
+	{
+		id: text().primaryKey(),
+		createdByUserId: text("created_by_user_id").notNull().default(""),
+		name: text().notNull(),
+		nameKey: text("name_key").notNull(),
+		color: text().notNull(),
+		sortOrder: integer("sort_order").notNull(),
+		createdAt: integer("created_at")
+			.notNull()
+			.$defaultFn(() => Date.now()),
+	},
+	(table) => [
+		uniqueIndex("workspace_labels_owner_name_key_idx").on(
+			table.createdByUserId,
+			table.nameKey,
+		),
+	],
+);
+
+export const workspaceLabelAssignments = sqliteTable(
+	"workspace_label_assignments",
+	{
+		workspaceId: text("workspace_id")
+			.notNull()
+			.references(() => workspaces.id, { onDelete: "cascade" }),
+		labelId: text("label_id")
+			.notNull()
+			.references(() => workspaceLabels.id, { onDelete: "cascade" }),
+		createdAt: integer("created_at")
+			.notNull()
+			.$defaultFn(() => Date.now()),
+	},
+	(table) => [
+		primaryKey({ columns: [table.workspaceId, table.labelId] }),
+		index("workspace_label_assignments_label_id_idx").on(table.labelId),
+	],
+);
+
 /**
  * Every pull request a workspace has ever been linked to, append-only.
  * `workspaces.pullRequestId` stays the single "currently linked" pointer the

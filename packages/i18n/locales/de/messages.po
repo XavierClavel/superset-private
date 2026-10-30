@@ -1807,6 +1807,9 @@ msgstr "Ich habe die schlechte Angewohnheit, mitten in der Nacht mit einer Idee 
 msgid "A host must have at least one owner."
 msgstr "Ein Host muss mindestens einen Inhaber haben."
 
+msgid "A label with this name already exists"
+msgstr "Ein Label mit diesem Namen existiert bereits"
+
 msgid "A living reference of every component exported from"
 msgstr "Eine lebende Referenz jeder Komponente, die exportiert wird aus"
 
@@ -5724,6 +5727,9 @@ msgstr "Der Chat konnte nicht verzweigt werden"
 msgid "Could not change access"
 msgstr "Zugriff konnte nicht geändert werden"
 
+msgid "Could not change the label color"
+msgstr "Die Labelfarbe konnte nicht geändert werden"
+
 msgid "Could not change the mode"
 msgstr "Modus konnte nicht geändert werden"
 
@@ -5777,6 +5783,9 @@ msgstr "Konto konnte nicht gelöscht werden"
 
 msgid "Could not delete file"
 msgstr "Datei konnte nicht gelöscht werden"
+
+msgid "Could not delete the label"
+msgstr "Das Label konnte nicht gelöscht werden"
 
 msgid "Could not delete this page"
 msgstr "Diese Seite konnte nicht gelöscht werden"
@@ -5959,6 +5968,9 @@ msgstr "Der Chat konnte nicht fortgesetzt werden"
 msgid "Could not save the change."
 msgstr "Die Änderung konnte nicht gespeichert werden."
 
+msgid "Could not save the label"
+msgstr "Das Label konnte nicht gespeichert werden"
+
 msgid "Could not send"
 msgstr "Senden nicht möglich"
 
@@ -6030,6 +6042,9 @@ msgstr "Skill konnte nicht aktualisiert werden"
 
 msgid "Could not update the branch"
 msgstr "Branch konnte nicht aktualisiert werden"
+
+msgid "Could not update the workspace labels"
+msgstr "Die Labels des Arbeitsbereichs konnten nicht aktualisiert werden"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6987,6 +7002,13 @@ msgstr "Host löschen"
 
 msgid "Delete image"
 msgstr "Bild löschen"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Label \"{0}\" löschen?"
+
+msgid "Delete local branch on workspace removal"
+msgstr "Lokalen Branch beim Entfernen des Arbeitsbereichs löschen"
 
 msgid "Delete message"
 msgstr "Nachricht löschen"
@@ -10929,9 +10951,22 @@ msgstr "Label"
 msgid "Label change"
 msgstr "Label-Änderung"
 
+msgid "Label created but could not be assigned"
+msgstr "Label erstellt, konnte aber nicht zugewiesen werden"
+
+msgid "Label is required."
+msgstr "Bezeichnung ist erforderlich."
+
+msgid "Label name"
+msgstr "Label-Name"
+
 msgid "Label name..."
 msgstr "Labelname..."
 
+msgid "Labels"
+msgstr "Labels"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Labels"
 
@@ -12458,6 +12493,11 @@ msgstr "Neues Issue"
 
 msgid "New layout"
 msgstr "Neues Layout"
+msgid "New label"
+msgstr "Neues Label"
+
+msgid "New label…"
+msgstr "Neues Label…"
 
 msgid "New messages"
 msgstr "Neue Nachrichten"
@@ -13267,6 +13307,10 @@ msgstr "Kein Run-Befehl für den Arbeitsbereich konfiguriert"
 
 msgid "No workspaces found."
 msgstr "Keine Arbeitsbereiche gefunden."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Kein Arbeitsbereich hat das Label {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Dieses Projekt hat noch keine Arbeitsbereiche."
@@ -16390,6 +16434,9 @@ msgstr "Gruppe umbenennen"
 msgid "Rename host"
 msgstr "Host umbenennen"
 
+msgid "Rename label"
+msgstr "Label umbenennen"
+
 msgid "Rename page"
 msgstr "Seite umbenennen"
 
@@ -16407,6 +16454,9 @@ msgstr "Arbeitsbereich umbenennen"
 
 msgid "Rename..."
 msgstr "Umbenennen..."
+
+msgid "Rename…"
+msgstr "Umbenennen…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Branch wird in {newName} umbenannt..."
@@ -20150,6 +20200,9 @@ msgstr "Enthaltene GB-Stunden und GB-Stunden über dem Plan werden nur für den 
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "Die Stellenbeschreibung verschiebt sich. Entwickler sind nicht länger Tipper mit Geschmack, sondern Disponenten mit Geschmack: Arbeit zerlegen, an Flotten verteilen, Konflikte zwischen Agenten schlichten, die beide dasselbe Modul angefasst haben."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Das Label wird aus allen Arbeitsbereichen entfernt. Die Arbeitsbereiche selbst bleiben unverändert."
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Die neuesten Updates, Verbesserungen und Funktionen in Paradev."

@@ -1807,6 +1807,9 @@ msgstr "我有個忍不住的習慣：半夜醒來有了想法，就開啟應用
 msgid "A host must have at least one owner."
 msgstr "主機必須至少有一位擁有者。"
 
+msgid "A label with this name already exists"
+msgstr "已有相同名稱的標籤"
+
 msgid "A living reference of every component exported from"
 msgstr "一份持續更新的參考，收錄了從"
 
@@ -5724,6 +5727,9 @@ msgstr "無法為聊天建立分支"
 msgid "Could not change access"
 msgstr "無法變更存取權限"
 
+msgid "Could not change the label color"
+msgstr "無法變更標籤顏色"
+
 msgid "Could not change the mode"
 msgstr "無法變更模式"
 
@@ -5777,6 +5783,9 @@ msgstr "無法刪除帳戶"
 
 msgid "Could not delete file"
 msgstr "無法刪除檔案"
+
+msgid "Could not delete the label"
+msgstr "無法刪除標籤"
 
 msgid "Could not delete this page"
 msgstr "無法刪除這個頁面"
@@ -5959,6 +5968,9 @@ msgstr "無法繼續聊天"
 msgid "Could not save the change."
 msgstr "無法儲存變更。"
 
+msgid "Could not save the label"
+msgstr "無法儲存標籤"
+
 msgid "Could not send"
 msgstr "無法傳送"
 
@@ -6030,6 +6042,9 @@ msgstr "無法更新技能"
 
 msgid "Could not update the branch"
 msgstr "無法更新分支"
+
+msgid "Could not update the workspace labels"
+msgstr "無法更新工作區標籤"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6987,6 +7002,13 @@ msgstr "刪除主機"
 
 msgid "Delete image"
 msgstr "刪除圖片"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "刪除標籤「{0}」？"
+
+msgid "Delete local branch on workspace removal"
+msgstr "移除工作區時刪除本地分支"
 
 msgid "Delete message"
 msgstr "刪除訊息"
@@ -10929,9 +10951,22 @@ msgstr "標籤"
 msgid "Label change"
 msgstr "標籤變更"
 
+msgid "Label created but could not be assigned"
+msgstr "標籤已建立，但無法指派"
+
+msgid "Label is required."
+msgstr "名稱為必填項。"
+
+msgid "Label name"
+msgstr "標籤名稱"
+
 msgid "Label name..."
 msgstr "標籤名稱..."
 
+msgid "Labels"
+msgstr "標籤"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "標籤"
 
@@ -12458,6 +12493,11 @@ msgstr "新建議題"
 
 msgid "New layout"
 msgstr "新版面配置"
+msgid "New label"
+msgstr "新增標籤"
+
+msgid "New label…"
+msgstr "新增標籤…"
 
 msgid "New messages"
 msgstr "新訊息"
@@ -13267,6 +13307,10 @@ msgstr "未配置工作區執行命令"
 
 msgid "No workspaces found."
 msgstr "未找到工作區。"
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "沒有工作區帶有標籤 {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "此專案尚無工作區。"
@@ -16390,6 +16434,9 @@ msgstr "重新命名群組"
 msgid "Rename host"
 msgstr "重新命名主機"
 
+msgid "Rename label"
+msgstr "重新命名標籤"
+
 msgid "Rename page"
 msgstr "重新命名頁面"
 
@@ -16407,6 +16454,9 @@ msgstr "重新命名工作區"
 
 msgid "Rename..."
 msgstr "重新命名..."
+
+msgid "Rename…"
+msgstr "重新命名…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "正在將分支重新命名為{newName}..."
@@ -20150,6 +20200,9 @@ msgstr "包含的 GB 小時和超額 GB 小時僅保留目前週期的資料。"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "崗位描述變了。工程師不再是有品味的打字員，而成了有品味的排程員：拆解工作、分派給代理程式叢集、在兩個改了同一個模組的代理程式之間做裁決。"
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "該標籤將從所有工作區中移除，工作區本身不受影響。"
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Paradev 的最新更新、改進與新功能。"

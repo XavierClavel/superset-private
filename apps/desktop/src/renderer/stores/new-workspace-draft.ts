@@ -51,6 +51,7 @@ export interface NewWorkspaceDraft {
 	branchNameFromProvider: boolean;
 	selectedAgentId: string | null;
 	promptAttachments: PromptInputAttachment[];
+	labelIds: string[];
 }
 
 interface NewWorkspaceDraftState extends NewWorkspaceDraft {
@@ -77,6 +78,7 @@ function buildInitialDraft(): NewWorkspaceDraft {
 		branchNameFromProvider: false,
 		selectedAgentId: null,
 		promptAttachments: [],
+		labelIds: [],
 	};
 }
 

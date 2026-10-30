@@ -76,6 +76,7 @@ import { DevicePicker } from "../DashboardNewWorkspaceForm/components/DevicePick
 import { useWorkspaceHostOptions } from "../DashboardNewWorkspaceForm/components/DevicePicker/hooks/useWorkspaceHostOptions";
 import { CheckoutPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/CheckoutPickerPill";
 import { CompareBaseBranchPicker } from "../DashboardNewWorkspaceForm/PromptGroup/components/CompareBaseBranchPicker";
+import { LabelPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LabelPickerPill";
 import { ProjectPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/ProjectPickerPill";
 import { PromptHistoryCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PromptHistoryCommand";
 import { useBranchPickerController } from "../DashboardNewWorkspaceForm/PromptGroup/hooks/useBranchPickerController";
@@ -1096,6 +1097,12 @@ export function NewWorkspaceScreen({
 						});
 					}}
 					isLoading={environmentsQuery.isLoading}
+				/>
+			)}
+			{!isCloudHost && hostId === machineId && (
+				<LabelPickerPill
+					selectedLabelIds={draft.labelIds}
+					onChange={(labelIds) => updateDraft({ labelIds })}
 				/>
 			)}
 			{activeOrganizationId && (

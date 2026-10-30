@@ -1807,6 +1807,9 @@ msgstr "我有个忍不住的习惯：半夜醒来有了想法，就打开应用
 msgid "A host must have at least one owner."
 msgstr "主机必须至少有一位所有者。"
 
+msgid "A label with this name already exists"
+msgstr "已存在同名标签"
+
 msgid "A living reference of every component exported from"
 msgstr "一份持续更新的参考，收录了从"
 
@@ -5724,6 +5727,9 @@ msgstr "无法为聊天创建分支"
 msgid "Could not change access"
 msgstr "无法更改访问权限"
 
+msgid "Could not change the label color"
+msgstr "无法更改标签颜色"
+
 msgid "Could not change the mode"
 msgstr "无法更改模式"
 
@@ -5777,6 +5783,9 @@ msgstr "无法删除账户"
 
 msgid "Could not delete file"
 msgstr "无法删除文件"
+
+msgid "Could not delete the label"
+msgstr "无法删除标签"
 
 msgid "Could not delete this page"
 msgstr "无法删除这个页面"
@@ -5959,6 +5968,9 @@ msgstr "无法继续聊天"
 msgid "Could not save the change."
 msgstr "无法保存更改。"
 
+msgid "Could not save the label"
+msgstr "无法保存标签"
+
 msgid "Could not send"
 msgstr "无法发送"
 
@@ -6030,6 +6042,9 @@ msgstr "无法更新技能"
 
 msgid "Could not update the branch"
 msgstr "无法更新分支"
+
+msgid "Could not update the workspace labels"
+msgstr "无法更新工作区标签"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6987,6 +7002,13 @@ msgstr "删除主机"
 
 msgid "Delete image"
 msgstr "删除图片"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "删除标签“{0}”？"
+
+msgid "Delete local branch on workspace removal"
+msgstr "移除工作区时删除本地分支"
 
 msgid "Delete message"
 msgstr "删除消息"
@@ -10929,9 +10951,22 @@ msgstr "标签"
 msgid "Label change"
 msgstr "标签变更"
 
+msgid "Label created but could not be assigned"
+msgstr "标签已创建，但无法分配"
+
+msgid "Label is required."
+msgstr "名称为必填项。"
+
+msgid "Label name"
+msgstr "标签名称"
+
 msgid "Label name..."
 msgstr "标签名称..."
 
+msgid "Labels"
+msgstr "标签"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "标签"
 
@@ -12458,6 +12493,11 @@ msgstr "新建议题"
 
 msgid "New layout"
 msgstr "新布局"
+msgid "New label"
+msgstr "新建标签"
+
+msgid "New label…"
+msgstr "新建标签…"
 
 msgid "New messages"
 msgstr "新消息"
@@ -13267,6 +13307,10 @@ msgstr "未配置工作区运行命令"
 
 msgid "No workspaces found."
 msgstr "未找到工作区。"
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "没有工作区带有标签 {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "此项目还没有工作区。"
@@ -16390,6 +16434,9 @@ msgstr "重命名分组"
 msgid "Rename host"
 msgstr "重命名主机"
 
+msgid "Rename label"
+msgstr "重命名标签"
+
 msgid "Rename page"
 msgstr "重命名页面"
 
@@ -16407,6 +16454,9 @@ msgstr "重命名工作区"
 
 msgid "Rename..."
 msgstr "重命名..."
+
+msgid "Rename…"
+msgstr "重命名…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "正在将分支重命名为{newName}..."
@@ -20150,6 +20200,9 @@ msgstr "包含的 GB 小时和超额 GB 小时仅保留当前周期的数据。"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "岗位描述变了。工程师不再是有品味的打字员，而成了有品味的调度员：拆解工作、分派给智能体集群、在两个改了同一个模块的智能体之间做裁决。"
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "该标签将从所有工作区中移除，工作区本身不受影响。"
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Paradev 的最新更新、改进与新功能。"

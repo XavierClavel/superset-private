@@ -10,17 +10,20 @@ import {
 	type MouseEventHandler,
 	useEffect,
 	useRef,
+	useState,
 } from "react";
 import { HiCheck, HiMiniXMark } from "react-icons/hi2";
 import { LuArchive } from "react-icons/lu";
 import { WorkspaceNameMarquee } from "renderer/components/WorkspaceNameMarquee";
 import { useFocusVisible } from "renderer/hooks/useFocusVisible";
+import type { WorkspaceLabel } from "renderer/hooks/workspace-labels/useWorkspaceLabels";
 import { HotkeyLabel } from "renderer/hotkeys";
 import { usePullRequestLinkPolicy } from "renderer/lib/clickPolicy";
 import { openPullRequestLink } from "renderer/lib/github/openPullRequestLink";
 import { useDashboardSidebarWorkspacePorts } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/providers/DashboardSidebarPortsProvider";
 import { navigateToWorkspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
+import { WorkspaceLabelPill } from "renderer/routes/_authenticated/components/WorkspaceLabelPill";
 import { getStatusTooltip } from "renderer/screens/main/components/StatusIndicator";
 import { RenameInput } from "renderer/screens/main/components/WorkspaceSidebar/RenameInput";
 import { useBoxPressure } from "renderer/stores/box-pressure";
@@ -37,11 +40,13 @@ import { DashboardSidebarPortsChip } from "./components/DashboardSidebarPortsChi
 import { DashboardSidebarRowEventBoundary } from "./components/DashboardSidebarRowEventBoundary";
 import { DashboardSidebarWorkspaceChips } from "./components/DashboardSidebarWorkspaceChips";
 import { DashboardSidebarWorkspaceHostGlyph } from "./components/DashboardSidebarWorkspaceHostGlyph";
+import { DashboardSidebarWorkspaceLabelsButton } from "./components/DashboardSidebarWorkspaceLabelsButton";
 import { DashboardSidebarWorkspaceLeadIndicator } from "./components/DashboardSidebarWorkspaceLeadIndicator";
 
 interface DashboardSidebarExpandedWorkspaceRowProps
 	extends ComponentPropsWithoutRef<"div"> {
 	workspace: DashboardSidebarWorkspace;
+	labels?: WorkspaceLabel[];
 	isActive: boolean;
 	isRenaming: boolean;
 	renameValue: string;
@@ -72,6 +77,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 	(
 		{
 			workspace,
+			labels = [],
 			isActive,
 			isRenaming,
 			renameValue,
@@ -111,6 +117,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 		} = workspace;
 		const isPending = pendingTransaction?.type === "insert";
 		const localRef = useRef<HTMLDivElement>(null);
+		const [isLabelsMenuOpen, setIsLabelsMenuOpen] = useState(false);
 		const navigate = useNavigate();
 		const linkPolicy = usePullRequestLinkPolicy();
 		// Drives the name's hover-reveal for keyboard users: the row, not the
@@ -362,7 +369,9 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 										"flex",
 										!isPending &&
 											!isSelected &&
-											"group-hover:invisible group-[:focus-within:not(:focus:not(:focus-visible))]:invisible",
+											(isLabelsMenuOpen
+												? "invisible"
+												: "group-hover:invisible group-[:focus-within:not(:focus:not(:focus-visible))]:invisible"),
 									)}
 								>
 									{isCloudWorkspace && isActive ? (
@@ -381,11 +390,25 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 									)}
 								</span>
 								{!isPending && !isSelected && (
-									<div className="hidden items-center justify-end gap-1.5 group-hover:flex group-[:focus-within:not(:focus:not(:focus-visible))]:flex">
+									<div
+										className={cn(
+											"items-center justify-end gap-1.5",
+											isLabelsMenuOpen
+												? "flex"
+												: "hidden group-hover:flex group-[:focus-within:not(:focus:not(:focus-visible))]:flex",
+										)}
+									>
 										{shortcutLabel && (
 											<span className="shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground">
 												{shortcutLabel}
 											</span>
+										)}
+										{hostType === "local-device" && (
+											<DashboardSidebarWorkspaceLabelsButton
+												workspaceId={workspace.id}
+												open={isLabelsMenuOpen}
+												onOpenChange={setIsLabelsMenuOpen}
+											/>
 										)}
 										<Tooltip delayDuration={300}>
 											<TooltipTrigger asChild>
@@ -432,6 +455,22 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 						</div>
 					</div>
 				</div>
+				{!isPending && hostType === "local-device" && labels.length > 0 && (
+					<div
+						className={cn(
+							"flex flex-wrap items-center gap-1 pb-1 pr-2",
+							resolvedIndentation === "top-level"
+								? "pl-[26px]"
+								: resolvedIndentation === "grouped" || isInSection
+									? "pl-[50px]"
+									: "pl-[42px]",
+						)}
+					>
+						{labels.map((label) => (
+							<WorkspaceLabelPill key={label.id} label={label} size="xs" />
+						))}
+					</div>
+				)}
 				{!isPending && (
 					<DashboardSidebarWorkspaceChips
 						workspaceId={workspace.id}

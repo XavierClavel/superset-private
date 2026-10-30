@@ -10,6 +10,7 @@ import {
 	ContextMenuTrigger,
 } from "@superset/ui/context-menu";
 import { useRunAfterMenuClose } from "@superset/ui/hooks/use-run-after-menu-close";
+import { useState } from "react";
 import {
 	LuArrowUp,
 	LuCpu,
@@ -27,7 +28,10 @@ import type {
 	MovableWorkspace,
 	WorkspaceMoveDirection,
 } from "renderer/routes/_authenticated/_dashboard/hooks/useWorkspaceMoveDirections";
+import { WorkspaceLabelDialog } from "renderer/routes/_authenticated/components/WorkspaceLabelDialog";
+import { useCreateAndAssignWorkspaceLabel } from "../../../../hooks/useCreateAndAssignWorkspaceLabel";
 import { useDashboardSidebarHoverActions } from "../../../../providers/DashboardSidebarHoverProvider";
+import { DashboardSidebarWorkspaceLabelsSubmenu } from "./components/DashboardSidebarWorkspaceLabelsSubmenu";
 import { MoveToGroupItems } from "./components/MoveToGroupItems";
 
 interface DashboardSidebarWorkspaceContextMenuProps
@@ -75,88 +79,108 @@ export function DashboardSidebarWorkspaceContextMenu({
 		hasPullRequest,
 		...actions
 	} = rest;
+	const handleCreateLabel = useCreateAndAssignWorkspaceLabel(workspaceId);
+	const [isNewLabelOpen, setIsNewLabelOpen] = useState(false);
 
 	return (
-		<ContextMenu onOpenChange={setContextMenuOpen}>
-			<ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
-			<ContextMenuContent onCloseAutoFocus={onCloseAutoFocus}>
-				<WorkspaceMenuItems
-					parts={CONTEXT_MENU_PARTS}
-					state={{
-						workspaceId,
-						isLocalWorkspace,
-						isCloudWorkspace,
-						isPinned,
-						isUnread,
-						hasStatus,
-						hasPullRequest,
-					}}
-					actions={{
-						...actions,
-						onRename: onRename && (() => runAfterClose(onRename)),
-					}}
-					move={move}
-					showDeleteHotkey={showDeleteHotkey}
-					groupItems={
-						// Group actions change placement (sectionId/tabOrder), which a
-						// pinned row doesn't show; the change would only appear on unpin.
-						<>
-							{!isPinned && canJoinGroup && (
+		<>
+			<ContextMenu onOpenChange={setContextMenuOpen}>
+				<ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+				<ContextMenuContent onCloseAutoFocus={onCloseAutoFocus}>
+					<WorkspaceMenuItems
+						parts={CONTEXT_MENU_PARTS}
+						state={{
+							workspaceId,
+							isLocalWorkspace,
+							isCloudWorkspace,
+							isPinned,
+							isUnread,
+							hasStatus,
+							hasPullRequest,
+						}}
+						actions={{
+							...actions,
+							onRename: onRename && (() => runAfterClose(onRename)),
+						}}
+						move={move}
+						afterPinItem={
+							isLocalWorkspace && (
+								<DashboardSidebarWorkspaceLabelsSubmenu
+									workspaceId={workspaceId}
+									onNewLabel={() =>
+										runAfterClose(() => setIsNewLabelOpen(true))
+									}
+								/>
+							)
+						}
+						showDeleteHotkey={showDeleteHotkey}
+						groupItems={
+							// Group actions change placement (sectionId/tabOrder), which a
+							// pinned row doesn't show; the change would only appear on unpin.
+							<>
+								{!isPinned && canJoinGroup && (
+									<>
+										<ContextMenuSeparator />
+										<ContextMenuItem onSelect={onCreateSection}>
+											<LuFolderPlus className="size-4 mr-2" />
+											<Trans>New group from workspace</Trans>
+										</ContextMenuItem>
+										<ContextMenuSub>
+											<ContextMenuSubTrigger>
+												<LuFolderSymlink className="size-4 mr-2" />
+												<Trans>Move to group</Trans>
+											</ContextMenuSubTrigger>
+											<ContextMenuSubContent>
+												<MoveToGroupItems
+													projectId={projectId}
+													onMoveToSection={onMoveToSection}
+												/>
+												<ContextMenuItem onSelect={onCreateSection}>
+													<LuFolderPlus className="size-4 mr-2" />
+													<Trans>Create new group</Trans>
+												</ContextMenuItem>
+											</ContextMenuSubContent>
+										</ContextMenuSub>
+										{isInSection && (
+											<ContextMenuItem onSelect={() => onMoveToSection(null)}>
+												<LuArrowUp className="size-4 mr-2" />
+												<Trans>Ungroup</Trans>
+											</ContextMenuItem>
+										)}
+									</>
+								)}
+								{environmentItem}
+							</>
+						}
+						afterMoveItems={
+							isCloudWorkspace && (
 								<>
 									<ContextMenuSeparator />
-									<ContextMenuItem onSelect={onCreateSection}>
-										<LuFolderPlus className="size-4 mr-2" />
-										<Trans>New group from workspace</Trans>
-									</ContextMenuItem>
 									<ContextMenuSub>
 										<ContextMenuSubTrigger>
-											<LuFolderSymlink className="size-4 mr-2" />
-											<Trans>Move to group</Trans>
+											<LuCpu className="size-4 mr-2" />
+											<Trans>Machine size</Trans>
 										</ContextMenuSubTrigger>
-										<ContextMenuSubContent>
-											<MoveToGroupItems
-												projectId={projectId}
-												onMoveToSection={onMoveToSection}
+										<ContextMenuSubContent className="min-w-64">
+											<MachineSizeMenuItems
+												workspaceId={workspaceId}
+												menu="context"
+												runAfterClose={runAfterClose}
 											/>
-											<ContextMenuItem onSelect={onCreateSection}>
-												<LuFolderPlus className="size-4 mr-2" />
-												<Trans>Create new group</Trans>
-											</ContextMenuItem>
 										</ContextMenuSubContent>
 									</ContextMenuSub>
-									{isInSection && (
-										<ContextMenuItem onSelect={() => onMoveToSection(null)}>
-											<LuArrowUp className="size-4 mr-2" />
-											<Trans>Ungroup</Trans>
-										</ContextMenuItem>
-									)}
 								</>
-							)}
-							{environmentItem}
-						</>
-					}
-					afterMoveItems={
-						isCloudWorkspace && (
-							<>
-								<ContextMenuSeparator />
-								<ContextMenuSub>
-									<ContextMenuSubTrigger>
-										<LuCpu className="size-4 mr-2" />
-										<Trans>Machine size</Trans>
-									</ContextMenuSubTrigger>
-									<ContextMenuSubContent className="min-w-64">
-										<MachineSizeMenuItems
-											workspaceId={workspaceId}
-											menu="context"
-											runAfterClose={runAfterClose}
-										/>
-									</ContextMenuSubContent>
-								</ContextMenuSub>
-							</>
-						)
-					}
-				/>
-			</ContextMenuContent>
-		</ContextMenu>
+							)
+						}
+					/>
+				</ContextMenuContent>
+			</ContextMenu>
+			<WorkspaceLabelDialog
+				open={isNewLabelOpen}
+				onOpenChange={setIsNewLabelOpen}
+				mode="create"
+				onSubmit={handleCreateLabel}
+			/>
+		</>
 	);
 }

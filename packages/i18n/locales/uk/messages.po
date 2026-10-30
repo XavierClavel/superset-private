@@ -1801,6 +1801,9 @@ msgstr "Маю одну погану звичку: прокидаюся сере
 msgid "A host must have at least one owner."
 msgstr "У хоста має бути принаймні один власник."
 
+msgid "A label with this name already exists"
+msgstr "Мітка з такою назвою вже існує"
+
 msgid "A living reference of every component exported from"
 msgstr "Живий довідник усіх компонентів, що експортуються з"
 
@@ -5718,6 +5721,9 @@ msgstr "Не вдалося створити гілку чату"
 msgid "Could not change access"
 msgstr "Не вдалося змінити доступ"
 
+msgid "Could not change the label color"
+msgstr "Не вдалося змінити колір мітки"
+
 msgid "Could not change the mode"
 msgstr "Не вдалося змінити режим"
 
@@ -5771,6 +5777,9 @@ msgstr "Не вдалося видалити обліковий запис"
 
 msgid "Could not delete file"
 msgstr "Не вдалося видалити файл"
+
+msgid "Could not delete the label"
+msgstr "Не вдалося видалити мітку"
 
 msgid "Could not delete this page"
 msgstr "Не вдалося видалити цю сторінку"
@@ -5953,6 +5962,9 @@ msgstr "Не вдалося відновити чат"
 msgid "Could not save the change."
 msgstr "Не вдалося зберегти зміну."
 
+msgid "Could not save the label"
+msgstr "Не вдалося зберегти мітку"
+
 msgid "Could not send"
 msgstr "Не вдалося надіслати"
 
@@ -6024,6 +6036,9 @@ msgstr "Не вдалося оновити навичку"
 
 msgid "Could not update the branch"
 msgstr "Не вдалося оновити гілку"
+
+msgid "Could not update the workspace labels"
+msgstr "Не вдалося оновити мітки робочого простору"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6981,6 +6996,13 @@ msgstr "Видалити хост"
 
 msgid "Delete image"
 msgstr "Видалити зображення"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Видалити мітку «{0}»?"
+
+msgid "Delete local branch on workspace removal"
+msgstr "Видаляти локальну гілку під час видалення робочого простору"
 
 msgid "Delete message"
 msgstr "Видалити повідомлення"
@@ -10923,9 +10945,22 @@ msgstr "Мітка"
 msgid "Label change"
 msgstr "Зміна мітки"
 
+msgid "Label created but could not be assigned"
+msgstr "Мітку створено, але не вдалося призначити"
+
+msgid "Label is required."
+msgstr "Потрібно вказати мітку."
+
+msgid "Label name"
+msgstr "Назва мітки"
+
 msgid "Label name..."
 msgstr "Назва мітки..."
 
+msgid "Labels"
+msgstr "Мітки"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Мітки"
 
@@ -12452,6 +12487,11 @@ msgstr "Нове issue"
 
 msgid "New layout"
 msgstr "Новий макет"
+msgid "New label"
+msgstr "Нова мітка"
+
+msgid "New label…"
+msgstr "Нова мітка…"
 
 msgid "New messages"
 msgstr "Нові повідомлення"
@@ -13261,6 +13301,10 @@ msgstr "Не налаштовано команду запуску робочог
 
 msgid "No workspaces found."
 msgstr "Робочих просторів не знайдено."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Жоден робочий простір не має мітки {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "У цьому проєкті ще немає робочих просторів."
@@ -16384,6 +16428,9 @@ msgstr "Перейменувати групу"
 msgid "Rename host"
 msgstr "Перейменувати хост"
 
+msgid "Rename label"
+msgstr "Перейменувати мітку"
+
 msgid "Rename page"
 msgstr "Перейменувати сторінку"
 
@@ -16401,6 +16448,9 @@ msgstr "Перейменувати робочий простір"
 
 msgid "Rename..."
 msgstr "Перейменувати..."
+
+msgid "Rename…"
+msgstr "Перейменувати…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Перейменування гілки на {newName}..."
@@ -20144,6 +20194,9 @@ msgstr "Включені ГБ-години та ГБ-години понад т�
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "Суть професії змінюється. Інженери перестають бути друкарями зі смаком і стають диспетчерами зі смаком: розбивають роботу на частини, розподіляють її між флотами агентів, розв'язують конфлікти між агентами, які змінили той самий модуль."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Мітку буде прибрано з усіх робочих просторів. Самі робочі простори не зміняться."
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Останні оновлення, покращення й нові функції в Paradev."

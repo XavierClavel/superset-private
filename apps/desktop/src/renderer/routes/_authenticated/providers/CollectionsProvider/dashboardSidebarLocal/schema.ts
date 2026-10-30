@@ -535,6 +535,7 @@ export const userPreferencesSchema = z.object({
 	// grouping without untagging anyone). Bounded by tags a user has ever
 	// hidden; entries for tags no longer in use are harmless and cheap.
 	hiddenTagFolders: z.record(z.string(), z.array(z.string())).default({}),
+	sidebarLabelFilterId: z.string().nullable().default(null),
 });
 
 // The fixed set of built-in preset ids. Consumers derive their id constants
@@ -569,6 +570,7 @@ export const DEFAULT_V2_USER_PREFERENCES: UserPreferencesRow = {
 	hiddenBuiltinPresetIds: [],
 	favoritePageIds: [],
 	hiddenTagFolders: {},
+	sidebarLabelFilterId: null,
 };
 
 /**
@@ -669,6 +671,10 @@ export function healUserPreferences(raw: unknown): UserPreferencesRow {
 		sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema.parse(
 			r.sidebarProjectHostFilter,
 		),
+		sidebarLabelFilterId:
+			typeof r.sidebarLabelFilterId === "string"
+				? r.sidebarLabelFilterId
+				: null,
 		// Prune retired/stray built-in ids so the array stays bounded.
 		hiddenBuiltinPresetIds: (Array.isArray(r.hiddenBuiltinPresetIds)
 			? r.hiddenBuiltinPresetIds
