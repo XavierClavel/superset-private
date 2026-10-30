@@ -1487,6 +1487,9 @@ msgstr "A guilty habit I have is waking up with an idea in the middle of the nig
 msgid "A host must have at least one owner."
 msgstr "A host must have at least one owner."
 
+msgid "A label with this name already exists"
+msgstr "A label with this name already exists"
+
 msgid "A living reference of every component exported from"
 msgstr "A living reference of every component exported from"
 
@@ -4803,6 +4806,9 @@ msgstr "Could not attach files"
 msgid "Could not branch the chat"
 msgstr "Could not branch the chat"
 
+msgid "Could not change the label color"
+msgstr "Could not change the label color"
+
 msgid "Could not change the mode"
 msgstr "Could not change the mode"
 
@@ -4850,6 +4856,9 @@ msgstr "Could not delete account"
 
 msgid "Could not delete file"
 msgstr "Could not delete file"
+
+msgid "Could not delete the label"
+msgstr "Could not delete the label"
 
 msgid "Could not delete this page"
 msgstr "Could not delete this page"
@@ -4984,6 +4993,9 @@ msgstr "Could not resume"
 msgid "Could not resume the chat"
 msgstr "Could not resume the chat"
 
+msgid "Could not save the label"
+msgstr "Could not save the label"
+
 msgid "Could not send"
 msgstr "Could not send"
 
@@ -5037,6 +5049,9 @@ msgstr "Could not update skill"
 
 msgid "Could not update the branch"
 msgstr "Could not update the branch"
+
+msgid "Could not update the workspace labels"
+msgstr "Could not update the workspace labels"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -5814,6 +5829,10 @@ msgstr "Delete host"
 
 msgid "Delete image"
 msgstr "Delete image"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Delete label \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Delete local branch on workspace removal"
@@ -9195,12 +9214,22 @@ msgstr "Label"
 msgid "Label change"
 msgstr "Label change"
 
+msgid "Label created but could not be assigned"
+msgstr "Label created but could not be assigned"
+
 msgid "Label is required."
 msgstr "Label is required."
+
+msgid "Label name"
+msgstr "Label name"
 
 msgid "Label name..."
 msgstr "Label name..."
 
+msgid "Labels"
+msgstr "Labels"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Labels"
 
@@ -10492,6 +10521,12 @@ msgstr "New group from workspace"
 msgid "New issue"
 msgstr "New issue"
 
+msgid "New label"
+msgstr "New label"
+
+msgid "New label…"
+msgstr "New label…"
+
 msgid "New page"
 msgstr "New page"
 
@@ -11188,6 +11223,10 @@ msgstr "No workspace run command configured"
 
 msgid "No workspaces found."
 msgstr "No workspaces found."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "No workspaces have the label {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "No workspaces in this project yet."
@@ -13674,6 +13713,9 @@ msgstr "Rename group"
 msgid "Rename host"
 msgstr "Rename host"
 
+msgid "Rename label"
+msgstr "Rename label"
+
 msgid "Rename page"
 msgstr "Rename page"
 
@@ -13688,6 +13730,9 @@ msgstr "Rename workspace"
 
 msgid "Rename..."
 msgstr "Rename..."
+
+msgid "Rename…"
+msgstr "Rename…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Renaming branch to {newName}..."
@@ -17065,6 +17110,9 @@ msgstr "The human reads every line before it merges."
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "The label is removed from every workspace. The workspaces themselves are not affected."
 
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "The latest updates, improvements, and new features in Superset."

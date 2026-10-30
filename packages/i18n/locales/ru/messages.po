@@ -1487,6 +1487,9 @@ msgstr "У меня есть грешок: проснуться посреди �
 msgid "A host must have at least one owner."
 msgstr "У хоста должен быть хотя бы один владелец."
 
+msgid "A label with this name already exists"
+msgstr "Метка с таким именем уже существует"
+
 msgid "A living reference of every component exported from"
 msgstr "Живой справочник всех компонентов, экспортируемых из"
 
@@ -4803,6 +4806,9 @@ msgstr "Не удалось прикрепить файлы"
 msgid "Could not branch the chat"
 msgstr "Не удалось ответвить чат"
 
+msgid "Could not change the label color"
+msgstr "Не удалось изменить цвет метки"
+
 msgid "Could not change the mode"
 msgstr "Не удалось сменить режим"
 
@@ -4850,6 +4856,9 @@ msgstr "Не удалось удалить аккаунт"
 
 msgid "Could not delete file"
 msgstr "Не удалось удалить файл"
+
+msgid "Could not delete the label"
+msgstr "Не удалось удалить метку"
 
 msgid "Could not delete this page"
 msgstr "Не удалось удалить эту страницу"
@@ -4984,6 +4993,9 @@ msgstr "Не удалось возобновить"
 msgid "Could not resume the chat"
 msgstr "Не удалось продолжить чат"
 
+msgid "Could not save the label"
+msgstr "Не удалось сохранить метку"
+
 msgid "Could not send"
 msgstr "Не удалось отправить"
 
@@ -5037,6 +5049,9 @@ msgstr "Не удалось обновить навык"
 
 msgid "Could not update the branch"
 msgstr "Не удалось обновить ветку"
+
+msgid "Could not update the workspace labels"
+msgstr "Не удалось обновить метки рабочего пространства"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -5814,6 +5829,10 @@ msgstr "Удалить хост"
 
 msgid "Delete image"
 msgstr "Удалить изображение"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Удалить метку \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Удалять локальную ветку при удалении рабочей области"
@@ -9195,12 +9214,22 @@ msgstr "Название"
 msgid "Label change"
 msgstr "Изменение метки"
 
+msgid "Label created but could not be assigned"
+msgstr "Метка создана, но не удалось её назначить"
+
 msgid "Label is required."
 msgstr "Название обязательно."
+
+msgid "Label name"
+msgstr "Название метки"
 
 msgid "Label name..."
 msgstr "Название метки..."
 
+msgid "Labels"
+msgstr "Метки"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Метки"
 
@@ -10492,6 +10521,12 @@ msgstr "Новая группа из рабочей области"
 msgid "New issue"
 msgstr "Новая задача"
 
+msgid "New label"
+msgstr "Новая метка"
+
+msgid "New label…"
+msgstr "Новая метка…"
+
 msgid "New page"
 msgstr "Новая страница"
 
@@ -11188,6 +11223,10 @@ msgstr "Команда запуска рабочей области не нас�
 
 msgid "No workspaces found."
 msgstr "Рабочие области не найдены."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Ни у одной рабочей области нет метки {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "В этом проекте пока нет рабочих пространств."
@@ -13674,6 +13713,9 @@ msgstr "Переименовать группу"
 msgid "Rename host"
 msgstr "Переименовать хост"
 
+msgid "Rename label"
+msgstr "Переименовать метку"
+
 msgid "Rename page"
 msgstr "Переименовать страницу"
 
@@ -13688,6 +13730,9 @@ msgstr "Переименовать рабочую область"
 
 msgid "Rename..."
 msgstr "Переименовать..."
+
+msgid "Rename…"
+msgstr "Переименовать…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Переименование ветки в {newName}..."
@@ -17065,6 +17110,9 @@ msgstr "Человек читает каждую строку перед сли�
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "Описание работы меняется. Инженеры перестают быть машинистками со вкусом и становятся диспетчерами со вкусом: декомпозируют работу, раздают её флотам, разрешают конфликты между агентами, которые оба тронули один модуль."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Метка будет удалена из всех рабочих областей. Сами рабочие области не изменятся."
 
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "Последние обновления, улучшения и новые возможности Superset."

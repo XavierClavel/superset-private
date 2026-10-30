@@ -1,0 +1,1 @@
+export { DashboardSidebarWorkspaceLabelsSubmenu } from "./DashboardSidebarWorkspaceLabelsSubmenu";

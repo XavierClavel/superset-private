@@ -1487,6 +1487,9 @@ msgstr "Ho la cattiva abitudine di svegliarmi con un’idea nel cuore della nott
 msgid "A host must have at least one owner."
 msgstr "Un host deve avere almeno un proprietario."
 
+msgid "A label with this name already exists"
+msgstr "Esiste già un'etichetta con questo nome"
+
 msgid "A living reference of every component exported from"
 msgstr "Un riferimento vivo di ogni componente esportato da"
 
@@ -4803,6 +4806,9 @@ msgstr "Impossibile allegare i file"
 msgid "Could not branch the chat"
 msgstr "Impossibile creare un ramo della chat"
 
+msgid "Could not change the label color"
+msgstr "Impossibile cambiare il colore dell'etichetta"
+
 msgid "Could not change the mode"
 msgstr "Impossibile cambiare modalità"
 
@@ -4850,6 +4856,9 @@ msgstr "Impossibile eliminare l'account"
 
 msgid "Could not delete file"
 msgstr "Impossibile eliminare il file"
+
+msgid "Could not delete the label"
+msgstr "Impossibile eliminare l'etichetta"
 
 msgid "Could not delete this page"
 msgstr "Impossibile eliminare questa pagina"
@@ -4984,6 +4993,9 @@ msgstr "Impossibile riprendere"
 msgid "Could not resume the chat"
 msgstr "Impossibile riprendere la chat"
 
+msgid "Could not save the label"
+msgstr "Impossibile salvare l'etichetta"
+
 msgid "Could not send"
 msgstr "Impossibile inviare"
 
@@ -5037,6 +5049,9 @@ msgstr "Impossibile aggiornare la skill"
 
 msgid "Could not update the branch"
 msgstr "Impossibile aggiornare il branch"
+
+msgid "Could not update the workspace labels"
+msgstr "Impossibile aggiornare le etichette dello spazio di lavoro"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -5814,6 +5829,10 @@ msgstr "Elimina l'host"
 
 msgid "Delete image"
 msgstr "Elimina immagine"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Eliminare l'etichetta \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Elimina il branch locale alla rimozione del workspace"
@@ -9195,12 +9214,22 @@ msgstr "Etichetta"
 msgid "Label change"
 msgstr "Modifica delle etichette"
 
+msgid "Label created but could not be assigned"
+msgstr "Etichetta creata, ma non è stato possibile assegnarla"
+
 msgid "Label is required."
 msgstr "L'etichetta è obbligatoria."
+
+msgid "Label name"
+msgstr "Nome dell'etichetta"
 
 msgid "Label name..."
 msgstr "Nome dell’etichetta..."
 
+msgid "Labels"
+msgstr "Etichette"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Etichette"
 
@@ -10492,6 +10521,12 @@ msgstr "Nuovo gruppo dal workspace"
 msgid "New issue"
 msgstr "Nuova issue"
 
+msgid "New label"
+msgstr "Nuova etichetta"
+
+msgid "New label…"
+msgstr "Nuova etichetta…"
+
 msgid "New page"
 msgstr "Nuova pagina"
 
@@ -11188,6 +11223,10 @@ msgstr "Nessun comando di esecuzione del workspace configurato"
 
 msgid "No workspaces found."
 msgstr "Nessun workspace trovato."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Nessun workspace ha l'etichetta {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Nessuno spazio di lavoro in questo progetto."
@@ -13674,6 +13713,9 @@ msgstr "Rinomina il gruppo"
 msgid "Rename host"
 msgstr "Rinomina l'host"
 
+msgid "Rename label"
+msgstr "Rinomina etichetta"
+
 msgid "Rename page"
 msgstr "Rinomina pagina"
 
@@ -13688,6 +13730,9 @@ msgstr "Rinomina il workspace"
 
 msgid "Rename..."
 msgstr "Rinomina..."
+
+msgid "Rename…"
+msgstr "Rinomina…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Rinomina del branch in {newName}..."
@@ -17065,6 +17110,9 @@ msgstr "L'umano legge ogni riga prima del merge."
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "La descrizione del lavoro cambia. Gli ingegneri smettono di essere dattilografi con gusto e diventano dispatcher con gusto: scompongono il lavoro, lo instradano alle flotte, arbitrano i conflitti tra agenti che hanno toccato lo stesso modulo."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "L'etichetta viene rimossa da tutti i workspace. I workspace stessi non vengono modificati."
 
 msgid "The latest updates, improvements, and new features in Superset."
 msgstr "Gli ultimi aggiornamenti, miglioramenti e nuove funzionalità di Superset."

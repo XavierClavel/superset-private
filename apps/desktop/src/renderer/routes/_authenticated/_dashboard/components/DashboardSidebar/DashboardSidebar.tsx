@@ -44,6 +44,7 @@ import { DashboardSidebarGithubNotice } from "./components/DashboardSidebarGithu
 import { DashboardSidebarHeader } from "./components/DashboardSidebarHeader";
 import { DashboardSidebarHiddenProjects } from "./components/DashboardSidebarHiddenProjects";
 import { DashboardSidebarHoverCardOverlay } from "./components/DashboardSidebarHoverCardOverlay";
+import { DashboardSidebarLabelFilterBar } from "./components/DashboardSidebarLabelFilterBar";
 import { DashboardSidebarPinnedSection } from "./components/DashboardSidebarPinnedSection";
 import { DashboardSidebarProjectSection } from "./components/DashboardSidebarProjectSection";
 import { DashboardSidebarSectionRenameProvider } from "./components/DashboardSidebarSectionRenameContext";
@@ -61,6 +62,10 @@ import { useMigrateLegacySidebarFolders } from "./hooks/useMigrateLegacySidebarF
 import { useDashboardSidebarDnd } from "./hooks/useSidebarDnd";
 import { DashboardSidebarDndProvider } from "./providers/DashboardSidebarDndProvider";
 import { DashboardSidebarHoverProvider } from "./providers/DashboardSidebarHoverProvider";
+import {
+	DashboardSidebarLabelsProvider,
+	useDashboardSidebarLabels,
+} from "./providers/DashboardSidebarLabelsProvider";
 import { DashboardSidebarSelectionProvider } from "./providers/DashboardSidebarSelectionProvider";
 import {
 	DashboardSidebarWorkspaceStatusProvider,
@@ -70,6 +75,7 @@ import type {
 	DashboardSidebarProject,
 	DashboardSidebarWorkspace,
 } from "./types";
+import { filterDashboardSidebarByLabel } from "./utils/filterDashboardSidebarByLabel";
 import { filterDashboardSidebarProjects } from "./utils/filterDashboardSidebarProjects";
 import { getProjectChildrenWorkspaces } from "./utils/projectChildren";
 import { sortDashboardSidebarProjects } from "./utils/sortDashboardSidebarProjects";
@@ -149,9 +155,15 @@ const SortableProjectWrapper = memo(function SortableProjectWrapper({
 	);
 });
 
-export function DashboardSidebar({
-	isCollapsed = false,
-}: DashboardSidebarProps) {
+export function DashboardSidebar(props: DashboardSidebarProps) {
+	return (
+		<DashboardSidebarLabelsProvider>
+			<DashboardSidebarBody {...props} />
+		</DashboardSidebarLabelsProvider>
+	);
+}
+
+function DashboardSidebarBody({ isCollapsed = false }: DashboardSidebarProps) {
 	const { t } = useLingui();
 	const {
 		groups,
@@ -220,16 +232,57 @@ export function DashboardSidebar({
 				: sortDashboardSidebarProjects(orderedGroups, sortMode),
 		[sortMode, orderedGroups],
 	);
+	const { labelsByWorkspaceId, activeFilterLabel, setActiveFilterLabelId } =
+		useDashboardSidebarLabels();
+	const labelIdsByWorkspaceId = useMemo(
+		() =>
+			new Map(
+				[...labelsByWorkspaceId].map(([workspaceId, labels]) => [
+					workspaceId,
+					new Set(labels.map((label) => label.id)),
+				]),
+			),
+		[labelsByWorkspaceId],
+	);
+	const activeLabelId = isCollapsed ? null : (activeFilterLabel?.id ?? null);
+	const labelView = useMemo(
+		() =>
+			filterDashboardSidebarByLabel(
+				{
+					projects: sortedGroups,
+					sessionChildren,
+					sessionWorkspaces,
+					pinnedWorkspaces,
+				},
+				activeLabelId,
+				labelIdsByWorkspaceId,
+			),
+		[
+			sortedGroups,
+			sessionChildren,
+			sessionWorkspaces,
+			pinnedWorkspaces,
+			activeLabelId,
+			labelIdsByWorkspaceId,
+		],
+	);
 	const displayedGroups = useMemo(
-		() => filterDashboardSidebarProjects(sortedGroups, projectFilterQuery),
-		[sortedGroups, projectFilterQuery],
+		() =>
+			filterDashboardSidebarProjects(labelView.projects, projectFilterQuery),
+		[labelView.projects, projectFilterQuery],
 	);
 	const displayedProjectIds = useMemo(
 		() => displayedGroups.map((project) => project.id),
 		[displayedGroups],
 	);
 	const trimmedFilterQuery = projectFilterQuery.trim();
-	const isFilterActive = trimmedFilterQuery !== "";
+	const isLabelFilterActive = activeLabelId !== null;
+	const isLabelViewEmpty =
+		displayedGroups.length === 0 &&
+		labelView.pinnedWorkspaces.length === 0 &&
+		labelView.sessionWorkspaces.length === 0 &&
+		labelView.sessionChildren.length === 0;
+	const isFilterActive = trimmedFilterQuery !== "" || isLabelFilterActive;
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -238,17 +291,23 @@ export function DashboardSidebar({
 	useBlockedDragNotice({
 		reason: isFilterActive ? "filter" : sortMode !== "manual" ? "sort" : null,
 		onSwitchToManualOrder: () => setSidebarProjectSortMode("manual"),
-		onClearFilter: () => setProjectFilterQuery(""),
+		onClearFilter: () => {
+			setProjectFilterQuery("");
+			setActiveFilterLabelId(null);
+		},
 	});
 
-	// Sorted but unfiltered, so ⌘1–⌘9 targets stay put while typing a query.
+	// Label-filtered but not text-filtered, so ⌘1–⌘9 targets stay put while typing a query.
 	// The filtered view expands matches through derived objects, so a jump
 	// must not toggle the persisted collapse state while it is active.
 	const workspaceShortcutLabels = useDashboardSidebarShortcuts(
-		sortedGroups,
-		sessionWorkspaces,
-		sessionChildren,
-		{ revealCollapsed: !isFilterActive, pinnedWorkspaces },
+		labelView.projects,
+		labelView.sessionWorkspaces,
+		labelView.sessionChildren,
+		{
+			revealCollapsed: !isFilterActive,
+			pinnedWorkspaces: labelView.pinnedWorkspaces,
+		},
 	);
 	// Scoped to what the filter actually shows — select-all and range-select
 	// must not reach rows the filter is hiding.
@@ -440,8 +499,8 @@ export function DashboardSidebar({
 						<DashboardSidebarHoverCardOverlay>
 							<DashboardSidebarDndProvider
 								projects={displayedGroups}
-								pinnedWorkspaces={pinnedWorkspaces}
-								sessionChildren={sessionChildren}
+								pinnedWorkspaces={labelView.pinnedWorkspaces}
+								sessionChildren={labelView.sessionChildren}
 								isSidebarCollapsed={isCollapsed}
 								workspaceShortcutLabels={workspaceShortcutLabels}
 								onReorderProjects={handleReorderProjects}
@@ -455,19 +514,22 @@ export function DashboardSidebar({
 										fadeEdges={["top", "bottom"]}
 										className="flex-1 overflow-y-auto hide-scrollbar"
 									>
+										{!isCollapsed && <DashboardSidebarLabelFilterBar />}
 										{(isCollapsed || !workspacesListCollapsed) && (
 											<DashboardSidebarPinnedSection
-												pinnedWorkspaces={pinnedWorkspaces}
+												pinnedWorkspaces={labelView.pinnedWorkspaces}
 												isCollapsed={isCollapsed}
 												onWorkspaceHover={refreshWorkspacePullRequest}
 											/>
 										)}
-										<DashboardSidebarCloudSection
-											isCollapsed={isCollapsed}
-											onWorkspaceHover={refreshWorkspacePullRequest}
-										/>
+										{!isLabelFilterActive && (
+											<DashboardSidebarCloudSection
+												isCollapsed={isCollapsed}
+												onWorkspaceHover={refreshWorkspacePullRequest}
+											/>
+										)}
 										<DashboardSidebarSessionsSection
-											sessionWorkspaces={sessionWorkspaces}
+											sessionWorkspaces={labelView.sessionWorkspaces}
 											isCollapsed={isCollapsed}
 											workspaceShortcutLabels={workspaceShortcutLabels}
 											onWorkspaceHover={refreshWorkspacePullRequest}
@@ -516,11 +578,16 @@ export function DashboardSidebar({
 										)}
 										{!isCollapsed &&
 											isFilterActive &&
-											displayedGroups.length === 0 && (
+											displayedGroups.length === 0 &&
+											(trimmedFilterQuery !== "" || isLabelViewEmpty) && (
 												<div className="select-text cursor-text px-4 py-2 text-xs text-muted-foreground">
-													{t({
-														message: `No projects match "${trimmedFilterQuery}"`,
-													})}
+													{activeFilterLabel && trimmedFilterQuery === ""
+														? t({
+																message: `No workspaces have the label ${activeFilterLabel.name}`,
+															})
+														: t({
+																message: `No projects match "${trimmedFilterQuery}"`,
+															})}
 												</div>
 											)}
 									</OverflowFadeContainer>

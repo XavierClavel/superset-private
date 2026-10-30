@@ -10,6 +10,7 @@ import {
 	ContextMenuSubTrigger,
 	ContextMenuTrigger,
 } from "@superset/ui/context-menu";
+import { useState } from "react";
 import {
 	LuArrowRightLeft,
 	LuArrowUp,
@@ -30,11 +31,14 @@ import {
 	LuX,
 } from "react-icons/lu";
 import { useHotkeyDisplay } from "renderer/hotkeys";
+import { WorkspaceLabelDialog } from "renderer/routes/_authenticated/components/WorkspaceLabelDialog";
+import { useCreateAndAssignWorkspaceLabel } from "../../../../hooks/useCreateAndAssignWorkspaceLabel";
 import { useDashboardSidebarPortKill } from "../../../../hooks/useDashboardSidebarPortKill";
 import { useProjectTagFolderSections } from "../../../../hooks/useProjectTagFolderSections";
 import { useRunAfterMenuClose } from "../../../../hooks/useRunAfterMenuClose";
 import { useDashboardSidebarHoverActions } from "../../../../providers/DashboardSidebarHoverProvider";
 import { useDashboardSidebarWorkspacePorts } from "../../../../providers/DashboardSidebarPortsProvider";
+import { DashboardSidebarWorkspaceLabelsSubmenu } from "./components/DashboardSidebarWorkspaceLabelsSubmenu";
 
 interface DashboardSidebarWorkspaceContextMenuProps {
 	workspaceId: string;
@@ -92,6 +96,8 @@ export function DashboardSidebarWorkspaceContextMenu({
 	children,
 }: DashboardSidebarWorkspaceContextMenuProps) {
 	const { runAfterClose, onCloseAutoFocus } = useRunAfterMenuClose();
+	const handleCreateLabel = useCreateAndAssignWorkspaceLabel(workspaceId);
+	const [isNewLabelOpen, setIsNewLabelOpen] = useState(false);
 	const { setContextMenuOpen } = useDashboardSidebarHoverActions();
 	const portGroup = useDashboardSidebarWorkspacePorts(workspaceId);
 	const { isPending: isKillingPorts, killPorts } =
@@ -110,148 +116,162 @@ export function DashboardSidebarWorkspaceContextMenu({
 	};
 
 	return (
-		<ContextMenu onOpenChange={setContextMenuOpen}>
-			<ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
-			<ContextMenuContent onCloseAutoFocus={onCloseAutoFocus}>
-				<ContextMenuItem onSelect={onTogglePin}>
-					{isPinned ? (
-						<>
-							<LuPinOff className="size-4 mr-2" />
-							<Trans>Unpin</Trans>
-						</>
-					) : (
-						<>
-							<LuPin className="size-4 mr-2" />
-							<Trans>Pin</Trans>
-						</>
+		<>
+			<ContextMenu onOpenChange={setContextMenuOpen}>
+				<ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+				<ContextMenuContent onCloseAutoFocus={onCloseAutoFocus}>
+					<ContextMenuItem onSelect={onTogglePin}>
+						{isPinned ? (
+							<>
+								<LuPinOff className="size-4 mr-2" />
+								<Trans>Unpin</Trans>
+							</>
+						) : (
+							<>
+								<LuPin className="size-4 mr-2" />
+								<Trans>Pin</Trans>
+							</>
+						)}
+					</ContextMenuItem>
+					{isLocalWorkspace && (
+						<DashboardSidebarWorkspaceLabelsSubmenu
+							workspaceId={workspaceId}
+							onNewLabel={() => runAfterClose(() => setIsNewLabelOpen(true))}
+						/>
 					)}
-				</ContextMenuItem>
-				{onRename && (
-					<ContextMenuItem onSelect={() => runAfterClose(onRename)}>
-						<LuPencil className="size-4 mr-2" />
-						<Trans>Rename</Trans>
-					</ContextMenuItem>
-				)}
-				{isLocalWorkspace && (
-					<>
-						{onRename && <ContextMenuSeparator />}
-						<ContextMenuItem onSelect={onOpenInFinder}>
-							<LuFolderOpen className="size-4 mr-2" />
-							<Trans>Open in Finder</Trans>
+					{onRename && (
+						<ContextMenuItem onSelect={() => runAfterClose(onRename)}>
+							<LuPencil className="size-4 mr-2" />
+							<Trans>Rename</Trans>
 						</ContextMenuItem>
-						<ContextMenuItem onSelect={onCopyPath}>
-							<LuCopy className="size-4 mr-2" />
-							<Trans>Copy Path</Trans>
-						</ContextMenuItem>
-					</>
-				)}
-				{!isLocalWorkspace && onRename && <ContextMenuSeparator />}
-				<ContextMenuItem onSelect={onCopyBranchName}>
-					<LuGitBranch className="size-4 mr-2" />
-					<Trans>Copy Branch Name</Trans>
-				</ContextMenuItem>
-				<ContextMenuItem onSelect={onCopyWorkspaceId}>
-					<LuHash className="size-4 mr-2" />
-					<Trans>Copy Workspace ID</Trans>
-				</ContextMenuItem>
-				<ContextMenuSeparator />
-				<ContextMenuItem onSelect={onToggleUnread}>
-					{isUnread ? (
-						<>
-							<LuEye className="size-4 mr-2" />
-							<Trans>Mark as Read</Trans>
-						</>
-					) : (
-						<>
-							<LuEyeOff className="size-4 mr-2" />
-							<Trans>Mark as Unread</Trans>
-						</>
 					)}
-				</ContextMenuItem>
-				{hasStatus && (
-					<ContextMenuItem onSelect={onClearStatus}>
-						<LuBellOff className="size-4 mr-2" />
-						<Trans>Clear Status</Trans>
-					</ContextMenuItem>
-				)}
-				{hasPullRequest && (
-					<ContextMenuItem onSelect={onRemovePullRequest}>
-						<LuUnlink className="size-4 mr-2" />
-						<Trans>Remove PR Link</Trans>
-					</ContextMenuItem>
-				)}
-				{/* Group actions mutate placement (sectionId/tabOrder), which a pinned
-				    row doesn't display — the change would only surface on unpin. */}
-				{!isPinned && canJoinGroup && (
-					<>
-						<ContextMenuSeparator />
-						<ContextMenuItem onSelect={onCreateSection}>
-							<LuFolderPlus className="size-4 mr-2" />
-							<Trans>New group from workspace</Trans>
-						</ContextMenuItem>
-						<ContextMenuSub>
-							<ContextMenuSubTrigger>
-								<LuArrowRightLeft className="size-4 mr-2" />
-								<Trans>Move to group</Trans>
-							</ContextMenuSubTrigger>
-							<ContextMenuSubContent>
-								{sections.map((section) => (
-									<ContextMenuItem
-										key={section.id}
-										onSelect={() => onMoveToSection(section.id)}
-									>
-										{section.color && (
-											<span
-												className="size-2 shrink-0 rounded-full mr-2"
-												style={{ backgroundColor: section.color }}
-											/>
-										)}
-										{section.name}
-									</ContextMenuItem>
-								))}
-								{sections.length > 0 && <ContextMenuSeparator />}
-								<ContextMenuItem onSelect={onCreateSection}>
-									<LuFolderPlus className="size-4 mr-2" />
-									<Trans>Create new group</Trans>
-								</ContextMenuItem>
-							</ContextMenuSubContent>
-						</ContextMenuSub>
-						{isInSection && (
-							<ContextMenuItem onSelect={() => onMoveToSection(null)}>
-								<LuArrowUp className="size-4 mr-2" />
-								<Trans>Ungroup</Trans>
+					{isLocalWorkspace && (
+						<>
+							{onRename && <ContextMenuSeparator />}
+							<ContextMenuItem onSelect={onOpenInFinder}>
+								<LuFolderOpen className="size-4 mr-2" />
+								<Trans>Open in Finder</Trans>
 							</ContextMenuItem>
-						)}
-					</>
-				)}
-				<ContextMenuSeparator />
-				{ports.length > 0 && (
-					<ContextMenuItem
-						onSelect={handleCloseAllPorts}
-						disabled={isKillingPorts}
-						variant="destructive"
-					>
-						<LuRadioTower className="size-4 mr-2" />
-						<Trans>Close all ports</Trans>
+							<ContextMenuItem onSelect={onCopyPath}>
+								<LuCopy className="size-4 mr-2" />
+								<Trans>Copy Path</Trans>
+							</ContextMenuItem>
+						</>
+					)}
+					{!isLocalWorkspace && onRename && <ContextMenuSeparator />}
+					<ContextMenuItem onSelect={onCopyBranchName}>
+						<LuGitBranch className="size-4 mr-2" />
+						<Trans>Copy Branch Name</Trans>
 					</ContextMenuItem>
-				)}
-				<ContextMenuItem onSelect={onRemoveFromSidebar}>
-					<LuX className="size-4 mr-2" />
-					<Trans>Remove from Sidebar</Trans>
-				</ContextMenuItem>
-				{onDelete ? (
-					<ContextMenuItem
-						onSelect={onDelete}
-						className="text-destructive focus:text-destructive"
-					>
-						<LuTrash2 className="size-4 mr-2 text-destructive" />
-						<Trans>Delete</Trans>
-						{showDeleteShortcut && (
-							<ContextMenuShortcut>{deleteHotkeyText}</ContextMenuShortcut>
+					<ContextMenuItem onSelect={onCopyWorkspaceId}>
+						<LuHash className="size-4 mr-2" />
+						<Trans>Copy Workspace ID</Trans>
+					</ContextMenuItem>
+					<ContextMenuSeparator />
+					<ContextMenuItem onSelect={onToggleUnread}>
+						{isUnread ? (
+							<>
+								<LuEye className="size-4 mr-2" />
+								<Trans>Mark as Read</Trans>
+							</>
+						) : (
+							<>
+								<LuEyeOff className="size-4 mr-2" />
+								<Trans>Mark as Unread</Trans>
+							</>
 						)}
 					</ContextMenuItem>
-				) : null}
-			</ContextMenuContent>
-		</ContextMenu>
+					{hasStatus && (
+						<ContextMenuItem onSelect={onClearStatus}>
+							<LuBellOff className="size-4 mr-2" />
+							<Trans>Clear Status</Trans>
+						</ContextMenuItem>
+					)}
+					{hasPullRequest && (
+						<ContextMenuItem onSelect={onRemovePullRequest}>
+							<LuUnlink className="size-4 mr-2" />
+							<Trans>Remove PR Link</Trans>
+						</ContextMenuItem>
+					)}
+					{/* Group actions mutate placement (sectionId/tabOrder), which a pinned
+				    row doesn't display — the change would only surface on unpin. */}
+					{!isPinned && canJoinGroup && (
+						<>
+							<ContextMenuSeparator />
+							<ContextMenuItem onSelect={onCreateSection}>
+								<LuFolderPlus className="size-4 mr-2" />
+								<Trans>New group from workspace</Trans>
+							</ContextMenuItem>
+							<ContextMenuSub>
+								<ContextMenuSubTrigger>
+									<LuArrowRightLeft className="size-4 mr-2" />
+									<Trans>Move to group</Trans>
+								</ContextMenuSubTrigger>
+								<ContextMenuSubContent>
+									{sections.map((section) => (
+										<ContextMenuItem
+											key={section.id}
+											onSelect={() => onMoveToSection(section.id)}
+										>
+											{section.color && (
+												<span
+													className="size-2 shrink-0 rounded-full mr-2"
+													style={{ backgroundColor: section.color }}
+												/>
+											)}
+											{section.name}
+										</ContextMenuItem>
+									))}
+									{sections.length > 0 && <ContextMenuSeparator />}
+									<ContextMenuItem onSelect={onCreateSection}>
+										<LuFolderPlus className="size-4 mr-2" />
+										<Trans>Create new group</Trans>
+									</ContextMenuItem>
+								</ContextMenuSubContent>
+							</ContextMenuSub>
+							{isInSection && (
+								<ContextMenuItem onSelect={() => onMoveToSection(null)}>
+									<LuArrowUp className="size-4 mr-2" />
+									<Trans>Ungroup</Trans>
+								</ContextMenuItem>
+							)}
+						</>
+					)}
+					<ContextMenuSeparator />
+					{ports.length > 0 && (
+						<ContextMenuItem
+							onSelect={handleCloseAllPorts}
+							disabled={isKillingPorts}
+							variant="destructive"
+						>
+							<LuRadioTower className="size-4 mr-2" />
+							<Trans>Close all ports</Trans>
+						</ContextMenuItem>
+					)}
+					<ContextMenuItem onSelect={onRemoveFromSidebar}>
+						<LuX className="size-4 mr-2" />
+						<Trans>Remove from Sidebar</Trans>
+					</ContextMenuItem>
+					{onDelete ? (
+						<ContextMenuItem
+							onSelect={onDelete}
+							className="text-destructive focus:text-destructive"
+						>
+							<LuTrash2 className="size-4 mr-2 text-destructive" />
+							<Trans>Delete</Trans>
+							{showDeleteShortcut && (
+								<ContextMenuShortcut>{deleteHotkeyText}</ContextMenuShortcut>
+							)}
+						</ContextMenuItem>
+					) : null}
+				</ContextMenuContent>
+			</ContextMenu>
+			<WorkspaceLabelDialog
+				open={isNewLabelOpen}
+				onOpenChange={setIsNewLabelOpen}
+				mode="create"
+				onSubmit={handleCreateLabel}
+			/>
+		</>
 	);
 }

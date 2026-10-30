@@ -12,15 +12,18 @@ import {
 	type MouseEventHandler,
 	useEffect,
 	useRef,
+	useState,
 } from "react";
 import { HiCheck, HiMiniXMark } from "react-icons/hi2";
 import { WorkspaceNameMarquee } from "renderer/components/WorkspaceNameMarquee";
 import type { DiffStats } from "renderer/hooks/host-service/useDiffStats";
 import { useFocusVisible } from "renderer/hooks/useFocusVisible";
+import type { WorkspaceLabel } from "renderer/hooks/workspace-labels/useWorkspaceLabels";
 import { HotkeyLabel } from "renderer/hotkeys";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import { navigateToV2Workspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
+import { WorkspaceLabelPill } from "renderer/routes/_authenticated/components/WorkspaceLabelPill";
 import { RenameInput } from "renderer/screens/main/components/WorkspaceSidebar/RenameInput";
 import { usePullRequestPaneIntent } from "renderer/stores/pull-request-pane-intent";
 import type { ActivePaneStatus } from "shared/tabs-types";
@@ -33,6 +36,7 @@ import { DashboardSidebarWorkspaceDiffStats } from "../DashboardSidebarWorkspace
 import { DashboardSidebarWorkspaceIcon } from "../DashboardSidebarWorkspaceIcon";
 import { DashboardSidebarWorkspaceQueuedBadge } from "../DashboardSidebarWorkspaceQueuedBadge";
 import { DashboardSidebarWorkspaceChips } from "./components/DashboardSidebarWorkspaceChips";
+import { DashboardSidebarWorkspaceLabelsButton } from "./components/DashboardSidebarWorkspaceLabelsButton";
 
 const PR_STATE_LABEL: Record<
 	DashboardSidebarWorkspacePullRequest["state"],
@@ -59,6 +63,7 @@ const PR_STATE_LABEL: Record<
 interface DashboardSidebarExpandedWorkspaceRowProps
 	extends ComponentPropsWithoutRef<"div"> {
 	workspace: DashboardSidebarWorkspace;
+	labels?: WorkspaceLabel[];
 	isActive: boolean;
 	isRenaming: boolean;
 	renameValue: string;
@@ -90,6 +95,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 	(
 		{
 			workspace,
+			labels = [],
 			isActive,
 			isRenaming,
 			renameValue,
@@ -128,6 +134,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 		} = workspace;
 		const isPending = pendingTransaction?.type === "insert";
 		const localRef = useRef<HTMLDivElement>(null);
+		const [isLabelsMenuOpen, setIsLabelsMenuOpen] = useState(false);
 		const navigate = useNavigate();
 		// Drives the name's hover-reveal for keyboard users: the row, not the
 		// name span, is what's actually tabbable.
@@ -401,11 +408,25 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 								</div>
 							)}
 							{!isPending && !isSelected && (
-								<div className="hidden items-center justify-end gap-1.5 group-hover:flex group-focus-within:flex">
+								<div
+									className={cn(
+										"items-center justify-end gap-1.5",
+										isLabelsMenuOpen
+											? "flex"
+											: "hidden group-hover:flex group-focus-within:flex",
+									)}
+								>
 									{shortcutLabel && (
 										<span className="shrink-0 font-mono text-[10px] tabular-nums text-muted-foreground">
 											{shortcutLabel}
 										</span>
+									)}
+									{hostType === "local-device" && (
+										<DashboardSidebarWorkspaceLabelsButton
+											workspaceId={workspace.id}
+											open={isLabelsMenuOpen}
+											onOpenChange={setIsLabelsMenuOpen}
+										/>
 									)}
 									{
 										<Tooltip delayDuration={300}>
@@ -448,6 +469,22 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 						</div>
 					</div>
 				</div>
+				{!isPending && hostType === "local-device" && labels.length > 0 && (
+					<div
+						className={cn(
+							"flex flex-wrap items-center gap-1 pb-1 pr-2",
+							resolvedIndentation === "top-level"
+								? "pl-[26px]"
+								: resolvedIndentation === "grouped" || isInSection
+									? "pl-[50px]"
+									: "pl-[42px]",
+						)}
+					>
+						{labels.map((label) => (
+							<WorkspaceLabelPill key={label.id} label={label} size="xs" />
+						))}
+					</div>
+				)}
 				{!isPending && (
 					<DashboardSidebarWorkspaceChips
 						workspaceId={workspace.id}

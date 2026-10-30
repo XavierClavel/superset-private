@@ -87,6 +87,7 @@ import { CheckoutPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/com
 import { CompareBaseBranchPicker } from "../DashboardNewWorkspaceForm/PromptGroup/components/CompareBaseBranchPicker";
 import { EnvironmentPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/EnvironmentPickerPill";
 import { GitHubIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/GitHubIssueLinkCommand";
+import { LabelPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LabelPickerPill";
 import { LinearIssueLinkCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinearIssueLinkCommand";
 import { LinkedGitHubIssuePill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedGitHubIssuePill";
 import { LinkedPRPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LinkedPRPill";
@@ -1082,6 +1083,12 @@ export function NewWorkspaceScreen({
 									onSelectEnvironment={(next) =>
 										updateDraft({ environmentId: next })
 									}
+								/>
+							)}
+							{(draft.hostId ?? machineId) === machineId && (
+								<LabelPickerPill
+									selectedLabelIds={draft.labelIds}
+									onChange={(labelIds) => updateDraft({ labelIds })}
 								/>
 							)}
 							{draft.linkedPR ? (

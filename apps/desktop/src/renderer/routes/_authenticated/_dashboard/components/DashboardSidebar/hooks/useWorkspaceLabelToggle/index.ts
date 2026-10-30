@@ -1,0 +1,1 @@
+export { useWorkspaceLabelToggle } from "./useWorkspaceLabelToggle";
