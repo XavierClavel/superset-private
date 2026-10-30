@@ -1739,6 +1739,9 @@ msgstr "Kebiasaan buruk saya adalah terbangun dengan sebuah ide di tengah malam 
 msgid "A host must have at least one owner."
 msgstr "Sebuah host harus punya setidaknya satu pemilik."
 
+msgid "A label with this name already exists"
+msgstr "Label dengan nama ini sudah ada"
+
 msgid "A living reference of every component exported from"
 msgstr "Referensi hidup untuk setiap komponen yang diekspor dari"
 
@@ -5548,6 +5551,9 @@ msgstr "Tidak dapat mencabangkan obrolan"
 msgid "Could not change access"
 msgstr "Tidak bisa mengubah akses"
 
+msgid "Could not change the label color"
+msgstr "Tidak dapat mengubah warna label"
+
 msgid "Could not change the mode"
 msgstr "Tidak dapat mengubah mode"
 
@@ -5595,6 +5601,9 @@ msgstr "Tidak bisa menghapus akun"
 
 msgid "Could not delete file"
 msgstr "Tidak bisa menghapus file"
+
+msgid "Could not delete the label"
+msgstr "Tidak dapat menghapus label"
 
 msgid "Could not delete this page"
 msgstr "Tidak bisa menghapus halaman ini"
@@ -5765,6 +5774,9 @@ msgstr "Tidak dapat melanjutkan obrolan"
 msgid "Could not save the change."
 msgstr "Tidak dapat menyimpan perubahan."
 
+msgid "Could not save the label"
+msgstr "Tidak dapat menyimpan label"
+
 msgid "Could not send"
 msgstr "Tidak bisa mengirim"
 
@@ -5827,6 +5839,9 @@ msgstr "Tidak bisa memperbarui skill"
 
 msgid "Could not update the branch"
 msgstr "Tidak bisa memperbarui branch"
+
+msgid "Could not update the workspace labels"
+msgstr "Tidak dapat memperbarui label ruang kerja"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6725,6 +6740,10 @@ msgstr "Hapus host"
 
 msgid "Delete image"
 msgstr "Hapus gambar"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Hapus label \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Hapus branch lokal saat workspace dihapus"
@@ -10583,12 +10602,22 @@ msgstr "Label"
 msgid "Label change"
 msgstr "Perubahan label"
 
+msgid "Label created but could not be assigned"
+msgstr "Label dibuat, tetapi tidak dapat ditetapkan"
+
 msgid "Label is required."
 msgstr "Label wajib diisi."
+
+msgid "Label name"
+msgstr "Nama label"
 
 msgid "Label name..."
 msgstr "Nama label..."
 
+msgid "Labels"
+msgstr "Label"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Label"
 
@@ -12030,6 +12059,12 @@ msgstr "Grup baru…"
 msgid "New issue"
 msgstr "Issue baru"
 
+msgid "New label"
+msgstr "Label baru"
+
+msgid "New label…"
+msgstr "Label baru…"
+
 msgid "New messages"
 msgstr "Pesan baru"
 
@@ -12816,6 +12851,10 @@ msgstr "Tidak ada perintah run workspace yang dikonfigurasi"
 
 msgid "No workspaces found."
 msgstr "Tidak ada workspace ditemukan."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Tidak ada workspace yang memiliki label {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Belum ada workspace di proyek ini."
@@ -15795,6 +15834,9 @@ msgstr "Ganti nama grup"
 msgid "Rename host"
 msgstr "Ganti nama host"
 
+msgid "Rename label"
+msgstr "Ubah nama label"
+
 msgid "Rename page"
 msgstr "Ganti nama halaman"
 
@@ -15812,6 +15854,9 @@ msgstr "Ganti nama workspace"
 
 msgid "Rename..."
 msgstr "Ganti nama..."
+
+msgid "Rename…"
+msgstr "Ubah nama…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Mengganti nama branch menjadi {newName}..."
@@ -19374,6 +19419,9 @@ msgstr "Unggahan gambar kedaluwarsa — lampirkan lagi"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "Deskripsi pekerjaannya bergeser. Engineer berhenti menjadi juru ketik berselera dan menjadi pengatur lalu lintas berselera: memecah pekerjaan, mengarahkannya ke armada agen, menengahi konflik antara agen yang sama-sama menyentuh modul yang sama."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Label akan dihapus dari semua workspace. Workspace itu sendiri tidak terpengaruh."
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Pembaruan, peningkatan, dan fitur baru terkini di Paradev."

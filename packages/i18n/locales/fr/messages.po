@@ -1739,6 +1739,9 @@ msgstr "J’ai une mauvaise habitude : me réveiller avec une idée en pleine nu
 msgid "A host must have at least one owner."
 msgstr "Un hôte doit avoir au moins un propriétaire."
 
+msgid "A label with this name already exists"
+msgstr "Une étiquette portant ce nom existe déjà"
+
 msgid "A living reference of every component exported from"
 msgstr "Une référence vivante de chaque composant exporté depuis"
 
@@ -5548,6 +5551,9 @@ msgstr "Impossible de créer une branche de la discussion"
 msgid "Could not change access"
 msgstr "Impossible de modifier l’accès"
 
+msgid "Could not change the label color"
+msgstr "Impossible de changer la couleur de l'étiquette"
+
 msgid "Could not change the mode"
 msgstr "Impossible de changer le mode"
 
@@ -5595,6 +5601,9 @@ msgstr "Impossible de supprimer le compte"
 
 msgid "Could not delete file"
 msgstr "Impossible de supprimer le fichier"
+
+msgid "Could not delete the label"
+msgstr "Impossible de supprimer l'étiquette"
 
 msgid "Could not delete this page"
 msgstr "Impossible de supprimer cette page"
@@ -5765,6 +5774,9 @@ msgstr "Impossible de reprendre la discussion"
 msgid "Could not save the change."
 msgstr "Impossible d’enregistrer la modification."
 
+msgid "Could not save the label"
+msgstr "Impossible d'enregistrer l'étiquette"
+
 msgid "Could not send"
 msgstr "Échec de l'envoi"
 
@@ -5827,6 +5839,9 @@ msgstr "Impossible de mettre à jour la compétence"
 
 msgid "Could not update the branch"
 msgstr "Impossible de mettre à jour la branche"
+
+msgid "Could not update the workspace labels"
+msgstr "Impossible de mettre à jour les étiquettes de l'espace de travail"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6725,6 +6740,10 @@ msgstr "Supprimer l'hôte"
 
 msgid "Delete image"
 msgstr "Supprimer l’image"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Supprimer l'étiquette \"{0}\" ?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Supprimer la branche locale à la suppression de l'espace de travail"
@@ -10583,14 +10602,24 @@ msgstr "Étiquette"
 msgid "Label change"
 msgstr "Changement de label"
 
+msgid "Label created but could not be assigned"
+msgstr "Étiquette créée, mais impossible de l'assigner"
+
 msgid "Label is required."
 msgstr "Le libellé est obligatoire."
+
+msgid "Label name"
+msgstr "Nom de l'étiquette"
 
 msgid "Label name..."
 msgstr "Nom de l’étiquette..."
 
 msgid "Labels"
 msgstr "Labels"
+
+msgctxt "personal workspace labels"
+msgid "Labels"
+msgstr "Étiquettes"
 
 msgid "Language"
 msgstr "Langue"
@@ -12030,6 +12059,12 @@ msgstr "Nouveau groupe…"
 msgid "New issue"
 msgstr "Nouvelle issue"
 
+msgid "New label"
+msgstr "Nouvelle étiquette"
+
+msgid "New label…"
+msgstr "Nouvelle étiquette…"
+
 msgid "New messages"
 msgstr "Nouveaux messages"
 
@@ -12816,6 +12851,10 @@ msgstr "Aucune commande d'exécution configurée pour l'espace de travail"
 
 msgid "No workspaces found."
 msgstr "Aucun espace de travail trouvé."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Aucun espace de travail n'a l'étiquette {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Ce projet n’a pas encore d’espace de travail."
@@ -15795,6 +15834,9 @@ msgstr "Renommer le groupe"
 msgid "Rename host"
 msgstr "Renommer l'hôte"
 
+msgid "Rename label"
+msgstr "Renommer l'étiquette"
+
 msgid "Rename page"
 msgstr "Renommer la page"
 
@@ -15812,6 +15854,9 @@ msgstr "Renommer l'espace de travail"
 
 msgid "Rename..."
 msgstr "Renommer..."
+
+msgid "Rename…"
+msgstr "Renommer…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Renommage de la branche en {newName}..."
@@ -19374,6 +19419,9 @@ msgstr "Le téléversement de l'image a expiré — joignez-la à nouveau"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "La fiche de poste change. Les ingénieurs cessent d'être des dactylos avec du goût pour devenir des répartiteurs avec du goût : découper le travail, l'acheminer vers des flottes, arbitrer les conflits entre agents qui ont touché le même module."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "L'étiquette est retirée de tous les espaces de travail. Les espaces de travail eux-mêmes ne sont pas affectés."
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Les dernières mises à jour, améliorations et nouveautés de Paradev."

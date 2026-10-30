@@ -1739,6 +1739,9 @@ msgstr "Ik heb de slechte gewoonte om midden in de nacht wakker te worden met ee
 msgid "A host must have at least one owner."
 msgstr "Een host moet minstens één eigenaar hebben."
 
+msgid "A label with this name already exists"
+msgstr "Er bestaat al een label met deze naam"
+
 msgid "A living reference of every component exported from"
 msgstr "Een levende referentie van elk component dat wordt geëxporteerd uit"
 
@@ -5548,6 +5551,9 @@ msgstr "Kan de chat niet vertakken"
 msgid "Could not change access"
 msgstr "Kan toegang niet wijzigen"
 
+msgid "Could not change the label color"
+msgstr "Kon de kleur van het label niet wijzigen"
+
 msgid "Could not change the mode"
 msgstr "Kan de modus niet wijzigen"
 
@@ -5595,6 +5601,9 @@ msgstr "Kan account niet verwijderen"
 
 msgid "Could not delete file"
 msgstr "Kan bestand niet verwijderen"
+
+msgid "Could not delete the label"
+msgstr "Kon het label niet verwijderen"
 
 msgid "Could not delete this page"
 msgstr "Kan deze pagina niet verwijderen"
@@ -5765,6 +5774,9 @@ msgstr "Kan de chat niet hervatten"
 msgid "Could not save the change."
 msgstr "De wijziging kon niet worden opgeslagen."
 
+msgid "Could not save the label"
+msgstr "Het label kon niet worden opgeslagen"
+
 msgid "Could not send"
 msgstr "Versturen mislukt"
 
@@ -5827,6 +5839,9 @@ msgstr "Kan skill niet bijwerken"
 
 msgid "Could not update the branch"
 msgstr "Kan de branch niet bijwerken"
+
+msgid "Could not update the workspace labels"
+msgstr "Kon de labels van de werkruimte niet bijwerken"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6725,6 +6740,10 @@ msgstr "Host verwijderen"
 
 msgid "Delete image"
 msgstr "Afbeelding verwijderen"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Label \"{0}\" verwijderen?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Lokale branch verwijderen bij verwijderen werkruimte"
@@ -10583,12 +10602,22 @@ msgstr "Label"
 msgid "Label change"
 msgstr "Labelwijziging"
 
+msgid "Label created but could not be assigned"
+msgstr "Label gemaakt, maar kon niet worden toegewezen"
+
 msgid "Label is required."
 msgstr "Label is verplicht."
+
+msgid "Label name"
+msgstr "Labelnaam"
 
 msgid "Label name..."
 msgstr "Labelnaam..."
 
+msgid "Labels"
+msgstr "Labels"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Labels"
 
@@ -12030,6 +12059,12 @@ msgstr "Nieuwe groep…"
 msgid "New issue"
 msgstr "Nieuwe issue"
 
+msgid "New label"
+msgstr "Nieuw label"
+
+msgid "New label…"
+msgstr "Nieuw label…"
+
 msgid "New messages"
 msgstr "Nieuwe berichten"
 
@@ -12816,6 +12851,10 @@ msgstr "Geen run-commando voor de werkruimte geconfigureerd"
 
 msgid "No workspaces found."
 msgstr "Geen werkruimtes gevonden."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Geen enkele werkruimte heeft het label {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Dit project heeft nog geen workspaces."
@@ -15795,6 +15834,9 @@ msgstr "Groepsnaam wijzigen"
 msgid "Rename host"
 msgstr "Host hernoemen"
 
+msgid "Rename label"
+msgstr "Label hernoemen"
+
 msgid "Rename page"
 msgstr "Pagina hernoemen"
 
@@ -15812,6 +15854,9 @@ msgstr "Werkruimte hernoemen"
 
 msgid "Rename..."
 msgstr "Naam wijzigen..."
+
+msgid "Rename…"
+msgstr "Hernoemen…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Branch hernoemen naar {newName}..."
@@ -19374,6 +19419,9 @@ msgstr "De upload van de afbeelding is verlopen — voeg deze opnieuw toe"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "De functieomschrijving verschuift. Engineers zijn geen typisten met smaak meer, maar dispatchers met smaak: werk opdelen, het naar vloten routeren, en conflicten beslechten tussen agents die dezelfde module aanraakten."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Het label wordt van alle werkruimtes verwijderd. De werkruimtes zelf blijven ongewijzigd."
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "De nieuwste updates, verbeteringen en functies in Paradev."

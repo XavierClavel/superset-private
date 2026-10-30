@@ -1739,6 +1739,9 @@ msgstr "Mam taki grzeszny nawyk: budzę się w środku nocy z pomysłem i otwier
 msgid "A host must have at least one owner."
 msgstr "Host musi mieć co najmniej jednego właściciela."
 
+msgid "A label with this name already exists"
+msgstr "Etykieta o tej nazwie już istnieje"
+
 msgid "A living reference of every component exported from"
 msgstr "Żywa dokumentacja każdego komponentu eksportowanego z"
 
@@ -5548,6 +5551,9 @@ msgstr "Nie udało się rozgałęzić czatu"
 msgid "Could not change access"
 msgstr "Nie udało się zmienić dostępu"
 
+msgid "Could not change the label color"
+msgstr "Nie udało się zmienić koloru etykiety"
+
 msgid "Could not change the mode"
 msgstr "Nie udało się zmienić trybu"
 
@@ -5595,6 +5601,9 @@ msgstr "Nie udało się usunąć konta"
 
 msgid "Could not delete file"
 msgstr "Nie udało się usunąć pliku"
+
+msgid "Could not delete the label"
+msgstr "Nie udało się usunąć etykiety"
 
 msgid "Could not delete this page"
 msgstr "Nie udało się usunąć tej strony"
@@ -5765,6 +5774,9 @@ msgstr "Nie udało się wznowić czatu"
 msgid "Could not save the change."
 msgstr "Nie udało się zapisać zmiany."
 
+msgid "Could not save the label"
+msgstr "Nie udało się zapisać etykiety"
+
 msgid "Could not send"
 msgstr "Nie udało się wysłać"
 
@@ -5827,6 +5839,9 @@ msgstr "Nie udało się zaktualizować umiejętności"
 
 msgid "Could not update the branch"
 msgstr "Nie udało się zaktualizować gałęzi"
+
+msgid "Could not update the workspace labels"
+msgstr "Nie udało się zaktualizować etykiet obszaru roboczego"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6725,6 +6740,10 @@ msgstr "Usuń hosta"
 
 msgid "Delete image"
 msgstr "Usuń obraz"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "Usunąć etykietę \"{0}\"?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "Usuwaj lokalną gałąź przy usuwaniu obszaru roboczego"
@@ -10583,12 +10602,22 @@ msgstr "Etykieta"
 msgid "Label change"
 msgstr "Zmiana etykiety"
 
+msgid "Label created but could not be assigned"
+msgstr "Etykieta została utworzona, ale nie udało się jej przypisać"
+
 msgid "Label is required."
 msgstr "Etykieta jest wymagana."
+
+msgid "Label name"
+msgstr "Nazwa etykiety"
 
 msgid "Label name..."
 msgstr "Nazwa etykiety..."
 
+msgid "Labels"
+msgstr "Etykiety"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "Etykiety"
 
@@ -12030,6 +12059,12 @@ msgstr "Nowa grupa…"
 msgid "New issue"
 msgstr "Nowe zgłoszenie"
 
+msgid "New label"
+msgstr "Nowa etykieta"
+
+msgid "New label…"
+msgstr "Nowa etykieta…"
+
 msgid "New messages"
 msgstr "Nowe wiadomości"
 
@@ -12816,6 +12851,10 @@ msgstr "Nie skonfigurowano polecenia uruchamiania obszaru roboczego"
 
 msgid "No workspaces found."
 msgstr "Nie znaleziono obszarów roboczych."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "Żaden obszar roboczy nie ma etykiety {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Ten projekt nie ma jeszcze obszarów roboczych."
@@ -15795,6 +15834,9 @@ msgstr "Zmień nazwę grupy"
 msgid "Rename host"
 msgstr "Zmień nazwę hosta"
 
+msgid "Rename label"
+msgstr "Zmień nazwę etykiety"
+
 msgid "Rename page"
 msgstr "Zmień nazwę strony"
 
@@ -15812,6 +15854,9 @@ msgstr "Zmień nazwę obszaru roboczego"
 
 msgid "Rename..."
 msgstr "Zmień nazwę..."
+
+msgid "Rename…"
+msgstr "Zmień nazwę…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "Zmiana nazwy gałęzi na {newName}..."
@@ -19374,6 +19419,9 @@ msgstr "Przesyłanie obrazu wygasło — załącz go ponownie"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "Zakres obowiązków się przesuwa. Inżynierowie przestają być maszynistkami z gustem, a stają się dyspozytorami z gustem: dzielą pracę, kierują ją do flot, rozstrzygają konflikty między agentami, którzy dotknęli tego samego modułu."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "Etykieta zostanie usunięta ze wszystkich obszarów roboczych. Same obszary robocze nie ulegną zmianie."
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Najnowsze aktualizacje, ulepszenia i nowe funkcje w Paradev."

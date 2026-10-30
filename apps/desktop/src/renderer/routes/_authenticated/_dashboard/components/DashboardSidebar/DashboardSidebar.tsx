@@ -50,6 +50,7 @@ import { DashboardSidebarGithubNotice } from "./components/DashboardSidebarGithu
 import { DashboardSidebarHeader } from "./components/DashboardSidebarHeader";
 import { DashboardSidebarHiddenProjects } from "./components/DashboardSidebarHiddenProjects";
 import { DashboardSidebarHoverCardOverlay } from "./components/DashboardSidebarHoverCardOverlay";
+import { DashboardSidebarLabelFilterBar } from "./components/DashboardSidebarLabelFilterBar";
 import { DashboardSidebarPinnedSection } from "./components/DashboardSidebarPinnedSection";
 import { DashboardSidebarProjectSection } from "./components/DashboardSidebarProjectSection";
 import { DashboardSidebarSectionRenameProvider } from "./components/DashboardSidebarSectionRenameContext";
@@ -69,6 +70,10 @@ import { useDashboardSidebarDnd } from "./hooks/useSidebarDnd";
 import { DashboardSidebarActionsProvider } from "./providers/DashboardSidebarActionsProvider";
 import { DashboardSidebarDndProvider } from "./providers/DashboardSidebarDndProvider";
 import { DashboardSidebarHoverProvider } from "./providers/DashboardSidebarHoverProvider";
+import {
+	DashboardSidebarLabelsProvider,
+	useDashboardSidebarLabels,
+} from "./providers/DashboardSidebarLabelsProvider";
 import { DashboardSidebarSelectionProvider } from "./providers/DashboardSidebarSelectionProvider";
 import {
 	DashboardSidebarWorkspaceStatusProvider,
@@ -78,6 +83,7 @@ import type {
 	DashboardSidebarProject,
 	DashboardSidebarWorkspace,
 } from "./types";
+import { filterDashboardSidebarByLabel } from "./utils/filterDashboardSidebarByLabel";
 import { filterDashboardSidebarProjects } from "./utils/filterDashboardSidebarProjects";
 import {
 	filterDashboardSidebarProjectsByHost,
@@ -247,27 +253,61 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 				: sortDashboardSidebarProjects(orderedGroups, sortMode),
 		[sortMode, orderedGroups],
 	);
+	const { labelsByWorkspaceId, activeFilterLabel, setActiveFilterLabelId } =
+		useDashboardSidebarLabels();
+	const labelIdsByWorkspaceId = useMemo(
+		() =>
+			new Map(
+				[...labelsByWorkspaceId].map(([workspaceId, labels]) => [
+					workspaceId,
+					new Set(labels.map((label) => label.id)),
+				]),
+			),
+		[labelsByWorkspaceId],
+	);
+	const activeLabelId = isCollapsed ? null : (activeFilterLabel?.id ?? null);
+	const labelView = useMemo(
+		() =>
+			filterDashboardSidebarByLabel(
+				{
+					projects: sortedGroups,
+					sessionChildren,
+					sessionWorkspaces,
+					pinnedWorkspaces,
+				},
+				activeLabelId,
+				labelIdsByWorkspaceId,
+			),
+		[
+			sortedGroups,
+			sessionChildren,
+			sessionWorkspaces,
+			pinnedWorkspaces,
+			activeLabelId,
+			labelIdsByWorkspaceId,
+		],
+	);
 	const hostFilteredGroups = useMemo(
-		() => filterDashboardSidebarProjectsByHost(sortedGroups, hostFilter),
-		[sortedGroups, hostFilter],
+		() => filterDashboardSidebarProjectsByHost(labelView.projects, hostFilter),
+		[labelView.projects, hostFilter],
 	);
 	const displayedPinnedWorkspaces = useMemo(
 		() =>
 			hostFilter === "all"
-				? pinnedWorkspaces
-				: pinnedWorkspaces.filter((workspace) =>
+				? labelView.pinnedWorkspaces
+				: labelView.pinnedWorkspaces.filter((workspace) =>
 						matchesHostFilter(workspace, hostFilter),
 					),
-		[pinnedWorkspaces, hostFilter],
+		[labelView.pinnedWorkspaces, hostFilter],
 	);
 	const displayedSessionWorkspaces = useMemo(
 		() =>
 			hostFilter === "all"
-				? sessionWorkspaces
-				: sessionWorkspaces.filter((workspace) =>
+				? labelView.sessionWorkspaces
+				: labelView.sessionWorkspaces.filter((workspace) =>
 						matchesHostFilter(workspace, hostFilter),
 					),
-		[sessionWorkspaces, hostFilter],
+		[labelView.sessionWorkspaces, hostFilter],
 	);
 	const displayedGroups = useMemo(
 		() =>
@@ -279,7 +319,14 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		[displayedGroups],
 	);
 	const trimmedFilterQuery = projectFilterQuery.trim();
-	const isFilterActive = trimmedFilterQuery !== "" || hostFilter !== "all";
+	const isLabelFilterActive = activeLabelId !== null;
+	const isLabelViewEmpty =
+		displayedGroups.length === 0 &&
+		displayedPinnedWorkspaces.length === 0 &&
+		displayedSessionWorkspaces.length === 0 &&
+		labelView.sessionChildren.length === 0;
+	const isFilterActive =
+		trimmedFilterQuery !== "" || hostFilter !== "all" || isLabelFilterActive;
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -291,17 +338,21 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		onClearFilter: () => {
 			setProjectFilterQuery("");
 			setSidebarProjectHostFilter("all");
+			setActiveFilterLabelId(null);
 		},
 	});
 
-	// Sorted but unfiltered, so ⌘1–⌘9 targets stay put while typing a query.
+	// Label-filtered but not text-filtered, so ⌘1–⌘9 targets stay put while typing a query.
 	// The filtered view expands matches through derived objects, so a jump
 	// must not toggle the persisted collapse state while it is active.
 	const workspaceShortcutLabels = useDashboardSidebarShortcuts(
-		sortedGroups,
-		sessionWorkspaces,
-		sessionChildren,
-		{ revealCollapsed: !isFilterActive, pinnedWorkspaces },
+		labelView.projects,
+		labelView.sessionWorkspaces,
+		labelView.sessionChildren,
+		{
+			revealCollapsed: !isFilterActive,
+			pinnedWorkspaces: labelView.pinnedWorkspaces,
+		},
 	);
 	// Scoped to what the filter actually shows — select-all and range-select
 	// must not reach rows the filter is hiding.
@@ -477,6 +528,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 
 	const workspaceList = (
 		<>
+			{!isCollapsed && <DashboardSidebarLabelFilterBar />}
 			{(isCollapsed || !workspacesListCollapsed) && (
 				<DashboardSidebarPinnedSection
 					pinnedWorkspaces={displayedPinnedWorkspaces}
@@ -531,17 +583,26 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 					onShow={showHiddenProject}
 				/>
 			)}
-			{!isCollapsed && isFilterActive && displayedGroups.length === 0 && (
-				<div className="select-text cursor-text px-4 py-2 text-xs text-muted-foreground">
-					{trimmedFilterQuery !== ""
-						? t({
-								message: `No projects match "${trimmedFilterQuery}"`,
-							})
-						: hostFilter === "cloud"
-							? t({ message: "No cloud workspaces" })
-							: t({ message: "No local workspaces" })}
-				</div>
-			)}
+			{!isCollapsed &&
+				isFilterActive &&
+				displayedGroups.length === 0 &&
+				(!isLabelFilterActive ||
+					trimmedFilterQuery !== "" ||
+					isLabelViewEmpty) && (
+					<div className="select-text cursor-text px-4 py-2 text-xs text-muted-foreground">
+						{trimmedFilterQuery !== ""
+							? t({
+									message: `No projects match "${trimmedFilterQuery}"`,
+								})
+							: activeFilterLabel
+								? t({
+										message: `No workspaces have the label ${activeFilterLabel.name}`,
+									})
+								: hostFilter === "cloud"
+									? t({ message: "No cloud workspaces" })
+									: t({ message: "No local workspaces" })}
+					</div>
+				)}
 		</>
 	);
 	const cardSlot = (
@@ -579,8 +640,8 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 						<DashboardSidebarHoverCardOverlay>
 							<DashboardSidebarDndProvider
 								projects={displayedGroups}
-								pinnedWorkspaces={pinnedWorkspaces}
-								sessionChildren={sessionChildren}
+								pinnedWorkspaces={labelView.pinnedWorkspaces}
+								sessionChildren={labelView.sessionChildren}
 								isSidebarCollapsed={isCollapsed}
 								workspaceShortcutLabels={workspaceShortcutLabels}
 								onReorderProjects={handleReorderProjects}
@@ -698,7 +759,9 @@ export const DashboardSidebar = memo(function DashboardSidebar(
 ) {
 	return (
 		<DashboardSidebarActionsProvider>
-			<DashboardSidebarContent {...props} />
+			<DashboardSidebarLabelsProvider>
+				<DashboardSidebarContent {...props} />
+			</DashboardSidebarLabelsProvider>
 		</DashboardSidebarActionsProvider>
 	);
 });

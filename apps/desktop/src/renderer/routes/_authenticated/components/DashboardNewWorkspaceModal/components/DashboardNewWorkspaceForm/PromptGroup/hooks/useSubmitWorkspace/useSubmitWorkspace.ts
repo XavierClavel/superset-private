@@ -13,9 +13,11 @@ import { useMatchRoute, useNavigate } from "@tanstack/react-router";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { useResolveAcpChatEnabled } from "renderer/hooks/useAcpChatEnabled";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
+import { useWorkspaceLabels } from "renderer/hooks/workspace-labels/useWorkspaceLabels";
 import { cloudTrpc, cloudTrpcClient } from "renderer/lib/cloud-trpc";
 import { draftLinkedContext } from "renderer/routes/_authenticated/components/AgentComposer/utils/linkedContextChips";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
+import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import type { NewWorkspacePromptContextApi } from "renderer/stores/new-workspace-prompt-context";
 import { usePromptHistoryStore } from "renderer/stores/prompt-history";
 import { useWorkspaceCreates } from "renderer/stores/workspace-creates";
@@ -23,6 +25,7 @@ import { seedPendingCloudChat } from "renderer/stores/workspace-creates/pendingC
 import { useDashboardNewWorkspaceDraft } from "../../../../../DashboardNewWorkspaceDraftContext";
 import type { WorkspaceCreateAgent } from "../../types";
 import type { UseUploadAttachmentsApi } from "../useUploadAttachments";
+import { keepExistingLabelIds } from "./keepExistingLabelIds";
 import { resolveNames } from "./resolveNames";
 
 /**
@@ -56,6 +59,8 @@ export function useSubmitWorkspace(
 	);
 	const { submit } = useWorkspaceCreates();
 	const collections = useCollections();
+	const { machineId } = useLocalHostService();
+	const { labels, setWorkspaceLabels } = useWorkspaceLabels();
 	const activeOrganizationId = useActiveOrganizationId();
 	const resolveAcpChatEnabled = useResolveAcpChatEnabled();
 	const createCloudWorkspace = cloudTrpc.cloudWorkspace.create.useMutation();
@@ -376,8 +381,18 @@ export function useSubmitWorkspace(
 			);
 		};
 
+		const labelIds = keepExistingLabelIds(draft.labelIds, labels);
 		void completed.then((outcome) => {
 			if (!outcome.ok) return;
+
+			if (labelIds.length > 0 && hostId === machineId) {
+				setWorkspaceLabels(outcome.workspaceId, labelIds).catch((error) => {
+					console.error(
+						"[useSubmitWorkspace] failed to assign workspace labels",
+						error,
+					);
+				});
+			}
 
 			// The server can resolve the optimistic workspace to a different
 			// canonical id; follow it only if we're still on the optimistic route.
@@ -408,9 +423,12 @@ export function useSubmitWorkspace(
 		isSession,
 		matchRoute,
 		hostId,
+		machineId,
 		navigate,
 		projectId,
+		labels,
 		promptContext,
+		setWorkspaceLabels,
 		selectedAgent,
 		selectedModel,
 		selectedEffort,

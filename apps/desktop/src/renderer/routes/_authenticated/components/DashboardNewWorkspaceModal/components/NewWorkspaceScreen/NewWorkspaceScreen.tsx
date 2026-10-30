@@ -72,6 +72,7 @@ import { useWorkspaceHostOptions } from "../DashboardNewWorkspaceForm/components
 import { CheckoutPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/CheckoutPickerPill";
 import { CompareBaseBranchPicker } from "../DashboardNewWorkspaceForm/PromptGroup/components/CompareBaseBranchPicker";
 import { EnvironmentPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/EnvironmentPickerPill";
+import { LabelPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/LabelPickerPill";
 import { MachineSizePickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/MachineSizePickerPill";
 import { ProjectPickerPill } from "../DashboardNewWorkspaceForm/PromptGroup/components/ProjectPickerPill";
 import { PromptHistoryCommand } from "../DashboardNewWorkspaceForm/PromptGroup/components/PromptHistoryCommand";
@@ -989,6 +990,12 @@ export function NewWorkspaceScreen({
 				<MachineSizePickerPill
 					machineSize={cloudSelection.machineSize}
 					onSelectMachineSize={handleSelectMachineSize}
+				/>
+			)}
+			{!isCloudHost && hostId === machineId && (
+				<LabelPickerPill
+					selectedLabelIds={draft.labelIds}
+					onChange={(labelIds) => updateDraft({ labelIds })}
 				/>
 			)}
 			{activeOrganizationId && (

@@ -1739,6 +1739,9 @@ msgstr "한밤중에 아이디어가 떠올라 잠에서 깨면 앱을 여는 �
 msgid "A host must have at least one owner."
 msgstr "호스트에는 소유자가 한 명 이상 있어야 합니다."
 
+msgid "A label with this name already exists"
+msgstr "이 이름의 레이블이 이미 있습니다"
+
 msgid "A living reference of every component exported from"
 msgstr "다음 패키지에서 내보낸 모든 컴포넌트의 살아 있는 레퍼런스:"
 
@@ -5548,6 +5551,9 @@ msgstr "채팅을 분기할 수 없습니다"
 msgid "Could not change access"
 msgstr "접근 권한을 변경할 수 없습니다"
 
+msgid "Could not change the label color"
+msgstr "레이블 색상을 변경할 수 없습니다"
+
 msgid "Could not change the mode"
 msgstr "모드를 변경할 수 없습니다"
 
@@ -5595,6 +5601,9 @@ msgstr "계정을 삭제할 수 없습니다"
 
 msgid "Could not delete file"
 msgstr "파일을 삭제할 수 없습니다"
+
+msgid "Could not delete the label"
+msgstr "레이블을 삭제할 수 없습니다"
 
 msgid "Could not delete this page"
 msgstr "이 페이지를 삭제할 수 없습니다"
@@ -5765,6 +5774,9 @@ msgstr "채팅을 재개할 수 없습니다"
 msgid "Could not save the change."
 msgstr "변경 사항을 저장할 수 없습니다."
 
+msgid "Could not save the label"
+msgstr "레이블을 저장할 수 없습니다"
+
 msgid "Could not send"
 msgstr "보낼 수 없습니다"
 
@@ -5827,6 +5839,9 @@ msgstr "스킬을 업데이트할 수 없습니다"
 
 msgid "Could not update the branch"
 msgstr "브랜치를 업데이트할 수 없습니다"
+
+msgid "Could not update the workspace labels"
+msgstr "워크스페이스 레이블을 업데이트할 수 없습니다"
 
 #. js-lingui-explicit-id
 msgid "serverError.plugins.credentialUnverified"
@@ -6725,6 +6740,10 @@ msgstr "호스트 삭제"
 
 msgid "Delete image"
 msgstr "이미지 삭제"
+
+#. placeholder {0}: label.name
+msgid "Delete label \"{0}\"?"
+msgstr "레이블 \"{0}\"을(를) 삭제할까요?"
 
 msgid "Delete local branch on workspace removal"
 msgstr "워크스페이스 삭제 시 로컬 브랜치 삭제"
@@ -10583,12 +10602,22 @@ msgstr "레이블"
 msgid "Label change"
 msgstr "라벨 변경"
 
+msgid "Label created but could not be assigned"
+msgstr "레이블을 만들었지만 할당할 수 없습니다"
+
 msgid "Label is required."
 msgstr "레이블은 필수입니다."
+
+msgid "Label name"
+msgstr "레이블 이름"
 
 msgid "Label name..."
 msgstr "라벨 이름..."
 
+msgid "Labels"
+msgstr "레이블"
+
+msgctxt "personal workspace labels"
 msgid "Labels"
 msgstr "레이블"
 
@@ -12030,6 +12059,12 @@ msgstr "새 그룹…"
 msgid "New issue"
 msgstr "새 이슈"
 
+msgid "New label"
+msgstr "새 레이블"
+
+msgid "New label…"
+msgstr "새 레이블…"
+
 msgid "New messages"
 msgstr "새 메시지"
 
@@ -12816,6 +12851,10 @@ msgstr "설정된 워크스페이스 실행 명령이 없습니다"
 
 msgid "No workspaces found."
 msgstr "워크스페이스를 찾을 수 없습니다."
+
+#. placeholder {0}: activeFilterLabel.name
+msgid "No workspaces have the label {0}"
+msgstr "{0} 레이블이 있는 워크스페이스가 없습니다"
 
 msgid "No workspaces in this project yet."
 msgstr "이 프로젝트에는 아직 워크스페이스가 없습니다."
@@ -15795,6 +15834,9 @@ msgstr "그룹 이름 변경"
 msgid "Rename host"
 msgstr "호스트 이름 변경"
 
+msgid "Rename label"
+msgstr "레이블 이름 바꾸기"
+
 msgid "Rename page"
 msgstr "페이지 이름 변경"
 
@@ -15812,6 +15854,9 @@ msgstr "워크스페이스 이름 변경"
 
 msgid "Rename..."
 msgstr "이름 변경..."
+
+msgid "Rename…"
+msgstr "이름 바꾸기…"
 
 msgid "Renaming branch to {newName}..."
 msgstr "브랜치 이름을 {newName}(으)로 변경하는 중..."
@@ -19374,6 +19419,9 @@ msgstr "이미지 업로드가 만료되었습니다 — 다시 첨부하세요"
 
 msgid "The job description shifts. Engineers stop being typists with taste and become dispatchers with taste: decomposing work, routing it to fleets, arbitrating conflicts between agents that both touched the same module."
 msgstr "직무의 성격이 바뀝니다. 엔지니어는 안목 있는 타자수가 아니라 안목 있는 배차원이 됩니다. 일을 쪼개고, 플릿에 배분하고, 같은 모듈을 건드린 에이전트들 사이의 충돌을 중재합니다."
+
+msgid "The label is removed from every workspace. The workspaces themselves are not affected."
+msgstr "레이블이 모든 워크스페이스에서 제거됩니다. 워크스페이스 자체에는 영향이 없습니다."
 
 msgid "The latest updates, improvements, and new features in Paradev."
 msgstr "Paradev의 최신 업데이트, 개선 사항, 신규 기능입니다."
