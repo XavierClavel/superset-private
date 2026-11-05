@@ -20,6 +20,7 @@ import {
 	type AutoUpdateProgress,
 	type AutoUpdateStatus,
 	type AutoUpdateStatusEvent,
+	RELEASES_URL,
 } from "shared/auto-update";
 import { PLATFORM } from "shared/constants";
 
@@ -64,8 +65,8 @@ const IS_AUTO_UPDATE_PLATFORM = PLATFORM.IS_MAC || PLATFORM.IS_LINUX;
 // - Stable: fetches from /releases/latest/download/ (latest non-prerelease)
 // - Canary: fetches from /releases/download/desktop-canary/ (rolling canary tag)
 const UPDATE_FEED_URL = IS_PRERELEASE
-	? "https://github.com/paradevai/paradev/releases/download/desktop-canary"
-	: "https://github.com/paradevai/paradev/releases/latest/download";
+	? `${RELEASES_URL}/download/desktop-canary`
+	: `${RELEASES_URL}/latest/download`;
 
 export type { AutoUpdateStatusEvent } from "shared/auto-update";
 

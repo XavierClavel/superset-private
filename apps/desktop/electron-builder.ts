@@ -14,6 +14,7 @@ import {
 	packagedNodeModuleExclusions,
 } from "./runtime-dependencies";
 import { localizeMacDisplayName } from "./scripts/localize-display-name";
+import { RELEASES_REPO } from "./src/shared/auto-update";
 
 const currentYear = new Date().getFullYear();
 const productName = pkg.productName;
@@ -58,8 +59,8 @@ const config: Configuration = {
 	// Generate latest-mac.yml for auto-update (workflow handles actual upload)
 	publish: {
 		provider: "github",
-		owner: "paradevai",
-		repo: "paradev",
+		owner: RELEASES_REPO.owner,
+		repo: RELEASES_REPO.repo,
 	},
 
 	// Directories
