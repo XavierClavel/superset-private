@@ -26,6 +26,11 @@ is allowed.
   (`NewWorkspaceScreen/hooks/useBaseBranchReset`).
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
+- **Release builds share the official app's data**: a Paradev workspace's `.env` names its own
+  dev instance (`SUPERSET_WORKSPACE_NAME`, localhost servers, ports). A release build ignores those
+  (`apps/desktop/vite/release-env.ts`), so whatever workspace it is built in, the app uses the
+  same `~/.paradev` home, `~/Library/Application Support/Superset`, `superset://` links and
+  servers as official Superset, and keeps every session and project.
 
 ## Building on Windows
 
