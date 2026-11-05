@@ -16,6 +16,7 @@ import baseConfig, {
 } from "./electron-builder";
 import pkg from "./package.json";
 import { localizeMacDisplayName } from "./scripts/localize-display-name";
+import { RELEASES_REPO } from "./src/shared/auto-update";
 
 const productName = "Superset Canary";
 const displayName = `${baseDisplayName} Canary`;
@@ -31,8 +32,8 @@ const config: Configuration = {
 
 	publish: {
 		provider: "github",
-		owner: "paradevai",
-		repo: "paradev",
+		owner: RELEASES_REPO.owner,
+		repo: RELEASES_REPO.repo,
 		releaseType: "prerelease",
 	},
 

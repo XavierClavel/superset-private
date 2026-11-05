@@ -23,3 +23,15 @@ export interface AutoUpdateStatusEvent {
 	error?: string;
 	progress?: AutoUpdateProgress;
 }
+
+/**
+ * Where this fork's desktop releases are published (electron-builder) and
+ * where installed builds look for updates. Upstream's are paradevai/paradev;
+ * an official release must not replace a fork build.
+ */
+export const RELEASES_REPO = {
+	owner: "XavierClavel",
+	repo: "superset-private",
+} as const;
+
+export const RELEASES_URL = `https://github.com/${RELEASES_REPO.owner}/${RELEASES_REPO.repo}/releases`;

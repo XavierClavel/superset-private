@@ -31,6 +31,30 @@ is allowed.
   (`apps/desktop/vite/release-env.ts`), so whatever workspace it is built in, the app uses the
   same `~/.paradev` home, `~/Library/Application Support/Superset`, `superset://` links and
   servers as official Superset, and keeps every session and project.
+- **Updates come from this repository**: `RELEASES_REPO` in
+  `apps/desktop/src/shared/auto-update.ts` sets where installed builds look for updates and where
+  electron-builder publishes, so an official release no longer replaces a fork build.
+
+## Releasing
+
+Installed builds read
+`https://github.com/XavierClavel/superset-private/releases/latest/download/latest-mac.yml`. An
+update arrives only when all of these hold:
+
+- A published release (not a draft) holds the `latest-mac.yml`, `.zip` and `.zip.blockmap` that
+  `bun run build` writes to `apps/desktop/release/`, for example
+  `gh release create v<version> apps/desktop/release/*.{yml,zip,blockmap,dmg} --repo XavierClavel/superset-private`.
+- Its version (`apps/desktop/package.json`) is higher than the installed one. After a rebase it
+  is upstream's; a fork-only release bumps the patch above the last fork release.
+- The app can read the release without credentials. This repository is private, so it gets a 404:
+  make it public, or publish to a public releases-only repository and set `RELEASES_REPO` to it.
+- The new build is signed with the same certificate as the installed one: macOS refuses an update
+  otherwise. Without a signing identity, builds are only ad-hoc signed and every update is
+  refused; sign every build with one Developer ID or self-signed code-signing certificate.
+
+Switching from official Superset to a fork build is a manual install: drag the fork's app over
+`/Applications/Superset.app`. The sign-in (`~/.paradev/auth-token.enc`) is encrypted with a key
+derived from the machine, not the app, so the fork build stays signed in.
 
 ## Building on Windows
 
