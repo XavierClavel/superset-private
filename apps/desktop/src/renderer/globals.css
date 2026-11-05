@@ -225,6 +225,14 @@
 	/* Ensure the React root fills the viewport and provides a positioning context */
 	/* biome-ignore lint/correctness/noUnknownTypeSelector: app is a custom element in index.html */
 	app {
+		/* Inside the app, only `.drag` and `.no-drag` elements report a
+		   window-drag region. Chromium reports each element's region at its full
+		   size, even where a scroll container clips it, and later elements win:
+		   with `no-drag` inherited from body, rows scrolled out of the sidebar
+		   list sat under its top row and stopped the window from moving there.
+		   Only `initial` resets it; `none` computes to `no-drag`. Overlays
+		   portaled to body (menus, popovers, dialogs) keep body's `no-drag`. */
+		-webkit-app-region: initial;
 		display: block;
 		position: relative;
 		width: 100vw;
