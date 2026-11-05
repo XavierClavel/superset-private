@@ -16,9 +16,25 @@ import {
 	htmlEnvTransformPlugin,
 	linguiMacroPlugin,
 } from "./vite/helpers";
+import { dropInstanceEnv } from "./vite/release-env";
+
+// Read before the .env: only `bun dev` (scripts/dev.ts) runs electron-vite in
+// development; everything else here is a release build.
+const isDevBuild = process.env.NODE_ENV === "development";
 
 // override: true ensures .env values take precedence over inherited env vars
 config({ path: resolve(__dirname, "../../.env"), override: true, quiet: true });
+
+// A release build replaces the official app and keeps its home folder,
+// sessions and account, whatever a workspace .env says (vite/release-env.ts).
+if (!isDevBuild) {
+	const dropped = dropInstanceEnv(process.env);
+	if (dropped.length > 0) {
+		console.warn(
+			`[electron-vite] Release build: ignoring ${dropped.join(", ")} so the app uses the official home folder, servers and ports.`,
+		);
+	}
+}
 
 const DEV_SERVER_PORT = Number(process.env.DESKTOP_VITE_PORT);
 
