@@ -24,6 +24,12 @@ is allowed.
   composer seeds the project's saved base branch when it mounts, so a base left over from another
   project no longer makes the host fork the worktree from its local `HEAD`
   (`NewWorkspaceScreen/hooks/useBaseBranchReset`).
+- **Window drag** (ParadevAI/Paradev#9178, open upstream): the window could not be moved by its
+  top row while the sidebar's workspace list was scrolled down, or while tabs overflowed. Chromium
+  reports each element's drag region at full size, ignoring scroll clipping, and every element
+  inherited `no-drag` from `body`, so rows scrolled out of view switched the drag strips above
+  them off. Inside `<app>` only `.drag` and `.no-drag` elements report a region now
+  (`renderer/globals.css`), and the pane tab track no longer sets `no-drag`.
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own

@@ -300,9 +300,14 @@ export function TabBar<TData>({
 					isCards && "pl-1.5",
 				)}
 			>
+				{/* No app-region on the track: Chromium reports one at full size,
+				    so with `no-drag` here, tabs scrolled out of view to the left
+				    would sit under the drag strips there (sidebar top row,
+				    traffic-light spacer) and stop the window from moving. Nothing
+				    in the track is under a drag region. */}
 				<div
 					ref={tabsTrackRef}
-					className="no-drag relative flex h-full flex-1 items-stretch"
+					className="relative flex h-full flex-1 items-stretch"
 				>
 					{tabs.map((tab, i) => (
 						<div
