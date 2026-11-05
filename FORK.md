@@ -20,6 +20,12 @@ is allowed.
     electron-builder's `winCodeSign-2.6.0` cache. The upstream archive contains macOS symlinks
     that Windows cannot extract without admin rights.
   - `packages/macos-process-metrics/.gitignore` ignores the `bin/` rebuild cache.
+- **Base branch of a new workspace** (port of ParadevAI/Paradev#8032, open upstream): the
+  composer seeds the project's saved base branch when it mounts, so a base left over from another
+  project no longer makes the host fork the worktree from its local `HEAD`
+  (`NewWorkspaceScreen/hooks/useBaseBranchReset`).
+- **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
+  PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 
 ## Building on Windows
 
@@ -44,7 +50,20 @@ The NSIS installer is written to `apps/desktop/release/`.
 
 ## Syncing with upstream
 
+The fork's commits are rebased on upstream, so they stay a short list on top of it:
+
 ```bash
+git remote add upstream https://github.com/superset-sh/superset.git  # once
 git fetch upstream
-git merge upstream/main
+git rebase upstream/main
 ```
+
+Host-service migrations (`packages/host-service/drizzle`): when upstream has added migrations,
+renumber the fork's after upstream's last one, keep each fork migration's journal `when`, and
+point the first fork snapshot's `prevId` at upstream's last snapshot. `bunx drizzle-kit generate`
+in `packages/host-service` must then report no schema changes. The host-service applies every
+migration whose `when` it has not recorded (`@superset/shared/sqlite-migrations`), so databases
+from earlier fork builds still get upstream's migrations; `src/db/fork-migrations.test.ts` checks
+it.
+
+A local build without `NEXT_PUBLIC_POSTHOG_KEY` has no PostHog, so every feature flag reads off.
