@@ -1,17 +1,11 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
-import { Ellipsis, Play, Settings, Square, X } from "lucide-react";
-import { useHotkeyDisplay } from "renderer/hotkeys";
-import type { WorkspaceRunDefinition } from "shared/workspace-run-definition";
-import { useConfigureWorkspaceRun } from "../../hooks/useConfigureWorkspaceRun";
+import { Ellipsis } from "lucide-react";
 import { useWorkspaceOpenIn } from "../../hooks/useWorkspaceOpenIn";
 import { useWorkspaceOpenInTarget } from "../../hooks/useWorkspaceOpenInTarget";
 import { WorkspaceOpenInItems } from "./components/WorkspaceOpenInItems";
@@ -19,23 +13,16 @@ import { WorkspaceOpenInItems } from "./components/WorkspaceOpenInItems";
 interface WorkspaceMoreMenuProps {
 	workspaceId: string;
 	projectId: string | null;
-	runDefinition: WorkspaceRunDefinition | null;
-	isRunning: boolean;
-	isRunPending: boolean;
-	canForceStop: boolean;
-	onToggleRun: () => void | Promise<void>;
-	onForceStopRun: () => void | Promise<void>;
 }
 
+/**
+ * The toolbar's "…" menu. It holds the "Open in" targets; the run command
+ * has its own button beside it (WorkspaceToolbar), so with nothing to open
+ * the menu is not shown.
+ */
 export function WorkspaceMoreMenu({
 	workspaceId,
 	projectId,
-	runDefinition,
-	isRunning,
-	isRunPending,
-	canForceStop,
-	onToggleRun,
-	onForceStopRun,
 }: WorkspaceMoreMenuProps) {
 	const { t } = useLingui();
 	const openInTarget = useWorkspaceOpenInTarget(workspaceId);
@@ -43,10 +30,9 @@ export function WorkspaceMoreMenu({
 		worktreePath: openInTarget?.worktreePath ?? null,
 		projectId,
 	});
-	const configureRun = useConfigureWorkspaceRun(projectId, runDefinition);
-	const runHotkey = useHotkeyDisplay("RUN_WORKSPACE_COMMAND").text;
-	const hasRunCommand = (runDefinition?.commands ?? []).length > 0;
 	const label = t({ message: "More actions" });
+
+	if (!openInTarget) return null;
 
 	return (
 		<DropdownMenu>
@@ -65,59 +51,7 @@ export function WorkspaceMoreMenu({
 				<TooltipContent side="bottom">{label}</TooltipContent>
 			</Tooltip>
 			<DropdownMenuContent align="end" className="min-w-56">
-				{openInTarget && (
-					<>
-						<WorkspaceOpenInItems openIn={openIn} />
-						<DropdownMenuSeparator />
-					</>
-				)}
-				<DropdownMenuItem
-					disabled={isRunPending}
-					onClick={() => {
-						if (!hasRunCommand && !isRunning) {
-							configureRun();
-							return;
-						}
-						void onToggleRun();
-					}}
-				>
-					{isRunning ? (
-						<Square className="size-4" />
-					) : hasRunCommand ? (
-						<Play className="size-4" />
-					) : (
-						<Settings className="size-4" />
-					)}
-					{isRunning ? (
-						<Trans>Stop</Trans>
-					) : hasRunCommand ? (
-						<Trans>Run</Trans>
-					) : (
-						<Trans>Set Run</Trans>
-					)}
-					{(isRunning || hasRunCommand) && runHotkey !== "Unassigned" && (
-						<DropdownMenuShortcut>{runHotkey}</DropdownMenuShortcut>
-					)}
-				</DropdownMenuItem>
-				{canForceStop && (
-					<DropdownMenuItem
-						onClick={() => void onForceStopRun()}
-						className="text-destructive focus:text-destructive"
-					>
-						<X className="size-4 text-destructive" />
-						<Trans>Force Stop</Trans>
-					</DropdownMenuItem>
-				)}
-				{(isRunning || hasRunCommand) && (
-					<DropdownMenuItem onClick={configureRun}>
-						<Settings className="size-4" />
-						{runDefinition?.source === "terminal-preset" ? (
-							<Trans>Edit Run Script</Trans>
-						) : (
-							<Trans>Configure</Trans>
-						)}
-					</DropdownMenuItem>
-				)}
+				<WorkspaceOpenInItems openIn={openIn} />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

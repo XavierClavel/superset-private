@@ -30,6 +30,10 @@ is allowed.
   inherited `no-drag` from `body`, so rows scrolled out of view switched the drag strips above
   them off. Inside `<app>` only `.drag` and `.no-drag` elements report a region now
   (`renderer/globals.css`), and the pane tab track no longer sets `no-drag`.
+- **Run button in the workspace toolbar**: with the right pane area on, upstream puts Run/Stop
+  in the toolbar's "…" menu. The fork shows the run button beside it as an icon, with
+  Force Stop and Configure in its own menu, and the "…" menu keeps only the "Open in" targets
+  (`v2-workspace/$workspaceId/components/WorkspaceToolbar`).
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own
