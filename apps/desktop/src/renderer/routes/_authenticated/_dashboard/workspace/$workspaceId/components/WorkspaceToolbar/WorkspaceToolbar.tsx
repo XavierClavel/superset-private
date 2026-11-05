@@ -3,6 +3,7 @@ import { WindowControlsInset } from "renderer/routes/_authenticated/_dashboard/c
 import { useWorkspace } from "../../../providers/WorkspaceProvider";
 import type { useWorkspaceRun } from "../../hooks/useWorkspaceRun";
 import { WorkspaceMoreMenu } from "../WorkspaceMoreMenu";
+import { WorkspaceRunButton } from "../WorkspaceRunButton";
 
 interface WorkspaceToolbarProps {
 	run: ReturnType<typeof useWorkspaceRun>;
@@ -21,6 +22,16 @@ export function WorkspaceToolbar({
 
 	return (
 		<>
+			<WorkspaceRunButton
+				projectId={workspace.projectId}
+				definition={run.definition}
+				isRunning={run.isRunning}
+				isPending={run.isPending}
+				canForceStop={run.canForceStop}
+				onToggle={run.toggleWorkspaceRun}
+				onForceStop={run.forceStopWorkspaceRun}
+				iconOnly
+			/>
 			<WorkspaceMoreMenu
 				projectId={workspace.projectId}
 				runDefinition={run.definition}

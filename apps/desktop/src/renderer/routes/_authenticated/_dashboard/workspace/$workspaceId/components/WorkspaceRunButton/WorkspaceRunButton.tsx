@@ -6,6 +6,7 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { ChevronDown, Play, Settings, Square, X } from "lucide-react";
 import { useHotkeyDisplay } from "renderer/hotkeys";
@@ -21,6 +22,8 @@ interface WorkspaceRunButtonProps {
 	canForceStop: boolean;
 	onToggle: () => void | Promise<void>;
 	onForceStop: () => void | Promise<void>;
+	/** Shows only the icon; the label and shortcut move to a tooltip. */
+	iconOnly?: boolean;
 }
 
 export function WorkspaceRunButton({
@@ -31,6 +34,7 @@ export function WorkspaceRunButton({
 	canForceStop,
 	onToggle,
 	onForceStop,
+	iconOnly = false,
 }: WorkspaceRunButtonProps) {
 	const { t } = useLingui();
 	const hotkeyText = useHotkeyDisplay("RUN_WORKSPACE_COMMAND").text;
@@ -44,51 +48,69 @@ export function WorkspaceRunButton({
 			? t({ message: "Run" })
 			: t({ message: "Set Run" });
 	const Icon = isRunning ? Square : hasRunCommand ? Play : Settings;
+	const hasHotkey = !!hotkeyText && hotkeyText !== "Unassigned";
+
+	const runButton = (
+		<button
+			type="button"
+			onClick={() => {
+				if (!hasRunCommand && !isRunning) {
+					handleConfigureClick();
+					return;
+				}
+				void onToggle();
+			}}
+			disabled={isPending}
+			className={cn(
+				"group flex h-6 items-center gap-1.5 rounded-l-md border border-r-0 border-border/50 bg-transparent text-xs font-medium text-foreground transition-colors",
+				iconOnly ? "w-7 justify-center" : "px-2",
+				"hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+				isPending && "pointer-events-none opacity-50",
+				isRunning
+					? "border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-400 hover:bg-emerald-500/[0.12]"
+					: hasRunCommand
+						? "text-foreground"
+						: "text-muted-foreground/80 hover:text-foreground",
+			)}
+			aria-label={
+				isRunning
+					? t({
+							message: "Stop workspace run command",
+						})
+					: hasRunCommand
+						? t({
+								message: "Run workspace command",
+							})
+						: t({
+								message: "Configure workspace run command",
+							})
+			}
+		>
+			<Icon className="size-3 shrink-0" />
+			{!iconOnly && <span>{label}</span>}
+			{!iconOnly && hasHotkey && (
+				<span className="hidden text-[10px] tracking-wide text-muted-foreground/60 @min-[400px]/strip:inline">
+					{hotkeyText}
+				</span>
+			)}
+		</button>
+	);
 
 	return (
 		<div className="flex shrink-0 items-center no-drag">
-			<button
-				type="button"
-				onClick={() => {
-					if (!hasRunCommand && !isRunning) {
-						handleConfigureClick();
-						return;
-					}
-					void onToggle();
-				}}
-				disabled={isPending}
-				className={cn(
-					"group flex h-6 items-center gap-1.5 rounded-l-md border border-r-0 border-border/50 bg-transparent px-2 text-xs font-medium text-foreground transition-colors",
-					"hover:bg-muted/60 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
-					isPending && "pointer-events-none opacity-50",
-					isRunning
-						? "border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-400 hover:bg-emerald-500/[0.12]"
-						: hasRunCommand
-							? "text-foreground"
-							: "text-muted-foreground/80 hover:text-foreground",
-				)}
-				aria-label={
-					isRunning
-						? t({
-								message: "Stop workspace run command",
-							})
-						: hasRunCommand
-							? t({
-									message: "Run workspace command",
-								})
-							: t({
-									message: "Configure workspace run command",
-								})
-				}
-			>
-				<Icon className="size-3 shrink-0" />
-				<span>{label}</span>
-				{hotkeyText && hotkeyText !== "Unassigned" && (
-					<span className="hidden text-[10px] tracking-wide text-muted-foreground/60 @min-[400px]/strip:inline">
-						{hotkeyText}
-					</span>
-				)}
-			</button>
+			{iconOnly ? (
+				<Tooltip delayDuration={500}>
+					<TooltipTrigger asChild>{runButton}</TooltipTrigger>
+					<TooltipContent side="bottom">
+						{label}
+						{hasHotkey && (
+							<span className="ml-2 text-muted-foreground">{hotkeyText}</span>
+						)}
+					</TooltipContent>
+				</Tooltip>
+			) : (
+				runButton
+			)}
 
 			<DropdownMenu>
 				<DropdownMenuTrigger asChild>
