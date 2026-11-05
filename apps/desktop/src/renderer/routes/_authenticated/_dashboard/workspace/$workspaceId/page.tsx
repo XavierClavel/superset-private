@@ -1,16 +1,15 @@
 import { Workspace } from "@superset/panes";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import { cn } from "@superset/ui/utils";
 import {
 	useMaybeWorkspaceClient,
 	workspaceTrpc,
 } from "@superset/workspace-client";
 import { createFileRoute } from "@tanstack/react-router";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { openQuickOpen } from "renderer/commandPalette";
 import { useQuickOpenStore } from "renderer/commandPalette/ui/QuickOpen";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
+import { useMobilePaneEnabled } from "renderer/hooks/useMobilePaneEnabled";
 import { useParadevShell } from "renderer/hooks/useParadevShell";
 import { useUserPreferences } from "renderer/hooks/useUserPreferences";
 import { useHotkey } from "renderer/hotkeys";
@@ -254,8 +253,7 @@ function WorkspaceContent() {
 		workspaceId,
 		isPaneAreaEnabled: isRightPaneAreaEnabled,
 	});
-	const isMobilePaneEnabled =
-		useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_PANE) === true;
+	const isMobilePaneEnabled = useMobilePaneEnabled();
 	const { store: rightStore, isLayoutReady: isRightLayoutReady } =
 		useWorkspacePaneLayout({ slot: "rightPaneLayout" });
 	useRestoreExpandedPaneArea({
