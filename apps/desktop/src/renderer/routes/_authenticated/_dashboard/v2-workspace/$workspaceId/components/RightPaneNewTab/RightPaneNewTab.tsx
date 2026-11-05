@@ -1,8 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { CreatePaneInput } from "@superset/panes";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
+import { useMobilePaneEnabled } from "renderer/hooks/useMobilePaneEnabled";
 import { type HotkeyId, useHotkeyDisplay } from "renderer/hotkeys";
 import { CloudSection } from "renderer/routes/_authenticated/_dashboard/components/CloudSection";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/v2-workspace/providers/WorkspaceProvider";
@@ -23,8 +22,7 @@ export function RightPaneNewTab({ onOpen }: RightPaneNewTabProps) {
 	const { i18n } = useLingui();
 	const { workspace } = useWorkspace();
 	const host = useWorkspaceHostTarget(workspace.id);
-	const isMobilePaneEnabled =
-		useFeatureFlagEnabled(FEATURE_FLAGS.MOBILE_PANE) === true;
+	const isMobilePaneEnabled = useMobilePaneEnabled();
 	const launcher = useV2TerminalLauncher();
 	const browserUrl = useDefaultBrowserUrl();
 	const { pages, pullRequests } = useNewTabLists(workspace.id);
