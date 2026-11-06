@@ -34,6 +34,16 @@ is allowed.
   in the toolbar's "…" menu. The fork also shows the run button beside it as an icon, with
   Force Stop and Configure in its own menu
   (`workspace/$workspaceId/components/WorkspaceToolbar`).
+- **Agent status on project rows**: upstream shows agent status only on workspace rows, so a
+  collapsed project hides an agent that waits for input. The fork shows on the right of each
+  project row the needs-input, failed or ready-for-review dot when one of its workspaces asks
+  for the user, else the working spinner. Unlike the workspace rows' order, every status that
+  asks for the user outranks `working`
+  (`DashboardSidebarWorkspaceStatusProvider/utils/getProjectStatus`).
+- **No CLA check**: upstream's `.github/workflows/cla.yml` asks every PR author outside its
+  allowlist to sign Superset's CLA, and on this fork it failed on every PR because its
+  `cla-signatures` branch does not exist. This fork takes no outside contributions, so the
+  workflow is removed. If a rebase conflicts on it, keep the deletion.
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own

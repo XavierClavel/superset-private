@@ -28,6 +28,7 @@ import { deriveWorkspaceStatus } from "renderer/routes/_authenticated/_dashboard
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useNotificationStore } from "renderer/stores/notifications";
 import type { ActivePaneStatus, PaneStatus } from "shared/tabs-types";
+import { getProjectStatus } from "./utils/getProjectStatus";
 
 interface SidebarWorkspaceStatusEntry {
 	/** Highest-priority attention status across the workspace's terminals. */
@@ -440,6 +441,20 @@ export function useSidebarWorkspaceStatuses(): ReadonlyMap<
 	return useSyncExternalStore(
 		useCallback((listener) => store.subscribeAll(listener), [store]),
 		useCallback(() => store.getAll(), [store]),
+	);
+}
+
+/** Re-renders the caller only when the combined status changes. */
+export function useSidebarProjectStatus(
+	workspaceIds: readonly string[],
+): ActivePaneStatus | null {
+	const store = useSidebarWorkspaceStatusStore();
+	return useSyncExternalStore(
+		useCallback((listener) => store.subscribeAll(listener), [store]),
+		useCallback(
+			() => getProjectStatus(workspaceIds.map((id) => store.get(id))),
+			[store, workspaceIds],
+		),
 	);
 }
 
