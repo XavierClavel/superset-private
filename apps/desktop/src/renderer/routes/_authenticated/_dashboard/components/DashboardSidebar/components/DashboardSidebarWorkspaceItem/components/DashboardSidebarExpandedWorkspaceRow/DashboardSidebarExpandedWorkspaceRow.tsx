@@ -456,7 +456,10 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 					</div>
 				</div>
 				{!isPending && hostType === "local-device" && labels.length > 0 && (
+					// biome-ignore lint/a11y/noStaticElementInteractions: clicks on the label strip mirror the row click; the pills are not interactive
+					// biome-ignore lint/a11y/useKeyWithClickEvents: keyboard activation lives on the workspace row button; the strip click is a pointer convenience
 					<div
+						onClick={onClick}
 						className={cn(
 							"flex flex-wrap items-center gap-1 pb-1 pr-2",
 							resolvedIndentation === "top-level"
@@ -464,6 +467,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 								: resolvedIndentation === "grouped" || isInSection
 									? "pl-[50px]"
 									: "pl-[42px]",
+							onClick && "cursor-pointer",
 						)}
 					>
 						{labels.map((label) => (
