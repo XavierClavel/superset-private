@@ -49,7 +49,8 @@ is allowed.
   OSC 8 hyperlinks, which carry the full URL on every row, only to a terminal it knows supports
   them, and these terminals set no `TERM_PROGRAM` (`TERMINAL_IDENTITY_ENV_KEYS`). Both terminal
   environments set `FORCE_HYPERLINK=1` (`main/lib/terminal/env.ts`, host-service
-  `terminal/env.ts`).
+  `terminal/env.ts`). xterm underlined only the hovered row of such a link; the xterm patch
+  joins rows that carry the same link id (item 7 in `patches/README.md`).
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own
