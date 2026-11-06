@@ -3,6 +3,7 @@ export {
 	type SidebarStatusWorkspaceRef,
 	type SidebarWorkspaceStatusEntry,
 	useMarkSidebarWorkspaceTerminalsSeen,
+	useSidebarProjectStatus,
 	useSidebarWorkspaceStatus,
 	useSidebarWorkspaceStatuses,
 } from "./DashboardSidebarWorkspaceStatusProvider";
