@@ -34,6 +34,12 @@ is allowed.
   in the toolbar's "…" menu. The fork shows the run button beside it as an icon, with
   Force Stop and Configure in its own menu, and the "…" menu keeps only the "Open in" targets
   (`v2-workspace/$workspaceId/components/WorkspaceToolbar`).
+- **Agent status on project rows**: upstream shows agent status only on workspace rows, so a
+  collapsed project hides an agent that waits for input. The fork shows on the right of each
+  project row the needs-input, failed or ready-for-review dot when one of its workspaces asks
+  for the user, else the working spinner. Unlike the workspace rows' order, every status that
+  asks for the user outranks `working`
+  (`DashboardSidebarWorkspaceStatusProvider/utils/getProjectStatus`).
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own

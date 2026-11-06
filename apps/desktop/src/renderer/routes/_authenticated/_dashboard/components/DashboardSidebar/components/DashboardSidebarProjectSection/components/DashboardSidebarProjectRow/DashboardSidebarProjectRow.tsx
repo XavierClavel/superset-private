@@ -1,10 +1,15 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { WaveSpinner } from "@superset/ui/atoms/WaveSpinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { HiChevronRight, HiMiniPlus } from "react-icons/hi2";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
+import { StatusIndicator } from "renderer/screens/main/components/StatusIndicator";
 import { RenameInput } from "renderer/screens/main/components/WorkspaceSidebar/RenameInput";
+import type { ActivePaneStatus } from "shared/tabs-types";
+
+const HIDE_ON_HOVER = "group-hover:hidden group-has-[:focus]:hidden";
 
 interface DashboardSidebarProjectRowProps
 	extends ComponentPropsWithoutRef<"div"> {
@@ -12,6 +17,7 @@ interface DashboardSidebarProjectRowProps
 	iconUrl: string | null;
 	projectColor: string | null;
 	isCollapsed: boolean;
+	agentStatus: ActivePaneStatus | null;
 	isRenaming: boolean;
 	renameValue: string;
 	onRenameValueChange: (value: string) => void;
@@ -33,6 +39,7 @@ export const DashboardSidebarProjectRow = forwardRef<
 			iconUrl,
 			projectColor,
 			isCollapsed,
+			agentStatus,
 			isRenaming,
 			renameValue,
 			onRenameValueChange,
@@ -102,6 +109,18 @@ export const DashboardSidebarProjectRow = forwardRef<
 
 				{!isRenaming && (
 					<div className="ml-1 flex size-6 shrink-0 items-center justify-center">
+						{agentStatus === "working" ? (
+							<WaveSpinner
+								className={cn("text-foreground/80", HIDE_ON_HOVER)}
+							/>
+						) : (
+							agentStatus && (
+								<StatusIndicator
+									status={agentStatus}
+									className={HIDE_ON_HOVER}
+								/>
+							)
+						)}
 						<Tooltip delayDuration={500}>
 							<TooltipTrigger asChild>
 								<button
