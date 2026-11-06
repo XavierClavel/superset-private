@@ -44,6 +44,12 @@ is allowed.
   allowlist to sign Superset's CLA, and on this fork it failed on every PR because its
   `cla-signatures` branch does not exist. This fork takes no outside contributions, so the
   workflow is removed. If a rebase conflicts on it, keep the deletion.
+- **Wrapped URLs clickable on every row**: Claude Code breaks a long URL onto new lines itself,
+  so xterm sees unrelated rows and only the first, cut-off row is a link. Claude Code sends
+  OSC 8 hyperlinks, which carry the full URL on every row, only to a terminal it knows supports
+  them, and these terminals set no `TERM_PROGRAM` (`TERMINAL_IDENTITY_ENV_KEYS`). Both terminal
+  environments set `FORCE_HYPERLINK=1` (`main/lib/terminal/env.ts`, host-service
+  `terminal/env.ts`).
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own
