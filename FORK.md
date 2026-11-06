@@ -40,6 +40,10 @@ is allowed.
   for the user, else the working spinner. Unlike the workspace rows' order, every status that
   asks for the user outranks `working`
   (`DashboardSidebarWorkspaceStatusProvider/utils/getProjectStatus`).
+- **No CLA check**: upstream's `.github/workflows/cla.yml` asks every PR author outside its
+  allowlist to sign Superset's CLA, and on this fork it failed on every PR because its
+  `cla-signatures` branch does not exist. This fork takes no outside contributions, so the
+  workflow is removed. If a rebase conflicts on it, keep the deletion.
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own
