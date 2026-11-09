@@ -448,6 +448,9 @@ export function buildTerminalEnv(params: {
 		...baseEnv,
 		...shellEnv,
 		COLORTERM: "truecolor",
+		// Agents wrap long URLs themselves and only emit OSC 8 links when told
+		// to; a plain wrapped URL is clickable on its first row only.
+		FORCE_HYPERLINK: "1",
 		COLORFGBG: colorFgBg,
 		TERM_THEME: termTheme,
 		LANG: locale,

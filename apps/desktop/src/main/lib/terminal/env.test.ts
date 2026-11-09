@@ -686,6 +686,11 @@ describe("env", () => {
 				expect(result.COLORTERM).toBe("truecolor");
 			});
 
+			it("should tell agents to emit OSC 8 hyperlinks", () => {
+				const result = buildTerminalEnv(baseParams);
+				expect(result.FORCE_HYPERLINK).toBe("1");
+			});
+
 			it("should set Paradev-specific env vars", () => {
 				const result = buildTerminalEnv(baseParams);
 

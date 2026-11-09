@@ -151,6 +151,16 @@ were built from):
    [xterm.js #6174](https://github.com/xtermjs/xterm.js/pull/6174), commit
    `793883591` (open, not yet released). See the addon-serialize section below.
 
+7. `OscLinkProvider` (also `src/browser/OscLinkProvider.ts`): an OSC 8 link grew
+   across rows only where xterm wrapped them (`isWrapped`). Claude Code breaks a
+   long URL onto new lines itself and reopens the link with the same `id` on
+   each row, so hovering a row underlined that row alone. `_getRangeWithLineWrap`
+   now also joins a row when the same link id closes the row above and opens
+   this one past blank cells. The joined range covers the continuation row's
+   indentation, so those cells underline too. Upstream leaves this as a TODO in
+   `provideLinks` ("underline other links with the same id"). Guard test:
+   `apps/desktop/src/xterm-osc-link-rows-patch.test.ts`.
+
 **IME removal condition:** Follow-up: [Superset #7490](https://github.com/superset-sh/superset/issues/7490). Track [upstream fix #6162](https://github.com/xtermjs/xterm.js/pull/6162)
 and [upstream issue #6161](https://github.com/xtermjs/xterm.js/issues/6161).
 An upstream merge alone is not enough: wait for a published xterm version
