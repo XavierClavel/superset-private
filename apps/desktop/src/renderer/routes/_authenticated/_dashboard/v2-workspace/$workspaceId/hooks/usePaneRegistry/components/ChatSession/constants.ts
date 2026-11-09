@@ -2,6 +2,7 @@ import { ChatTable } from "@superset/chat-ui/ChatMarkdown";
 import { ChatCodeBlock } from "./components/ChatCodeBlock";
 import { ChatInlineCode } from "./components/ChatInlineCode";
 import { ChatLink } from "./components/ChatLink";
+import { remarkBarePathLinks } from "./utils/remarkBarePathLinks";
 import { remarkLocalPathLinks } from "./utils/remarkLocalPathLinks";
 
 /** The transcript and the composer share one column so their edges line up. */
@@ -19,3 +20,8 @@ export const CHAT_MARKDOWN_COMPONENTS = {
 };
 
 export const CHAT_REMARK_PLUGINS = [remarkLocalPathLinks];
+
+export const AGENT_REMARK_PLUGINS = [
+	...CHAT_REMARK_PLUGINS,
+	remarkBarePathLinks,
+];

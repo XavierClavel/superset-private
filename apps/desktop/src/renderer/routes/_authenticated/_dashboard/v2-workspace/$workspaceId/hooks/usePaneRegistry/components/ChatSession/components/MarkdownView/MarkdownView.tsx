@@ -5,7 +5,10 @@ import {
 import { cn } from "@superset/ui/utils";
 import { memo, type ReactNode, useMemo } from "react";
 import { env } from "renderer/env.renderer";
-import { CHAT_MARKDOWN_COMPONENTS, CHAT_REMARK_PLUGINS } from "../../constants";
+import {
+	AGENT_REMARK_PLUGINS,
+	CHAT_MARKDOWN_COMPONENTS,
+} from "../../constants";
 import { pageLinkFinder } from "../../utils/pageLinks";
 import { CODE_CARD_CLASSNAME } from "../ChatCodeBlock";
 import { PageLinkCard } from "../PageLinkCard";
@@ -25,7 +28,7 @@ const MarkdownBlock = memo(function MarkdownBlock({
 		<ChatMarkdown
 			className={first ? chatMarkdownFirstBlock : undefined}
 			components={CHAT_MARKDOWN_COMPONENTS}
-			remarkPlugins={CHAT_REMARK_PLUGINS}
+			remarkPlugins={AGENT_REMARK_PLUGINS}
 		>
 			{block}
 		</ChatMarkdown>

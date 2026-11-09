@@ -4,8 +4,8 @@ import {
 } from "@superset/chat-ui/ChatMarkdown";
 import { cn } from "@superset/ui/utils";
 import {
+	AGENT_REMARK_PLUGINS,
 	CHAT_MARKDOWN_COMPONENTS,
-	CHAT_REMARK_PLUGINS,
 } from "../../../../../../constants";
 
 /**
@@ -26,7 +26,7 @@ export function TextContent({ text }: { text: string }) {
 				"min-w-0 text-muted-foreground text-xs",
 			)}
 			components={CHAT_MARKDOWN_COMPONENTS}
-			remarkPlugins={CHAT_REMARK_PLUGINS}
+			remarkPlugins={AGENT_REMARK_PLUGINS}
 		>
 			{text}
 		</ChatMarkdown>
