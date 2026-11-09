@@ -1,0 +1,1 @@
+export { remarkBarePathLinks } from "./remarkBarePathLinks";
