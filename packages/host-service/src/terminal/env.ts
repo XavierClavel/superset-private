@@ -274,6 +274,9 @@ export function buildV2TerminalEnv(
 	env.SHELL = shell;
 	for (const key of TERMINAL_IDENTITY_ENV_KEYS) delete env[key];
 	env.COLORTERM = "truecolor";
+	// Agents wrap long URLs themselves and only emit OSC 8 links when told to; a
+	// plain wrapped URL is clickable on its first row only.
+	env.FORCE_HYPERLINK = "1";
 	env.COLORFGBG = themeType === "light" ? "0;15" : "15;0";
 	// TERM_THEME is an explicit light/dark hint that cursor-agent (and other
 	// TUIs) read before falling back to an OSC 11 background probe. Our PTY

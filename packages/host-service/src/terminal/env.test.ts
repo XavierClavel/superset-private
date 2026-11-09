@@ -504,6 +504,7 @@ describe("buildV2TerminalEnv", () => {
 		expect(env).toMatchObject({
 			TERM: "xterm-256color",
 			COLORTERM: "truecolor",
+			FORCE_HYPERLINK: "1",
 			PWD: "/tmp/workspace",
 			SUPERSET_TERMINAL_ID: "term-1",
 			SUPERSET_ORGANIZATION_ID: "org-1",
