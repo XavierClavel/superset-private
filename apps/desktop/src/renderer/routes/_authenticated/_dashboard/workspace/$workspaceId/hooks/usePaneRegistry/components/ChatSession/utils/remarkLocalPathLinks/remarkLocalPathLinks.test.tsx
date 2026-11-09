@@ -6,14 +6,36 @@ import {
 	remarkLocalPathLinks,
 } from "./remarkLocalPathLinks";
 
-function hrefs(markdown: string): string[] {
-	const html = renderToStaticMarkup(
+function render(markdown: string): string {
+	return renderToStaticMarkup(
 		<ChatMarkdown remarkPlugins={[remarkLocalPathLinks]}>
 			{markdown}
 		</ChatMarkdown>,
 	);
-	return [...html.matchAll(/href="([^"]*)"/g)].map((match) => match[1] ?? "");
 }
+
+function hrefs(markdown: string): string[] {
+	return [...render(markdown).matchAll(/href="([^"]*)"/g)].map(
+		(match) => match[1] ?? "",
+	);
+}
+
+function localPaths(markdown: string): string[] {
+	return hrefs(markdown)
+		.filter((href) => href.startsWith(LOCAL_PATH_PREFIX))
+		.map((href) => decodeURIComponent(href.slice(LOCAL_PATH_PREFIX.length)));
+}
+
+test("a local image becomes a link to its file, a web image stays an image", () => {
+	const markdown =
+		"![Screenshot](/tmp/shot.png) ![](rel/b.jpg) ![web](https://a.co/c.png)";
+	const html = render(markdown);
+	expect(localPaths(markdown)).toEqual(["/tmp/shot.png", "rel/b.jpg"]);
+	expect(
+		[...html.matchAll(/<img [^>]*src="([^"]*)"/g)].map((match) => match[1]),
+	).toEqual(["https://a.co/c.png"]);
+	expect(html).toContain(">Screenshot</a>");
+});
 
 test("relative and absolute file links survive the markdown hardening", () => {
 	expect(
