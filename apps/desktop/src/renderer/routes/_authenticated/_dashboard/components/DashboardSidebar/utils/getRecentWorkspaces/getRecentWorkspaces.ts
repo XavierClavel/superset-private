@@ -5,29 +5,35 @@ import type {
 } from "../../types";
 import { getProjectChildrenWorkspaces } from "../projectChildren";
 
+export const RECENT_WORKSPACE_WINDOW_MS = 14 * 24 * 60 * 60 * 1000;
+
 export interface RecentSidebarWorkspace {
 	workspace: DashboardSidebarWorkspace;
 	project: DashboardSidebarProject;
 }
 
-function activityRank(workspace: DashboardSidebarWorkspace): number {
-	const time = getWorkspaceActivityTime(workspace);
-	return Number.isNaN(time) ? Number.NEGATIVE_INFINITY : time;
-}
-
 export function getRecentWorkspaces(
 	projects: DashboardSidebarProject[],
+	now: number,
 ): RecentSidebarWorkspace[] {
-	const entries = projects.flatMap((project) =>
-		getProjectChildrenWorkspaces(project.children).map((workspace) => ({
-			workspace,
-			project,
-		})),
-	);
-	return entries.sort(
-		(left, right) =>
-			activityRank(right.workspace) - activityRank(left.workspace) ||
-			left.workspace.name.localeCompare(right.workspace.name) ||
-			left.workspace.id.localeCompare(right.workspace.id),
-	);
+	return projects
+		.flatMap((project) =>
+			getProjectChildrenWorkspaces(project.children).map((workspace) => ({
+				workspace,
+				project,
+				activityTime: getWorkspaceActivityTime(workspace),
+			})),
+		)
+		.filter(
+			({ activityTime }) =>
+				!Number.isNaN(activityTime) &&
+				now - activityTime < RECENT_WORKSPACE_WINDOW_MS,
+		)
+		.sort(
+			(left, right) =>
+				right.activityTime - left.activityTime ||
+				left.workspace.name.localeCompare(right.workspace.name) ||
+				left.workspace.id.localeCompare(right.workspace.id),
+		)
+		.map(({ workspace, project }) => ({ workspace, project }));
 }

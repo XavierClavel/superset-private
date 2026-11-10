@@ -12247,6 +12247,9 @@ msgstr "没有活动的工作区"
 msgid "No agent"
 msgstr "无智能体"
 
+msgid "No agent activity in the last two weeks"
+msgstr "过去两周没有智能体活动"
+
 msgid "No agent is configured on this host"
 msgstr "此主机上未配置任何智能体"
 

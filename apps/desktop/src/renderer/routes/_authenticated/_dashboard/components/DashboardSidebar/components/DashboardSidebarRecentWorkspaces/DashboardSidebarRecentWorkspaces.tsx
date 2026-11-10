@@ -6,26 +6,32 @@ import { DashboardSidebarWorkspaceItem } from "../DashboardSidebarWorkspaceItem"
 
 interface DashboardSidebarRecentWorkspacesProps {
 	projects: DashboardSidebarProject[];
+	now: number;
 	workspaceShortcutLabels: Map<string, string>;
 	onWorkspaceHover: (workspaceId: string) => void | Promise<void>;
 }
 
 /**
- * The Projects section as one flat list, newest activity first. Rows cannot be
- * dragged or bulk-selected: both act inside a single project.
+ * The Projects section's workspaces active in the last two weeks, as one flat
+ * list, newest first. Rows cannot be dragged or bulk-selected: both act inside
+ * a single project.
  */
 export function DashboardSidebarRecentWorkspaces({
 	projects,
+	now,
 	workspaceShortcutLabels,
 	onWorkspaceHover,
 }: DashboardSidebarRecentWorkspacesProps) {
-	const entries = useMemo(() => getRecentWorkspaces(projects), [projects]);
+	const entries = useMemo(
+		() => getRecentWorkspaces(projects, now),
+		[projects, now],
+	);
 
 	if (entries.length === 0) {
 		if (projects.length === 0) return null;
 		return (
 			<div className="select-text cursor-text px-4 py-2 text-xs text-muted-foreground">
-				<Trans>No workspaces yet</Trans>
+				<Trans>No agent activity in the last two weeks</Trans>
 			</div>
 		);
 	}

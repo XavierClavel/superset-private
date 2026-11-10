@@ -4,9 +4,14 @@ import {
 	makeSection,
 	makeWorkspace,
 } from "../testProjectFixtures";
-import { getRecentWorkspaces } from "./getRecentWorkspaces";
+import {
+	getRecentWorkspaces,
+	RECENT_WORKSPACE_WINDOW_MS,
+} from "./getRecentWorkspaces";
 
-const at = (iso: string) => new Date(iso).getTime();
+const NOW = new Date("2026-09-15").getTime();
+const DAY_MS = 24 * 60 * 60 * 1000;
+const daysAgo = (days: number) => NOW - days * DAY_MS;
 
 describe("getRecentWorkspaces", () => {
 	it("merges every project, folders included, newest activity first", () => {
@@ -20,7 +25,7 @@ describe("getRecentWorkspaces", () => {
 					workspace: makeWorkspace({
 						id: "w-old",
 						name: "old",
-						lastActivityAt: at("2026-03-01"),
+						lastActivityAt: daysAgo(9),
 					}),
 				},
 				{
@@ -33,7 +38,7 @@ describe("getRecentWorkspaces", () => {
 							makeWorkspace({
 								id: "w-new",
 								name: "new",
-								lastActivityAt: at("2026-09-01"),
+								lastActivityAt: daysAgo(1),
 							}),
 						],
 					}),
@@ -49,14 +54,14 @@ describe("getRecentWorkspaces", () => {
 					workspace: makeWorkspace({
 						id: "w-mid",
 						name: "mid",
-						lastActivityAt: at("2026-06-01"),
+						lastActivityAt: daysAgo(5),
 					}),
 				},
 			],
 		});
 
 		expect(
-			getRecentWorkspaces([api, web]).map(({ workspace, project }) => [
+			getRecentWorkspaces([api, web], NOW).map(({ workspace, project }) => [
 				workspace.id,
 				project.id,
 			]),
@@ -67,7 +72,7 @@ describe("getRecentWorkspaces", () => {
 		]);
 	});
 
-	it("puts undated workspaces last and breaks ties by name", () => {
+	it("keeps only activity from the last two weeks and breaks ties by name", () => {
 		const project = makeProject({
 			id: "p",
 			name: "p",
@@ -78,20 +83,25 @@ describe("getRecentWorkspaces", () => {
 					updatedAt: new Date("not a date"),
 				}),
 				makeWorkspace({
+					id: "w-expired",
+					name: "expired",
+					lastActivityAt: NOW - RECENT_WORKSPACE_WINDOW_MS,
+				}),
+				makeWorkspace({
 					id: "w-b",
 					name: "b",
-					lastActivityAt: at("2026-05-01"),
+					lastActivityAt: daysAgo(13),
 				}),
 				makeWorkspace({
 					id: "w-a",
 					name: "a",
-					lastActivityAt: at("2026-05-01"),
+					lastActivityAt: daysAgo(13),
 				}),
 			].map((workspace) => ({ type: "workspace" as const, workspace })),
 		});
 
 		expect(
-			getRecentWorkspaces([project]).map(({ workspace }) => workspace.id),
-		).toEqual(["w-a", "w-b", "w-undated"]);
+			getRecentWorkspaces([project], NOW).map(({ workspace }) => workspace.id),
+		).toEqual(["w-a", "w-b"]);
 	});
 });

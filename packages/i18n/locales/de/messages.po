@@ -12247,6 +12247,9 @@ msgstr "Keine aktiven Arbeitsbereiche"
 msgid "No agent"
 msgstr "Kein Agent"
 
+msgid "No agent activity in the last two weeks"
+msgstr "Keine Agent-Aktivität in den letzten zwei Wochen"
+
 msgid "No agent is configured on this host"
 msgstr "Auf diesem Host ist kein Agent konfiguriert"
 

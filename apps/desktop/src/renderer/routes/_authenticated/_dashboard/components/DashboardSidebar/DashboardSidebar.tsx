@@ -22,6 +22,7 @@ import {
 import { UpdatesPill } from "renderer/components/UpdatesPill";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
+import { useNow } from "renderer/hooks/useNow";
 import { useParadevShell } from "renderer/hooks/useParadevShell";
 import { useV2UserPreferences } from "renderer/hooks/useV2UserPreferences";
 import { useHotkeyDisplay } from "renderer/hotkeys";
@@ -93,6 +94,8 @@ import {
 import { getRecentWorkspaces } from "./utils/getRecentWorkspaces";
 import { getProjectChildrenWorkspaces } from "./utils/projectChildren";
 import { sortDashboardSidebarProjects } from "./utils/sortDashboardSidebarProjects";
+
+const RECENT_VIEW_TICK_MS = 60 * 60 * 1000;
 
 interface DashboardSidebarProps {
 	isCollapsed?: boolean;
@@ -226,6 +229,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			? preferences.sidebarProjectHostFilter
 			: "all";
 	const isRecentView = preferences.sidebarRecentView && !isCollapsed;
+	const recentViewNow = useNow(RECENT_VIEW_TICK_MS, isRecentView).getTime();
 	const [projectFilterQuery, setProjectFilterQuery] = useState("");
 	// The icon rail hides the Projects header (and its filter input); a
 	// filter left active there would invisibly hide projects.
@@ -349,11 +353,11 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 	const recentShortcutWorkspaces = useMemo(
 		() =>
 			isRecentView
-				? getRecentWorkspaces(labelView.projects).map(
+				? getRecentWorkspaces(labelView.projects, recentViewNow).map(
 						({ workspace }) => workspace,
 					)
 				: undefined,
-		[isRecentView, labelView.projects],
+		[isRecentView, labelView.projects, recentViewNow],
 	);
 	// Label-filtered but not text-filtered, so ⌘1–⌘9 targets stay put while typing a query.
 	// The filtered view expands matches through derived objects, so a jump
@@ -579,6 +583,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 				(isRecentView ? (
 					<DashboardSidebarRecentWorkspaces
 						projects={displayedGroups}
+						now={recentViewNow}
 						workspaceShortcutLabels={workspaceShortcutLabels}
 						onWorkspaceHover={refreshWorkspacePullRequest}
 					/>

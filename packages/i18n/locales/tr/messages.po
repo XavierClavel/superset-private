@@ -12247,6 +12247,9 @@ msgstr "Etkin çalışma alanı yok"
 msgid "No agent"
 msgstr "Ajan yok"
 
+msgid "No agent activity in the last two weeks"
+msgstr "Son iki haftada ajan etkinliği yok"
+
 msgid "No agent is configured on this host"
 msgstr "Bu ana makinede yapılandırılmış bir ajan yok"
 

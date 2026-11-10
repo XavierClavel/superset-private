@@ -42,9 +42,9 @@ is allowed.
   (`DashboardSidebarWorkspaceStatusProvider/utils/getProjectStatus`).
 - **Recent view of the Projects list**: upstream's "Last active" sort reorders rows only inside
   each project, so a session that just ran sits under its project, maybe collapsed. A clock
-  button in the Projects header swaps the grouped list for one flat list of every project
-  workspace, newest agent activity first, each row prefixed with its project. ⌘1–9 follow that
-  order. The rows cannot be dragged or bulk-selected, the sort modes are off while it shows, and
+  button in the Projects header swaps the grouped list for one flat list of the project
+  workspaces with agent activity in the last 14 days, newest first, each row prefixed with its
+  project. ⌘1–9 follow that order. The rows cannot be dragged or bulk-selected, the sort modes are off while it shows, and
   the icon rail keeps the grouped list. The choice persists in `sidebarRecentView`
   (`DashboardSidebar/components/DashboardSidebarRecentWorkspaces`).
 - **No CLA check**: upstream's `.github/workflows/cla.yml` asks every PR author outside its
