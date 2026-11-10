@@ -9365,6 +9365,12 @@ msgstr "Group actions"
 msgid "Group by"
 msgstr "Group by"
 
+msgid "Group by project"
+msgstr "Group by project"
+
+msgid "Group by project to change the sort"
+msgstr "Group by project to change the sort"
+
 msgid "Group new branches under a folder."
 msgstr "Group new branches under a folder."
 
@@ -17755,6 +17761,9 @@ msgstr "Show pull request list"
 
 msgid "Show pull request preview"
 msgstr "Show pull request preview"
+
+msgid "Show recent workspaces"
+msgstr "Show recent workspaces"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Show resolved ({resolvedCount})"

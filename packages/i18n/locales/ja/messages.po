@@ -9365,6 +9365,12 @@ msgstr "グループの操作"
 msgid "Group by"
 msgstr "グループ化"
 
+msgid "Group by project"
+msgstr "プロジェクトごとにグループ化"
+
+msgid "Group by project to change the sort"
+msgstr "並べ替えを変更するにはプロジェクトごとにグループ化してください"
+
 msgid "Group new branches under a folder."
 msgstr "新しいブランチをフォルダにまとめます。"
 
@@ -17755,6 +17761,9 @@ msgstr "プルリクエスト一覧を表示"
 
 msgid "Show pull request preview"
 msgstr "プルリクエストのプレビューを表示"
+
+msgid "Show recent workspaces"
+msgstr "最近のワークスペースを表示"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "解決済みを表示 ({resolvedCount})"

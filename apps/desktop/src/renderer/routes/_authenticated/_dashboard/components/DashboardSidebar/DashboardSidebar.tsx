@@ -53,6 +53,7 @@ import { DashboardSidebarHoverCardOverlay } from "./components/DashboardSidebarH
 import { DashboardSidebarLabelFilterBar } from "./components/DashboardSidebarLabelFilterBar";
 import { DashboardSidebarPinnedSection } from "./components/DashboardSidebarPinnedSection";
 import { DashboardSidebarProjectSection } from "./components/DashboardSidebarProjectSection";
+import { DashboardSidebarRecentWorkspaces } from "./components/DashboardSidebarRecentWorkspaces";
 import { DashboardSidebarSectionRenameProvider } from "./components/DashboardSidebarSectionRenameContext";
 import { DashboardSidebarSessionsSection } from "./components/DashboardSidebarSessionsSection";
 import { DashboardSidebarShellHeader } from "./components/DashboardSidebarShellHeader";
@@ -89,6 +90,7 @@ import {
 	filterDashboardSidebarProjectsByHost,
 	matchesHostFilter,
 } from "./utils/filterDashboardSidebarProjectsByHost";
+import { getRecentWorkspaces } from "./utils/getRecentWorkspaces";
 import { getProjectChildrenWorkspaces } from "./utils/projectChildren";
 import { sortDashboardSidebarProjects } from "./utils/sortDashboardSidebarProjects";
 
@@ -215,6 +217,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		preferences,
 		setSidebarProjectSortMode,
 		setSidebarProjectHostFilter,
+		setSidebarRecentView,
 	} = useV2UserPreferences();
 	const sortMode = preferences.sidebarProjectSortMode;
 	// The icon rail has no control for the filter, so it rests there.
@@ -222,6 +225,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		isCloudEnabled && !isCollapsed
 			? preferences.sidebarProjectHostFilter
 			: "all";
+	const isRecentView = preferences.sidebarRecentView && !isCollapsed;
 	const [projectFilterQuery, setProjectFilterQuery] = useState("");
 	// The icon rail hides the Projects header (and its filter input); a
 	// filter left active there would invisibly hide projects.
@@ -342,6 +346,15 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		},
 	});
 
+	const recentShortcutWorkspaces = useMemo(
+		() =>
+			isRecentView
+				? getRecentWorkspaces(labelView.projects).map(
+						({ workspace }) => workspace,
+					)
+				: undefined,
+		[isRecentView, labelView.projects],
+	);
 	// Label-filtered but not text-filtered, so ⌘1–⌘9 targets stay put while typing a query.
 	// The filtered view expands matches through derived objects, so a jump
 	// must not toggle the persisted collapse state while it is active.
@@ -350,8 +363,9 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		labelView.sessionWorkspaces,
 		labelView.sessionChildren,
 		{
-			revealCollapsed: !isFilterActive,
+			revealCollapsed: !isFilterActive && !isRecentView,
 			pinnedWorkspaces: labelView.pinnedWorkspaces,
+			projectWorkspaces: recentShortcutWorkspaces,
 		},
 	);
 	// Scoped to what the filter actually shows — select-all and range-select
@@ -551,6 +565,8 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 						<DashboardSidebarWorkspacesHeader
 							sortMode={sortMode}
 							onSortModeChange={setSidebarProjectSortMode}
+							isRecentView={isRecentView}
+							onRecentViewChange={setSidebarRecentView}
 							hostFilter={isCloudEnabled ? hostFilter : null}
 							onHostFilterChange={setSidebarProjectHostFilter}
 							filterQuery={projectFilterQuery}
@@ -559,24 +575,31 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 					</DashboardSidebarBulkActions>
 				</div>
 			)}
-			{(isCollapsed || !workspacesListCollapsed) && (
-				<SortableContext
-					items={displayedProjectIds}
-					strategy={verticalListSortingStrategy}
-				>
-					{displayedGroups.map((project) => (
-						<SortableProjectWrapper
-							key={project.id}
-							project={project}
-							isCollapsed={isCollapsed}
-							isDragDisabled={isProjectDragDisabled}
-							workspaceShortcutLabels={workspaceShortcutLabels}
-							onWorkspaceHover={refreshWorkspacePullRequest}
-							onToggleCollapse={toggleProjectCollapsed}
-						/>
-					))}
-				</SortableContext>
-			)}
+			{(isCollapsed || !workspacesListCollapsed) &&
+				(isRecentView ? (
+					<DashboardSidebarRecentWorkspaces
+						projects={displayedGroups}
+						workspaceShortcutLabels={workspaceShortcutLabels}
+						onWorkspaceHover={refreshWorkspacePullRequest}
+					/>
+				) : (
+					<SortableContext
+						items={displayedProjectIds}
+						strategy={verticalListSortingStrategy}
+					>
+						{displayedGroups.map((project) => (
+							<SortableProjectWrapper
+								key={project.id}
+								project={project}
+								isCollapsed={isCollapsed}
+								isDragDisabled={isProjectDragDisabled}
+								workspaceShortcutLabels={workspaceShortcutLabels}
+								onWorkspaceHover={refreshWorkspacePullRequest}
+								onToggleCollapse={toggleProjectCollapsed}
+							/>
+						))}
+					</SortableContext>
+				))}
 			{!isCollapsed && !workspacesListCollapsed && (
 				<DashboardSidebarHiddenProjects
 					projects={hiddenProjects}

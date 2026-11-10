@@ -9365,6 +9365,12 @@ msgstr "分组操作"
 msgid "Group by"
 msgstr "分组方式"
 
+msgid "Group by project"
+msgstr "按项目分组"
+
+msgid "Group by project to change the sort"
+msgstr "按项目分组后可更改排序"
+
 msgid "Group new branches under a folder."
 msgstr "将新分支归入一个文件夹。"
 
@@ -17755,6 +17761,9 @@ msgstr "显示拉取请求列表"
 
 msgid "Show pull request preview"
 msgstr "显示拉取请求预览"
+
+msgid "Show recent workspaces"
+msgstr "显示最近的工作区"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "显示已解决 ({resolvedCount})"

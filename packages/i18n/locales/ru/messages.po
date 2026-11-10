@@ -9365,6 +9365,12 @@ msgstr "Действия с группой"
 msgid "Group by"
 msgstr "Группировать по"
 
+msgid "Group by project"
+msgstr "Группировать по проектам"
+
+msgid "Group by project to change the sort"
+msgstr "Сгруппируйте по проектам, чтобы изменить сортировку"
+
 msgid "Group new branches under a folder."
 msgstr "Группировать новые ветки в папке."
 
@@ -17755,6 +17761,9 @@ msgstr "Показать список пул-реквестов"
 
 msgid "Show pull request preview"
 msgstr "Показать предпросмотр пул-реквеста"
+
+msgid "Show recent workspaces"
+msgstr "Показать недавние рабочие области"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Показать закрытые ({resolvedCount})"

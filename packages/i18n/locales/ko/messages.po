@@ -9365,6 +9365,12 @@ msgstr "그룹 작업"
 msgid "Group by"
 msgstr "그룹화 기준"
 
+msgid "Group by project"
+msgstr "프로젝트별로 그룹화"
+
+msgid "Group by project to change the sort"
+msgstr "정렬을 변경하려면 프로젝트별로 그룹화하세요"
+
 msgid "Group new branches under a folder."
 msgstr "새 브랜치를 폴더 아래로 묶습니다."
 
@@ -17755,6 +17761,9 @@ msgstr "풀 리퀘스트 목록 표시"
 
 msgid "Show pull request preview"
 msgstr "풀 리퀘스트 미리보기 표시"
+
+msgid "Show recent workspaces"
+msgstr "최근 워크스페이스 표시"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "해결된 항목 표시 ({resolvedCount})"

@@ -9365,6 +9365,12 @@ msgstr "Akce skupiny"
 msgid "Group by"
 msgstr "Seskupit podle"
 
+msgid "Group by project"
+msgstr "Seskupit podle projektu"
+
+msgid "Group by project to change the sort"
+msgstr "Pro změnu řazení seskupte podle projektu"
+
 msgid "Group new branches under a folder."
 msgstr "Seskupit nové větve pod složku."
 
@@ -17755,6 +17761,9 @@ msgstr "Zobrazit seznam pull requestů"
 
 msgid "Show pull request preview"
 msgstr "Zobrazit náhled pull requestu"
+
+msgid "Show recent workspaces"
+msgstr "Zobrazit nedávné pracovní prostory"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Zobrazit vyřešené ({resolvedCount})"

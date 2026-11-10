@@ -9365,6 +9365,12 @@ msgstr "Acciones del grupo"
 msgid "Group by"
 msgstr "Agrupar por"
 
+msgid "Group by project"
+msgstr "Agrupar por proyecto"
+
+msgid "Group by project to change the sort"
+msgstr "Agrupa por proyecto para cambiar el orden"
+
 msgid "Group new branches under a folder."
 msgstr "Agrupa las ramas nuevas dentro de una carpeta."
 
@@ -17755,6 +17761,9 @@ msgstr "Mostrar la lista de pull requests"
 
 msgid "Show pull request preview"
 msgstr "Mostrar la vista previa de la pull request"
+
+msgid "Show recent workspaces"
+msgstr "Mostrar espacios de trabajo recientes"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Mostrar los resueltos ({resolvedCount})"
