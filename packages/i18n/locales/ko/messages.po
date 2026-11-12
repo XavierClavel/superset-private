@@ -12241,6 +12241,9 @@ msgstr "활성 워크스페이스 없음"
 msgid "No agent"
 msgstr "에이전트 없음"
 
+msgid "No agent activity in the last two weeks"
+msgstr "지난 2주 동안 에이전트 활동이 없습니다"
+
 msgid "No agent is configured on this host"
 msgstr "이 호스트에 구성된 에이전트가 없습니다"
 
@@ -17651,6 +17654,9 @@ msgstr "모든 댓글 표시"
 msgid "Show all lines"
 msgstr "모든 줄 표시"
 
+msgid "Show all workspaces"
+msgstr "모든 워크스페이스 표시"
+
 msgid "Show archived"
 msgstr "보관된 항목 표시"
 
@@ -17755,6 +17761,9 @@ msgstr "풀 리퀘스트 목록 표시"
 
 msgid "Show pull request preview"
 msgstr "풀 리퀘스트 미리보기 표시"
+
+msgid "Show recent workspaces"
+msgstr "최근 워크스페이스 표시"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "해결된 항목 표시 ({resolvedCount})"

@@ -12241,6 +12241,9 @@ msgstr "Tidak ada workspace aktif"
 msgid "No agent"
 msgstr "Tanpa agen"
 
+msgid "No agent activity in the last two weeks"
+msgstr "Tidak ada aktivitas agen dalam dua minggu terakhir"
+
 msgid "No agent is configured on this host"
 msgstr "Tidak ada agen yang dikonfigurasi di host ini"
 
@@ -17651,6 +17654,9 @@ msgstr "Tampilkan semua komentar"
 msgid "Show all lines"
 msgstr "Tampilkan semua baris"
 
+msgid "Show all workspaces"
+msgstr "Tampilkan semua workspace"
+
 msgid "Show archived"
 msgstr "Tampilkan yang diarsipkan"
 
@@ -17755,6 +17761,9 @@ msgstr "Tampilkan daftar pull request"
 
 msgid "Show pull request preview"
 msgstr "Tampilkan pratinjau pull request"
+
+msgid "Show recent workspaces"
+msgstr "Tampilkan workspace terbaru"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Tampilkan yang terselesaikan ({resolvedCount})"

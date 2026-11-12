@@ -160,6 +160,19 @@ describe("healV2UserPreferences sidebarProjectSortMode", () => {
 	});
 });
 
+describe("healV2UserPreferences sidebarRecentView", () => {
+	it("is on only for a stored true", () => {
+		expect(healV2UserPreferences({}).sidebarRecentView).toBe(false);
+		expect(
+			healV2UserPreferences({ sidebarRecentView: "yes" as unknown as boolean })
+				.sidebarRecentView,
+		).toBe(false);
+		expect(
+			healV2UserPreferences({ sidebarRecentView: true }).sidebarRecentView,
+		).toBe(true);
+	});
+});
+
 describe("healV2UserPreferences favoritePageIds", () => {
 	it("defaults to an empty list on rows written before the field existed", () => {
 		expect(healV2UserPreferences({}).favoritePageIds).toEqual([]);

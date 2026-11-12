@@ -12241,6 +12241,9 @@ msgstr "Brak aktywnych obszarów roboczych"
 msgid "No agent"
 msgstr "Brak agenta"
 
+msgid "No agent activity in the last two weeks"
+msgstr "Brak aktywności agentów w ostatnich dwóch tygodniach"
+
 msgid "No agent is configured on this host"
 msgstr "Na tym hoście nie skonfigurowano żadnego agenta"
 
@@ -17651,6 +17654,9 @@ msgstr "Pokaż wszystkie komentarze"
 msgid "Show all lines"
 msgstr "Pokaż wszystkie wiersze"
 
+msgid "Show all workspaces"
+msgstr "Pokaż wszystkie obszary robocze"
+
 msgid "Show archived"
 msgstr "Pokaż zarchiwizowane"
 
@@ -17755,6 +17761,9 @@ msgstr "Pokaż listę pull requestów"
 
 msgid "Show pull request preview"
 msgstr "Pokaż podgląd pull requesta"
+
+msgid "Show recent workspaces"
+msgstr "Pokaż ostatnie obszary robocze"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Pokaż rozwiązane ({resolvedCount})"

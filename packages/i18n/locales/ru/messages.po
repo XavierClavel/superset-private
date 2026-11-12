@@ -12241,6 +12241,9 @@ msgstr "Нет активных рабочих областей"
 msgid "No agent"
 msgstr "Без агента"
 
+msgid "No agent activity in the last two weeks"
+msgstr "Нет активности агентов за последние две недели"
+
 msgid "No agent is configured on this host"
 msgstr "На этом хосте не настроен ни один агент"
 
@@ -17651,6 +17654,9 @@ msgstr "Показать все комментарии"
 msgid "Show all lines"
 msgstr "Показать все строки"
 
+msgid "Show all workspaces"
+msgstr "Показать все рабочие области"
+
 msgid "Show archived"
 msgstr "Показать архивные"
 
@@ -17755,6 +17761,9 @@ msgstr "Показать список пул-реквестов"
 
 msgid "Show pull request preview"
 msgstr "Показать предпросмотр пул-реквеста"
+
+msgid "Show recent workspaces"
+msgstr "Показать недавние рабочие области"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Показать закрытые ({resolvedCount})"

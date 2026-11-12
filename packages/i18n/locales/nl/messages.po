@@ -12241,6 +12241,9 @@ msgstr "Geen actieve werkruimtes"
 msgid "No agent"
 msgstr "Geen agent"
 
+msgid "No agent activity in the last two weeks"
+msgstr "Geen agentactiviteit in de afgelopen twee weken"
+
 msgid "No agent is configured on this host"
 msgstr "Er is geen agent geconfigureerd op deze host"
 
@@ -17651,6 +17654,9 @@ msgstr "Alle opmerkingen tonen"
 msgid "Show all lines"
 msgstr "Alle regels tonen"
 
+msgid "Show all workspaces"
+msgstr "Alle werkruimtes tonen"
+
 msgid "Show archived"
 msgstr "Gearchiveerde tonen"
 
@@ -17755,6 +17761,9 @@ msgstr "Lijst met pull requests tonen"
 
 msgid "Show pull request preview"
 msgstr "Voorbeeld van pull request tonen"
+
+msgid "Show recent workspaces"
+msgstr "Recente werkruimtes tonen"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Opgeloste tonen ({resolvedCount})"

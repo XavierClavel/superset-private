@@ -12241,6 +12241,9 @@ msgstr "Etkin çalışma alanı yok"
 msgid "No agent"
 msgstr "Ajan yok"
 
+msgid "No agent activity in the last two weeks"
+msgstr "Son iki haftada ajan etkinliği yok"
+
 msgid "No agent is configured on this host"
 msgstr "Bu ana makinede yapılandırılmış bir ajan yok"
 
@@ -17651,6 +17654,9 @@ msgstr "Tüm yorumları göster"
 msgid "Show all lines"
 msgstr "Tüm satırları göster"
 
+msgid "Show all workspaces"
+msgstr "Tüm çalışma alanlarını göster"
+
 msgid "Show archived"
 msgstr "Arşivlenenleri göster"
 
@@ -17755,6 +17761,9 @@ msgstr "Pull request listesini göster"
 
 msgid "Show pull request preview"
 msgstr "Pull request önizlemesini göster"
+
+msgid "Show recent workspaces"
+msgstr "Son çalışma alanlarını göster"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Çözülenleri göster ({resolvedCount})"
