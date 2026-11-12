@@ -9359,12 +9359,6 @@ msgstr "Дії з групою"
 msgid "Group by"
 msgstr "Групувати за"
 
-msgid "Group by project"
-msgstr "Групувати за проєктами"
-
-msgid "Group by project to change the sort"
-msgstr "Згрупуйте за проєктами, щоб змінити сортування"
-
 msgid "Group new branches under a folder."
 msgstr "Групувати нові гілки в папці."
 
@@ -17653,6 +17647,9 @@ msgstr "Показати всі коментарі"
 
 msgid "Show all lines"
 msgstr "Показати всі рядки"
+
+msgid "Show all workspaces"
+msgstr "Показати всі робочі простори"
 
 msgid "Show archived"
 msgstr "Показати архівні"

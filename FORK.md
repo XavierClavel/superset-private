@@ -40,13 +40,13 @@ is allowed.
   for the user, else the working spinner. Unlike the workspace rows' order, every status that
   asks for the user outranks `working`
   (`DashboardSidebarWorkspaceStatusProvider/utils/getProjectStatus`).
-- **Recent view of the Projects list**: upstream's "Last active" sort reorders rows only inside
-  each project, so a session that just ran sits under its project, maybe collapsed. A clock
-  button in the Projects header swaps the grouped list for one flat list of the project
-  workspaces with agent activity in the last 14 days, newest first, each row prefixed with its
-  project. ⌘1–9 follow that order. The rows cannot be dragged or bulk-selected, the sort modes are off while it shows, and
-  the icon rail keeps the grouped list. The choice persists in `sidebarRecentView`
-  (`DashboardSidebar/components/DashboardSidebarRecentWorkspaces`).
+- **Recent filter on the Projects list**: upstream's "Last active" sort reorders rows only inside
+  each project, so a session that just ran can sit under a project far down the list. A clock
+  button in the Projects header filters the list to the workspaces with agent activity in the
+  last 14 days, still grouped by project, and hides the projects left empty. Like the label
+  filter, it expands the projects and folders it shows and turns off drag while it is on. The
+  choice persists in `sidebarRecentView`
+  (`DashboardSidebar/utils/filterDashboardSidebarByRecentActivity`).
 - **No CLA check**: upstream's `.github/workflows/cla.yml` asks every PR author outside its
   allowlist to sign Superset's CLA, and on this fork it failed on every PR because its
   `cla-signatures` branch does not exist. This fork takes no outside contributions, so the

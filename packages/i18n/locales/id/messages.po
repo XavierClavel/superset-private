@@ -9365,12 +9365,6 @@ msgstr "Aksi grup"
 msgid "Group by"
 msgstr "Kelompokkan menurut"
 
-msgid "Group by project"
-msgstr "Kelompokkan menurut proyek"
-
-msgid "Group by project to change the sort"
-msgstr "Kelompokkan menurut proyek untuk mengubah urutan"
-
 msgid "Group new branches under a folder."
 msgstr "Kelompokkan branch baru di bawah satu folder."
 
@@ -17659,6 +17653,9 @@ msgstr "Tampilkan semua komentar"
 
 msgid "Show all lines"
 msgstr "Tampilkan semua baris"
+
+msgid "Show all workspaces"
+msgstr "Tampilkan semua workspace"
 
 msgid "Show archived"
 msgstr "Tampilkan yang diarsipkan"

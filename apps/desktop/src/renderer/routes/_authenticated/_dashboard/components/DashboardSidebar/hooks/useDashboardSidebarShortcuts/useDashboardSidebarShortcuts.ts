@@ -63,8 +63,6 @@ interface UseDashboardSidebarShortcutsOptions {
 	 * only rewrite the persisted collapse state behind the user's back.
 	 */
 	revealCollapsed?: boolean;
-	/** Replaces the grouped order of the project rows, for the flat Recent list. */
-	projectWorkspaces?: DashboardSidebarWorkspace[];
 }
 
 export function useDashboardSidebarShortcuts(
@@ -74,7 +72,6 @@ export function useDashboardSidebarShortcuts(
 	{
 		revealCollapsed = true,
 		pinnedWorkspaces = [],
-		projectWorkspaces,
 	}: UseDashboardSidebarShortcutsOptions = {},
 ) {
 	const navigate = useNavigate();
@@ -86,14 +83,13 @@ export function useDashboardSidebarShortcuts(
 			[
 				// Sessions render above the project groups.
 				...sessionWorkspaces,
-				...(projectWorkspaces ??
-					groups.flatMap((project) =>
-						getProjectChildrenWorkspaces(project.children),
-					)),
+				...groups.flatMap((project) =>
+					getProjectChildrenWorkspaces(project.children),
+				),
 				// A destroy in flight keeps its row until the archive commit —
 				// don't hand shortcuts a workspace that is about to vanish.
 			].filter((workspace) => !deletingIds.has(workspace.id)),
-		[groups, sessionWorkspaces, projectWorkspaces, deletingIds],
+		[groups, sessionWorkspaces, deletingIds],
 	);
 	const workspaceShortcutLabels =
 		useStableWorkspaceShortcutLabels(flattenedWorkspaces);

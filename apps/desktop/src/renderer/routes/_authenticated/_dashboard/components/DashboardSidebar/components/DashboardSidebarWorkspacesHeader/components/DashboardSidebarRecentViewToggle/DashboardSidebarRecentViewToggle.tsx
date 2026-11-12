@@ -14,7 +14,7 @@ export function DashboardSidebarRecentViewToggle({
 }: DashboardSidebarRecentViewToggleProps) {
 	const { t } = useLingui();
 	const label = isRecentView
-		? t({ message: "Group by project" })
+		? t({ message: "Show all workspaces" })
 		: t({ message: "Show recent workspaces" });
 
 	return (

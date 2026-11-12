@@ -22,7 +22,6 @@ const HOST_FILTERS: SidebarProjectHostFilter[] = ["all", "local", "cloud"];
 interface DashboardSidebarProjectsSortMenuProps {
 	sortMode: SidebarProjectSortMode;
 	onSortModeChange: (mode: SidebarProjectSortMode) => void;
-	isRecentView: boolean;
 	/** Null hides the host filter (cloud rows are not inline). */
 	hostFilter: SidebarProjectHostFilter | null;
 	onHostFilterChange: (filter: SidebarProjectHostFilter) => void;
@@ -37,7 +36,6 @@ interface DashboardSidebarProjectsSortMenuProps {
 export function DashboardSidebarProjectsSortMenu({
 	sortMode,
 	onSortModeChange,
-	isRecentView,
 	hostFilter,
 	onHostFilterChange,
 }: DashboardSidebarProjectsSortMenuProps) {
@@ -120,29 +118,17 @@ export function DashboardSidebarProjectsSortMenu({
 					}
 				>
 					{SORT_MODES.map((mode) => (
-						<DropdownMenuRadioItem
-							key={mode}
-							value={mode}
-							disabled={isRecentView}
-						>
+						<DropdownMenuRadioItem key={mode} value={mode}>
 							{labels[mode]}
 						</DropdownMenuRadioItem>
 					))}
 				</DropdownMenuRadioGroup>
-				{isRecentView ? (
+				{sortMode !== "manual" && (
 					<div className="px-2 pb-1 pt-1.5 text-[11px] text-muted-foreground/70">
 						{t({
-							message: "Group by project to change the sort",
+							message: "Drag workspaces to reorder in Manual order",
 						})}
 					</div>
-				) : (
-					sortMode !== "manual" && (
-						<div className="px-2 pb-1 pt-1.5 text-[11px] text-muted-foreground/70">
-							{t({
-								message: "Drag workspaces to reorder in Manual order",
-							})}
-						</div>
-					)
 				)}
 				{hostFilter !== null && (
 					<>

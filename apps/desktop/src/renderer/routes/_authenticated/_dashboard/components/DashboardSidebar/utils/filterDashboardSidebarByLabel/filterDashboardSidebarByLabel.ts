@@ -51,6 +51,22 @@ function filterChildren(
 	return sameItems(filtered, children) ? children : filtered;
 }
 
+/** Keeps the projects and folders holding a matching workspace, expanded. */
+export function filterProjectsByWorkspace(
+	projects: DashboardSidebarProject[],
+	keep: (workspace: DashboardSidebarWorkspace) => boolean,
+): DashboardSidebarProject[] {
+	const filtered = projects.flatMap((project): DashboardSidebarProject[] => {
+		const children = filterChildren(project.children, keep);
+		if (children.length === 0) return [];
+		if (children === project.children && !project.isCollapsed) {
+			return [project];
+		}
+		return [{ ...project, isCollapsed: false, children }];
+	});
+	return sameItems(filtered, projects) ? projects : filtered;
+}
+
 export function filterDashboardSidebarByLabel(
 	input: DashboardSidebarLabelFilterInput,
 	labelId: string | null,
@@ -61,19 +77,8 @@ export function filterDashboardSidebarByLabel(
 	const hasLabel = (workspace: DashboardSidebarWorkspace): boolean =>
 		labelIdsByWorkspaceId.get(workspace.id)?.has(labelId) ?? false;
 
-	const projects = input.projects.flatMap(
-		(project): DashboardSidebarProject[] => {
-			const children = filterChildren(project.children, hasLabel);
-			if (children.length === 0) return [];
-			if (children === project.children && !project.isCollapsed) {
-				return [project];
-			}
-			return [{ ...project, isCollapsed: false, children }];
-		},
-	);
-
 	return {
-		projects: sameItems(projects, input.projects) ? input.projects : projects,
+		projects: filterProjectsByWorkspace(input.projects, hasLabel),
 		sessionChildren: filterChildren(input.sessionChildren, hasLabel),
 		sessionWorkspaces: input.sessionWorkspaces.filter(hasLabel),
 		pinnedWorkspaces: input.pinnedWorkspaces.filter(hasLabel),

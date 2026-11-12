@@ -9365,12 +9365,6 @@ msgstr "グループの操作"
 msgid "Group by"
 msgstr "グループ化"
 
-msgid "Group by project"
-msgstr "プロジェクトごとにグループ化"
-
-msgid "Group by project to change the sort"
-msgstr "並べ替えを変更するにはプロジェクトごとにグループ化してください"
-
 msgid "Group new branches under a folder."
 msgstr "新しいブランチをフォルダにまとめます。"
 
@@ -17659,6 +17653,9 @@ msgstr "すべてのコメントを表示"
 
 msgid "Show all lines"
 msgstr "すべての行を表示"
+
+msgid "Show all workspaces"
+msgstr "すべてのワークスペースを表示"
 
 msgid "Show archived"
 msgstr "アーカイブ済みを表示"

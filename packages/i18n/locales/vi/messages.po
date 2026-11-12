@@ -9365,12 +9365,6 @@ msgstr "Hành động nhóm"
 msgid "Group by"
 msgstr "Nhóm theo"
 
-msgid "Group by project"
-msgstr "Nhóm theo dự án"
-
-msgid "Group by project to change the sort"
-msgstr "Nhóm theo dự án để thay đổi cách sắp xếp"
-
 msgid "Group new branches under a folder."
 msgstr "Gom các nhánh mới vào một thư mục."
 
@@ -17659,6 +17653,9 @@ msgstr "Hiển thị tất cả bình luận"
 
 msgid "Show all lines"
 msgstr "Hiện tất cả các dòng"
+
+msgid "Show all workspaces"
+msgstr "Hiển thị tất cả workspace"
 
 msgid "Show archived"
 msgstr "Hiện mục đã lưu trữ"

@@ -150,7 +150,6 @@ export function DashboardSidebarWorkspacesHeader({
 			<DashboardSidebarProjectsSortMenu
 				sortMode={sortMode}
 				onSortModeChange={onSortModeChange}
-				isRecentView={isRecentView}
 				hostFilter={hostFilter}
 				onHostFilterChange={onHostFilterChange}
 			/>

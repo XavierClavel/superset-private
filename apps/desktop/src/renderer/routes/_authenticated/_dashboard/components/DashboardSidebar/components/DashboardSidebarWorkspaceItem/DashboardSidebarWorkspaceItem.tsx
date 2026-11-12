@@ -43,8 +43,8 @@ interface DashboardSidebarWorkspaceItemProps {
 	isSelected?: boolean;
 	onSelectionClick?: (event: WorkspaceSelectionEvent) => boolean;
 	/**
-	 * Set when the row renders outside its project group (Pinned, Recent): shows
-	 * the owning project's avatar for cross-project context.
+	 * Set when the row renders inside the top-level Pinned section: shows the
+	 * owning project's avatar for cross-project context.
 	 */
 	/** projectName is null for pinned project-less "session" workspaces. */
 	pinnedContext?: { projectName: string | null; projectIconUrl: string | null };

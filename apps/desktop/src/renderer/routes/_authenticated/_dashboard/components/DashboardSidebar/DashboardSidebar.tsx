@@ -54,7 +54,6 @@ import { DashboardSidebarHoverCardOverlay } from "./components/DashboardSidebarH
 import { DashboardSidebarLabelFilterBar } from "./components/DashboardSidebarLabelFilterBar";
 import { DashboardSidebarPinnedSection } from "./components/DashboardSidebarPinnedSection";
 import { DashboardSidebarProjectSection } from "./components/DashboardSidebarProjectSection";
-import { DashboardSidebarRecentWorkspaces } from "./components/DashboardSidebarRecentWorkspaces";
 import { DashboardSidebarSectionRenameProvider } from "./components/DashboardSidebarSectionRenameContext";
 import { DashboardSidebarSessionsSection } from "./components/DashboardSidebarSessionsSection";
 import { DashboardSidebarShellHeader } from "./components/DashboardSidebarShellHeader";
@@ -86,12 +85,12 @@ import type {
 	DashboardSidebarWorkspace,
 } from "./types";
 import { filterDashboardSidebarByLabel } from "./utils/filterDashboardSidebarByLabel";
+import { filterDashboardSidebarByRecentActivity } from "./utils/filterDashboardSidebarByRecentActivity";
 import { filterDashboardSidebarProjects } from "./utils/filterDashboardSidebarProjects";
 import {
 	filterDashboardSidebarProjectsByHost,
 	matchesHostFilter,
 } from "./utils/filterDashboardSidebarProjectsByHost";
-import { getRecentWorkspaces } from "./utils/getRecentWorkspaces";
 import { getProjectChildrenWorkspaces } from "./utils/projectChildren";
 import { sortDashboardSidebarProjects } from "./utils/sortDashboardSidebarProjects";
 
@@ -295,9 +294,19 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			labelIdsByWorkspaceId,
 		],
 	);
+	const recentProjects = useMemo(
+		() =>
+			isRecentView
+				? filterDashboardSidebarByRecentActivity(
+						labelView.projects,
+						recentViewNow,
+					)
+				: labelView.projects,
+		[isRecentView, labelView.projects, recentViewNow],
+	);
 	const hostFilteredGroups = useMemo(
-		() => filterDashboardSidebarProjectsByHost(labelView.projects, hostFilter),
-		[labelView.projects, hostFilter],
+		() => filterDashboardSidebarProjectsByHost(recentProjects, hostFilter),
+		[recentProjects, hostFilter],
 	);
 	const displayedPinnedWorkspaces = useMemo(
 		() =>
@@ -334,7 +343,10 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		displayedSessionWorkspaces.length === 0 &&
 		labelView.sessionChildren.length === 0;
 	const isFilterActive =
-		trimmedFilterQuery !== "" || hostFilter !== "all" || isLabelFilterActive;
+		trimmedFilterQuery !== "" ||
+		hostFilter !== "all" ||
+		isLabelFilterActive ||
+		isRecentView;
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -347,29 +359,20 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			setProjectFilterQuery("");
 			setSidebarProjectHostFilter("all");
 			setActiveFilterLabelId(null);
+			setSidebarRecentView(false);
 		},
 	});
 
-	const recentShortcutWorkspaces = useMemo(
-		() =>
-			isRecentView
-				? getRecentWorkspaces(labelView.projects, recentViewNow).map(
-						({ workspace }) => workspace,
-					)
-				: undefined,
-		[isRecentView, labelView.projects, recentViewNow],
-	);
 	// Label-filtered but not text-filtered, so ⌘1–⌘9 targets stay put while typing a query.
 	// The filtered view expands matches through derived objects, so a jump
 	// must not toggle the persisted collapse state while it is active.
 	const workspaceShortcutLabels = useDashboardSidebarShortcuts(
-		labelView.projects,
+		recentProjects,
 		labelView.sessionWorkspaces,
 		labelView.sessionChildren,
 		{
-			revealCollapsed: !isFilterActive && !isRecentView,
+			revealCollapsed: !isFilterActive,
 			pinnedWorkspaces: labelView.pinnedWorkspaces,
-			projectWorkspaces: recentShortcutWorkspaces,
 		},
 	);
 	// Scoped to what the filter actually shows — select-all and range-select
@@ -579,32 +582,24 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 					</DashboardSidebarBulkActions>
 				</div>
 			)}
-			{(isCollapsed || !workspacesListCollapsed) &&
-				(isRecentView ? (
-					<DashboardSidebarRecentWorkspaces
-						projects={displayedGroups}
-						now={recentViewNow}
-						workspaceShortcutLabels={workspaceShortcutLabels}
-						onWorkspaceHover={refreshWorkspacePullRequest}
-					/>
-				) : (
-					<SortableContext
-						items={displayedProjectIds}
-						strategy={verticalListSortingStrategy}
-					>
-						{displayedGroups.map((project) => (
-							<SortableProjectWrapper
-								key={project.id}
-								project={project}
-								isCollapsed={isCollapsed}
-								isDragDisabled={isProjectDragDisabled}
-								workspaceShortcutLabels={workspaceShortcutLabels}
-								onWorkspaceHover={refreshWorkspacePullRequest}
-								onToggleCollapse={toggleProjectCollapsed}
-							/>
-						))}
-					</SortableContext>
-				))}
+			{(isCollapsed || !workspacesListCollapsed) && (
+				<SortableContext
+					items={displayedProjectIds}
+					strategy={verticalListSortingStrategy}
+				>
+					{displayedGroups.map((project) => (
+						<SortableProjectWrapper
+							key={project.id}
+							project={project}
+							isCollapsed={isCollapsed}
+							isDragDisabled={isProjectDragDisabled}
+							workspaceShortcutLabels={workspaceShortcutLabels}
+							onWorkspaceHover={refreshWorkspacePullRequest}
+							onToggleCollapse={toggleProjectCollapsed}
+						/>
+					))}
+				</SortableContext>
+			)}
 			{!isCollapsed && !workspacesListCollapsed && (
 				<DashboardSidebarHiddenProjects
 					projects={hiddenProjects}
@@ -626,9 +621,13 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 								? t({
 										message: `No workspaces have the label ${activeFilterLabel.name}`,
 									})
-								: hostFilter === "cloud"
-									? t({ message: "No cloud workspaces" })
-									: t({ message: "No local workspaces" })}
+								: isRecentView
+									? t({
+											message: "No agent activity in the last two weeks",
+										})
+									: hostFilter === "cloud"
+										? t({ message: "No cloud workspaces" })
+										: t({ message: "No local workspaces" })}
 					</div>
 				)}
 		</>

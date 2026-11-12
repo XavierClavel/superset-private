@@ -9365,12 +9365,6 @@ msgstr "群組操作"
 msgid "Group by"
 msgstr "分組方式"
 
-msgid "Group by project"
-msgstr "依專案分組"
-
-msgid "Group by project to change the sort"
-msgstr "依專案分組後即可變更排序"
-
 msgid "Group new branches under a folder."
 msgstr "將新分支歸入一個資料夾。"
 
@@ -17659,6 +17653,9 @@ msgstr "顯示所有評論"
 
 msgid "Show all lines"
 msgstr "顯示所有行"
+
+msgid "Show all workspaces"
+msgstr "顯示全部工作區"
 
 msgid "Show archived"
 msgstr "顯示已歸檔"

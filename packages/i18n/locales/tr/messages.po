@@ -9365,12 +9365,6 @@ msgstr "Grup eylemleri"
 msgid "Group by"
 msgstr "Gruplama ölçütü"
 
-msgid "Group by project"
-msgstr "Projeye göre grupla"
-
-msgid "Group by project to change the sort"
-msgstr "Sıralamayı değiştirmek için projeye göre gruplayın"
-
 msgid "Group new branches under a folder."
 msgstr "Yeni dalları bir klasör altında toplayın."
 
@@ -17659,6 +17653,9 @@ msgstr "Tüm yorumları göster"
 
 msgid "Show all lines"
 msgstr "Tüm satırları göster"
+
+msgid "Show all workspaces"
+msgstr "Tüm çalışma alanlarını göster"
 
 msgid "Show archived"
 msgstr "Arşivlenenleri göster"

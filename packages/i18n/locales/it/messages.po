@@ -9365,12 +9365,6 @@ msgstr "Azioni del gruppo"
 msgid "Group by"
 msgstr "Raggruppa per"
 
-msgid "Group by project"
-msgstr "Raggruppa per progetto"
-
-msgid "Group by project to change the sort"
-msgstr "Raggruppa per progetto per cambiare l'ordinamento"
-
 msgid "Group new branches under a folder."
 msgstr "Raggruppa i nuovi branch sotto una cartella."
 
@@ -17659,6 +17653,9 @@ msgstr "Mostra tutti i commenti"
 
 msgid "Show all lines"
 msgstr "Mostra tutte le righe"
+
+msgid "Show all workspaces"
+msgstr "Mostra tutti i workspace"
 
 msgid "Show archived"
 msgstr "Mostra archiviati"
