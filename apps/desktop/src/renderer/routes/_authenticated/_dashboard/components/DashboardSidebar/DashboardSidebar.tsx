@@ -342,9 +342,11 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		displayedPinnedWorkspaces.length === 0 &&
 		displayedSessionWorkspaces.length === 0 &&
 		labelView.sessionChildren.length === 0;
-	const isRowFilterActive =
-		trimmedFilterQuery !== "" || hostFilter !== "all" || isLabelFilterActive;
-	const isFilterActive = isRowFilterActive || isRecentView;
+	const isFilterActive =
+		trimmedFilterQuery !== "" ||
+		hostFilter !== "all" ||
+		isLabelFilterActive ||
+		isRecentView;
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -369,7 +371,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		labelView.sessionWorkspaces,
 		labelView.sessionChildren,
 		{
-			revealCollapsed: !isRowFilterActive,
+			revealCollapsed: !isFilterActive,
 			pinnedWorkspaces: labelView.pinnedWorkspaces,
 		},
 	);

@@ -41,10 +41,11 @@ is allowed.
   asks for the user outranks `working`
   (`DashboardSidebarWorkspaceStatusProvider/utils/getProjectStatus`).
 - **Recent filter on the Projects list**: upstream's "Last active" sort reorders rows only inside
-  each project, so a project whose session just ran can sit far down the list. A clock button in
-  the Projects header hides the projects with no workspace that had agent activity in the last
-  14 days. The projects it keeps show all their workspaces. Like the other filters, it turns off
-  drag while it is on. The choice persists in `sidebarRecentView`
+  each project, so a session that just ran can sit under a project far down the list. A clock
+  button in the Projects header filters the list to the workspaces with agent activity in the
+  last 14 days, still grouped by project, and hides the projects left empty. Like the label
+  filter, it expands the projects and folders it shows and turns off drag while it is on. The
+  choice persists in `sidebarRecentView`
   (`DashboardSidebar/utils/filterDashboardSidebarByRecentActivity`).
 - **No CLA check**: upstream's `.github/workflows/cla.yml` asks every PR author outside its
   allowlist to sign Superset's CLA, and on this fork it failed on every PR because its
