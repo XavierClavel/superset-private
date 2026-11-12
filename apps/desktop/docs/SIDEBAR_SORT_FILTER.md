@@ -56,9 +56,10 @@ row to the top of "Last active". Once a row carries any `lastActivityAt`, that
 alone ranks it.
 
 **What counts.** Every normalized agent lifecycle event that reaches
-`notifications.hook`: prompt submit, tool use, stop, permission request, and
-session attach/detach, for every supported agent CLI. Creating a workspace
-stamps creation as its first activity.
+`notifications.hook`: prompt submit, tool use, stop, permission request and
+failure, for every supported agent CLI. Session attach/detach does not count:
+restoring a terminal resumes its agent session, which would mark an idle
+workspace active. Creating a workspace stamps creation as its first activity.
 
 **What does not count, by design.** Plain non-agent terminal typing; the user
 merely opening or viewing a workspace (that would reshuffle the list under the
