@@ -525,7 +525,7 @@ export const v2UserPreferencesSchema = z.object({
 	// Which workspaces the Projects list shows: every row, only the ones on
 	// a device, or only cloud sandboxes.
 	sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema,
-	// Hides Projects workspaces with no agent activity in the last two weeks.
+	// Hides projects with no agent activity in the last two weeks.
 	sidebarRecentView: z.boolean().default(false),
 	// Built-in (synthetic, app-shipped) presets the user hid from the preset
 	// bar. Synthetic presets have no v2TerminalPresets row, so visibility can't
