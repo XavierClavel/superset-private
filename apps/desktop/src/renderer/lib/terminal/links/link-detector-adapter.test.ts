@@ -201,4 +201,53 @@ describe("LinkDetectorAdapter", () => {
 		);
 		expect(pathLink).toBeDefined();
 	});
+
+	describe("paths a TUI broke onto an indented next row", () => {
+		const path =
+			"/private/tmp/claude-502/-Users-xavierclavel--paradev-worktrees-backend-picta-api-photobook-layout-landscape-7e8c270e/e49c4ae7-bb64-4d0c-800d-0fd856b7d96a/scratchpad/duplicate-landscape-empty-layer-as-back.sql";
+		const cols = 145;
+		const firstRow = `  Script: ${path}`.slice(0, cols);
+		const secondRow = `  ${path.slice(firstRow.length - "  Script: ".length)}`;
+
+		async function linksOn(row: number) {
+			const { adapter } = createAdapter(
+				["⏺ The SQL is written.", firstRow, secondRow, "", "  It finds..."],
+				[path],
+				{ cols },
+			);
+			return new Promise<ILink[] | undefined>((resolve) => {
+				adapter.provideLinks(row, resolve);
+			});
+		}
+
+		it("links the whole path from either row", async () => {
+			for (const row of [2, 3]) {
+				const links = await linksOn(row);
+				expect(links).toHaveLength(1);
+				expect(links?.[0]?.text).toBe(path);
+				expect(links?.[0]?.range).toEqual({
+					start: { x: 11, y: 2 },
+					end: { x: secondRow.length, y: 3 },
+				});
+			}
+		});
+
+		it("leaves rows outside the path unlinked", async () => {
+			expect(await linksOn(1)).toBeUndefined();
+			expect(await linksOn(5)).toBeUndefined();
+		});
+
+		it("keeps a path that ends on a full row", async () => {
+			const filler = "x".repeat(20);
+			const { adapter } = createAdapter(
+				[`${filler} /foo/bar.ts`, "  next row"],
+				["/foo/bar.ts"],
+				{ cols: filler.length + 12 },
+			);
+			const links = await new Promise<ILink[] | undefined>((resolve) => {
+				adapter.provideLinks(1, resolve);
+			});
+			expect(links?.map((link) => link.text)).toEqual(["/foo/bar.ts"]);
+		});
+	});
 });
