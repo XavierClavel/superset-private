@@ -22,6 +22,7 @@ import {
 import { UpdatesPill } from "renderer/components/UpdatesPill";
 import { useCloudWorkspaces } from "renderer/hooks/useCloudWorkspaces";
 import { useMatchRoute } from "renderer/hooks/useMatchRoute";
+import { useNow } from "renderer/hooks/useNow";
 import { useParadevShell } from "renderer/hooks/useParadevShell";
 import { useUserPreferences } from "renderer/hooks/useUserPreferences";
 import { useHotkeyDisplay } from "renderer/hotkeys";
@@ -75,6 +76,7 @@ import type {
 	DashboardSidebarWorkspace,
 } from "./types";
 import { filterDashboardSidebarByLabel } from "./utils/filterDashboardSidebarByLabel";
+import { filterDashboardSidebarByRecentActivity } from "./utils/filterDashboardSidebarByRecentActivity";
 import { filterDashboardSidebarProjects } from "./utils/filterDashboardSidebarProjects";
 import {
 	filterDashboardSidebarProjectsByHost,
@@ -82,6 +84,8 @@ import {
 } from "./utils/filterDashboardSidebarProjectsByHost";
 import { getProjectChildrenWorkspaces } from "./utils/projectChildren";
 import { sortDashboardSidebarProjects } from "./utils/sortDashboardSidebarProjects";
+
+const RECENT_VIEW_TICK_MS = 60 * 60 * 1000;
 
 interface DashboardSidebarProps {
 	isCollapsed?: boolean;
@@ -209,6 +213,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		preferences,
 		setSidebarProjectSortMode,
 		setSidebarProjectHostFilter,
+		setSidebarRecentView,
 	} = useUserPreferences();
 	const sortMode = preferences.sidebarProjectSortMode;
 	// The icon rail has no control for the filter, so it rests there.
@@ -216,6 +221,8 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		isCloudEnabled && !isCollapsed
 			? preferences.sidebarProjectHostFilter
 			: "all";
+	const isRecentView = preferences.sidebarRecentView && !isCollapsed;
+	const recentViewNow = useNow(RECENT_VIEW_TICK_MS, isRecentView).getTime();
 	const [projectFilterQuery, setProjectFilterQuery] = useState("");
 	// The icon rail hides the Projects header (and its filter input); a
 	// filter left active there would invisibly hide projects.
@@ -287,9 +294,19 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			labelIdsByWorkspaceId,
 		],
 	);
+	const recentProjects = useMemo(
+		() =>
+			isRecentView
+				? filterDashboardSidebarByRecentActivity(
+						labelView.projects,
+						recentViewNow,
+					)
+				: labelView.projects,
+		[isRecentView, labelView.projects, recentViewNow],
+	);
 	const hostFilteredGroups = useMemo(
-		() => filterDashboardSidebarProjectsByHost(labelView.projects, hostFilter),
-		[labelView.projects, hostFilter],
+		() => filterDashboardSidebarProjectsByHost(recentProjects, hostFilter),
+		[recentProjects, hostFilter],
 	);
 	const displayedPinnedWorkspaces = useMemo(
 		() =>
@@ -325,8 +342,9 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		displayedPinnedWorkspaces.length === 0 &&
 		displayedSessionWorkspaces.length === 0 &&
 		labelView.sessionChildren.length === 0;
-	const isFilterActive =
+	const isRowFilterActive =
 		trimmedFilterQuery !== "" || hostFilter !== "all" || isLabelFilterActive;
+	const isFilterActive = isRowFilterActive || isRecentView;
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -339,6 +357,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			setProjectFilterQuery("");
 			setSidebarProjectHostFilter("all");
 			setActiveFilterLabelId(null);
+			setSidebarRecentView(false);
 		},
 	});
 
@@ -346,11 +365,11 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 	// The filtered view expands matches through derived objects, so a jump
 	// must not toggle the persisted collapse state while it is active.
 	const workspaceShortcutLabels = useDashboardSidebarShortcuts(
-		labelView.projects,
+		recentProjects,
 		labelView.sessionWorkspaces,
 		labelView.sessionChildren,
 		{
-			revealCollapsed: !isFilterActive,
+			revealCollapsed: !isRowFilterActive,
 			pinnedWorkspaces: labelView.pinnedWorkspaces,
 		},
 	);
@@ -501,6 +520,8 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 						<DashboardSidebarWorkspacesHeader
 							sortMode={sortMode}
 							onSortModeChange={setSidebarProjectSortMode}
+							isRecentView={isRecentView}
+							onRecentViewChange={setSidebarRecentView}
 							hostFilter={isCloudEnabled ? hostFilter : null}
 							onHostFilterChange={setSidebarProjectHostFilter}
 							filterQuery={projectFilterQuery}
@@ -548,9 +569,13 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 								? t({
 										message: `No workspaces have the label ${activeFilterLabel.name}`,
 									})
-								: hostFilter === "cloud"
-									? t({ message: "No cloud workspaces" })
-									: t({ message: "No local workspaces" })}
+								: isRecentView
+									? t({
+											message: "No agent activity in the last two weeks",
+										})
+									: hostFilter === "cloud"
+										? t({ message: "No cloud workspaces" })
+										: t({ message: "No local workspaces" })}
 					</div>
 				)}
 		</>

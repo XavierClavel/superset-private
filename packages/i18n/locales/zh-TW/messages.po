@@ -12677,6 +12677,8 @@ msgstr "無代理程式"
 
 msgid "No agent is available to set up the environment"
 msgstr "沒有可用來設定環境的代理程式"
+msgid "No agent activity in the last two weeks"
+msgstr "過去兩週沒有代理程式活動"
 
 msgid "No agent is configured on this host"
 msgstr "此主機上未設定任何代理程式"
@@ -18325,6 +18327,8 @@ msgstr "顯示所有行"
 
 msgid "Show Apple's installer"
 msgstr "顯示 Apple 安裝程式"
+msgid "Show all workspaces"
+msgstr "顯示全部工作區"
 
 msgid "Show archived"
 msgstr "顯示已歸檔"
@@ -18430,6 +18434,9 @@ msgstr "顯示拉取請求列表"
 
 msgid "Show pull request preview"
 msgstr "顯示拉取請求預覽"
+
+msgid "Show recent workspaces"
+msgstr "顯示最近的工作區"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "顯示已解決 ({resolvedCount})"

@@ -12677,6 +12677,8 @@ msgstr "Nenhum agente"
 
 msgid "No agent is available to set up the environment"
 msgstr "Nenhum agente disponível para configurar o ambiente"
+msgid "No agent activity in the last two weeks"
+msgstr "Nenhuma atividade de agente nas últimas duas semanas"
 
 msgid "No agent is configured on this host"
 msgstr "Nenhum agente está configurado neste host"
@@ -18325,6 +18327,8 @@ msgstr "Mostrar todas as linhas"
 
 msgid "Show Apple's installer"
 msgstr "Mostrar o instalador da Apple"
+msgid "Show all workspaces"
+msgstr "Mostrar todas as áreas de trabalho"
 
 msgid "Show archived"
 msgstr "Mostrar arquivadas"
@@ -18430,6 +18434,9 @@ msgstr "Mostrar a lista de pull requests"
 
 msgid "Show pull request preview"
 msgstr "Mostrar a prévia do pull request"
+
+msgid "Show recent workspaces"
+msgstr "Mostrar áreas de trabalho recentes"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Mostrar os resolvidos ({resolvedCount})"

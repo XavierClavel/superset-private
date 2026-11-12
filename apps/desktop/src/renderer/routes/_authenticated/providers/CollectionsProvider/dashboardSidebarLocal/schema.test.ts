@@ -158,6 +158,19 @@ describe("healUserPreferences sidebarProjectSortMode", () => {
 	});
 });
 
+describe("healUserPreferences sidebarRecentView", () => {
+	it("is on only for a stored true", () => {
+		expect(healUserPreferences({}).sidebarRecentView).toBe(false);
+		expect(
+			healUserPreferences({ sidebarRecentView: "yes" as unknown as boolean })
+				.sidebarRecentView,
+		).toBe(false);
+		expect(
+			healUserPreferences({ sidebarRecentView: true }).sidebarRecentView,
+		).toBe(true);
+	});
+});
+
 describe("healUserPreferences favoritePageIds", () => {
 	it("defaults to an empty list on rows written before the field existed", () => {
 		expect(healUserPreferences({}).favoritePageIds).toEqual([]);

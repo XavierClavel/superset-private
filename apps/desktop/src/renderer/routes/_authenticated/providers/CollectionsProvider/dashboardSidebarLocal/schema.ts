@@ -525,6 +525,8 @@ export const userPreferencesSchema = z.object({
 	// Which workspaces the Projects list shows: every row, only the ones on
 	// a device, or only cloud sandboxes.
 	sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema,
+	// Hides Projects workspaces with no agent activity in the last two weeks.
+	sidebarRecentView: z.boolean().default(false),
 	// Built-in (synthetic, app-shipped) presets the user hid from the preset
 	// bar. Synthetic presets have no terminalPresets row, so visibility can't
 	// live on the row's pinnedToBar like user presets. Pruned against
@@ -567,6 +569,7 @@ export const DEFAULT_V2_USER_PREFERENCES: UserPreferencesRow = {
 	changesViewMode: "folders",
 	sidebarProjectSortMode: "manual",
 	sidebarProjectHostFilter: "all",
+	sidebarRecentView: false,
 	hiddenBuiltinPresetIds: [],
 	favoritePageIds: [],
 	hiddenTagFolders: {},
@@ -671,6 +674,7 @@ export function healUserPreferences(raw: unknown): UserPreferencesRow {
 		sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema.parse(
 			r.sidebarProjectHostFilter,
 		),
+		sidebarRecentView: r.sidebarRecentView === true,
 		sidebarLabelFilterId:
 			typeof r.sidebarLabelFilterId === "string"
 				? r.sidebarLabelFilterId

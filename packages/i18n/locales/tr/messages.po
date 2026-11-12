@@ -12677,6 +12677,8 @@ msgstr "Ajan yok"
 
 msgid "No agent is available to set up the environment"
 msgstr "Ortamı kurmak için kullanılabilir ajan yok"
+msgid "No agent activity in the last two weeks"
+msgstr "Son iki haftada ajan etkinliği yok"
 
 msgid "No agent is configured on this host"
 msgstr "Bu ana makinede yapılandırılmış bir ajan yok"
@@ -18325,6 +18327,8 @@ msgstr "Tüm satırları göster"
 
 msgid "Show Apple's installer"
 msgstr "Apple'ın yükleyicisini göster"
+msgid "Show all workspaces"
+msgstr "Tüm çalışma alanlarını göster"
 
 msgid "Show archived"
 msgstr "Arşivlenenleri göster"
@@ -18430,6 +18434,9 @@ msgstr "Pull request listesini göster"
 
 msgid "Show pull request preview"
 msgstr "Pull request önizlemesini göster"
+
+msgid "Show recent workspaces"
+msgstr "Son çalışma alanlarını göster"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Çözülenleri göster ({resolvedCount})"

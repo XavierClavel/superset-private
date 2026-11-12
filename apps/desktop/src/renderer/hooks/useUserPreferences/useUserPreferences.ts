@@ -33,6 +33,7 @@ export interface UserPreferencesApi {
 	setChangesViewMode: (next: ChangesViewMode) => void;
 	setSidebarProjectSortMode: (next: SidebarProjectSortMode) => void;
 	setSidebarProjectHostFilter: (next: SidebarProjectHostFilter) => void;
+	setSidebarRecentView: (next: boolean) => void;
 	setSidebarLabelFilterId: (next: string | null) => void;
 	setBuiltinPresetHidden: (presetId: string, hidden: boolean) => void;
 	/** Hide/show a tag folder in one project without touching anyone's tags. */
@@ -309,6 +310,23 @@ export function useUserPreferences(): UserPreferencesApi {
 		[collections],
 	);
 
+	const setSidebarRecentView = useCallback(
+		(next: boolean) => {
+			const existing = collections.userPreferences.get(V2_USER_PREFERENCES_ID);
+			if (!existing) {
+				collections.userPreferences.insert({
+					...DEFAULT_V2_USER_PREFERENCES,
+					sidebarRecentView: next,
+				});
+				return;
+			}
+			collections.userPreferences.update(V2_USER_PREFERENCES_ID, (draft) => {
+				draft.sidebarRecentView = next;
+			});
+		},
+		[collections],
+	);
+
 	const setSidebarLabelFilterId = useCallback(
 		(next: string | null) => {
 			const existing = collections.userPreferences.get(V2_USER_PREFERENCES_ID);
@@ -405,6 +423,7 @@ export function useUserPreferences(): UserPreferencesApi {
 		setChangesViewMode,
 		setSidebarProjectSortMode,
 		setSidebarProjectHostFilter,
+		setSidebarRecentView,
 		setSidebarLabelFilterId,
 		setBuiltinPresetHidden,
 		setTagFolderHidden,

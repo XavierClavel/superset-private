@@ -12677,6 +12677,8 @@ msgstr "无智能体"
 
 msgid "No agent is available to set up the environment"
 msgstr "没有可用于设置环境的代理"
+msgid "No agent activity in the last two weeks"
+msgstr "过去两周没有智能体活动"
 
 msgid "No agent is configured on this host"
 msgstr "此主机上未配置任何智能体"
@@ -18325,6 +18327,8 @@ msgstr "显示所有行"
 
 msgid "Show Apple's installer"
 msgstr "显示 Apple 安装器"
+msgid "Show all workspaces"
+msgstr "显示全部工作区"
 
 msgid "Show archived"
 msgstr "显示已归档"
@@ -18430,6 +18434,9 @@ msgstr "显示拉取请求列表"
 
 msgid "Show pull request preview"
 msgstr "显示拉取请求预览"
+
+msgid "Show recent workspaces"
+msgstr "显示最近的工作区"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "显示已解决 ({resolvedCount})"

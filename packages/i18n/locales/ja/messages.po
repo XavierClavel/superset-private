@@ -12677,6 +12677,8 @@ msgstr "エージェントなし"
 
 msgid "No agent is available to set up the environment"
 msgstr "環境をセットアップできるエージェントがありません"
+msgid "No agent activity in the last two weeks"
+msgstr "過去2週間にエージェントのアクティビティはありません"
 
 msgid "No agent is configured on this host"
 msgstr "このホストにはエージェントが設定されていません"
@@ -18325,6 +18327,8 @@ msgstr "すべての行を表示"
 
 msgid "Show Apple's installer"
 msgstr "Apple のインストーラを表示"
+msgid "Show all workspaces"
+msgstr "すべてのワークスペースを表示"
 
 msgid "Show archived"
 msgstr "アーカイブ済みを表示"
@@ -18430,6 +18434,9 @@ msgstr "プルリクエスト一覧を表示"
 
 msgid "Show pull request preview"
 msgstr "プルリクエストのプレビューを表示"
+
+msgid "Show recent workspaces"
+msgstr "最近のワークスペースを表示"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "解決済みを表示 ({resolvedCount})"

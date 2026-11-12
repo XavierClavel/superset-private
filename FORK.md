@@ -40,6 +40,16 @@ is allowed.
   for the user, else the working spinner. Unlike the workspace rows' order, every status that
   asks for the user outranks `working`
   (`DashboardSidebarWorkspaceStatusProvider/utils/getProjectStatus`).
+- **Recent filter on the Projects list**: upstream's "Last active" sort reorders rows only inside
+  each project, so a session that just ran can sit under a project far down the list. A clock
+  button in the Projects header filters the list to the workspaces with agent activity in the
+  last 14 days, still grouped by project, and hides the projects left empty. Projects and
+  folders keep their collapsed state. Like the other filters, it turns off drag while it is on. The
+  choice persists in `sidebarRecentView`
+  (`DashboardSidebar/utils/filterDashboardSidebarByRecentActivity`).
+  An agent session attaching or detaching no longer counts as activity for this filter or for
+  "Last active": the app resumes a workspace's agent session when it restores its terminal, which
+  marked idle workspaces active (`host-service` `fan-out-agent-lifecycle.ts`).
 - **No CLA check**: upstream's `.github/workflows/cla.yml` asks every PR author outside its
   allowlist to sign Superset's CLA, and on this fork it failed on every PR because its
   `cla-signatures` branch does not exist. This fork takes no outside contributions, so the

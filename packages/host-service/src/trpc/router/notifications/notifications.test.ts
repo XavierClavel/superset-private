@@ -521,6 +521,26 @@ describe("notificationsRouter.hook", () => {
 		});
 	});
 
+	it("does not stamp activity when an agent session attaches or detaches", async () => {
+		const workspaceId = "dddddddd-dddd-4ddd-8ddd-dddddddddddd";
+		const { ctx, db, workspaceChanged } = createDbContext({
+			terminalId: "terminal-resume",
+			workspaceId,
+		});
+
+		for (const eventType of ["SessionStart", "SessionEnd"]) {
+			const result = await notificationsRouter.createCaller(ctx).hook({
+				terminalId: "terminal-resume",
+				eventType,
+				agent: { agentId: "claude", sessionId: "session-abc" },
+			});
+			expect(result).toEqual({ success: true, ignored: false });
+		}
+
+		expect(getLocalWorkspace(db, workspaceId)?.lastActivityAt).toBeNull();
+		expect(workspaceChanged).toHaveLength(0);
+	});
+
 	it("does not fail the hook when the activity write throws", async () => {
 		const { ctx, broadcastAgentLifecycle } = createContext("workspace-1");
 		(ctx.db as unknown as { update: () => never }).update = () => {

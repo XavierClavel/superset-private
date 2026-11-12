@@ -12677,6 +12677,8 @@ msgstr "Không có agent"
 
 msgid "No agent is available to set up the environment"
 msgstr "Không có agent nào để thiết lập environment"
+msgid "No agent activity in the last two weeks"
+msgstr "Không có hoạt động của agent trong hai tuần qua"
 
 msgid "No agent is configured on this host"
 msgstr "Không có tác nhân nào được cấu hình trên máy chủ này"
@@ -18325,6 +18327,8 @@ msgstr "Hiện tất cả các dòng"
 
 msgid "Show Apple's installer"
 msgstr "Hiện trình cài đặt của Apple"
+msgid "Show all workspaces"
+msgstr "Hiển thị tất cả workspace"
 
 msgid "Show archived"
 msgstr "Hiện mục đã lưu trữ"
@@ -18430,6 +18434,9 @@ msgstr "Hiện danh sách pull request"
 
 msgid "Show pull request preview"
 msgstr "Hiện xem trước pull request"
+
+msgid "Show recent workspaces"
+msgstr "Hiển thị workspace gần đây"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Hiện các mục đã xử lý ({resolvedCount})"

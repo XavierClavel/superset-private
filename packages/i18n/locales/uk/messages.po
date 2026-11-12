@@ -12671,6 +12671,8 @@ msgstr "Без агента"
 
 msgid "No agent is available to set up the environment"
 msgstr "Немає агента, який може налаштувати середовище"
+msgid "No agent activity in the last two weeks"
+msgstr "Немає активності агентів за останні два тижні"
 
 msgid "No agent is configured on this host"
 msgstr "На цьому хості не налаштовано жодного агента"
@@ -18319,6 +18321,8 @@ msgstr "Показати всі рядки"
 
 msgid "Show Apple's installer"
 msgstr "Показати інсталятор Apple"
+msgid "Show all workspaces"
+msgstr "Показати всі робочі простори"
 
 msgid "Show archived"
 msgstr "Показати архівні"
@@ -18424,6 +18428,9 @@ msgstr "Показати список пул-реквестів"
 
 msgid "Show pull request preview"
 msgstr "Показати попередній перегляд пул-реквесту"
+
+msgid "Show recent workspaces"
+msgstr "Показати нещодавні робочі простори"
 
 msgid "Show resolved ({resolvedCount})"
 msgstr "Показати вирішені ({resolvedCount})"

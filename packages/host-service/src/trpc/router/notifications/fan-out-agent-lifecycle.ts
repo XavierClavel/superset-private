@@ -50,16 +50,19 @@ export function fanOutAgentLifecycle(
 	const { workspaceId, eventType, preview, occurredAt } = event;
 	ctx.eventBus.broadcastAgentLifecycle(event);
 
-	// Every lifecycle event is activity for the sidebar's "Last active"
-	// ranking. Best-effort: a failed write must not fail the caller, which
-	// also drives the chime and the status dots.
-	try {
-		touchLocalWorkspaceActivity(ctx, workspaceId, occurredAt);
-	} catch (err) {
-		console.warn(
-			`[agent-lifecycle] failed to record activity for workspace ${workspaceId}:`,
-			err,
-		);
+	// Activity for the sidebar's "Last active" ranking. A session attaching or
+	// detaching is not: restoring a terminal resumes its agent session, which
+	// would mark an idle workspace active. Best-effort: a failed write must not
+	// fail the caller, which also drives the chime and the status dots.
+	if (eventType !== "Attached" && eventType !== "Detached") {
+		try {
+			touchLocalWorkspaceActivity(ctx, workspaceId, occurredAt);
+		} catch (err) {
+			console.warn(
+				`[agent-lifecycle] failed to record activity for workspace ${workspaceId}:`,
+				err,
+			);
+		}
 	}
 
 	try {
