@@ -43,8 +43,8 @@ is allowed.
 - **Recent filter on the Projects list**: upstream's "Last active" sort reorders rows only inside
   each project, so a session that just ran can sit under a project far down the list. A clock
   button in the Projects header filters the list to the workspaces with agent activity in the
-  last 14 days, still grouped by project, and hides the projects left empty. Like the label
-  filter, it expands the projects and folders it shows and turns off drag while it is on. The
+  last 14 days, still grouped by project, and hides the projects left empty. Projects and
+  folders keep their collapsed state. Like the other filters, it turns off drag while it is on. The
   choice persists in `sidebarRecentView`
   (`DashboardSidebar/utils/filterDashboardSidebarByRecentActivity`).
 - **No CLA check**: upstream's `.github/workflows/cla.yml` asks every PR author outside its

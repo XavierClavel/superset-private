@@ -8,11 +8,15 @@ export function filterDashboardSidebarByRecentActivity(
 	projects: DashboardSidebarProject[],
 	now: number,
 ): DashboardSidebarProject[] {
-	return filterProjectsByWorkspace(projects, (workspace) => {
-		const activityTime = getWorkspaceActivityTime(workspace);
-		return (
-			!Number.isNaN(activityTime) &&
-			now - activityTime < RECENT_ACTIVITY_WINDOW_MS
-		);
-	});
+	return filterProjectsByWorkspace(
+		projects,
+		(workspace) => {
+			const activityTime = getWorkspaceActivityTime(workspace);
+			return (
+				!Number.isNaN(activityTime) &&
+				now - activityTime < RECENT_ACTIVITY_WINDOW_MS
+			);
+		},
+		{ expand: false },
+	);
 }

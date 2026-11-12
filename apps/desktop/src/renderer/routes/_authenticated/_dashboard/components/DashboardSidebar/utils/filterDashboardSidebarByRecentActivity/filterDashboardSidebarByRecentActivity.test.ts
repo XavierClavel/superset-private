@@ -13,7 +13,7 @@ const NOW = new Date("2026-09-15").getTime();
 const DAY_MS = 24 * 60 * 60 * 1000;
 
 describe("filterDashboardSidebarByRecentActivity", () => {
-	it("keeps the project grouping, drops idle workspaces and projects left empty", () => {
+	it("drops idle workspaces and the projects left empty, keeping collapse state", () => {
 		const api = makeProject({
 			id: "p-api",
 			name: "api",
@@ -67,10 +67,10 @@ describe("filterDashboardSidebarByRecentActivity", () => {
 		const result = filterDashboardSidebarByRecentActivity([api, idle], NOW);
 
 		expect(result.map((project) => project.id)).toEqual(["p-api"]);
-		expect(result[0].isCollapsed).toBe(false);
+		expect(result[0].isCollapsed).toBe(true);
 		expect(result[0].children).toHaveLength(1);
 		const [folder] = result[0].children;
-		expect(folder.type === "section" && folder.section.isCollapsed).toBe(false);
+		expect(folder.type === "section" && folder.section.isCollapsed).toBe(true);
 		expect(
 			folder.type === "section" &&
 				folder.section.workspaces.map((workspace) => workspace.id),
