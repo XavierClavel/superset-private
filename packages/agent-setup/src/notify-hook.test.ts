@@ -186,6 +186,64 @@ describe("getNotifyScriptContent", () => {
 		}
 	});
 
+	it("forwards the PR URLs a gh pr create call printed, not the ones its command quoted", async () => {
+		const host = fakeHostService(false);
+		try {
+			const result = await runNotifyHookAsync(
+				{
+					hook_event_name: "PostToolUse",
+					session_id: "claude-session",
+					tool_name: "Bash",
+					tool_input: {
+						command:
+							'for b in a b; do gh pr create --head "$b" --body "Stacks on https://github.com/o/r/pull/1"; done',
+					},
+					tool_response: {
+						stdout:
+							"https://github.com/o/r/pull/3\nhttps://github.com/o/r/pull/2\n",
+						stderr: "",
+					},
+				},
+				{
+					SUPERSET_AGENT_ID: "claude",
+					SUPERSET_HOST_AGENT_HOOK_URL: `${host.url}/trpc/notifications.hook`,
+				},
+			);
+			expect(result.exitCode).toBe(0);
+			expect(host.requests[0]?.json).toMatchObject({
+				eventType: "PostToolUse",
+				pullRequestUrls: [
+					"https://github.com/o/r/pull/2",
+					"https://github.com/o/r/pull/3",
+				],
+			});
+		} finally {
+			host.stop();
+		}
+	});
+
+	it("forwards no PR URLs for a tool call that did not open a PR", async () => {
+		const host = fakeHostService(false);
+		try {
+			await runNotifyHookAsync(
+				{
+					hook_event_name: "PostToolUse",
+					session_id: "claude-session",
+					tool_name: "Bash",
+					tool_input: { command: "gh pr view 2 --json url" },
+					tool_response: { stdout: "https://github.com/o/r/pull/2\n" },
+				},
+				{
+					SUPERSET_AGENT_ID: "claude",
+					SUPERSET_HOST_AGENT_HOOK_URL: `${host.url}/trpc/notifications.hook`,
+				},
+			);
+			expect(host.requests[0]?.json).not.toHaveProperty("pullRequestUrls");
+		} finally {
+			host.stop();
+		}
+	});
+
 	it("forwards hooks fired inside a subagent (agent_id present) to the host roster only", async () => {
 		const host = fakeHostService(false);
 		try {
@@ -338,7 +396,7 @@ describe("getNotifyScriptContent", () => {
 			"HOOK_SESSION_ID=$(json_field session_id sessionId conversationId)",
 		);
 		expect(script).toContain(
-			'dispatch_to_host "{\\"json\\":{\\"terminalId\\":\\"$(json_escape "$SUPERSET_TERMINAL_ID")\\",\\"eventType\\":\\"$(json_escape "$EVENT_TYPE")\\",\\"agent\\":{\\"agentId\\":\\"$(json_escape "$AGENT_ID")\\",\\"sessionId\\":\\"$(json_escape "$SESSION_ID")\\"}$PREVIEW_FIELD$ACCOUNT_FIELD$TRANSCRIPT_FIELD$LAUNCH_FIELD$ATTRIBUTION_FIELD}}"',
+			'dispatch_to_host "{\\"json\\":{\\"terminalId\\":\\"$(json_escape "$SUPERSET_TERMINAL_ID")\\",\\"eventType\\":\\"$(json_escape "$EVENT_TYPE")\\",\\"agent\\":{\\"agentId\\":\\"$(json_escape "$AGENT_ID")\\",\\"sessionId\\":\\"$(json_escape "$SESSION_ID")\\"}$PREVIEW_FIELD$ACCOUNT_FIELD$TRANSCRIPT_FIELD$LAUNCH_FIELD$ATTRIBUTION_FIELD$PULL_REQUEST_FIELD}}"',
 		);
 		// One dispatcher serves both the agent and subagent payloads.
 		expect(script.split('dispatch_to_host "').length - 1).toBe(2);

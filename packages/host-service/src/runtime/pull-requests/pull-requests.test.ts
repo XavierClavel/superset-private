@@ -2446,6 +2446,141 @@ function ghAnsweringPr(
 	};
 }
 
+describe("PullRequestRuntimeManager session-opened PRs", () => {
+	const WORKSPACE_BRANCH = "workspace-branch";
+	const workspaceRefs: WorkspaceRefsSnapshot = {
+		branch: WORKSPACE_BRANCH,
+		headSha: `sha-${WORKSPACE_BRANCH}`,
+		upstream: { owner: REPO.owner, name: REPO.name, branch: WORKSPACE_BRANCH },
+	};
+
+	function seedSessionWorkspace(db: HostDb) {
+		seedProject(db);
+		seedWorkspace(db, {
+			id: "ws",
+			branch: WORKSPACE_BRANCH,
+			headSha: workspaceRefs.headSha,
+			upstreamOwner: REPO.owner,
+			upstreamRepo: REPO.name,
+			upstreamBranch: WORKSPACE_BRANCH,
+		});
+	}
+
+	function sessionExecGh(
+		prs: Array<{ number: number; headRef: string; createdAt: string }>,
+	) {
+		const toNode = (pr: (typeof prs)[number]) => ({
+			...makePrNode({
+				number: pr.number,
+				headRef: pr.headRef,
+				headSha: `sha-${pr.headRef}`,
+			}),
+			created_at: pr.createdAt,
+		});
+		return async (args: string[]) => {
+			if (args.includes("graphql")) {
+				return {
+					data: { repository: { pullRequest: { mergeQueueEntry: null } } },
+				};
+			}
+			const path = args.find(
+				(arg) => typeof arg === "string" && arg.startsWith("repos/"),
+			);
+			if (path?.endsWith("/reviews")) return [];
+			if (path?.endsWith("/check-runs")) return { check_runs: [] };
+			if (path?.endsWith("/statuses")) return [];
+			const single = path?.match(/\/pulls\/(\d+)$/);
+			if (single) {
+				const pr = prs.find((p) => p.number === Number(single[1]));
+				if (!pr) throw new Error("HTTP 404: Not Found");
+				return toNode(pr);
+			}
+			const head = args.find(
+				(arg) => typeof arg === "string" && arg.startsWith("head="),
+			);
+			if (head) {
+				const branch = head.slice(`head=${REPO.owner}:`.length);
+				return prs.filter((p) => p.headRef === branch).map(toNode);
+			}
+			if (path === `repos/${REPO.owner}/${REPO.name}/pulls`) {
+				return prs.map(toNode);
+			}
+			throw new Error(`unexpected gh call: ${args.join(" ")}`);
+		};
+	}
+
+	const minutesAgo = (minutes: number) =>
+		new Date(Date.now() - minutes * 60_000).toISOString();
+	const prUrl = (number: number) =>
+		`https://github.com/${REPO.owner}/${REPO.name}/pull/${number}`;
+
+	test("records a PR opened from another worktree in history, without moving the current link", async () => {
+		const db = createRealDb();
+		seedSessionWorkspace(db);
+		const manager = createManager(db, {
+			execGh: sessionExecGh([
+				{ number: 12, headRef: "v4-pp/1-mapper", createdAt: minutesAgo(1) },
+			]),
+			readWorkspaceRefs: async () => workspaceRefs,
+		});
+
+		await withSilencedWarnings(() =>
+			manager.recordSessionPullRequests("ws", [prUrl(12)]),
+		);
+
+		const history = await manager.getPullRequestHistoryByWorkspaces(["ws"]);
+		expect(
+			history[0]?.pullRequests.map((pr) => [
+				pr.number,
+				pr.headBranch,
+				pr.isCurrent,
+			]),
+		).toEqual([[12, "v4-pp/1-mapper", false]]);
+		const current = await manager.getPullRequestsByWorkspaces(["ws"]);
+		expect(current[0]?.pullRequest).toBeNull();
+	});
+
+	test("links a PR on the workspace's own branch at once, not at the next sweep", async () => {
+		const db = createRealDb();
+		seedSessionWorkspace(db);
+		const manager = createManager(db, {
+			execGh: sessionExecGh([
+				{ number: 20, headRef: WORKSPACE_BRANCH, createdAt: minutesAgo(0) },
+			]),
+			readWorkspaceRefs: async () => workspaceRefs,
+		});
+
+		await withSilencedWarnings(() =>
+			manager.recordSessionPullRequests("ws", [prUrl(20)]),
+		);
+
+		const current = await manager.getPullRequestsByWorkspaces(["ws"]);
+		expect(current[0]?.pullRequest?.number).toBe(20);
+	});
+
+	test("ignores PRs the output only mentioned and repos with no project", async () => {
+		const db = createRealDb();
+		seedSessionWorkspace(db);
+		const manager = createManager(db, {
+			execGh: sessionExecGh([
+				{ number: 3, headRef: "stack-base", createdAt: minutesAgo(120) },
+			]),
+			readWorkspaceRefs: async () => workspaceRefs,
+		});
+
+		await withSilencedWarnings(() =>
+			manager.recordSessionPullRequests("ws", [
+				prUrl(3),
+				"https://github.com/someone-else/other-repo/pull/9",
+			]),
+		);
+
+		const history = await manager.getPullRequestHistoryByWorkspaces(["ws"]);
+		expect(history[0]?.pullRequests).toEqual([]);
+		expect(getPrByNumber(db, 3)).toBeUndefined();
+	});
+});
+
 describe("PullRequestRuntimeManager GitHub traffic", () => {
 	test("caches review/check/merge-queue lookups per PR head across refreshes", async () => {
 		const db = createRealDb();

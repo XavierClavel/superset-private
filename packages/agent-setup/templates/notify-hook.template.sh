@@ -117,6 +117,22 @@ fi
 # a false completion notification.
 [ -z "$EVENT_TYPE" ] && exit 0
 
+# Read PR URLs only from the tool's output: the command can quote other PRs
+# (a stack's base, a link in the body).
+PULL_REQUEST_FIELD=""
+case "$EVENT_TYPE" in
+  PostToolUse|postToolUse|post_tool_use)
+    case "$INPUT" in
+      *"gh pr create"*|*"create_pull_request"*)
+        PULL_REQUEST_URLS=$(printf '%s' "${INPUT#*\"tool_response\"}" \
+          | grep -oE 'https://github\.com/[A-Za-z0-9._-]+/[A-Za-z0-9._-]+/pull/[0-9]+' \
+          | sort -u | head -n 20 | sed 's/.*/"&"/' | paste -sd, -)
+        [ -n "$PULL_REQUEST_URLS" ] && PULL_REQUEST_FIELD=",\"pullRequestUrls\":[$PULL_REQUEST_URLS]"
+        ;;
+    esac
+    ;;
+esac
+
 DEBUG_HOOKS_ENABLED="0"
 if [ -n "$SUPERSET_DEBUG_HOOKS" ]; then
   case "$SUPERSET_DEBUG_HOOKS" in
@@ -198,7 +214,7 @@ dispatch_to_host() {
 if [ -n "$SUBAGENT_ID" ]; then
   debug_log "subagent event=$EVENT_TYPE terminalId=$SUPERSET_TERMINAL_ID agentId=$AGENT_ID subagentId=$SUBAGENT_ID subagentType=$SUBAGENT_TYPE"
   [ -n "$SUPERSET_TERMINAL_ID" ] || exit 0
-  dispatch_to_host "{\"json\":{\"terminalId\":\"$(json_escape "$SUPERSET_TERMINAL_ID")\",\"eventType\":\"$(json_escape "$EVENT_TYPE")\",\"subagent\":{\"id\":\"$(json_escape "$SUBAGENT_ID")\",\"type\":\"$(json_escape "$SUBAGENT_TYPE")\",\"sessionId\":\"$(json_escape "$HOOK_SESSION_ID")\",\"transcriptPath\":\"$(json_escape "$TRANSCRIPT_PATH")\",\"agentTranscriptPath\":\"$(json_escape "$AGENT_TRANSCRIPT_PATH")\"}}}"
+  dispatch_to_host "{\"json\":{\"terminalId\":\"$(json_escape "$SUPERSET_TERMINAL_ID")\",\"eventType\":\"$(json_escape "$EVENT_TYPE")\",\"subagent\":{\"id\":\"$(json_escape "$SUBAGENT_ID")\",\"type\":\"$(json_escape "$SUBAGENT_TYPE")\",\"sessionId\":\"$(json_escape "$HOOK_SESSION_ID")\",\"transcriptPath\":\"$(json_escape "$TRANSCRIPT_PATH")\",\"agentTranscriptPath\":\"$(json_escape "$AGENT_TRANSCRIPT_PATH")\"}$PULL_REQUEST_FIELD}}"
   exit 0
 fi
 
@@ -259,7 +275,7 @@ case "$EVENT_TYPE" in
 esac
 
 if [ -n "$SUPERSET_TERMINAL_ID" ]; then
-  dispatch_to_host "{\"json\":{\"terminalId\":\"$(json_escape "$SUPERSET_TERMINAL_ID")\",\"eventType\":\"$(json_escape "$EVENT_TYPE")\",\"agent\":{\"agentId\":\"$(json_escape "$AGENT_ID")\",\"sessionId\":\"$(json_escape "$SESSION_ID")\"}$PREVIEW_FIELD$ACCOUNT_FIELD$TRANSCRIPT_FIELD$LAUNCH_FIELD$ATTRIBUTION_FIELD}}"
+  dispatch_to_host "{\"json\":{\"terminalId\":\"$(json_escape "$SUPERSET_TERMINAL_ID")\",\"eventType\":\"$(json_escape "$EVENT_TYPE")\",\"agent\":{\"agentId\":\"$(json_escape "$AGENT_ID")\",\"sessionId\":\"$(json_escape "$SESSION_ID")\"}$PREVIEW_FIELD$ACCOUNT_FIELD$TRANSCRIPT_FIELD$LAUNCH_FIELD$ATTRIBUTION_FIELD$PULL_REQUEST_FIELD}}"
 fi
 
 exit 0
