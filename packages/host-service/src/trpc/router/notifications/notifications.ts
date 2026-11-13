@@ -49,6 +49,8 @@ const hookInput = z.object({
 	apiKey: z.boolean().optional(),
 	attributionToken: z.string().max(128).optional(),
 	transcriptPath: z.string().max(4096).optional(),
+	// A malformed list must never cost the lifecycle event it rides on.
+	pullRequestUrls: z.array(z.string()).max(50).optional().catch(undefined),
 });
 
 function trimOrUndefined(value: string | undefined): string | undefined {
@@ -106,6 +108,20 @@ export const notificationsRouter = router({
 			.sync();
 		if (!terminalSession?.originWorkspaceId) {
 			return { success: true, ignored: true as const };
+		}
+
+		if (input.pullRequestUrls?.length) {
+			void ctx.runtime.pullRequests
+				.recordSessionPullRequests(
+					terminalSession.originWorkspaceId,
+					input.pullRequestUrls,
+				)
+				.catch((error) => {
+					console.warn("[notifications/hook] Failed to record session PRs", {
+						terminalId: input.terminalId,
+						error,
+					});
+				});
 		}
 
 		const occurredAt = Date.now();

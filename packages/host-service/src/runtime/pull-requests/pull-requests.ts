@@ -25,10 +25,12 @@ import {
 import {
 	fetchOpenPullRequests,
 	fetchOpenPullRequestsFromGh,
+	fetchPullRequest,
 	fetchPullRequestByHead,
 	fetchPullRequestByHeadFromGh,
 	fetchPullRequestChecks,
 	fetchPullRequestChecksFromGh,
+	fetchPullRequestFromGh,
 	fetchPullRequestMergeQueueState,
 	fetchPullRequestMergeQueueStateFromGh,
 	fetchPullRequestReviewDecision,
@@ -55,6 +57,10 @@ import {
 	type ReviewDecision,
 } from "./utils/pull-request-mappers";
 import {
+	type PullRequestUrlRef,
+	uniquePullRequestRefs,
+} from "./utils/pull-request-url";
+import {
 	readWorkspaceRefs,
 	type WorkspaceRefsSnapshot,
 } from "./utils/workspace-refs";
@@ -79,6 +85,9 @@ const REPO_PULL_REQUEST_CACHE_MAX_TTL_MS = 30 * 60_000;
 // Re-probe cadence for worktrees observed missing on disk. existsSync-only —
 // cheap enough to run every tick; spawning git against a missing dir is not.
 const MISSING_WORKTREE_PROBE_INTERVAL_MS = 30_000;
+// Bash tool calls time out after 10 minutes; a PR older than the call that
+// printed it was not opened by it.
+const SESSION_PULL_REQUEST_MAX_AGE_MS = 15 * 60_000;
 // Dedup + link-assignment key. Branch stays case-sensitive: `feature` and
 // `Feature` are distinct branches with distinct PRs, so collapsing them here
 // would mislink. Case drift is tolerated only in the fallback in
@@ -674,6 +683,97 @@ export class PullRequestRuntimeManager {
 	onPullRequestLinked(listener: () => void): () => void {
 		this.linkListeners.add(listener);
 		return () => this.linkListeners.delete(listener);
+	}
+
+	async recordSessionPullRequests(
+		workspaceId: string,
+		urls: string[],
+	): Promise<void> {
+		const workspace = this.db
+			.select()
+			.from(workspaces)
+			.where(eq(workspaces.id, workspaceId))
+			.get();
+		if (!workspace?.projectId || workspace.archivedAt != null) return;
+		const refs = uniquePullRequestRefs(urls);
+		if (refs.length === 0) return;
+
+		const now = Date.now();
+		let recorded = false;
+		for (const ref of refs) {
+			try {
+				const target = await this.resolvePullRequestProject(
+					workspace.projectId,
+					ref,
+				);
+				if (!target) continue;
+				const repository = { owner: target.repo.owner, name: target.repo.name };
+				const fetched = await this.fetchFromGitHub(
+					"session PR lookup",
+					{ ...repository, prNumber: ref.number },
+					() => fetchPullRequestFromGh(this.execGh, repository, ref.number),
+					async () =>
+						fetchPullRequest(await this.github(), repository, ref.number),
+					{ probe: true },
+				);
+				// The tool output can name older PRs too (a stack's base, a
+				// body link); only one created moments ago is this session's.
+				if (
+					!fetched ||
+					fetched.createdAt === null ||
+					now - fetched.createdAt > SESSION_PULL_REQUEST_MAX_AGE_MS
+				) {
+					continue;
+				}
+				const rowId = this.upsertPullRequestNode({
+					projectId: target.projectId,
+					repo: target.repo,
+					node: fetched.node,
+					details: undefined,
+					now,
+				});
+				this.recordWorkspacePullRequestLink(workspaceId, rowId, now);
+				recorded = true;
+			} catch (error) {
+				console.warn(
+					"[host-service:pull-request-runtime] Failed to record session PR",
+					{ workspaceId, ref, error },
+				);
+			}
+		}
+
+		// A PR on the branch the workspace holds now links at once instead of
+		// at the next sweep.
+		if (recorded) {
+			await this.enqueueWorkspaceSync(workspaceId, { bypassCache: true });
+		}
+	}
+
+	private async resolvePullRequestProject(
+		workspaceProjectId: string,
+		ref: PullRequestUrlRef,
+	): Promise<{ projectId: string; repo: NormalizedRepoIdentity } | null> {
+		const isSameRepo = (owner: string | null, name: string | null) =>
+			owner?.toLowerCase() === ref.owner.toLowerCase() &&
+			name?.toLowerCase() === ref.repo.toLowerCase();
+
+		const workspaceRepo = await this.getProjectRepository(workspaceProjectId);
+		if (workspaceRepo && isSameRepo(workspaceRepo.owner, workspaceRepo.name)) {
+			return { projectId: workspaceProjectId, repo: workspaceRepo };
+		}
+
+		const otherProject = this.db
+			.select({
+				id: projects.id,
+				repoOwner: projects.repoOwner,
+				repoName: projects.repoName,
+			})
+			.from(projects)
+			.all()
+			.find((project) => isSameRepo(project.repoOwner, project.repoName));
+		if (!otherProject) return null;
+		const otherRepo = await this.getProjectRepository(otherProject.id);
+		return otherRepo ? { projectId: otherProject.id, repo: otherRepo } : null;
 	}
 
 	private async syncWorkspaceBranches(): Promise<void> {
@@ -1660,41 +1760,61 @@ export class PullRequestRuntimeManager {
 		);
 
 		for (const [key, node] of latestByKey) {
-			const existing = this.findPullRequestRow(repo, node.number);
-			// A failed fetch keeps the last-known state rather than blanking it.
-			const details = detailsByNumber.get(node.number);
-			const checks = details
-				? parseCheckContexts(details.checks)
-				: parseChecksJson(existing?.checksJson ?? null);
-			const reviewDecision = details
-				? mapReviewDecision(details.reviewDecision)
-				: coerceReviewDecision(existing?.reviewDecision ?? null);
-			const isInMergeQueue =
-				details?.isInMergeQueue ??
-				coercePullRequestState(existing?.state ?? null) === "queued";
-			const rowId = this.upsertPullRequestRow({
-				existing,
+			const rowId = this.upsertPullRequestNode({
 				projectId,
-				prNumber: node.number,
 				repo,
-				url: node.url,
-				title: node.title,
-				state: mapPullRequestState(node.state, node.isDraft, isInMergeQueue),
-				isDraft: node.isDraft,
-				headBranch: node.headRefName,
-				headSha: node.headRefOid,
-				mergedAt: node.mergedAt,
-				reviewDecision,
-				checksStatus: computeChecksStatus(checks),
-				checksJson: JSON.stringify(checks),
-				lastFetchedAt: now,
-				error: null,
+				node,
+				details: detailsByNumber.get(node.number),
 				now,
 			});
-
 			matched.set(key, { id: rowId });
 		}
 
 		return { matched, failedKeys };
+	}
+
+	private upsertPullRequestNode({
+		projectId,
+		repo,
+		node,
+		details,
+		now,
+	}: {
+		projectId: string;
+		repo: NormalizedRepoIdentity;
+		node: GitHubPullRequestNode;
+		details: PullRequestDetails | undefined;
+		now: number;
+	}): string {
+		const existing = this.findPullRequestRow(repo, node.number);
+		// A failed fetch keeps the last-known state rather than blanking it.
+		const checks = details
+			? parseCheckContexts(details.checks)
+			: parseChecksJson(existing?.checksJson ?? null);
+		const reviewDecision = details
+			? mapReviewDecision(details.reviewDecision)
+			: coerceReviewDecision(existing?.reviewDecision ?? null);
+		const isInMergeQueue =
+			details?.isInMergeQueue ??
+			coercePullRequestState(existing?.state ?? null) === "queued";
+		return this.upsertPullRequestRow({
+			existing,
+			projectId,
+			prNumber: node.number,
+			repo,
+			url: node.url,
+			title: node.title,
+			state: mapPullRequestState(node.state, node.isDraft, isInMergeQueue),
+			isDraft: node.isDraft,
+			headBranch: node.headRefName,
+			headSha: node.headRefOid,
+			mergedAt: node.mergedAt,
+			reviewDecision,
+			checksStatus: computeChecksStatus(checks),
+			checksJson: JSON.stringify(checks),
+			lastFetchedAt: now,
+			error: null,
+			now,
+		});
 	}
 }
