@@ -50,7 +50,13 @@ function createContext(
 		typeof mock<(input: { id: string }) => Promise<unknown>>
 	>;
 	terminalAgentStore: TerminalAgentStore;
+	recordSessionPullRequests: ReturnType<
+		typeof mock<(workspaceId: string, urls: string[]) => Promise<void>>
+	>;
 } {
+	const recordSessionPullRequests = mock(
+		(_workspaceId: string, _urls: string[]) => Promise.resolve(),
+	);
 	const broadcastAgentLifecycle = mock(
 		(_event: BroadcastedAgentLifecycleEvent) => {},
 	);
@@ -100,6 +106,7 @@ function createContext(
 			broadcastWorkspaceChanged: () => {},
 		},
 		terminalAgentStore,
+		runtime: { pullRequests: { recordSessionPullRequests } },
 	} as unknown as HostServiceContext;
 
 	return {
@@ -109,6 +116,7 @@ function createContext(
 		findFirst,
 		taskStart,
 		terminalAgentStore,
+		recordSessionPullRequests,
 	};
 }
 
@@ -314,6 +322,37 @@ describe("notificationsRouter.hook", () => {
 		expect(typeof broadcastAgentLifecycle.mock.calls[0]?.[0].occurredAt).toBe(
 			"number",
 		);
+	});
+
+	it("hands the PR URLs a tool call printed to the PR runtime under the terminal's workspace", async () => {
+		const { ctx, recordSessionPullRequests } = createContext("workspace-1");
+		const url = "https://github.com/o/r/pull/12";
+
+		const result = await notificationsRouter.createCaller(ctx).hook({
+			terminalId: "terminal-1",
+			eventType: "PostToolUse",
+			pullRequestUrls: [url],
+		});
+
+		expect(result).toEqual({ success: true, ignored: false });
+		expect(recordSessionPullRequests).toHaveBeenCalledWith("workspace-1", [
+			url,
+		]);
+	});
+
+	it("keeps the lifecycle event when the PR URL list is malformed", async () => {
+		const { ctx, broadcastAgentLifecycle, recordSessionPullRequests } =
+			createContext("workspace-1");
+
+		const result = await notificationsRouter.createCaller(ctx).hook({
+			terminalId: "terminal-1",
+			eventType: "PostToolUse",
+			pullRequestUrls: "https://github.com/o/r/pull/12" as never,
+		});
+
+		expect(result).toEqual({ success: true, ignored: false });
+		expect(broadcastAgentLifecycle).toHaveBeenCalledTimes(1);
+		expect(recordSessionPullRequests).not.toHaveBeenCalled();
 	});
 
 	it("ignores missing or unknown terminal ids", async () => {

@@ -1,10 +1,12 @@
 export {
 	fetchOpenPullRequests,
 	fetchOpenPullRequestsFromGh,
+	fetchPullRequest,
 	fetchPullRequestByHead,
 	fetchPullRequestByHeadFromGh,
 	fetchPullRequestChecks,
 	fetchPullRequestChecksFromGh,
+	fetchPullRequestFromGh,
 	fetchPullRequestMergeQueueState,
 	fetchPullRequestMergeQueueStateFromGh,
 	fetchPullRequestReviewDecision,

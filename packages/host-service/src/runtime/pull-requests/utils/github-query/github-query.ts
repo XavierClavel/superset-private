@@ -275,6 +275,57 @@ export async function fetchPullRequestByHead(
 	return normalizePullRequestCandidates(response.data, head);
 }
 
+export interface GitHubCreatedPullRequest {
+	node: GitHubPullRequestNode;
+	/** GitHub's `created_at` as epoch ms; null when absent or unparseable. */
+	createdAt: number | null;
+}
+
+function normalizeCreatedPullRequest(
+	raw: unknown,
+): GitHubCreatedPullRequest | null {
+	const node = normalizePullRequest(raw);
+	if (!node || !isRecord(raw)) return null;
+	const createdAt =
+		typeof raw.created_at === "string"
+			? Date.parse(raw.created_at)
+			: Number.NaN;
+	return { node, createdAt: Number.isNaN(createdAt) ? null : createdAt };
+}
+
+export async function fetchPullRequestFromGh(
+	execGh: ExecGh,
+	repository: {
+		owner: string;
+		name: string;
+	},
+	number: number,
+): Promise<GitHubCreatedPullRequest | null> {
+	const raw = await execGh([
+		"api",
+		"--method",
+		"GET",
+		`repos/${repository.owner}/${repository.name}/pulls/${number}`,
+	]);
+	return normalizeCreatedPullRequest(raw);
+}
+
+export async function fetchPullRequest(
+	octokit: Octokit,
+	repository: {
+		owner: string;
+		name: string;
+	},
+	number: number,
+): Promise<GitHubCreatedPullRequest | null> {
+	const response = await octokit.rest.pulls.get({
+		owner: repository.owner,
+		repo: repository.name,
+		pull_number: number,
+	});
+	return normalizeCreatedPullRequest(response.data);
+}
+
 // 100 full PR objects (bodies included) routinely exceed exec's stdout
 // buffer, so project down to exactly what normalizePullRequest reads before
 // the payload leaves gh. jq's null-indexing keeps absent nests as nulls,
