@@ -5,7 +5,10 @@ import type {
 import { AnimatePresence, motion } from "framer-motion";
 import { useMemo } from "react";
 import { DeleteProjectDialog } from "renderer/routes/_authenticated/components/DeleteProjectDialog";
-import { useSidebarProjectStatus } from "../../providers/DashboardSidebarWorkspaceStatusProvider";
+import {
+	useSidebarProjectBackgroundWork,
+	useSidebarProjectStatus,
+} from "../../providers/DashboardSidebarWorkspaceStatusProvider";
 import type { DashboardSidebarProject } from "../../types";
 import { getProjectChildrenWorkspaces } from "../../utils/projectChildren";
 import { DashboardSidebarCollapsedProjectContent } from "./components/DashboardSidebarCollapsedProjectContent";
@@ -45,6 +48,7 @@ export function DashboardSidebarProjectSection({
 		[flattenedCollapsedWorkspaces],
 	);
 	const agentStatus = useSidebarProjectStatus(workspaceIds);
+	const backgroundWork = useSidebarProjectBackgroundWork(workspaceIds);
 
 	const {
 		canDeleteProject,
@@ -155,6 +159,7 @@ export function DashboardSidebarProjectSection({
 					projectColor={project.color}
 					isCollapsed={project.isCollapsed}
 					agentStatus={agentStatus}
+					backgroundWork={backgroundWork}
 					isRenaming={isRenaming}
 					renameValue={renameValue}
 					onRenameValueChange={setRenameValue}

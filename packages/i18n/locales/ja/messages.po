@@ -798,6 +798,9 @@ msgstr "{appName} MobileはProの一部です"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobileは、接続したコンピュータ上でエージェントを実行します。"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, other {# 件のバックグラウンドタスクを実行中}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {mainより#コミット遅れています。リベースが必要です} other {mainより#コミット遅れています。リベースが必要です}}"
 

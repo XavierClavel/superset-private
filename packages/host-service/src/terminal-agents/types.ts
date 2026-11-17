@@ -40,6 +40,8 @@ export interface TerminalSubagent {
 	id: string;
 	/** Harness agent type (`Explore`, `general-purpose`, a Codex role), if reported. */
 	agentType?: string;
+	/** What the parent asked it to do, when its transcript said. */
+	description?: string;
 	startedAt: number;
 	lastEventAt: number;
 	/** The child's own transcript on disk, once a hook event revealed it. */

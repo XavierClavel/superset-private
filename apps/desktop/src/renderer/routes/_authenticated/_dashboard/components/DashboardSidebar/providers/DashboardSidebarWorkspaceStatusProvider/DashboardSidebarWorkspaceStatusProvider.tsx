@@ -32,6 +32,7 @@ import {
 	type PaneStatus,
 } from "shared/tabs-types";
 import { getProjectStatus } from "./utils/getProjectStatus";
+import { listBackgroundWork } from "./utils/listBackgroundWork";
 
 export interface SidebarWorkspaceStatusEntry {
 	/** Highest-priority attention status across the workspace's terminals. */
@@ -42,6 +43,8 @@ export interface SidebarWorkspaceStatusEntry {
 	bindings: ReadonlyMap<string, TerminalAgentBinding>;
 	/** `terminalId → derived agent status` (drives the agents chip). */
 	statuses: ReadonlyMap<string, PaneStatus>;
+	/** Descriptions of the subagents, shells and monitors still running under agents that are not working. */
+	backgroundWork: readonly string[];
 	/** Populated only for the active workspace — the only row that shows it. */
 	diffStats: DiffStats | null;
 	/** When the host reported `status`, for mark-seen; null when derived from bindings. */
@@ -53,6 +56,7 @@ const EMPTY_ENTRY: SidebarWorkspaceStatusEntry = {
 	isUnread: false,
 	bindings: new Map(),
 	statuses: new Map(),
+	backgroundWork: [],
 	diffStats: null,
 	reportedAt: null,
 };
@@ -164,6 +168,10 @@ function entriesEqual(
 		left.status === right.status &&
 		left.isUnread === right.isUnread &&
 		left.reportedAt === right.reportedAt &&
+		left.backgroundWork.length === right.backgroundWork.length &&
+		left.backgroundWork.every(
+			(description, index) => description === right.backgroundWork[index],
+		) &&
 		(left.diffStats === right.diffStats ||
 			(left.diffStats !== null &&
 				right.diffStats !== null &&
@@ -392,6 +400,7 @@ export function DashboardSidebarWorkspaceStatusProvider({
 					reported === "failed",
 				bindings,
 				statuses,
+				backgroundWork: listBackgroundWork(bindings.values(), statuses),
 				diffStats:
 					target.workspaceId === activeWorkspaceId ? activeDiffStats : null,
 				reportedAt: report?.at ?? null,
@@ -476,6 +485,24 @@ export function useSidebarProjectStatus(
 		useCallback((listener) => store.subscribeAll(listener), [store]),
 		useCallback(
 			() => getProjectStatus(workspaceIds.map((id) => store.get(id))),
+			[store, workspaceIds],
+		),
+	);
+}
+
+/** Re-renders the caller only when the total changes. */
+export function useSidebarProjectBackgroundWork(
+	workspaceIds: readonly string[],
+): number {
+	const store = useSidebarWorkspaceStatusStore();
+	return useSyncExternalStore(
+		useCallback((listener) => store.subscribeAll(listener), [store]),
+		useCallback(
+			() =>
+				workspaceIds.reduce(
+					(total, id) => total + store.get(id).backgroundWork.length,
+					0,
+				),
 			[store, workspaceIds],
 		),
 	);

@@ -1,4 +1,7 @@
 import { beforeEach, describe, expect, it } from "bun:test";
+import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
 import {
 	type TerminalAgentBindingPersistence,
 	TerminalAgentStore,
@@ -12,6 +15,86 @@ describe("TerminalAgentStore", () => {
 
 	beforeEach(() => {
 		store = new TerminalAgentStore();
+	});
+
+	it("attaches a Claude terminal's background shells until the terminal ends", async () => {
+		const dir = mkdtempSync(path.join(tmpdir(), "store-bg-"));
+		const transcript = path.join(dir, "session.jsonl");
+		writeFileSync(
+			transcript,
+			`${JSON.stringify({
+				type: "user",
+				message: { content: [{ type: "tool_result", tool_use_id: "u1" }] },
+				toolUseResult: { backgroundTaskId: "b1" },
+			})}\n`,
+		);
+		try {
+			store.recordEvent({
+				terminalId: "t1",
+				workspaceId: WORKSPACE,
+				eventType: "Stop",
+				agentId: "claude",
+				occurredAt: 1,
+			});
+
+			expect(await store.refreshBackgroundTasks("t1", transcript)).toBe(true);
+			expect(
+				store
+					.listByWorkspace(WORKSPACE)[0]
+					?.backgroundTasks?.map((task) => task.id),
+			).toEqual(["b1"]);
+			expect(await store.refreshBackgroundTasks("t1", transcript)).toBe(false);
+
+			store.recordEvent({
+				terminalId: "t1",
+				workspaceId: WORKSPACE,
+				eventType: "exit",
+				occurredAt: 2,
+			});
+			expect(store.get("t1")).toBeUndefined();
+			expect(await store.refreshBackgroundTasks("t1", transcript)).toBe(false);
+		} finally {
+			rmSync(dir, { recursive: true });
+		}
+	});
+
+	it("names a background subagent with the description from the transcript", async () => {
+		const dir = mkdtempSync(path.join(tmpdir(), "store-bg-"));
+		const transcript = path.join(dir, "session.jsonl");
+		writeFileSync(
+			transcript,
+			`${JSON.stringify({
+				type: "user",
+				toolUseResult: {
+					isAsync: true,
+					agentId: "a1",
+					description: "Review the diff",
+				},
+			})}\n`,
+		);
+		try {
+			store.recordEvent({
+				terminalId: "t1",
+				workspaceId: WORKSPACE,
+				eventType: "Stop",
+				agentId: "claude",
+				occurredAt: Date.now(),
+			});
+			store.recordSubagentEvent({
+				terminalId: "t1",
+				workspaceId: WORKSPACE,
+				eventType: "SubagentStart",
+				subagentId: "a1",
+				occurredAt: Date.now(),
+			});
+
+			expect(await store.refreshBackgroundTasks("t1", transcript)).toBe(true);
+			expect(store.listByWorkspace(WORKSPACE)[0]?.subagents).toEqual([
+				expect.objectContaining({ id: "a1", description: "Review the diff" }),
+			]);
+		} finally {
+			rmSync(dir, { recursive: true });
+		}
 	});
 
 	it("reports every hook event as activity, a subagent's included, even when the status does not change", () => {

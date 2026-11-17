@@ -798,6 +798,9 @@ msgstr "{appName} Mobile, Pro'nun bir parçasıdır"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile, ajanları bağladığınız bilgisayarlarda çalıştırır."
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, one {# arka plan görevi çalışıyor} other {# arka plan görevi çalışıyor}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {main dalının # commit gerisinde, rebase gerekiyor} other {main dalının # commit gerisinde, rebase gerekiyor}}"
 
