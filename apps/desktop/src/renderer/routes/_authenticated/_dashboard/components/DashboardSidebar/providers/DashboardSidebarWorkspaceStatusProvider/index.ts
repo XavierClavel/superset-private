@@ -3,6 +3,7 @@ export {
 	type SidebarStatusWorkspaceRef,
 	type SidebarWorkspaceStatusEntry,
 	useMarkSidebarWorkspaceTerminalsSeen,
+	useSidebarProjectBackgroundWork,
 	useSidebarProjectStatus,
 	useSidebarWorkspaceStatus,
 	useSidebarWorkspaceStatuses,

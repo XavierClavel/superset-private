@@ -33,6 +33,14 @@ function itemsOfKind(events: AdapterEvent[], kind: string): Item[] {
 	return items(events).filter((item) => item.kind === kind);
 }
 
+function backgroundTaskLists(events: AdapterEvent[]): unknown[][] {
+	return events.flatMap((event) =>
+		event.kind === "session" && event.session.backgroundTasks
+			? [event.session.backgroundTasks]
+			: [],
+	);
+}
+
 function toolCalls(events: AdapterEvent[], name: string): Item[] {
 	return itemsOfKind(events, "tool_call").filter(
 		(item) => (item as { toolName: string }).toolName === name,
@@ -309,6 +317,121 @@ describe("ClaudeTranslator", () => {
 		expect(notices.some((notice) => notice.includes("task_notification"))).toBe(
 			false,
 		);
+	});
+
+	test("a backgrounded subagent is a background task until it reports", () => {
+		const events = translateFixture("subagent-task");
+		const lists = backgroundTaskLists(events);
+
+		expect(lists[0]).toEqual([
+			expect.objectContaining({
+				id: "a9e93c4d16b3f5529",
+				kind: "subagent",
+				name: "Run agent to reply with ping",
+			}),
+		]);
+		expect(lists.at(-1)).toEqual([]);
+	});
+
+	test("is_backgrounded shows the subagent before its tool result", () => {
+		const translator = new ClaudeTranslator({ cwd: CWD, now: () => 1 });
+		const events = translator.translate({
+			type: "system",
+			subtype: "task_started",
+			task_id: "t1",
+			tool_use_id: "tool-1",
+			description: "Probe",
+			task_type: "local_agent",
+			is_backgrounded: true,
+		});
+
+		expect(backgroundTaskLists(events)).toEqual([
+			[expect.objectContaining({ id: "t1", kind: "subagent" })],
+		]);
+		expect(backgroundTaskLists(translator.endTasks()).at(-1)).toEqual([]);
+	});
+
+	test("a background shell is a process task until it reports", () => {
+		const translator = new ClaudeTranslator({ cwd: CWD, now: () => 1 });
+		const events = [
+			{
+				type: "assistant",
+				message: {
+					id: "m1",
+					content: [
+						{
+							type: "tool_use",
+							id: "tool-1",
+							name: "Bash",
+							input: { command: "bun dev", run_in_background: true },
+						},
+					],
+				},
+			},
+			{
+				type: "system",
+				subtype: "task_started",
+				task_id: "b1",
+				tool_use_id: "tool-1",
+				description: "bun dev",
+				task_type: "local_bash",
+			},
+			{
+				type: "user",
+				message: {
+					content: [
+						{ type: "tool_result", tool_use_id: "tool-1", content: "" },
+					],
+				},
+				tool_use_result: { backgroundTaskId: "b1" },
+			},
+			{
+				type: "system",
+				subtype: "task_notification",
+				task_id: "b1",
+				status: "completed",
+			},
+		].flatMap((message) => translator.translate(message));
+
+		expect(backgroundTaskLists(events)).toEqual([
+			[expect.objectContaining({ id: "b1", kind: "process" })],
+			[],
+		]);
+	});
+
+	test("a foreground subagent is never a background task", () => {
+		const translator = new ClaudeTranslator({ cwd: CWD, now: () => 1 });
+		const events = [
+			{
+				type: "assistant",
+				message: {
+					id: "m1",
+					content: [
+						{ type: "tool_use", id: "tool-1", name: "Agent", input: {} },
+					],
+				},
+			},
+			{
+				type: "system",
+				subtype: "task_started",
+				task_id: "t1",
+				tool_use_id: "tool-1",
+				description: "Probe",
+				task_type: "local_agent",
+			},
+			{
+				type: "user",
+				message: {
+					content: [
+						{ type: "tool_result", tool_use_id: "tool-1", content: "ok" },
+					],
+				},
+				tool_use_result: { status: "completed" },
+			},
+		].flatMap((message) => translator.translate(message));
+
+		expect(backgroundTaskLists(events)).toEqual([]);
+		expect(translator.endTasks()).toEqual([]);
 	});
 
 	test("a zero-cost turn still reports costUsd", () => {

@@ -406,11 +406,13 @@ export class ClaudeAdapter implements HarnessAdapter {
 		} catch (error) {
 			const waiting = this.approvals.size > 0;
 			this.pushAll(translator.interrupt(String(error)));
+			this.pushAll(translator.endTasks());
 			if (waiting) {
 				this.events.push({ kind: "session", session: { status: "idle" } });
 				return;
 			}
 		}
+		this.pushAll(translator.endTasks());
 		if (this.staleApprovals()) {
 			this.events.push({ kind: "session", session: { status: "idle" } });
 		}

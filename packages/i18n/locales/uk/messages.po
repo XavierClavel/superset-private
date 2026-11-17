@@ -792,6 +792,9 @@ msgstr "{appName} Mobile входить до Pro"
 msgid "{appName} Mobile runs agents on the computers you connect."
 msgstr "{appName} Mobile запускає агентів на комп'ютерах, які ви підключили."
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, one {# фонове завдання виконується} few {# фонові завдання виконуються} many {# фонових завдань виконується} other {# фонового завдання виконується}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Відстає від main на # коміт, потрібен ребейз} few {Відстає від main на # коміти, потрібен ребейз} many {Відстає від main на # комітів, потрібен ребейз} other {Відстає від main на # коміту, потрібен ребейз}}"
 
