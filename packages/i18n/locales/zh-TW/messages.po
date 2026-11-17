@@ -801,6 +801,9 @@ msgstr "{appName} Mobile在你連線的電腦上執行代理程式。"
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {歸檔#個雲端工作區} other {歸檔#個雲端工作區}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, other {# 個背景工作正在執行}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {落後main #個提交，需要變基} other {落後main #個提交，需要變基}}"
 
@@ -7007,9 +7010,6 @@ msgstr "刪除圖片"
 msgid "Delete label \"{0}\"?"
 msgstr "刪除標籤「{0}」？"
 
-msgid "Delete local branch on workspace removal"
-msgstr "移除工作區時刪除本地分支"
-
 msgid "Delete message"
 msgstr "刪除訊息"
 
@@ -10954,9 +10954,6 @@ msgstr "標籤變更"
 msgid "Label created but could not be assigned"
 msgstr "標籤已建立，但無法指派"
 
-msgid "Label is required."
-msgstr "名稱為必填項。"
-
 msgid "Label name"
 msgstr "標籤名稱"
 
@@ -12491,13 +12488,14 @@ msgstr "新增群組…"
 msgid "New issue"
 msgstr "新建議題"
 
-msgid "New layout"
-msgstr "新版面配置"
 msgid "New label"
 msgstr "新增標籤"
 
 msgid "New label…"
 msgstr "新增標籤…"
+
+msgid "New layout"
+msgstr "新版面配置"
 
 msgid "New messages"
 msgstr "新訊息"
@@ -12675,10 +12673,11 @@ msgstr "沒有活動的終端會話"
 msgid "No agent"
 msgstr "無代理程式"
 
-msgid "No agent is available to set up the environment"
-msgstr "沒有可用來設定環境的代理程式"
 msgid "No agent activity in the last two weeks"
 msgstr "過去兩週沒有代理程式活動"
+
+msgid "No agent is available to set up the environment"
+msgstr "沒有可用來設定環境的代理程式"
 
 msgid "No agent is configured on this host"
 msgstr "此主機上未設定任何代理程式"
@@ -18325,10 +18324,11 @@ msgstr "顯示所有評論"
 msgid "Show all lines"
 msgstr "顯示所有行"
 
-msgid "Show Apple's installer"
-msgstr "顯示 Apple 安裝程式"
 msgid "Show all workspaces"
 msgstr "顯示全部工作區"
+
+msgid "Show Apple's installer"
+msgstr "顯示 Apple 安裝程式"
 
 msgid "Show archived"
 msgstr "顯示已歸檔"

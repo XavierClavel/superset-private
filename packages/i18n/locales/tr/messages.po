@@ -801,6 +801,9 @@ msgstr "{appName} Mobile, ajanları bağladığınız bilgisayarlarda çalışt�
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {# bulut çalışma alanını arşivle} other {# bulut çalışma alanını arşivle}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, one {# arka plan görevi çalışıyor} other {# arka plan görevi çalışıyor}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {main dalının # commit gerisinde, rebase gerekiyor} other {main dalının # commit gerisinde, rebase gerekiyor}}"
 
@@ -7007,9 +7010,6 @@ msgstr "Görseli sil"
 msgid "Delete label \"{0}\"?"
 msgstr "\"{0}\" etiketi silinsin mi?"
 
-msgid "Delete local branch on workspace removal"
-msgstr "Çalışma alanı kaldırılırken yerel dalı sil"
-
 msgid "Delete message"
 msgstr "Mesajı sil"
 
@@ -10954,9 +10954,6 @@ msgstr "Etiket değişikliği"
 msgid "Label created but could not be assigned"
 msgstr "Etiket oluşturuldu ancak atanamadı"
 
-msgid "Label is required."
-msgstr "Etiket gereklidir."
-
 msgid "Label name"
 msgstr "Etiket adı"
 
@@ -12491,13 +12488,14 @@ msgstr "Yeni grup…"
 msgid "New issue"
 msgstr "Yeni issue"
 
-msgid "New layout"
-msgstr "Yeni düzen"
 msgid "New label"
 msgstr "Yeni etiket"
 
 msgid "New label…"
 msgstr "Yeni etiket…"
+
+msgid "New layout"
+msgstr "Yeni düzen"
 
 msgid "New messages"
 msgstr "Yeni mesajlar"
@@ -12675,10 +12673,11 @@ msgstr "Etkin terminal oturumu yok"
 msgid "No agent"
 msgstr "Ajan yok"
 
-msgid "No agent is available to set up the environment"
-msgstr "Ortamı kurmak için kullanılabilir ajan yok"
 msgid "No agent activity in the last two weeks"
 msgstr "Son iki haftada ajan etkinliği yok"
+
+msgid "No agent is available to set up the environment"
+msgstr "Ortamı kurmak için kullanılabilir ajan yok"
 
 msgid "No agent is configured on this host"
 msgstr "Bu ana makinede yapılandırılmış bir ajan yok"
@@ -18325,10 +18324,11 @@ msgstr "Tüm yorumları göster"
 msgid "Show all lines"
 msgstr "Tüm satırları göster"
 
-msgid "Show Apple's installer"
-msgstr "Apple'ın yükleyicisini göster"
 msgid "Show all workspaces"
 msgstr "Tüm çalışma alanlarını göster"
+
+msgid "Show Apple's installer"
+msgstr "Apple'ın yükleyicisini göster"
 
 msgid "Show archived"
 msgstr "Arşivlenenleri göster"

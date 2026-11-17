@@ -35,6 +35,7 @@ import type {
 	DashboardSidebarWorkspaceIndentation,
 } from "../../../../types";
 import { DashboardSidebarWorkspaceQueuedBadge } from "../DashboardSidebarWorkspaceQueuedBadge";
+import { DashboardSidebarBackgroundWorkBadge } from "./components/DashboardSidebarBackgroundWorkBadge";
 import { DashboardSidebarOpenCloudHostGlyph } from "./components/DashboardSidebarOpenCloudHostGlyph";
 import { DashboardSidebarPortsChip } from "./components/DashboardSidebarPortsChip";
 import { DashboardSidebarRowEventBoundary } from "./components/DashboardSidebarRowEventBoundary";
@@ -358,9 +359,14 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 									{creationStatusText}
 								</span>
 							) : (
-								<DashboardSidebarWorkspaceQueuedBadge
-									workspaceId={workspace.id}
-								/>
+								<>
+									<DashboardSidebarWorkspaceQueuedBadge
+										workspaceId={workspace.id}
+									/>
+									<DashboardSidebarBackgroundWorkBadge
+										workspaceId={workspace.id}
+									/>
+								</>
 							)}
 							<div className="grid items-center justify-items-end [&>*]:col-start-1 [&>*]:row-start-1">
 								{/* Not plain focus-within: a clicked row keeps focus, and the open cloud row's glyph must stay in view while it connects. */}

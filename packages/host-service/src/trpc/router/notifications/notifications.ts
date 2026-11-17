@@ -202,6 +202,19 @@ export const notificationsRouter = router({
 				agentSessionId: agent.sessionId,
 				transcriptPath,
 			});
+			if (eventType === "Stop") {
+				const workspaceId = terminalSession.originWorkspaceId;
+				void ctx.terminalAgentStore
+					.refreshBackgroundTasks(input.terminalId, transcriptPath)
+					.then((changed) => {
+						if (!changed) return;
+						ctx.eventBus.broadcastAgentBindingsChanged({
+							workspaceId,
+							occurredAt: Date.now(),
+						});
+					})
+					.catch(() => {});
+			}
 		}
 
 		fanOutAgentLifecycle(ctx, {

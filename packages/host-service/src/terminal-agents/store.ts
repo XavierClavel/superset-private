@@ -1,6 +1,7 @@
 import { EventEmitter } from "node:events";
 import type { BackgroundTask } from "@superset/chat/protocol";
 import type { AgentDefinitionId } from "@superset/shared/agent-catalog";
+import { ClaudeBackgroundTasks } from "./claude-background-tasks";
 import {
 	getSubagentHarness,
 	readSubagentTranscript,
@@ -139,6 +140,10 @@ export class TerminalAgentStore extends EventEmitter {
 		string,
 		Map<string, TerminalSubagent>
 	>();
+	private readonly backgroundTasksByTerminal = new Map<
+		string,
+		{ reader: ClaudeBackgroundTasks; tasks: BackgroundTask[]; revision: number }
+	>();
 	private readonly persistence: TerminalAgentBindingPersistence | undefined;
 
 	constructor(persistence?: TerminalAgentBindingPersistence) {
@@ -208,6 +213,7 @@ export class TerminalAgentStore extends EventEmitter {
 		// A new agent or session in the terminal orphans the old roster.
 		if (prior === undefined || sessionChanged) {
 			this.subagentsByTerminal.delete(terminalId);
+			this.backgroundTasksByTerminal.delete(terminalId);
 		}
 
 		// "Attached" is a session-liveness signal, not lifecycle progress. The
@@ -242,6 +248,30 @@ export class TerminalAgentStore extends EventEmitter {
 		this.persistence?.upsert(next);
 		this.emit("change", workspaceId);
 		this.noteActivity(workspaceId);
+	}
+
+	/**
+	 * Re-read the background shells and monitors of the terminal's Claude
+	 * session from its transcript.
+	 */
+	async refreshBackgroundTasks(
+		terminalId: string,
+		transcriptPath: string,
+	): Promise<boolean> {
+		const binding = this.byTerminal.get(terminalId);
+		if (binding?.agentId !== "claude") return false;
+		let entry = this.backgroundTasksByTerminal.get(terminalId);
+		if (!entry) {
+			entry = { reader: new ClaudeBackgroundTasks(), tasks: [], revision: 0 };
+			this.backgroundTasksByTerminal.set(terminalId, entry);
+		}
+		const tasks = await entry.reader.read(transcriptPath);
+		if (this.backgroundTasksByTerminal.get(terminalId) !== entry) return false;
+		if (entry.revision === entry.reader.revision) return false;
+		entry.revision = entry.reader.revision;
+		entry.tasks = tasks;
+		this.emit("change", binding.workspaceId);
+		return true;
 	}
 
 	/** An agent did something; the sandbox keepalive listens for this. */
@@ -584,11 +614,19 @@ export class TerminalAgentStore extends EventEmitter {
 				launchId: memory.launchId,
 			};
 		}
+		const background = this.backgroundTasksByTerminal.get(binding.terminalId);
+		if (background?.tasks.length) {
+			binding = { ...binding, backgroundTasks: background.tasks };
+		}
 		const roster = this.pruneSubagents(binding.terminalId);
 		if (!roster) return binding;
 		const live = [...roster.values()]
 			.filter((subagent) => subagent.endedAt === undefined)
-			.sort((a, b) => a.startedAt - b.startedAt);
+			.sort((a, b) => a.startedAt - b.startedAt)
+			.map((subagent) => {
+				const description = background?.reader.subagentDescription(subagent.id);
+				return description ? { ...subagent, description } : subagent;
+			});
 		return live.length > 0 ? { ...binding, subagents: live } : binding;
 	}
 
@@ -655,6 +693,7 @@ export class TerminalAgentStore extends EventEmitter {
 		const existing = this.byTerminal.get(terminalId);
 		this.byTerminal.delete(terminalId);
 		this.subagentsByTerminal.delete(terminalId);
+		this.backgroundTasksByTerminal.delete(terminalId);
 
 		let marked: { workspaceId: string } | undefined;
 		if (this.persistence?.markEnded) {

@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import type {
 	AgentMessage,
+	BackgroundTask,
 	Notice,
 	Reasoning,
 	ToolCall,
@@ -25,11 +26,10 @@ const IGNORED_SYSTEM_SUBTYPES = new Set([
 	"status",
 	"thinking_tokens",
 	"recorder_abort",
-	"task_started",
-	"task_updated",
-	"task_notification",
 	"task_progress",
 ]);
+
+const ENDED_TASK_STATUSES = new Set(["completed", "failed", "killed"]);
 
 const IGNORED_TYPES = new Set(["user_replay"]);
 
@@ -62,6 +62,12 @@ function usageFrom(raw: unknown): Usage | undefined {
 	};
 }
 
+type TrackedTask = {
+	task: BackgroundTask;
+	toolUseId: string | null;
+	backgrounded: boolean;
+};
+
 type TrackedTool = ToolUse & {
 	itemId: string;
 	startedAtMs: number;
@@ -83,6 +89,7 @@ export class ClaudeTranslator {
 	private interruptReason: string | null = null;
 	private refused: RefusedWindow = null;
 	private lastModel: string | null = null;
+	private readonly tasks = new Map<string, TrackedTask>();
 
 	constructor(private readonly options: ClaudeTranslatorOptions) {}
 
@@ -194,6 +201,12 @@ export class ClaudeTranslator {
 			];
 		}
 
+		if (subtype === "task_started") return this.taskStarted(envelope);
+		if (subtype === "task_updated") return this.taskUpdated(envelope);
+		if (subtype === "task_notification") {
+			return this.endTask(asString(envelope.task_id));
+		}
+
 		if (subtype === "compact_boundary") {
 			return [this.notice("compaction", "Conversation history was compacted")];
 		}
@@ -289,6 +302,10 @@ export class ClaudeTranslator {
 			if (!tool) continue;
 			this.tools.delete(toolUseId);
 
+			events.push(
+				...this.settleTaskLaunch(toolUseId, envelope.tool_use_result),
+			);
+
 			const isError = block.is_error === true;
 			const outcome: ToolOutcome = {
 				rawOutput: envelope.tool_use_result ?? null,
@@ -364,6 +381,88 @@ export class ClaudeTranslator {
 		}
 
 		return [];
+	}
+
+	/** The CLI is gone, so none of its background tasks still runs. */
+	endTasks(): AdapterEvent[] {
+		if (this.tasks.size === 0) return [];
+		this.tasks.clear();
+		return [this.backgroundTasks()];
+	}
+
+	private taskStarted(envelope: Json): AdapterEvent[] {
+		const taskId = asString(envelope.task_id);
+		if (!taskId) return [];
+		const backgrounded = envelope.is_backgrounded === true;
+		this.tasks.set(taskId, {
+			task: {
+				id: taskId,
+				kind:
+					asString(envelope.task_type) === "local_agent"
+						? "subagent"
+						: "process",
+				name:
+					asString(envelope.description) ??
+					asString(envelope.subagent_type) ??
+					"",
+				canStop: false,
+				startedAtMs: this.now(),
+			},
+			toolUseId: asString(envelope.tool_use_id),
+			backgrounded,
+		});
+		return backgrounded ? [this.backgroundTasks()] : [];
+	}
+
+	private taskUpdated(envelope: Json): AdapterEvent[] {
+		const taskId = asString(envelope.task_id);
+		const tracked = taskId ? this.tasks.get(taskId) : undefined;
+		const patch = asObject(envelope.patch);
+		if (!tracked || !patch) return [];
+		if (ENDED_TASK_STATUSES.has(asString(patch.status) ?? "")) {
+			return this.endTask(taskId);
+		}
+		if (patch.is_backgrounded !== true || tracked.backgrounded) return [];
+		tracked.backgrounded = true;
+		return [this.backgroundTasks()];
+	}
+
+	/**
+	 * The spawning tool call's result says whether its task went to the
+	 * background. Older CLIs send no `is_backgrounded` on `task_started`, so
+	 * this is the only signal there; any other result means the task is done.
+	 */
+	private settleTaskLaunch(
+		toolUseId: string,
+		rawResult: unknown,
+	): AdapterEvent[] {
+		for (const [taskId, tracked] of this.tasks) {
+			if (tracked.toolUseId !== toolUseId) continue;
+			const result = asObject(rawResult);
+			const launched =
+				result?.isAsync === true ||
+				typeof result?.backgroundTaskId === "string" ||
+				typeof result?.taskId === "string";
+			if (!launched) return this.endTask(taskId);
+			if (tracked.backgrounded) return [];
+			tracked.backgrounded = true;
+			return [this.backgroundTasks()];
+		}
+		return [];
+	}
+
+	private endTask(taskId: string | null): AdapterEvent[] {
+		const tracked = taskId ? this.tasks.get(taskId) : undefined;
+		if (!taskId || !tracked) return [];
+		this.tasks.delete(taskId);
+		return tracked.backgrounded ? [this.backgroundTasks()] : [];
+	}
+
+	private backgroundTasks(): AdapterEvent {
+		const tasks = [...this.tasks.values()]
+			.filter((tracked) => tracked.backgrounded)
+			.map((tracked) => tracked.task);
+		return { kind: "session", session: { backgroundTasks: tasks } };
 	}
 
 	private sessionIdle(): AdapterEvent {

@@ -1,7 +1,9 @@
+import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { WaveSpinner } from "@superset/ui/atoms/WaveSpinner";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
+import { Bot } from "lucide-react";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { HiChevronRight, HiMiniPlus } from "react-icons/hi2";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
@@ -18,6 +20,7 @@ interface DashboardSidebarProjectRowProps
 	projectColor: string | null;
 	isCollapsed: boolean;
 	agentStatus: ActivePaneStatus | null;
+	backgroundWork: number;
 	isRenaming: boolean;
 	renameValue: string;
 	onRenameValueChange: (value: string) => void;
@@ -40,6 +43,7 @@ export const DashboardSidebarProjectRow = forwardRef<
 			projectColor,
 			isCollapsed,
 			agentStatus,
+			backgroundWork,
 			isRenaming,
 			renameValue,
 			onRenameValueChange,
@@ -113,11 +117,22 @@ export const DashboardSidebarProjectRow = forwardRef<
 							<WaveSpinner
 								className={cn("text-foreground/80", HIDE_ON_HOVER)}
 							/>
+						) : agentStatus ? (
+							<StatusIndicator status={agentStatus} className={HIDE_ON_HOVER} />
 						) : (
-							agentStatus && (
-								<StatusIndicator
-									status={agentStatus}
-									className={HIDE_ON_HOVER}
+							backgroundWork > 0 && (
+								<Bot
+									role="img"
+									aria-label={t({
+										message: plural(backgroundWork, {
+											one: "# background task running",
+											other: "# background tasks running",
+										}),
+									})}
+									className={cn(
+										"size-3.5 text-emerald-500/90 motion-safe:animate-pulse",
+										HIDE_ON_HOVER,
+									)}
 								/>
 							)
 						)}

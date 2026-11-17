@@ -801,6 +801,9 @@ msgstr "{appName} Mobile在你连接的电脑上运行智能体。"
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {归档#个云工作区} other {归档#个云工作区}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, other {# 个后台任务正在运行}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {落后main #个提交，需要变基} other {落后main #个提交，需要变基}}"
 
@@ -7007,9 +7010,6 @@ msgstr "删除图片"
 msgid "Delete label \"{0}\"?"
 msgstr "删除标签“{0}”？"
 
-msgid "Delete local branch on workspace removal"
-msgstr "移除工作区时删除本地分支"
-
 msgid "Delete message"
 msgstr "删除消息"
 
@@ -10954,9 +10954,6 @@ msgstr "标签变更"
 msgid "Label created but could not be assigned"
 msgstr "标签已创建，但无法分配"
 
-msgid "Label is required."
-msgstr "名称为必填项。"
-
 msgid "Label name"
 msgstr "标签名称"
 
@@ -12491,13 +12488,14 @@ msgstr "新建分组…"
 msgid "New issue"
 msgstr "新建议题"
 
-msgid "New layout"
-msgstr "新布局"
 msgid "New label"
 msgstr "新建标签"
 
 msgid "New label…"
 msgstr "新建标签…"
+
+msgid "New layout"
+msgstr "新布局"
 
 msgid "New messages"
 msgstr "新消息"
@@ -12675,10 +12673,11 @@ msgstr "没有活动的终端会话"
 msgid "No agent"
 msgstr "无智能体"
 
-msgid "No agent is available to set up the environment"
-msgstr "没有可用于设置环境的代理"
 msgid "No agent activity in the last two weeks"
 msgstr "过去两周没有智能体活动"
+
+msgid "No agent is available to set up the environment"
+msgstr "没有可用于设置环境的代理"
 
 msgid "No agent is configured on this host"
 msgstr "此主机上未配置任何智能体"
@@ -18325,10 +18324,11 @@ msgstr "显示全部评论"
 msgid "Show all lines"
 msgstr "显示所有行"
 
-msgid "Show Apple's installer"
-msgstr "显示 Apple 安装器"
 msgid "Show all workspaces"
 msgstr "显示全部工作区"
+
+msgid "Show Apple's installer"
+msgstr "显示 Apple 安装器"
 
 msgid "Show archived"
 msgstr "显示已归档"

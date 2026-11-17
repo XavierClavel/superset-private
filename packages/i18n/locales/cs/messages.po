@@ -801,6 +801,9 @@ msgstr "{appName} Mobile spouští agenty na počítačích, které připojíte.
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {Archivovat # cloudový pracovní prostor} few {Archivovat # cloudové pracovní prostory} many {Archivovat # cloudového pracovního prostoru} other {Archivovat # cloudových pracovních prostorů}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, one {# úloha na pozadí běží} few {# úlohy na pozadí běží} many {# úlohy na pozadí běží} other {# úloh na pozadí běží}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Zaostává za main o # commit, je potřeba rebase} few {Zaostává za main o # commity, je potřeba rebase} many {Zaostává za main o # commitu, je potřeba rebase} other {Zaostává za main o # commitů, je potřeba rebase}}"
 
@@ -7007,9 +7010,6 @@ msgstr "Smazat obrázek"
 msgid "Delete label \"{0}\"?"
 msgstr "Smazat štítek \"{0}\"?"
 
-msgid "Delete local branch on workspace removal"
-msgstr "Smazat lokální větev při odstranění pracovního prostoru"
-
 msgid "Delete message"
 msgstr "Smazat zprávu"
 
@@ -10954,9 +10954,6 @@ msgstr "Změna štítku"
 msgid "Label created but could not be assigned"
 msgstr "Štítek byl vytvořen, ale nepodařilo se ho přiřadit"
 
-msgid "Label is required."
-msgstr "Popisek je povinný."
-
 msgid "Label name"
 msgstr "Název štítku"
 
@@ -12491,13 +12488,14 @@ msgstr "Nová skupina…"
 msgid "New issue"
 msgstr "Nová issue"
 
-msgid "New layout"
-msgstr "Nové rozvržení"
 msgid "New label"
 msgstr "Nový štítek"
 
 msgid "New label…"
 msgstr "Nový štítek…"
+
+msgid "New layout"
+msgstr "Nové rozvržení"
 
 msgid "New messages"
 msgstr "Nové zprávy"
@@ -12675,10 +12673,11 @@ msgstr "Žádné aktivní relace terminálu"
 msgid "No agent"
 msgstr "Žádný agent"
 
-msgid "No agent is available to set up the environment"
-msgstr "K nastavení prostředí není k dispozici žádný agent"
 msgid "No agent activity in the last two weeks"
 msgstr "Žádná aktivita agentů za poslední dva týdny"
+
+msgid "No agent is available to set up the environment"
+msgstr "K nastavení prostředí není k dispozici žádný agent"
 
 msgid "No agent is configured on this host"
 msgstr "Na tomto hostiteli není nakonfigurován žádný agent"
@@ -18325,10 +18324,11 @@ msgstr "Zobrazit všechny komentáře"
 msgid "Show all lines"
 msgstr "Zobrazit všechny řádky"
 
-msgid "Show Apple's installer"
-msgstr "Zobrazit instalátor od Applu"
 msgid "Show all workspaces"
 msgstr "Zobrazit všechny pracovní prostory"
+
+msgid "Show Apple's installer"
+msgstr "Zobrazit instalátor od Applu"
 
 msgid "Show archived"
 msgstr "Zobrazit archivované"

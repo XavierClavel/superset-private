@@ -801,6 +801,9 @@ msgstr "{appName} Mobile draait agents op de computers die je koppelt."
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {# cloudwerkruimte archiveren} other {# cloudwerkruimtes archiveren}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, one {# achtergrondtaak actief} other {# achtergrondtaken actief}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# commit achter op main, rebase nodig} other {# commits achter op main, rebase nodig}}"
 
@@ -7007,9 +7010,6 @@ msgstr "Afbeelding verwijderen"
 msgid "Delete label \"{0}\"?"
 msgstr "Label \"{0}\" verwijderen?"
 
-msgid "Delete local branch on workspace removal"
-msgstr "Lokale branch verwijderen bij verwijderen werkruimte"
-
 msgid "Delete message"
 msgstr "Bericht verwijderen"
 
@@ -10954,9 +10954,6 @@ msgstr "Labelwijziging"
 msgid "Label created but could not be assigned"
 msgstr "Label gemaakt, maar kon niet worden toegewezen"
 
-msgid "Label is required."
-msgstr "Label is verplicht."
-
 msgid "Label name"
 msgstr "Labelnaam"
 
@@ -12491,13 +12488,14 @@ msgstr "Nieuwe groep…"
 msgid "New issue"
 msgstr "Nieuwe issue"
 
-msgid "New layout"
-msgstr "Nieuwe indeling"
 msgid "New label"
 msgstr "Nieuw label"
 
 msgid "New label…"
 msgstr "Nieuw label…"
+
+msgid "New layout"
+msgstr "Nieuwe indeling"
 
 msgid "New messages"
 msgstr "Nieuwe berichten"
@@ -12675,10 +12673,11 @@ msgstr "Geen actieve terminalsessies"
 msgid "No agent"
 msgstr "Geen agent"
 
-msgid "No agent is available to set up the environment"
-msgstr "Er is geen agent beschikbaar om de omgeving in te richten"
 msgid "No agent activity in the last two weeks"
 msgstr "Geen agentactiviteit in de afgelopen twee weken"
+
+msgid "No agent is available to set up the environment"
+msgstr "Er is geen agent beschikbaar om de omgeving in te richten"
 
 msgid "No agent is configured on this host"
 msgstr "Er is geen agent geconfigureerd op deze host"
@@ -18325,10 +18324,11 @@ msgstr "Alle opmerkingen tonen"
 msgid "Show all lines"
 msgstr "Alle regels tonen"
 
-msgid "Show Apple's installer"
-msgstr "Toon het installatieprogramma van Apple"
 msgid "Show all workspaces"
 msgstr "Alle werkruimtes tonen"
+
+msgid "Show Apple's installer"
+msgstr "Toon het installatieprogramma van Apple"
 
 msgid "Show archived"
 msgstr "Gearchiveerde tonen"

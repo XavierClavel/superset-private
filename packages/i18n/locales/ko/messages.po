@@ -801,6 +801,9 @@ msgstr "{appName} Mobile은 연결한 컴퓨터에서 에이전트를 실행합�
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {클라우드 워크스페이스 #개 보관} other {클라우드 워크스페이스 #개 보관}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, other {백그라운드 작업 #개 실행 중}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {main보다 커밋 #개 뒤처짐, 리베이스 필요} other {main보다 커밋 #개 뒤처짐, 리베이스 필요}}"
 
@@ -7007,9 +7010,6 @@ msgstr "이미지 삭제"
 msgid "Delete label \"{0}\"?"
 msgstr "레이블 \"{0}\"을(를) 삭제할까요?"
 
-msgid "Delete local branch on workspace removal"
-msgstr "워크스페이스 삭제 시 로컬 브랜치 삭제"
-
 msgid "Delete message"
 msgstr "메시지 삭제"
 
@@ -10954,9 +10954,6 @@ msgstr "라벨 변경"
 msgid "Label created but could not be assigned"
 msgstr "레이블을 만들었지만 할당할 수 없습니다"
 
-msgid "Label is required."
-msgstr "레이블은 필수입니다."
-
 msgid "Label name"
 msgstr "레이블 이름"
 
@@ -12491,13 +12488,14 @@ msgstr "새 그룹…"
 msgid "New issue"
 msgstr "새 이슈"
 
-msgid "New layout"
-msgstr "새 레이아웃"
 msgid "New label"
 msgstr "새 레이블"
 
 msgid "New label…"
 msgstr "새 레이블…"
+
+msgid "New layout"
+msgstr "새 레이아웃"
 
 msgid "New messages"
 msgstr "새 메시지"
@@ -12675,10 +12673,11 @@ msgstr "활성 터미널 세션 없음"
 msgid "No agent"
 msgstr "에이전트 없음"
 
-msgid "No agent is available to set up the environment"
-msgstr "환경을 설정할 수 있는 에이전트가 없습니다"
 msgid "No agent activity in the last two weeks"
 msgstr "지난 2주 동안 에이전트 활동이 없습니다"
+
+msgid "No agent is available to set up the environment"
+msgstr "환경을 설정할 수 있는 에이전트가 없습니다"
 
 msgid "No agent is configured on this host"
 msgstr "이 호스트에 구성된 에이전트가 없습니다"
@@ -18325,10 +18324,11 @@ msgstr "모든 댓글 표시"
 msgid "Show all lines"
 msgstr "모든 줄 표시"
 
-msgid "Show Apple's installer"
-msgstr "Apple 설치 프로그램 보기"
 msgid "Show all workspaces"
 msgstr "모든 워크스페이스 표시"
+
+msgid "Show Apple's installer"
+msgstr "Apple 설치 프로그램 보기"
 
 msgid "Show archived"
 msgstr "보관된 항목 표시"

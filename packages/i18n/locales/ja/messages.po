@@ -801,6 +801,9 @@ msgstr "{appName} Mobileは、接続したコンピュータ上でエージェ�
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {#件のクラウドワークスペースをアーカイブ} other {#件のクラウドワークスペースをアーカイブ}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, other {# 件のバックグラウンドタスクを実行中}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {mainより#コミット遅れています。リベースが必要です} other {mainより#コミット遅れています。リベースが必要です}}"
 
@@ -7007,9 +7010,6 @@ msgstr "画像を削除"
 msgid "Delete label \"{0}\"?"
 msgstr "ラベル「{0}」を削除しますか？"
 
-msgid "Delete local branch on workspace removal"
-msgstr "ワークスペース削除時にローカルブランチも削除"
-
 msgid "Delete message"
 msgstr "メッセージを削除"
 
@@ -10954,9 +10954,6 @@ msgstr "ラベル変更"
 msgid "Label created but could not be assigned"
 msgstr "ラベルを作成しましたが、割り当てできませんでした"
 
-msgid "Label is required."
-msgstr "ラベルは必須です。"
-
 msgid "Label name"
 msgstr "ラベル名"
 
@@ -12491,13 +12488,14 @@ msgstr "新しいグループ…"
 msgid "New issue"
 msgstr "新規issue"
 
-msgid "New layout"
-msgstr "新しいレイアウト"
 msgid "New label"
 msgstr "新しいラベル"
 
 msgid "New label…"
 msgstr "新しいラベル…"
+
+msgid "New layout"
+msgstr "新しいレイアウト"
 
 msgid "New messages"
 msgstr "新着メッセージ"
@@ -12675,10 +12673,11 @@ msgstr "アクティブなターミナルセッションはありません"
 msgid "No agent"
 msgstr "エージェントなし"
 
-msgid "No agent is available to set up the environment"
-msgstr "環境をセットアップできるエージェントがありません"
 msgid "No agent activity in the last two weeks"
 msgstr "過去2週間にエージェントのアクティビティはありません"
+
+msgid "No agent is available to set up the environment"
+msgstr "環境をセットアップできるエージェントがありません"
 
 msgid "No agent is configured on this host"
 msgstr "このホストにはエージェントが設定されていません"
@@ -18325,10 +18324,11 @@ msgstr "すべてのコメントを表示"
 msgid "Show all lines"
 msgstr "すべての行を表示"
 
-msgid "Show Apple's installer"
-msgstr "Apple のインストーラを表示"
 msgid "Show all workspaces"
 msgstr "すべてのワークスペースを表示"
+
+msgid "Show Apple's installer"
+msgstr "Apple のインストーラを表示"
 
 msgid "Show archived"
 msgstr "アーカイブ済みを表示"

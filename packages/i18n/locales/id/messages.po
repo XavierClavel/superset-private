@@ -801,6 +801,9 @@ msgstr "{appName} Mobile menjalankan agen di komputer yang Anda hubungkan."
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {Arsipkan # Workspace Cloud} other {Arsipkan # Workspace Cloud}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, other {# tugas latar belakang sedang berjalan}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Tertinggal # commit dari main, perlu rebase} other {Tertinggal # commit dari main, perlu rebase}}"
 
@@ -7007,9 +7010,6 @@ msgstr "Hapus gambar"
 msgid "Delete label \"{0}\"?"
 msgstr "Hapus label \"{0}\"?"
 
-msgid "Delete local branch on workspace removal"
-msgstr "Hapus branch lokal saat workspace dihapus"
-
 msgid "Delete message"
 msgstr "Hapus pesan"
 
@@ -10954,9 +10954,6 @@ msgstr "Perubahan label"
 msgid "Label created but could not be assigned"
 msgstr "Label dibuat, tetapi tidak dapat ditetapkan"
 
-msgid "Label is required."
-msgstr "Label wajib diisi."
-
 msgid "Label name"
 msgstr "Nama label"
 
@@ -12491,13 +12488,14 @@ msgstr "Grup baru…"
 msgid "New issue"
 msgstr "Issue baru"
 
-msgid "New layout"
-msgstr "Tata letak baru"
 msgid "New label"
 msgstr "Label baru"
 
 msgid "New label…"
 msgstr "Label baru…"
+
+msgid "New layout"
+msgstr "Tata letak baru"
 
 msgid "New messages"
 msgstr "Pesan baru"
@@ -12675,10 +12673,11 @@ msgstr "Tidak ada sesi terminal aktif"
 msgid "No agent"
 msgstr "Tanpa agen"
 
-msgid "No agent is available to set up the environment"
-msgstr "Tidak ada agen yang tersedia untuk menyiapkan environment"
 msgid "No agent activity in the last two weeks"
 msgstr "Tidak ada aktivitas agen dalam dua minggu terakhir"
+
+msgid "No agent is available to set up the environment"
+msgstr "Tidak ada agen yang tersedia untuk menyiapkan environment"
 
 msgid "No agent is configured on this host"
 msgstr "Tidak ada agen yang dikonfigurasi di host ini"
@@ -18325,10 +18324,11 @@ msgstr "Tampilkan semua komentar"
 msgid "Show all lines"
 msgstr "Tampilkan semua baris"
 
-msgid "Show Apple's installer"
-msgstr "Tampilkan penginstal Apple"
 msgid "Show all workspaces"
 msgstr "Tampilkan semua workspace"
+
+msgid "Show Apple's installer"
+msgstr "Tampilkan penginstal Apple"
 
 msgid "Show archived"
 msgstr "Tampilkan yang diarsipkan"

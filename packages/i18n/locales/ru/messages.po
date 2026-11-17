@@ -801,6 +801,9 @@ msgstr "{appName} Mobile запускает агентов на компьюте
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {Архивировать # облачное рабочее пространство} few {Архивировать # облачных рабочих пространства} many {Архивировать # облачных рабочих пространств} other {Архивировать # облачных рабочих пространств}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, one {# фоновая задача выполняется} few {# фоновые задачи выполняются} many {# фоновых задач выполняется} other {# фоновой задачи выполняется}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {Отстаёт от main на # коммит, нужен rebase} few {Отстаёт от main на # коммита, нужен rebase} many {Отстаёт от main на # коммитов, нужен rebase} other {Отстаёт от main на # коммитов, нужен rebase}}"
 
@@ -7007,9 +7010,6 @@ msgstr "Удалить изображение"
 msgid "Delete label \"{0}\"?"
 msgstr "Удалить метку \"{0}\"?"
 
-msgid "Delete local branch on workspace removal"
-msgstr "Удалять локальную ветку при удалении рабочей области"
-
 msgid "Delete message"
 msgstr "Удалить сообщение"
 
@@ -10954,9 +10954,6 @@ msgstr "Изменение метки"
 msgid "Label created but could not be assigned"
 msgstr "Метка создана, но не удалось её назначить"
 
-msgid "Label is required."
-msgstr "Название обязательно."
-
 msgid "Label name"
 msgstr "Название метки"
 
@@ -12491,13 +12488,14 @@ msgstr "Новая группа…"
 msgid "New issue"
 msgstr "Новая задача"
 
-msgid "New layout"
-msgstr "Новый макет"
 msgid "New label"
 msgstr "Новая метка"
 
 msgid "New label…"
 msgstr "Новая метка…"
+
+msgid "New layout"
+msgstr "Новый макет"
 
 msgid "New messages"
 msgstr "Новые сообщения"
@@ -12675,10 +12673,11 @@ msgstr "Нет активных сессий терминала"
 msgid "No agent"
 msgstr "Без агента"
 
-msgid "No agent is available to set up the environment"
-msgstr "Нет агента, который может настроить окружение"
 msgid "No agent activity in the last two weeks"
 msgstr "Нет активности агентов за последние две недели"
+
+msgid "No agent is available to set up the environment"
+msgstr "Нет агента, который может настроить окружение"
 
 msgid "No agent is configured on this host"
 msgstr "На этом хосте не настроен ни один агент"
@@ -18325,10 +18324,11 @@ msgstr "Показать все комментарии"
 msgid "Show all lines"
 msgstr "Показать все строки"
 
-msgid "Show Apple's installer"
-msgstr "Показать установщик Apple"
 msgid "Show all workspaces"
 msgstr "Показать все рабочие области"
+
+msgid "Show Apple's installer"
+msgstr "Показать установщик Apple"
 
 msgid "Show archived"
 msgstr "Показать архивные"

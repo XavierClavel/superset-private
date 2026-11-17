@@ -433,11 +433,13 @@ export class ClaudeAdapter implements HarnessAdapter {
 			this.pushAll(
 				canceled ? translator.interrupt(message) : translator.fail(message),
 			);
+			this.pushAll(translator.endTasks());
 			if (waiting) {
 				this.events.push({ kind: "session", session: { status: "idle" } });
 				return;
 			}
 		}
+		this.pushAll(translator.endTasks());
 		if (this.staleApprovals()) {
 			this.events.push({ kind: "session", session: { status: "idle" } });
 		}

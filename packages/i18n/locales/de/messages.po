@@ -801,6 +801,9 @@ msgstr "{appName} Mobile führt Agenten auf den Rechnern aus, die du verbindest.
 msgid "{archivableCount, plural, one {Archive # Cloud Workspace} other {Archive # Cloud Workspaces}}"
 msgstr "{archivableCount, plural, one {# Cloud-Workspace archivieren} other {# Cloud-Workspaces archivieren}}"
 
+msgid "{backgroundWork, plural, one {# background task running} other {# background tasks running}}"
+msgstr "{backgroundWork, plural, one {# Hintergrundaufgabe läuft} other {# Hintergrundaufgaben laufen}}"
+
 msgid "{behindCount, plural, one {Behind main by # commit, needs rebase} other {Behind main by # commits, needs rebase}}"
 msgstr "{behindCount, plural, one {# Commit hinter main, Rebase nötig} other {# Commits hinter main, Rebase nötig}}"
 
@@ -7007,9 +7010,6 @@ msgstr "Bild löschen"
 msgid "Delete label \"{0}\"?"
 msgstr "Label \"{0}\" löschen?"
 
-msgid "Delete local branch on workspace removal"
-msgstr "Lokalen Branch beim Entfernen des Arbeitsbereichs löschen"
-
 msgid "Delete message"
 msgstr "Nachricht löschen"
 
@@ -10954,9 +10954,6 @@ msgstr "Label-Änderung"
 msgid "Label created but could not be assigned"
 msgstr "Label erstellt, konnte aber nicht zugewiesen werden"
 
-msgid "Label is required."
-msgstr "Bezeichnung ist erforderlich."
-
 msgid "Label name"
 msgstr "Label-Name"
 
@@ -12491,13 +12488,14 @@ msgstr "Neue Gruppe…"
 msgid "New issue"
 msgstr "Neues Issue"
 
-msgid "New layout"
-msgstr "Neues Layout"
 msgid "New label"
 msgstr "Neues Label"
 
 msgid "New label…"
 msgstr "Neues Label…"
+
+msgid "New layout"
+msgstr "Neues Layout"
 
 msgid "New messages"
 msgstr "Neue Nachrichten"
@@ -12675,10 +12673,11 @@ msgstr "Keine aktiven Terminal-Sitzungen"
 msgid "No agent"
 msgstr "Kein Agent"
 
-msgid "No agent is available to set up the environment"
-msgstr "Kein Agent verfügbar, um die Umgebung einzurichten"
 msgid "No agent activity in the last two weeks"
 msgstr "Keine Agent-Aktivität in den letzten zwei Wochen"
+
+msgid "No agent is available to set up the environment"
+msgstr "Kein Agent verfügbar, um die Umgebung einzurichten"
 
 msgid "No agent is configured on this host"
 msgstr "Auf diesem Host ist kein Agent konfiguriert"
@@ -18325,10 +18324,11 @@ msgstr "Alle Kommentare anzeigen"
 msgid "Show all lines"
 msgstr "Alle Zeilen anzeigen"
 
-msgid "Show Apple's installer"
-msgstr "Apples Installationsprogramm anzeigen"
 msgid "Show all workspaces"
 msgstr "Alle Arbeitsbereiche anzeigen"
+
+msgid "Show Apple's installer"
+msgstr "Apples Installationsprogramm anzeigen"
 
 msgid "Show archived"
 msgstr "Archivierte anzeigen"
