@@ -71,7 +71,9 @@ async function persistFromResolved(
 ): Promise<CreateResult> {
 	const projectId = randomUUID();
 	try {
-		persistLocalProject(ctx, projectId, args.resolved, { name: args.name });
+		await persistLocalProject(ctx, projectId, args.resolved, {
+			name: args.name,
+		});
 	} catch (err) {
 		if (args.cleanupRepoPathOnFailure) {
 			try {

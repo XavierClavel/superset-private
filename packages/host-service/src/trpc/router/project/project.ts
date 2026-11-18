@@ -765,7 +765,7 @@ export const projectRouter = router({
 						input.mode.parentDir,
 						ctx.credentials,
 					);
-					persistLocalProject(ctx, input.projectId, resolved, {
+					await persistLocalProject(ctx, input.projectId, resolved, {
 						name: origin.name,
 					});
 					return {
@@ -807,7 +807,7 @@ export const projectRouter = router({
 						};
 					}
 
-					persistLocalProject(ctx, input.projectId, resolved, {
+					await persistLocalProject(ctx, input.projectId, resolved, {
 						name: origin.name,
 					});
 					// Local workspaces are the checkout; when it moves, so do they.
