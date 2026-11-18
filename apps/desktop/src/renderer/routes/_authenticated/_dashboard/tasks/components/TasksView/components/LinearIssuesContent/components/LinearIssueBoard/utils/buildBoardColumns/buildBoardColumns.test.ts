@@ -26,14 +26,14 @@ describe("buildBoardColumns", () => {
 		expect(
 			buildBoardColumns({
 				teamStates: undefined,
-				status: "all",
+				statuses: [],
 				typeNames,
 			}).map((column) => column.key),
 		).toEqual(["backlog", "unstarted", "started", "completed", "canceled"]);
 		expect(
 			buildBoardColumns({
 				teamStates: undefined,
-				status: "active",
+				statuses: ["started", "unstarted"],
 				typeNames,
 			}).map((column) => column.name),
 		).toEqual(["Todo", "In progress"]);
@@ -47,7 +47,7 @@ describe("buildBoardColumns", () => {
 				state("progress", "started", 2),
 				state("triage", "triage", 9),
 			],
-			status: "all",
+			statuses: [],
 			typeNames,
 		});
 		expect(columns.map((column) => column.stateId)).toEqual([

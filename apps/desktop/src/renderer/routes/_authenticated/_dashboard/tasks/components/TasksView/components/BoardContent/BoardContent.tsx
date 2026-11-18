@@ -1,14 +1,14 @@
 import { Trans } from "@lingui/react/macro";
 import { HiCheckCircle } from "react-icons/hi2";
 import { LuRefreshCw } from "react-icons/lu";
+import type { StatusFilterValue } from "../../../../utils/statusFilter";
 import { useAutoLoadEmptyPages } from "../../hooks/useAutoLoadEmptyPages";
 import type { TaskWithStatus } from "../../hooks/useTasksData";
 import { useTasksData } from "../../hooks/useTasksData";
 import { TasksBoardView } from "../TasksBoardView";
-import type { TabValue } from "../TasksTopBar";
 
 interface BoardContentProps {
-	filterTab: TabValue;
+	statuses: StatusFilterValue[];
 	searchQuery: string;
 	assigneeFilter: string | null;
 	labelFilter: string | null;
@@ -16,7 +16,7 @@ interface BoardContentProps {
 }
 
 export function BoardContent({
-	filterTab,
+	statuses,
 	searchQuery,
 	assigneeFilter,
 	labelFilter,
@@ -30,7 +30,7 @@ export function BoardContent({
 		isFetchingNextTasksPage,
 		isLoadingTasks,
 	} = useTasksData({
-		filterTab,
+		statuses,
 		searchQuery,
 		assigneeFilter,
 		labelFilter,
@@ -39,7 +39,7 @@ export function BoardContent({
 	useAutoLoadEmptyPages({
 		isEmpty: data.length === 0,
 		isLoading: isLoadingTasks,
-		filterKey: `${filterTab}\0${searchQuery}\0${assigneeFilter ?? ""}\0${labelFilter ?? ""}`,
+		filterKey: `${statuses.join(",")}\0${searchQuery}\0${assigneeFilter ?? ""}\0${labelFilter ?? ""}`,
 		hasNextPage: hasNextTasksPage,
 		isFetchingNextPage: isFetchingNextTasksPage,
 		onLoadMore: fetchNextTasksPage,

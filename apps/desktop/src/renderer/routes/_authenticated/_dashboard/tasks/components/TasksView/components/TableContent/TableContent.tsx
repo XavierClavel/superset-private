@@ -1,15 +1,15 @@
 import { Trans } from "@lingui/react/macro";
 import { useCallback, useEffect, useMemo } from "react";
 import { HiCheckCircle } from "react-icons/hi2";
+import type { StatusFilterValue } from "../../../../utils/statusFilter";
 import { useAutoLoadEmptyPages } from "../../hooks/useAutoLoadEmptyPages";
 import type { TaskWithStatus } from "../../hooks/useTasksData";
 import { useTasksTable } from "../../hooks/useTasksTable";
 import { TasksTableView } from "../TasksTableView";
-import type { TabValue } from "../TasksTopBar";
 import { getSelectedTasks } from "./utils/getSelectedTasks";
 
 interface TableContentProps {
-	filterTab: TabValue;
+	statuses: StatusFilterValue[];
 	searchQuery: string;
 	assigneeFilter: string | null;
 	labelFilter: string | null;
@@ -21,7 +21,7 @@ interface TableContentProps {
 }
 
 export function TableContent({
-	filterTab,
+	statuses,
 	searchQuery,
 	assigneeFilter,
 	labelFilter,
@@ -37,7 +37,7 @@ export function TableContent({
 		isFetchingNextTasksPage,
 		isLoadingTasks,
 	} = useTasksTable({
-		filterTab,
+		statuses,
 		searchQuery,
 		assigneeFilter,
 		labelFilter,
@@ -48,7 +48,7 @@ export function TableContent({
 	useAutoLoadEmptyPages({
 		isEmpty: rows.length === 0,
 		isLoading: isLoadingTasks,
-		filterKey: `${filterTab}\0${searchQuery}\0${assigneeFilter ?? ""}\0${labelFilter ?? ""}`,
+		filterKey: `${statuses.join(",")}\0${searchQuery}\0${assigneeFilter ?? ""}\0${labelFilter ?? ""}`,
 		hasNextPage: hasNextTasksPage,
 		isFetchingNextPage: isFetchingNextTasksPage,
 		onLoadMore: fetchNextTasksPage,

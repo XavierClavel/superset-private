@@ -1,3 +1,4 @@
+import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { Button } from "@superset/ui/button";
 import {
@@ -16,60 +17,62 @@ import {
 	LuCircleDot,
 	LuCircleX,
 } from "react-icons/lu";
-import { ActiveIcon } from "../../../shared/icons/ActiveIcon";
+import {
+	STATUS_FILTER_VALUES,
+	type StatusFilterValue,
+} from "../../../../../../utils/statusFilter";
 import { AllIssuesIcon } from "../../../shared/icons/AllIssuesIcon";
 import { BacklogIcon } from "../../../shared/icons/BacklogIcon";
 
-import type { TabValue } from "../../TasksTopBar";
-
 interface StatusFilterProps {
-	value: TabValue;
-	onChange: (value: TabValue) => void;
+	value: StatusFilterValue[];
+	onChange: (value: StatusFilterValue[]) => void;
 }
 
-const OPTIONS: ReadonlyArray<{
-	value: TabValue;
-	Icon: IconType;
-}> = [
-	{ value: "all", Icon: AllIssuesIcon },
-	{ value: "active", Icon: ActiveIcon },
-	{ value: "backlog", Icon: BacklogIcon },
-	{ value: "unstarted", Icon: LuCircle },
-	{ value: "started", Icon: LuCircleDot },
-	{ value: "completed", Icon: LuCircleCheck },
-	{ value: "canceled", Icon: LuCircleX },
-];
+const ICONS: Record<StatusFilterValue, IconType> = {
+	backlog: BacklogIcon,
+	unstarted: LuCircle,
+	started: LuCircleDot,
+	completed: LuCircleCheck,
+	canceled: LuCircleX,
+};
 
 export function StatusFilter({ value, onChange }: StatusFilterProps) {
 	const { t } = useLingui();
-	const optionLabels: Record<TabValue, string> = {
-		all: t({ message: "All tasks" }),
-		active: t({ message: "Active" }),
-		backlog: t({
-			message: "Backlog",
-		}),
-		unstarted: t({
-			message: "Todo",
-		}),
-		started: t({
-			message: "In progress",
-		}),
-		completed: t({
-			message: "Done",
-		}),
-		canceled: t({
-			message: "Canceled",
-		}),
-	};
 	const [open, setOpen] = useState(false);
-	const selected = OPTIONS.find((o) => o.value === value) ?? OPTIONS[0];
-	const SelectedIcon = selected.Icon;
-	const selectedLabel = optionLabels[selected.value];
-
-	const handleSelect = (next: TabValue) => {
-		onChange(next);
-		setOpen(false);
+	const labels: Record<StatusFilterValue, string> = {
+		backlog: t({ message: "Backlog" }),
+		unstarted: t({ message: "Todo" }),
+		started: t({ message: "In progress" }),
+		completed: t({ message: "Done" }),
+		canceled: t({ message: "Canceled" }),
 	};
+	const allLabel = t({ message: "All tasks" });
+
+	const [onlyStatus] = value;
+	const TriggerIcon =
+		value.length === 1 && onlyStatus ? ICONS[onlyStatus] : AllIssuesIcon;
+	const triggerLabel =
+		value.length === 0
+			? allLabel
+			: value.length === 1 && onlyStatus
+				? labels[onlyStatus]
+				: t({
+						message: plural(value.length, {
+							one: "# status",
+							other: "# statuses",
+						}),
+					});
+	const title = value.map((status) => labels[status]).join(", ") || allLabel;
+
+	const toggle = (status: StatusFilterValue) =>
+		onChange(
+			STATUS_FILTER_VALUES.filter((candidate) =>
+				candidate === status
+					? !value.includes(candidate)
+					: value.includes(candidate),
+			),
+		);
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
@@ -77,12 +80,12 @@ export function StatusFilter({ value, onChange }: StatusFilterProps) {
 				<Button
 					variant="ghost"
 					size="sm"
-					title={selectedLabel}
-					aria-label={selectedLabel}
+					title={title}
+					aria-label={t({ message: `Status: ${title}` })}
 					className="h-8 gap-1.5 px-2 text-muted-foreground hover:text-foreground"
 				>
-					<SelectedIcon className="size-3.5" />
-					<span className="text-sm hidden @4xl:inline">{selectedLabel}</span>
+					<TriggerIcon className="size-3.5" />
+					<span className="text-sm hidden @4xl:inline">{triggerLabel}</span>
 					<HiChevronDown className="size-3" />
 				</Button>
 			</PopoverTrigger>
@@ -90,18 +93,18 @@ export function StatusFilter({ value, onChange }: StatusFilterProps) {
 				<Command>
 					<CommandList>
 						<CommandGroup>
-							{OPTIONS.map((option) => {
-								const Icon = option.Icon;
+							<CommandItem onSelect={() => onChange([])}>
+								<AllIssuesIcon className="size-3.5 shrink-0" />
+								<span className="text-sm">{allLabel}</span>
+								{value.length === 0 && <HiCheck className="ml-auto size-3.5" />}
+							</CommandItem>
+							{STATUS_FILTER_VALUES.map((status) => {
+								const Icon = ICONS[status];
 								return (
-									<CommandItem
-										key={option.value}
-										onSelect={() => handleSelect(option.value)}
-									>
+									<CommandItem key={status} onSelect={() => toggle(status)}>
 										<Icon className="size-3.5 shrink-0" />
-										<span className="text-sm">
-											{optionLabels[option.value]}
-										</span>
-										{option.value === value && (
+										<span className="text-sm">{labels[status]}</span>
+										{value.includes(status) && (
 											<HiCheck className="ml-auto size-3.5" />
 										)}
 									</CommandItem>

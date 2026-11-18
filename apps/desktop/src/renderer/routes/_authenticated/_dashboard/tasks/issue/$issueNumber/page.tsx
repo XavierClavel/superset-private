@@ -25,6 +25,7 @@ import {
 import { GitHubAuthorAvatar } from "../../components/GitHubAuthorAvatar";
 import { Route as TasksLayoutRoute } from "../../layout";
 import { tasksSearchFromFilters } from "../../stores/tasks-filter-state";
+import { parseStatusFilter } from "../../utils/statusFilter";
 
 export const Route = createFileRoute(
 	"/_authenticated/_dashboard/tasks/issue/$issueNumber/",
@@ -58,7 +59,7 @@ function IssueDetailPage() {
 	const backSearch = useMemo(
 		() =>
 			tasksSearchFromFilters({
-				tab: search.tab ?? "all",
+				statuses: parseStatusFilter(search.status),
 				assignee: search.assignee ?? null,
 				label: null,
 				search: search.search ?? "",
@@ -66,7 +67,13 @@ function IssueDetailPage() {
 				projectFilters: resolveProjectFilterParams(search.projects, null, []),
 				includeClosedIssues: search.state === "all",
 			}),
-		[search.assignee, search.search, search.projects, search.state, search.tab],
+		[
+			search.assignee,
+			search.search,
+			search.projects,
+			search.state,
+			search.status,
+		],
 	);
 
 	const { data, isLoading, error, refetch } = useQuery({

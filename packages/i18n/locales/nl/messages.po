@@ -261,6 +261,10 @@ msgstr "{0, plural, one {# sessie actief} other {# sessies actief}}"
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# overgeslagen} other {# overgeslagen}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# status} other {# statussen}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, one {# subagent} other {# subagents}}"
@@ -6456,9 +6460,6 @@ msgstr "Een Dev maken"
 
 msgid "Create a key in Linear"
 msgstr "Sleutel maken in Linear"
-
-msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
-msgstr "Maakt bij de provider een native fork met dezelfde gesprekscontext. De oorspronkelijke sessie blijft ongewijzigd."
 
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Maak een nieuwe API-sleutel voor externe integraties zoals Claude Desktop of Claude Code."
@@ -14897,13 +14898,14 @@ msgstr "Plak een persoonlijke Linear-API-sleutel om Linear in Taken te gebruiken
 msgid "Paste a link"
 msgstr "Plak een link"
 
+msgid "Paste a new key to replace the saved one"
+msgstr "Plak een nieuwe sleutel om de opgeslagen sleutel te vervangen"
+
 msgid "Paste an API key instead"
 msgstr "In plaats daarvan een API-sleutel plakken"
 
 msgid "Paste attachment"
 msgstr "Bijlage plakken"
-msgid "Paste a new key to replace the saved one"
-msgstr "Plak een nieuwe sleutel om de opgeslagen sleutel te vervangen"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Plak dit in de Paradev-CLI:"
@@ -19311,6 +19313,9 @@ msgstr "Status gewijzigd"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Status: {0}"
+
+msgid "Status: {title}"
+msgstr "Status: {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "Verbonden blijven (refresh-tokens)"

@@ -20,6 +20,7 @@ function memoryStore(): LinearApiKeyStore {
 
 function caller() {
 	const keysUsed: string[] = [];
+	const requests: Array<Record<string, unknown>> = [];
 	const router = createLinearRouter(memoryStore(), (apiKey) => {
 		keysUsed.push(apiKey);
 		return {
@@ -29,13 +30,26 @@ function caller() {
 					: Promise.reject(new Error("Authentication required"));
 			},
 			client: {
-				rawRequest: async () => ({
-					data: { teams: { nodes: [] }, users: { nodes: [] } },
-				}),
+				rawRequest: async (
+					_query: string,
+					variables: Record<string, unknown>,
+				) => {
+					requests.push(variables);
+					return {
+						data: {
+							teams: { nodes: [] },
+							users: { nodes: [] },
+							issues: {
+								nodes: [],
+								pageInfo: { hasNextPage: false, endCursor: null },
+							},
+						},
+					};
+				},
 			},
 		} as unknown as LinearClient;
 	});
-	return { keysUsed, call: router.createCaller({} as never) };
+	return { keysUsed, requests, call: router.createCaller({} as never) };
 }
 
 describe("Linear with a local API key", () => {
@@ -68,6 +82,18 @@ describe("Linear with a local API key", () => {
 		expect(await call.status()).toEqual({ connected: false });
 		await expect(call.workspace()).rejects.toMatchObject({
 			code: "PRECONDITION_FAILED",
+		});
+	});
+
+	test("lists the issues of every selected status", async () => {
+		const { call, requests } = caller();
+		await call.setApiKey({ apiKey: VALID_KEY });
+		const statuses = ["unstarted", "completed"] as const;
+
+		await call.issues({ statuses: [...statuses] });
+
+		expect(requests.at(-1)?.filter).toEqual({
+			state: { type: { in: [...statuses] } },
 		});
 	});
 });

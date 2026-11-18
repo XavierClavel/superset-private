@@ -261,6 +261,10 @@ msgstr "{0, plural, one {# oturum çalışıyor} other {# oturum çalışıyor}}
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# atlandı} other {# atlandı}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# durum} other {# durum}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, one {# alt ajan} other {# alt ajan}}"
@@ -6456,9 +6460,6 @@ msgstr "Dev oluştur"
 
 msgid "Create a key in Linear"
 msgstr "Linear'da anahtar oluştur"
-
-msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
-msgstr "Sağlayıcıda aynı konuşma bağlamına sahip yerel bir fork oluşturur. Özgün oturum değişmeden kalır."
 
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Claude Desktop veya Claude Code gibi harici entegrasyonlar için yeni bir API anahtarı oluşturun."
@@ -14897,13 +14898,14 @@ msgstr "Görevler'de Linear'ı kullanmak için kişisel bir Linear API anahtarı
 msgid "Paste a link"
 msgstr "Bağlantı yapıştır"
 
+msgid "Paste a new key to replace the saved one"
+msgstr "Kayıtlı anahtarı değiştirmek için yeni bir anahtar yapıştırın"
+
 msgid "Paste an API key instead"
 msgstr "Bunun yerine bir API anahtarı yapıştır"
 
 msgid "Paste attachment"
 msgstr "Eki yapıştır"
-msgid "Paste a new key to replace the saved one"
-msgstr "Kayıtlı anahtarı değiştirmek için yeni bir anahtar yapıştırın"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Bunu Paradev CLI'ye yapıştırın:"
@@ -19311,6 +19313,9 @@ msgstr "Durum değişti"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Durum: {0}"
+
+msgid "Status: {title}"
+msgstr "Durum: {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "Bağlı kalma (yenileme token'ları)"

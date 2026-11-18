@@ -72,7 +72,7 @@ export function createLinearRouter(
 				z.object({
 					teamId: z.string().nullish(),
 					projectId: z.string().nullish(),
-					status: z.enum(linearStatusFilterValues).default("active"),
+					statuses: z.array(z.enum(linearStatusFilterValues)).default([]),
 					assignee: z.string().nullish(),
 					search: z.string().trim().max(200).nullish(),
 					cursor: z.string().nullish(),
@@ -81,7 +81,7 @@ export function createLinearRouter(
 			.query(({ input }) =>
 				withLinear((client) =>
 					listIssues(client, {
-						filter: issueFilterFor(input),
+						filter: issueFilterFor({ ...input, status: input.statuses }),
 						cursor: input.cursor ?? undefined,
 						search: input.search || undefined,
 					}),

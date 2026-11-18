@@ -84,7 +84,7 @@ export function useDashboardNavigation() {
 			return navigate({
 				to: "/tasks",
 				search: tasksSearchFromFilters({
-					tab: tasksFilters.tab,
+					statuses: tasksFilters.statuses,
 					assignee: tasksFilters.assignee,
 					label: tasksFilters.label,
 					search: tasksFilters.search,

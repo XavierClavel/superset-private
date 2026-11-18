@@ -2,8 +2,10 @@ import type { SelectTask, SelectTaskStatus } from "@superset/db/schema";
 import type { RouterOutputs } from "@superset/trpc";
 import { useCallback, useMemo } from "react";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
-import type { TabValue } from "../../components/TasksTopBar";
-import { matchesTaskStatusFilter } from "../../utils/matchesTaskStatusFilter";
+import {
+	matchesStatusFilter,
+	type StatusFilterValue,
+} from "../../../../utils/statusFilter";
 import { compareTasks } from "../../utils/sorting";
 import { useHybridSearch } from "../useHybridSearch";
 
@@ -33,7 +35,7 @@ export interface TasksPagination {
 }
 
 interface UseTasksDataParams {
-	filterTab: TabValue;
+	statuses: StatusFilterValue[];
 	searchQuery: string;
 	assigneeFilter: string | null;
 	labelFilter: string | null;
@@ -95,7 +97,7 @@ export function useTasksJoinedWithStatuses(
 }
 
 export function useTasksData({
-	filterTab,
+	statuses,
 	searchQuery,
 	assigneeFilter,
 	labelFilter,
@@ -125,9 +127,9 @@ export function useTasksData({
 	const filteredData = useMemo(() => {
 		let result = searchedData;
 
-		if (filterTab !== "all") {
+		if (statuses.length > 0) {
 			result = result.filter((task) =>
-				matchesTaskStatusFilter(task.status.type, filterTab),
+				matchesStatusFilter(task.status.type, statuses),
 			);
 		}
 
@@ -141,7 +143,7 @@ export function useTasksData({
 		}
 
 		return result;
-	}, [searchedData, filterTab, assigneeFilter]);
+	}, [searchedData, statuses, assigneeFilter]);
 
 	return {
 		data: filteredData,

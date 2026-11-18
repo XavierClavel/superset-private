@@ -4,7 +4,11 @@ import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { useLinearBackend } from "renderer/hooks/useLinearBackend";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
-import type { TabValue } from "../../../TasksTopBar";
+import {
+	matchesStatusFilter,
+	type StatusFilterValue,
+} from "../../../../../../utils/statusFilter";
+import { cloudStatusFilter } from "./utils/cloudStatusFilter";
 
 const SEARCH_DEBOUNCE_MS = 300;
 const ISSUES_STALE_MS = 30_000;
@@ -12,7 +16,7 @@ const ISSUES_STALE_MS = 30_000;
 export interface LinearIssueFilters {
 	teamId: string | null;
 	projectId?: string | null;
-	status: TabValue;
+	statuses: StatusFilterValue[];
 	assignee: string | null;
 	search: string;
 }
@@ -25,7 +29,6 @@ export function useLinearIssues(filters: LinearIssueFilters) {
 	const input = {
 		teamId: filters.teamId,
 		projectId: filters.projectId ?? null,
-		status: filters.status,
 		assignee: filters.assignee,
 		search: search || null,
 	};
@@ -35,18 +38,25 @@ export function useLinearIssues(filters: LinearIssueFilters) {
 		retry: false,
 	};
 	const cloud = cloudTrpc.integration.linear.issues.useInfiniteQuery(
-		{ ...input, organizationId: organizationId ?? "" },
+		{
+			...input,
+			organizationId: organizationId ?? "",
+			status: cloudStatusFilter(filters.statuses),
+		},
 		{ ...options, enabled: backend === "cloud" && !!organizationId },
 	);
-	const local = electronTrpc.linear.issues.useInfiniteQuery(input, {
-		...options,
-		enabled: backend === "local",
-	});
+	const local = electronTrpc.linear.issues.useInfiniteQuery(
+		{ ...input, statuses: filters.statuses },
+		{ ...options, enabled: backend === "local" },
+	);
 	const query = backend === "local" ? local : cloud;
 
 	const issues = useMemo(
-		() => query.data?.pages.flatMap((page) => page.issues) ?? [],
-		[query.data],
+		() =>
+			(query.data?.pages.flatMap((page) => page.issues) ?? []).filter((issue) =>
+				matchesStatusFilter(issue.state.type, filters.statuses),
+			),
+		[query.data, filters.statuses],
 	);
 
 	return { ...query, issues };

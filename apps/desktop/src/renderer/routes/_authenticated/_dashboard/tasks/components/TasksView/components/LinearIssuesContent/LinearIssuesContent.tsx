@@ -129,7 +129,7 @@ export function LinearIssuesContent({
 					issues={issues}
 					workspace={workspace.data}
 					teamId={filters.teamId}
-					status={filters.status}
+					statuses={filters.statuses}
 					onOpen={onOpen}
 					hasNextPage={hasNextPage}
 					isFetchingNextPage={isFetchingNextPage}

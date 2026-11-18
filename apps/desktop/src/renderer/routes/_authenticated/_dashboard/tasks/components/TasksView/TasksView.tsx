@@ -17,6 +17,7 @@ import {
 	useTasksFilterStore,
 } from "../../stores/tasks-filter-state";
 import type { LinearIssue } from "../../utils/linearIssueTypes";
+import type { StatusFilterValue } from "../../utils/statusFilter";
 import { BoardContent } from "./components/BoardContent";
 import {
 	GitHubIssuesContent,
@@ -24,15 +25,11 @@ import {
 } from "./components/GitHubIssuesContent";
 import { LinearIssuesContent } from "./components/LinearIssuesContent";
 import { TableContent } from "./components/TableContent";
-import {
-	type TabValue,
-	type TaskSource,
-	TasksTopBar,
-} from "./components/TasksTopBar";
+import { type TaskSource, TasksTopBar } from "./components/TasksTopBar";
 import type { TaskWithStatus } from "./hooks/useTasksData";
 
 interface TasksViewProps {
-	initialTab?: TabValue;
+	initialStatuses?: StatusFilterValue[];
 	initialAssignee?: string;
 	initialLabel?: string;
 	initialSearch?: string;
@@ -42,7 +39,7 @@ interface TasksViewProps {
 }
 
 export function TasksView({
-	initialTab,
+	initialStatuses,
 	initialAssignee,
 	initialLabel,
 	initialSearch,
@@ -52,13 +49,13 @@ export function TasksView({
 }: TasksViewProps) {
 	const navigate = useNavigate();
 	const {
-		tab: storedTab,
+		statuses: storedStatuses,
 		assignee: storedAssignee,
 		label: storedLabel,
 		search: storedSearch,
 		typeTab: storedTypeTab,
 		projectFilters: storedProjectFilters,
-		setTab: storeSetTab,
+		setStatuses: storeSetStatuses,
 		setAssignee: storeSetAssignee,
 		setLabel: storeSetLabel,
 		setSearch: storeSetSearch,
@@ -73,7 +70,7 @@ export function TasksView({
 		viewMode,
 		setViewMode,
 	} = useTasksFilterStore();
-	const currentTab: TabValue = initialTab ?? storedTab;
+	const statuses = initialStatuses ?? storedStatuses;
 	const [searchQuery, setSearchQuery] = useState(initialSearch ?? storedSearch);
 	const deferredSearchQuery = useDeferredValue(searchQuery);
 	const assigneeFilter = initialAssignee ?? storedAssignee;
@@ -96,7 +93,7 @@ export function TasksView({
 
 	const buildSearch = useCallback(
 		(overrides: {
-			tab?: TabValue;
+			statuses?: StatusFilterValue[];
 			assignee?: string | null;
 			label?: string | null;
 			search?: string;
@@ -105,7 +102,7 @@ export function TasksView({
 			includeClosedIssues?: boolean;
 		}) =>
 			tasksSearchFromFilters({
-				tab: overrides.tab ?? currentTab,
+				statuses: overrides.statuses ?? statuses,
 				assignee:
 					overrides.assignee !== undefined
 						? overrides.assignee
@@ -121,7 +118,7 @@ export function TasksView({
 					overrides.includeClosedIssues ?? includeClosedIssues,
 			}),
 		[
-			currentTab,
+			statuses,
 			assigneeFilter,
 			labelFilter,
 			searchQuery,
@@ -155,8 +152,8 @@ export function TasksView({
 	);
 
 	useEffect(() => {
-		storeSetTab(currentTab);
-	}, [currentTab, storeSetTab]);
+		storeSetStatuses(statuses);
+	}, [statuses, storeSetStatuses]);
 
 	useEffect(() => {
 		storeSetAssignee(assigneeFilter);
@@ -221,10 +218,14 @@ export function TasksView({
 
 	// Defaults ("all"/null) are omitted from the URL, so write the store too —
 	// otherwise the render falls back to the stale stored value (no-op select).
-	const handleTabChange = (tab: TabValue) => {
+	const handleStatusesChange = (nextStatuses: StatusFilterValue[]) => {
 		cancelPendingSearchNavigation();
-		storeSetTab(tab);
-		navigate({ to: "/tasks", search: buildSearch({ tab }), replace: true });
+		storeSetStatuses(nextStatuses);
+		navigate({
+			to: "/tasks",
+			search: buildSearch({ statuses: nextStatuses }),
+			replace: true,
+		});
 	};
 
 	const handleAssigneeFilterChange = (assignee: string | null) => {
@@ -348,8 +349,8 @@ export function TasksView({
 	return (
 		<div className="flex-1 flex flex-col min-h-0 min-w-0 overflow-hidden">
 			<TasksTopBar
-				currentTab={currentTab}
-				onTabChange={handleTabChange}
+				statuses={statuses}
+				onStatusesChange={handleStatusesChange}
 				searchQuery={searchQuery}
 				onSearchChange={handleSearchChange}
 				assigneeFilter={assigneeFilter}
@@ -378,7 +379,7 @@ export function TasksView({
 				{showTasks &&
 					(viewMode === "board" ? (
 						<BoardContent
-							filterTab={currentTab}
+							statuses={statuses}
 							searchQuery={deferredSearchQuery}
 							assigneeFilter={assigneeFilter}
 							labelFilter={labelFilter}
@@ -386,7 +387,7 @@ export function TasksView({
 						/>
 					) : (
 						<TableContent
-							filterTab={currentTab}
+							statuses={statuses}
 							searchQuery={deferredSearchQuery}
 							assigneeFilter={assigneeFilter}
 							labelFilter={labelFilter}
@@ -398,7 +399,7 @@ export function TasksView({
 					<LinearIssuesContent
 						filters={{
 							teamId: linearTeamFilter,
-							status: currentTab,
+							statuses,
 							assignee: linearAssigneeFilter,
 							search: searchQuery,
 						}}

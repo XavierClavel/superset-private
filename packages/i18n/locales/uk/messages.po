@@ -255,6 +255,10 @@ msgstr "{0, plural, one {Працює # сеанс} few {Працюють # се
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# пропущено} few {# пропущено} many {# пропущено} other {# пропущено}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# статус} few {# статуси} many {# статусів} other {# статусу}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, one {# субагент} few {# субагенти} many {# субагентів} other {# субагента}}"
@@ -6450,9 +6454,6 @@ msgstr "Створити Dev"
 
 msgid "Create a key in Linear"
 msgstr "Створити ключ у Linear"
-
-msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
-msgstr "Створює нативний форк на боці провайдера з тим самим контекстом розмови. Початковий сеанс залишається без змін."
 
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Створіть новий ключ API для зовнішніх інтеграцій, як-от Claude Desktop або Claude Code."
@@ -14891,13 +14892,14 @@ msgstr "Вставте особистий ключ API Linear, щоб працю
 msgid "Paste a link"
 msgstr "Вставте посилання"
 
+msgid "Paste a new key to replace the saved one"
+msgstr "Вставте новий ключ, щоб замінити збережений"
+
 msgid "Paste an API key instead"
 msgstr "Натомість вставити ключ API"
 
 msgid "Paste attachment"
 msgstr "Вставити вкладення"
-msgid "Paste a new key to replace the saved one"
-msgstr "Вставте новий ключ, щоб замінити збережений"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Вставте це в Paradev CLI:"
@@ -19305,6 +19307,9 @@ msgstr "Статус змінено"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Статус: {0}"
+
+msgid "Status: {title}"
+msgstr "Статус: {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "Залишатися підключеним (токени оновлення)"

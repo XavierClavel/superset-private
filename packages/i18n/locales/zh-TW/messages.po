@@ -261,6 +261,10 @@ msgstr "{0, plural, one {#個會話執行中} other {#個會話執行中}}"
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {#項已跳過} other {#項已跳過}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# 個狀態} other {# 個狀態}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, other {# 個子代理程式}}"
@@ -6456,9 +6460,6 @@ msgstr "建立 Dev"
 
 msgid "Create a key in Linear"
 msgstr "在 Linear 中建立金鑰"
-
-msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
-msgstr "在供應商端建立具有相同對話上下文的原生分支。原本的會話維持不變。"
 
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "為Claude Desktop或Claude Code等外部整合建立新的API金鑰。"
@@ -14897,13 +14898,14 @@ msgstr "貼上 Linear 個人 API金鑰即可在任務中使用 Linear。金鑰�
 msgid "Paste a link"
 msgstr "貼上連結"
 
+msgid "Paste a new key to replace the saved one"
+msgstr "貼上新金鑰以取代已儲存的金鑰"
+
 msgid "Paste an API key instead"
 msgstr "改為貼上 API 金鑰"
 
 msgid "Paste attachment"
 msgstr "貼上附件"
-msgid "Paste a new key to replace the saved one"
-msgstr "貼上新金鑰以取代已儲存的金鑰"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "把它貼上到Paradev CLI："
@@ -19311,6 +19313,9 @@ msgstr "狀態變更"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "狀態：{0}"
+
+msgid "Status: {title}"
+msgstr "狀態：{title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "保持連線（重新整理權杖）"

@@ -261,6 +261,10 @@ msgstr "{0, plural, one {# sesión en marcha} other {# sesiones en marcha}}"
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# omitida} other {# omitidas}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# estado} other {# estados}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, one {# subagente} other {# subagentes}}"
@@ -6456,9 +6460,6 @@ msgstr "Crear un Dev"
 
 msgid "Create a key in Linear"
 msgstr "Crear una clave en Linear"
-
-msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
-msgstr "Crea una bifurcación nativa del proveedor con el mismo contexto de conversación. La sesión original no se modifica."
 
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Crea una clave de API nueva para integraciones externas como Claude Desktop o Claude Code."
@@ -14897,13 +14898,14 @@ msgstr "Pega una clave de API personal de Linear para usar Linear en Tareas. La 
 msgid "Paste a link"
 msgstr "Pega un enlace"
 
+msgid "Paste a new key to replace the saved one"
+msgstr "Pega una clave nueva para reemplazar la guardada"
+
 msgid "Paste an API key instead"
 msgstr "Pegar una clave de API en su lugar"
 
 msgid "Paste attachment"
 msgstr "Pegar archivo adjunto"
-msgid "Paste a new key to replace the saved one"
-msgstr "Pega una clave nueva para reemplazar la guardada"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Pega esto en la CLI de Paradev:"
@@ -19311,6 +19313,9 @@ msgstr "Estado modificado"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Estado: {0}"
+
+msgid "Status: {title}"
+msgstr "Estado: {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "Mantener la conexión (tokens de actualización)"

@@ -12,6 +12,7 @@ import { useLinearIssueActions } from "../../hooks/useLinearIssueActions";
 import { Route as TasksLayoutRoute } from "../../layout";
 import { tasksSearchFromFilters } from "../../stores/tasks-filter-state";
 import { statusIconType } from "../../utils/linearIssueTypes";
+import { parseStatusFilter } from "../../utils/statusFilter";
 import { LinearIssueSidebar } from "./components/LinearIssueSidebar";
 
 export const Route = createFileRoute(
@@ -30,7 +31,7 @@ function LinearIssueDetailPage() {
 	const backSearch = useMemo(
 		() =>
 			tasksSearchFromFilters({
-				tab: search.tab ?? "all",
+				statuses: parseStatusFilter(search.status),
 				assignee: search.assignee ?? null,
 				label: null,
 				search: search.search ?? "",
@@ -38,7 +39,13 @@ function LinearIssueDetailPage() {
 				projectFilters: resolveProjectFilterParams(search.projects, null, []),
 				includeClosedIssues: search.state === "all",
 			}),
-		[search.assignee, search.projects, search.search, search.state, search.tab],
+		[
+			search.assignee,
+			search.projects,
+			search.search,
+			search.state,
+			search.status,
+		],
 	);
 
 	const { data, isLoading, error, refetch } = useLinearIssue(issueId);

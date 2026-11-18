@@ -14,11 +14,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { HiChevronRight } from "react-icons/hi2";
 import { create } from "zustand";
 import {
+	matchesStatusFilter,
+	type StatusFilterValue,
+} from "../../../../utils/statusFilter";
+import {
 	StatusIcon,
 	type StatusType,
 } from "../../components/shared/StatusIcon";
-import type { TabValue } from "../../components/TasksTopBar";
-import { matchesTaskStatusFilter } from "../../utils/matchesTaskStatusFilter";
 import { useHybridSearch } from "../useHybridSearch";
 import {
 	type TasksPagination,
@@ -56,14 +58,14 @@ const useRowSelectionStore = create<{
 }));
 
 interface UseTasksTableParams {
-	filterTab: TabValue;
+	statuses: StatusFilterValue[];
 	searchQuery: string;
 	assigneeFilter: string | null;
 	labelFilter: string | null;
 }
 
 export function useTasksTable({
-	filterTab,
+	statuses,
 	searchQuery,
 	assigneeFilter,
 	labelFilter,
@@ -104,10 +106,10 @@ export function useTasksTable({
 	const isFirstMount = useRef(true);
 	useEffect(() => {
 		const newColumnFilters: ColumnFiltersState = [];
-		if (filterTab !== "all") {
+		if (statuses.length > 0) {
 			newColumnFilters.push({
 				id: "status",
-				value: filterTab,
+				value: statuses,
 			});
 		}
 		if (assigneeFilter !== null) {
@@ -122,7 +124,7 @@ export function useTasksTable({
 		} else {
 			setRowSelection({});
 		}
-	}, [filterTab, assigneeFilter, setRowSelection]);
+	}, [statuses, assigneeFilter, setRowSelection]);
 
 	const slugWidth = useMemo(
 		() =>
@@ -138,10 +140,8 @@ export function useTasksTable({
 					header: t({
 						message: "Status",
 					}),
-					filterFn: (row, _columnId, filterValue: TabValue) => {
-						const statusType = row.original.status.type;
-						return matchesTaskStatusFilter(statusType, filterValue);
-					},
+					filterFn: (row, _columnId, filterValue: StatusFilterValue[]) =>
+						matchesStatusFilter(row.original.status.type, filterValue),
 					cell: (info) => {
 						const { row, cell } = info;
 						const status = info.getValue();

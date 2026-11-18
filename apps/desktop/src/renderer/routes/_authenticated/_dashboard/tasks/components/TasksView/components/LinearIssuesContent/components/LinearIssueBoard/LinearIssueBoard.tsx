@@ -16,7 +16,7 @@ import type {
 	LinearState,
 	LinearWorkspace,
 } from "../../../../../../utils/linearIssueTypes";
-import type { TabValue } from "../../../TasksTopBar";
+import type { StatusFilterValue } from "../../../../../../utils/statusFilter";
 import { LinearBoardCard } from "./components/LinearBoardCard";
 import { LinearBoardColumn } from "./components/LinearBoardColumn";
 import {
@@ -31,7 +31,7 @@ interface LinearIssueBoardProps {
 	issues: LinearIssue[];
 	workspace: LinearWorkspace | undefined;
 	teamId: string | null;
-	status: TabValue;
+	statuses: StatusFilterValue[];
 	onOpen: (issue: LinearIssue) => void;
 	hasNextPage: boolean;
 	isFetchingNextPage: boolean;
@@ -42,7 +42,7 @@ export function LinearIssueBoard({
 	issues,
 	workspace,
 	teamId,
-	status,
+	statuses,
 	onOpen,
 	hasNextPage,
 	isFetchingNextPage,
@@ -70,7 +70,7 @@ export function LinearIssueBoard({
 	};
 	const columns = buildBoardColumns({
 		teamStates: team?.states,
-		status,
+		statuses,
 		typeNames,
 	});
 

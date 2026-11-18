@@ -261,6 +261,10 @@ msgstr "{0, plural, one {běží # relace} few {běží # relace} many {běží 
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# přeskočeno} few {# přeskočeno} many {# přeskočeno} other {# přeskočeno}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# stav} few {# stavy} many {# stavu} other {# stavů}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, one {# subagent} few {# subagenti} many {# subagenta} other {# subagentů}}"
@@ -6456,9 +6460,6 @@ msgstr "Vytvořit Deva"
 
 msgid "Create a key in Linear"
 msgstr "Vytvořit klíč v Linear"
-
-msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
-msgstr "Vytvoří nativní fork u poskytovatele se stejným kontextem konverzace. Původní relace zůstane beze změny."
 
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Vytvořte nový API klíč pro externí integrace, jako je Claude Desktop nebo Claude Code."
@@ -14897,13 +14898,14 @@ msgstr "Vložte osobní API klíč Linear a používejte Linear v Úkolech. Klí
 msgid "Paste a link"
 msgstr "Vložte odkaz"
 
+msgid "Paste a new key to replace the saved one"
+msgstr "Vložte nový klíč, který nahradí uložený"
+
 msgid "Paste an API key instead"
 msgstr "Místo toho vložit klíč API"
 
 msgid "Paste attachment"
 msgstr "Vložit přílohu"
-msgid "Paste a new key to replace the saved one"
-msgstr "Vložte nový klíč, který nahradí uložený"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Vložte to do Paradev CLI:"
@@ -19311,6 +19313,9 @@ msgstr "Změna stavu"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Stav: {0}"
+
+msgid "Status: {title}"
+msgstr "Stav: {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "zůstat připojená (obnovovací tokeny)"
