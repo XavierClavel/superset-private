@@ -261,6 +261,10 @@ msgstr "{0, plural, one {#個會話執行中} other {#個會話執行中}}"
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {#項已跳過} other {#項已跳過}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# 個狀態} other {# 個狀態}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, other {# 個子代理程式}}"
@@ -2066,6 +2070,9 @@ msgstr "新增篩選條件"
 
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "在專案設定中新增生命週期執行指令碼，或將某個終端指令碼標記為工作區執行命令。"
+
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "請在 設定 > 整合 中新增 Linear API金鑰。"
 
 msgid "Add a project to see GitHub issues."
 msgstr "新增專案以檢視GitHub議題。"
@@ -6451,6 +6458,9 @@ msgstr "建立雲端環境"
 msgid "Create a Dev"
 msgstr "建立 Dev"
 
+msgid "Create a key in Linear"
+msgstr "在 Linear 中建立金鑰"
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "為Claude Desktop或Claude Code等外部整合建立新的API金鑰。"
 
@@ -8610,6 +8620,9 @@ msgstr "移除PR連結失敗：{0}"
 msgid "Failed to remove terminal"
 msgstr "移除終端失敗"
 
+msgid "Failed to remove the API key"
+msgstr "無法移除 API金鑰"
+
 msgid "Failed to rename"
 msgstr "重新命名失敗"
 
@@ -8695,6 +8708,9 @@ msgstr "儲存提示詞失敗"
 
 msgid "Failed to save team"
 msgstr "儲存團隊失敗"
+
+msgid "Failed to save the API key"
+msgstr "無法儲存 API金鑰"
 
 msgid "Failed to send"
 msgstr "傳送失敗"
@@ -11275,6 +11291,15 @@ msgstr "行高"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Linear API金鑰"
+
+msgid "Linear API key removed"
+msgstr "已移除 Linear API金鑰"
+
+msgid "Linear API key saved"
+msgstr "已儲存 Linear API金鑰"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Linear授權已過期。重新連線以恢復同步。"
 
@@ -11292,6 +11317,9 @@ msgstr "Linear議題"
 
 msgid "Linear project"
 msgstr "Linear 專案"
+
+msgid "Linear rejected this API key."
+msgstr "Linear 拒絕了此 API金鑰。"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,8 +14892,14 @@ msgstr "{email}的密碼"
 msgid "Paste"
 msgstr "貼上"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "貼上 Linear 個人 API金鑰即可在任務中使用 Linear。金鑰只會保存在這台電腦上。"
+
 msgid "Paste a link"
 msgstr "貼上連結"
+
+msgid "Paste a new key to replace the saved one"
+msgstr "貼上新金鑰以取代已儲存的金鑰"
 
 msgid "Paste an API key instead"
 msgstr "改為貼上 API 金鑰"
@@ -16328,6 +16362,9 @@ msgstr "移除圖示"
 
 msgid "Remove image"
 msgstr "移除圖片"
+
+msgid "Remove key"
+msgstr "移除金鑰"
 
 msgid "Remove link"
 msgstr "移除連結"
@@ -19276,6 +19313,9 @@ msgstr "狀態變更"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "狀態：{0}"
+
+msgid "Status: {title}"
+msgstr "狀態：{title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "保持連線（重新整理權杖）"

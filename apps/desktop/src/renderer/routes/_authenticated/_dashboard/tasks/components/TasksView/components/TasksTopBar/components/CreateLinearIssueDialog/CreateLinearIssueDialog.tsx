@@ -31,9 +31,12 @@ import {
 import { SiLinear } from "react-icons/si";
 import { MarkdownEditor } from "renderer/components/MarkdownEditor";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
+import { useLinearBackend } from "renderer/hooks/useLinearBackend";
 import { PLATFORM } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useLinearWorkspace } from "../../../../../../hooks/useLinearWorkspace";
+import type { LinearIssue } from "../../../../../../utils/linearIssueTypes";
 import { LinearAssigneeMenu } from "../../../../../LinearAssigneeMenu";
 import { LinearPriorityMenu } from "../../../../../LinearPriorityMenu";
 import { PriorityIcon } from "../../../shared/PriorityIcon";
@@ -52,7 +55,9 @@ export function CreateLinearIssueDialog({
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const organizationId = useActiveOrganizationId();
+	const backend = useLinearBackend();
 	const utils = cloudTrpc.useUtils();
+	const localUtils = electronTrpc.useUtils();
 	const modKey = PLATFORM === "mac" ? "⌘" : "Ctrl";
 	const titleInputRef = useRef<HTMLInputElement>(null);
 	const { data: workspace } = useLinearWorkspace({ enabled: open });
@@ -67,21 +72,36 @@ export function CreateLinearIssueDialog({
 		teams.find((team) => team.id === teamId) ?? teams[0] ?? null;
 	const assignee = workspace?.users.find((user) => user.id === assigneeId);
 
-	const createMutation = cloudTrpc.integration.linear.createIssue.useMutation({
+	const showCreatedIssue = (issue: LinearIssue) => {
+		onOpenChange(false);
+		toast.success(t({ message: `Created ${issue.identifier}` }));
+		navigate({
+			to: "/tasks/linear/$issueId",
+			params: { issueId: issue.identifier },
+		});
+	};
+	const showCreateError = (error: unknown) =>
+		toast.error(
+			errorMessage(error, t({ message: "Failed to create Linear issue" })),
+		);
+
+	const cloudCreateMutation =
+		cloudTrpc.integration.linear.createIssue.useMutation({
+			onSuccess: (issue) => {
+				void utils.integration.linear.issues.invalidate();
+				showCreatedIssue(issue);
+			},
+			onError: showCreateError,
+		});
+	const localCreateMutation = electronTrpc.linear.createIssue.useMutation({
 		onSuccess: (issue) => {
-			void utils.integration.linear.issues.invalidate();
-			onOpenChange(false);
-			toast.success(t({ message: `Created ${issue.identifier}` }));
-			navigate({
-				to: "/tasks/linear/$issueId",
-				params: { issueId: issue.identifier },
-			});
+			void localUtils.linear.issues.invalidate();
+			showCreatedIssue(issue);
 		},
-		onError: (error) =>
-			toast.error(
-				errorMessage(error, t({ message: "Failed to create Linear issue" })),
-			),
+		onError: showCreateError,
 	});
+	const isCreating =
+		cloudCreateMutation.isPending || localCreateMutation.isPending;
 
 	useEffect(() => {
 		if (open) return;
@@ -93,16 +113,19 @@ export function CreateLinearIssueDialog({
 	}, [defaultTeamId, open]);
 
 	const handleCreate = () => {
-		if (!title.trim() || !selectedTeam || !organizationId) return;
-		if (createMutation.isPending) return;
-		createMutation.mutate({
-			organizationId,
+		if (!title.trim() || !selectedTeam || isCreating) return;
+		const issue = {
 			teamId: selectedTeam.id,
 			title: title.trim(),
 			description: description.trim() || undefined,
 			priority,
 			assigneeId: assigneeId ?? undefined,
-		});
+		};
+		if (backend === "local") {
+			localCreateMutation.mutate(issue);
+		} else if (organizationId) {
+			cloudCreateMutation.mutate({ ...issue, organizationId });
+		}
 	};
 
 	return (
@@ -224,17 +247,15 @@ export function CreateLinearIssueDialog({
 				<DialogFooter className="flex-row items-center justify-end border-t px-4 py-3">
 					<Button
 						onClick={handleCreate}
-						disabled={
-							!title.trim() || !selectedTeam || createMutation.isPending
-						}
+						disabled={!title.trim() || !selectedTeam || isCreating}
 						className="h-10 rounded-full px-5 text-sm"
 					>
-						{createMutation.isPending ? (
+						{isCreating ? (
 							<Trans>Creating...</Trans>
 						) : (
 							<Trans>Create issue</Trans>
 						)}
-						{!createMutation.isPending && (
+						{!isCreating && (
 							<KbdGroup className="ml-1.5 opacity-70">
 								<Kbd className="bg-primary-foreground/15 text-primary-foreground h-4 min-w-4 text-[10px]">
 									{modKey}

@@ -21,7 +21,8 @@ interface LinearIssueActionsProps {
 
 export function LinearIssueActions({ issue }: LinearIssueActionsProps) {
 	const { t } = useLingui();
-	const { addToWorkspace, importToTasks } = useLinearIssueActions();
+	const { addToWorkspace, canImportToTasks, importToTasks } =
+		useLinearIssueActions();
 
 	return (
 		// biome-ignore lint/a11y/noStaticElementInteractions: stops row navigation when using the actions
@@ -56,10 +57,12 @@ export function LinearIssueActions({ issue }: LinearIssueActionsProps) {
 					</Button>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent align="end" className="w-44">
-					<DropdownMenuItem onSelect={() => importToTasks(issue)}>
-						<HiOutlineArrowDownTray className="size-4" />
-						<Trans>Import to tasks</Trans>
-					</DropdownMenuItem>
+					{canImportToTasks && (
+						<DropdownMenuItem onSelect={() => importToTasks(issue)}>
+							<HiOutlineArrowDownTray className="size-4" />
+							<Trans>Import to tasks</Trans>
+						</DropdownMenuItem>
+					)}
 					<DropdownMenuItem
 						onSelect={() =>
 							window.open(issue.url, "_blank", "noopener,noreferrer")

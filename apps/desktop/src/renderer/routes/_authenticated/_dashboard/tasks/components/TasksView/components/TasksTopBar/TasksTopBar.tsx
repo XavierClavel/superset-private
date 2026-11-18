@@ -19,6 +19,10 @@ import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components
 import { ProjectFilter } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter";
 import { WorkItemsSearch } from "renderer/routes/_authenticated/_dashboard/components/WorkItemsSearch";
 import type { ViewMode } from "../../../../stores/tasks-filter-state";
+import {
+	type StatusFilterValue,
+	serializeStatusFilter,
+} from "../../../../utils/statusFilter";
 import { RunInWorkspacePopover } from "../../../RunInWorkspacePopover";
 import type { TaskWithStatus } from "../../hooks/useTasksData";
 import type { SelectedIssue } from "../GitHubIssuesContent";
@@ -30,19 +34,11 @@ import { LinearTeamFilter } from "./components/LinearTeamFilter";
 import { RunIssuesInWorkspacePopover } from "./components/RunIssuesInWorkspacePopover";
 import { StatusFilter } from "./components/StatusFilter";
 
-export type TabValue =
-	| "all"
-	| "active"
-	| "backlog"
-	| "unstarted"
-	| "started"
-	| "completed"
-	| "canceled";
 export type TaskSource = "tasks" | "linear" | "issues";
 
 interface TasksTopBarProps {
-	currentTab: TabValue;
-	onTabChange: (tab: TabValue) => void;
+	statuses: StatusFilterValue[];
+	onStatusesChange: (statuses: StatusFilterValue[]) => void;
 	searchQuery: string;
 	onSearchChange: (query: string) => void;
 	assigneeFilter: string | null;
@@ -76,8 +72,8 @@ const SOURCE_TABS: ReadonlyArray<{
 ];
 
 export function TasksTopBar({
-	currentTab,
-	onTabChange,
+	statuses,
+	onStatusesChange,
 	searchQuery,
 	onSearchChange,
 	assigneeFilter,
@@ -206,7 +202,10 @@ export function TasksTopBar({
 											value={linearTeamFilter}
 											onChange={onLinearTeamFilterChange}
 										/>
-										<StatusFilter value={currentTab} onChange={onTabChange} />
+										<StatusFilter
+											value={statuses}
+											onChange={onStatusesChange}
+										/>
 										<div className="h-4 w-px shrink-0 bg-border" />
 										<LinearAssigneeFilter
 											value={linearAssigneeFilter}
@@ -215,7 +214,10 @@ export function TasksTopBar({
 									</>
 								) : showTaskOnlyControls ? (
 									<>
-										<StatusFilter value={currentTab} onChange={onTabChange} />
+										<StatusFilter
+											value={statuses}
+											onChange={onStatusesChange}
+										/>
 										<div className="h-4 w-px shrink-0 bg-border" />
 										<AssigneeFilter
 											value={assigneeFilter}
@@ -361,7 +363,8 @@ export function TasksTopBar({
 				onOpenChange={setIsCreateTaskOpen}
 				onCreated={(task) => {
 					const search: Record<string, string> = {};
-					if (currentTab !== "all") search.tab = currentTab;
+					const status = serializeStatusFilter(statuses);
+					if (status) search.status = status;
 					if (assigneeFilter) search.assignee = assigneeFilter;
 					if (labelFilter) search.label = labelFilter;
 					if (searchQuery) search.search = searchQuery;

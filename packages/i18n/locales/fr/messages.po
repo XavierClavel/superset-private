@@ -261,6 +261,10 @@ msgstr "{0, plural, one {# session en cours} other {# sessions en cours}}"
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# ignoré} other {# ignorés}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# statut} other {# statuts}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, one {# sous-agent} other {# sous-agents}}"
@@ -2066,6 +2070,9 @@ msgstr "Ajouter un filtre"
 
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Ajoutez un script d'exécution de cycle de vie dans les paramètres du projet ou désignez un script de terminal comme exécution de l'espace de travail."
+
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "Ajoutez une clé API Linear dans Paramètres > Intégrations."
 
 msgid "Add a project to see GitHub issues."
 msgstr "Ajoutez un projet pour voir les issues GitHub."
@@ -6451,6 +6458,9 @@ msgstr "Créer un environnement cloud"
 msgid "Create a Dev"
 msgstr "Créer un Dev"
 
+msgid "Create a key in Linear"
+msgstr "Créer une clé dans Linear"
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Créez une nouvelle clé API pour des intégrations externes comme Claude Desktop ou Claude Code."
 
@@ -8610,6 +8620,9 @@ msgstr "Échec de la suppression du lien de la pull request : {0}"
 msgid "Failed to remove terminal"
 msgstr "Échec de la suppression du terminal"
 
+msgid "Failed to remove the API key"
+msgstr "Échec de la suppression de la clé API"
+
 msgid "Failed to rename"
 msgstr "Échec du renommage"
 
@@ -8695,6 +8708,9 @@ msgstr "Échec de l'enregistrement du prompt"
 
 msgid "Failed to save team"
 msgstr "Échec de l'enregistrement de l'équipe"
+
+msgid "Failed to save the API key"
+msgstr "Échec de l'enregistrement de la clé API"
 
 msgid "Failed to send"
 msgstr "Échec de l'envoi"
@@ -11275,6 +11291,15 @@ msgstr "Interligne"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Clé API Linear"
+
+msgid "Linear API key removed"
+msgstr "Clé API Linear retirée"
+
+msgid "Linear API key saved"
+msgstr "Clé API Linear enregistrée"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "L'autorisation Linear a expiré. Reconnectez-vous pour reprendre la synchronisation."
 
@@ -11292,6 +11317,9 @@ msgstr "Issues Linear"
 
 msgid "Linear project"
 msgstr "Projet Linear"
+
+msgid "Linear rejected this API key."
+msgstr "Linear a refusé cette clé API."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,8 +14892,14 @@ msgstr "Mot de passe pour {email}"
 msgid "Paste"
 msgstr "Coller"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Collez une clé API personnelle Linear pour utiliser Linear dans les Tâches. La clé reste sur cet ordinateur."
+
 msgid "Paste a link"
 msgstr "Collez un lien"
+
+msgid "Paste a new key to replace the saved one"
+msgstr "Collez une nouvelle clé pour remplacer celle enregistrée"
 
 msgid "Paste an API key instead"
 msgstr "Coller plutôt une clé API"
@@ -16328,6 +16362,9 @@ msgstr "Retirer l'icône"
 
 msgid "Remove image"
 msgstr "Retirer l'image"
+
+msgid "Remove key"
+msgstr "Retirer la clé"
 
 msgid "Remove link"
 msgstr "Supprimer le lien"
@@ -19276,6 +19313,9 @@ msgstr "Statut modifié"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Statut : {0}"
+
+msgid "Status: {title}"
+msgstr "Statut : {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "Rester connectée (tokens de rafraîchissement)"

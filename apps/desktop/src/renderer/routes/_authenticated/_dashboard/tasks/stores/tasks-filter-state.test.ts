@@ -28,7 +28,7 @@ describe("tasksSearchFromFilters", () => {
 	test("keeps default task filters out of the URL", () => {
 		expect(
 			tasksSearchFromFilters({
-				tab: "all",
+				statuses: [],
 				assignee: null,
 				label: null,
 				search: "",
@@ -42,7 +42,7 @@ describe("tasksSearchFromFilters", () => {
 	test("preserves GitHub Issue context across detail navigation", () => {
 		expect(
 			tasksSearchFromFilters({
-				tab: "active",
+				statuses: ["unstarted", "started"],
 				assignee: "me",
 				label: "acme/web",
 				search: "remote host",
@@ -51,7 +51,7 @@ describe("tasksSearchFromFilters", () => {
 				includeClosedIssues: true,
 			}),
 		).toEqual({
-			tab: "active",
+			status: "unstarted,started",
 			assignee: "me",
 			label: "acme/web",
 			search: "remote host",
@@ -64,7 +64,7 @@ describe("tasksSearchFromFilters", () => {
 	test("does not leak the issue state filter into Linear tasks", () => {
 		expect(
 			tasksSearchFromFilters({
-				tab: "all",
+				statuses: [],
 				assignee: null,
 				label: null,
 				search: "",
@@ -100,19 +100,34 @@ describe("migrateTasksFilterState", () => {
 				projectFilters: ["project-1", false, "project-1"],
 			}),
 		).toMatchObject({
-			tab: "all",
+			statuses: [],
 			typeTab: "tasks",
 			viewMode: "table",
 			includeClosedIssues: false,
 			projectFilters: ["project-1"],
 		});
 		expect(migrateTasksFilterState(null)).toMatchObject({
-			tab: "all",
+			statuses: [],
 			typeTab: "tasks",
 			viewMode: "table",
 			includeClosedIssues: false,
 			projectFilters: [],
 		});
+	});
+
+	test("turns a saved single status into a status list", () => {
+		expect(migrateTasksFilterState({ tab: "active" }).statuses).toEqual([
+			"unstarted",
+			"started",
+		]);
+		expect(migrateTasksFilterState({ tab: "completed" }).statuses).toEqual([
+			"completed",
+		]);
+		expect(migrateTasksFilterState({ tab: "all" }).statuses).toEqual([]);
+		expect(
+			migrateTasksFilterState({ statuses: ["started", "waiting", "backlog"] })
+				.statuses,
+		).toEqual(["backlog", "started"]);
 	});
 
 	test("keeps the Linear tab and its filters", () => {

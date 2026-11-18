@@ -261,6 +261,10 @@ msgstr "{0, plural, one {# phiên đang chạy} other {# phiên đang chạy}}"
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# bỏ qua} other {# bỏ qua}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# trạng thái} other {# trạng thái}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, other {# agent con}}"
@@ -2066,6 +2070,9 @@ msgstr "Thêm bộ lọc"
 
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Hãy thêm một script chạy vòng đời trong Cài đặt dự án hoặc đánh dấu một script terminal làm lệnh chạy của workspace."
+
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "Thêm khóa API Linear trong Cài đặt > Tích hợp."
 
 msgid "Add a project to see GitHub issues."
 msgstr "Thêm một dự án để xem issue GitHub."
@@ -6451,6 +6458,9 @@ msgstr "Tạo environment đám mây"
 msgid "Create a Dev"
 msgstr "Tạo Dev"
 
+msgid "Create a key in Linear"
+msgstr "Tạo khóa trong Linear"
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Tạo khóa API mới cho các tích hợp bên ngoài như Claude Desktop hoặc Claude Code."
 
@@ -8610,6 +8620,9 @@ msgstr "Không thể gỡ liên kết PR: {0}"
 msgid "Failed to remove terminal"
 msgstr "Không thể gỡ terminal"
 
+msgid "Failed to remove the API key"
+msgstr "Không gỡ được khóa API"
+
 msgid "Failed to rename"
 msgstr "Không thể đổi tên"
 
@@ -8695,6 +8708,9 @@ msgstr "Không thể lưu prompt"
 
 msgid "Failed to save team"
 msgstr "Không thể lưu nhóm"
+
+msgid "Failed to save the API key"
+msgstr "Không lưu được khóa API"
 
 msgid "Failed to send"
 msgstr "Không thể gửi"
@@ -11275,6 +11291,15 @@ msgstr "Chiều cao dòng"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Khóa API Linear"
+
+msgid "Linear API key removed"
+msgstr "Đã gỡ khóa API Linear"
+
+msgid "Linear API key saved"
+msgstr "Đã lưu khóa API Linear"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Quyền truy cập Linear đã hết hạn. Hãy kết nối lại để tiếp tục đồng bộ."
 
@@ -11292,6 +11317,9 @@ msgstr "Issue Linear"
 
 msgid "Linear project"
 msgstr "Dự án Linear"
+
+msgid "Linear rejected this API key."
+msgstr "Linear đã từ chối khóa API này."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,8 +14892,14 @@ msgstr "Mật khẩu cho {email}"
 msgid "Paste"
 msgstr "Dán"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Dán khóa API cá nhân của Linear để dùng Linear trong Tác vụ. Khóa chỉ được lưu trên máy tính này."
+
 msgid "Paste a link"
 msgstr "Dán liên kết"
+
+msgid "Paste a new key to replace the saved one"
+msgstr "Dán khóa mới để thay khóa đã lưu"
 
 msgid "Paste an API key instead"
 msgstr "Dán khóa API thay thế"
@@ -16328,6 +16362,9 @@ msgstr "Gỡ biểu tượng"
 
 msgid "Remove image"
 msgstr "Xóa hình ảnh"
+
+msgid "Remove key"
+msgstr "Gỡ khóa"
 
 msgid "Remove link"
 msgstr "Xóa liên kết"
@@ -19276,6 +19313,9 @@ msgstr "Trạng thái thay đổi"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Trạng thái: {0}"
+
+msgid "Status: {title}"
+msgstr "Trạng thái: {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "Duy trì kết nối (refresh token)"

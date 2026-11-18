@@ -1,12 +1,10 @@
 import type { LinearState } from "../../../../../../../../utils/linearIssueTypes";
-import type { TabValue } from "../../../../../TasksTopBar";
+import {
+	STATUS_FILTER_VALUES,
+	type StatusFilterValue,
+} from "../../../../../../../../utils/statusFilter";
 
-type ColumnType =
-	| "backlog"
-	| "unstarted"
-	| "started"
-	| "completed"
-	| "canceled";
+type ColumnType = StatusFilterValue;
 
 export interface BoardColumn {
 	key: string;
@@ -16,13 +14,7 @@ export interface BoardColumn {
 	stateId: string | null;
 }
 
-const TYPE_ORDER: ColumnType[] = [
-	"backlog",
-	"unstarted",
-	"started",
-	"completed",
-	"canceled",
-];
+const TYPE_ORDER: readonly ColumnType[] = STATUS_FILTER_VALUES;
 
 const TYPE_COLORS: Record<ColumnType, string> = {
 	backlog: "#95a2b3",
@@ -30,16 +22,6 @@ const TYPE_COLORS: Record<ColumnType, string> = {
 	started: "#f2c94c",
 	completed: "#5e6ad2",
 	canceled: "#95a2b3",
-};
-
-const TYPES_BY_FILTER: Record<TabValue, ColumnType[]> = {
-	all: TYPE_ORDER,
-	active: ["unstarted", "started"],
-	backlog: ["backlog"],
-	unstarted: ["unstarted"],
-	started: ["started"],
-	completed: ["completed"],
-	canceled: ["canceled"],
 };
 
 function columnType(stateType: LinearState["type"]): ColumnType {
@@ -52,14 +34,14 @@ export function columnKeyFor(state: LinearState, byTeamState: boolean): string {
 
 export function buildBoardColumns({
 	teamStates,
-	status,
+	statuses,
 	typeNames,
 }: {
 	teamStates: LinearState[] | undefined;
-	status: TabValue;
+	statuses: StatusFilterValue[];
 	typeNames: Record<ColumnType, string>;
 }): BoardColumn[] {
-	const visibleTypes = new Set(TYPES_BY_FILTER[status]);
+	const visibleTypes = new Set(statuses.length > 0 ? statuses : TYPE_ORDER);
 	if (teamStates) {
 		return teamStates
 			.filter((state) => visibleTypes.has(columnType(state.type)))

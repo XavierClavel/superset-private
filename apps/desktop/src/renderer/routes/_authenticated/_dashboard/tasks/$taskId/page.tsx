@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { resolveProjectFilterParams } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter/project-filter-utils";
 import { Route as TasksLayoutRoute } from "../layout";
 import { tasksSearchFromFilters } from "../stores/tasks-filter-state";
+import { parseStatusFilter } from "../utils/statusFilter";
 import { TaskRecordScreen } from "./components/TaskRecordScreen";
 import { useEscapeToNavigate } from "./hooks/useEscapeToNavigate";
 
@@ -15,7 +16,7 @@ export const Route = createFileRoute(
 function TaskDetailPage() {
 	const { taskId } = Route.useParams();
 	const {
-		tab,
+		status,
 		assignee,
 		label,
 		search: searchQuery,
@@ -28,7 +29,7 @@ function TaskDetailPage() {
 
 	const backSearch = useMemo(() => {
 		return tasksSearchFromFilters({
-			tab: tab ?? "all",
+			statuses: parseStatusFilter(status),
 			assignee: assignee ?? null,
 			label: label ?? null,
 			search: searchQuery ?? "",
@@ -36,7 +37,7 @@ function TaskDetailPage() {
 			projectFilters: resolveProjectFilterParams(projects, project, []),
 			includeClosedIssues: state === "all",
 		});
-	}, [tab, assignee, label, searchQuery, type, project, projects, state]);
+	}, [status, assignee, label, searchQuery, type, project, projects, state]);
 	useEscapeToNavigate("/tasks", { search: backSearch });
 
 	return (

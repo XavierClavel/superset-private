@@ -1,14 +1,8 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { parseStatusFilter, serializeStatusFilter } from "./utils/statusFilter";
 
 export type TasksSearch = {
-	tab?:
-		| "all"
-		| "active"
-		| "backlog"
-		| "unstarted"
-		| "started"
-		| "completed"
-		| "canceled";
+	status?: string;
 	assignee?: string;
 	label?: string;
 	search?: string;
@@ -21,17 +15,7 @@ export type TasksSearch = {
 export const Route = createFileRoute("/_authenticated/_dashboard/tasks")({
 	component: TasksLayout,
 	validateSearch: (search: Record<string, unknown>): TasksSearch => ({
-		tab: [
-			"all",
-			"active",
-			"backlog",
-			"unstarted",
-			"started",
-			"completed",
-			"canceled",
-		].includes(search.tab as string)
-			? (search.tab as TasksSearch["tab"])
-			: undefined,
+		status: serializeStatusFilter(parseStatusFilter(search.status)),
 		assignee:
 			typeof search.assignee === "string" && !search.assignee.startsWith("ext:")
 				? search.assignee

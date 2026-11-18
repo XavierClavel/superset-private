@@ -117,7 +117,7 @@ export function ChannelTasksTab({ channelId, canAdd }: ChannelTasksTabProps) {
 					filters={{
 						teamId: null,
 						projectId: linearProjectId,
-						status: "all",
+						statuses: [],
 						assignee: null,
 						search: "",
 					}}

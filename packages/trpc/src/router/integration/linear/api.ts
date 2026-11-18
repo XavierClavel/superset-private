@@ -456,17 +456,22 @@ const STATE_TYPES_BY_FILTER: Record<
 	canceled: ["canceled"],
 };
 
+/** Several statuses keep the issues of any of them; none, or "all", keeps every issue. */
 export function issueFilterFor(input: {
 	teamId?: string | null;
 	projectId?: string | null;
-	status: LinearStatusFilter;
+	status: LinearStatusFilter | readonly LinearStatusFilter[];
 	assignee?: string | null;
 }): LinearIssueFilter {
 	const filter: LinearIssueFilter = {};
 	if (input.teamId) filter.team = { id: { eq: input.teamId } };
 	if (input.projectId) filter.project = { id: { eq: input.projectId } };
-	if (input.status !== "all") {
-		filter.state = { type: { in: STATE_TYPES_BY_FILTER[input.status] } };
+	const statuses = [input.status].flat();
+	if (statuses.length > 0 && !statuses.includes("all")) {
+		const stateTypes = statuses.flatMap((status) =>
+			status === "all" ? [] : STATE_TYPES_BY_FILTER[status],
+		);
+		filter.state = { type: { in: [...new Set(stateTypes)] } };
 	}
 	if (input.assignee === "me") filter.assignee = { isMe: { eq: true } };
 	else if (input.assignee === "unassigned") filter.assignee = { null: true };

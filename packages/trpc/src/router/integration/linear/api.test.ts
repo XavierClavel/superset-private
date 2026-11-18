@@ -50,6 +50,13 @@ describe("issueFilterFor", () => {
 		});
 	});
 
+	test("keeps the issues of any of several statuses", () => {
+		expect(
+			issueFilterFor({ status: ["backlog", "started", "backlog"] }).state,
+		).toEqual({ type: { in: ["triage", "backlog", "started"] } });
+		expect(issueFilterFor({ status: [] }).state).toBeUndefined();
+	});
+
 	test("narrows to one project", () => {
 		expect(issueFilterFor({ status: "all", projectId: "p1" })).toEqual({
 			project: { id: { eq: "p1" } },

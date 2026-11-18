@@ -1,1 +1,5 @@
-export { useLinearConnection, useLinearWorkspace } from "./useLinearWorkspace";
+export {
+	useLinearAccount,
+	useLinearConnection,
+	useLinearWorkspace,
+} from "./useLinearWorkspace";

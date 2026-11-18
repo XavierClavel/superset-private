@@ -5,8 +5,10 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
+import { useLinearBackend } from "renderer/hooks/useLinearBackend";
 import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { electronTrpc } from "renderer/lib/electron-trpc";
 import {
 	linkedContextSeed,
 	linkedIssueChip,
@@ -27,21 +29,33 @@ export function useLinearIssueActions() {
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const organizationId = useActiveOrganizationId();
+	const backend = useLinearBackend();
 	const utils = cloudTrpc.useUtils();
+	const localUtils = electronTrpc.useUtils();
 	const openNewWorkspace = useOpenNewWorkspace();
 
-	const updateMutation = cloudTrpc.integration.linear.updateIssue.useMutation({
+	const cloudUpdateMutation =
+		cloudTrpc.integration.linear.updateIssue.useMutation({
+			onSuccess: (issue) => {
+				if (!organizationId) return;
+				utils.integration.linear.issue.setData(
+					{ organizationId, issueId: issue.id },
+					issue,
+				);
+				utils.integration.linear.issue.setData(
+					{ organizationId, issueId: issue.identifier },
+					issue,
+				);
+				void utils.integration.linear.issues.invalidate();
+			},
+			onError: (error) => toast.error(error.message),
+		});
+
+	const localUpdateMutation = electronTrpc.linear.updateIssue.useMutation({
 		onSuccess: (issue) => {
-			if (!organizationId) return;
-			utils.integration.linear.issue.setData(
-				{ organizationId, issueId: issue.id },
-				issue,
-			);
-			utils.integration.linear.issue.setData(
-				{ organizationId, issueId: issue.identifier },
-				issue,
-			);
-			void utils.integration.linear.issues.invalidate();
+			localUtils.linear.issue.setData({ issueId: issue.id }, issue);
+			localUtils.linear.issue.setData({ issueId: issue.identifier }, issue);
+			void localUtils.linear.issues.invalidate();
 		},
 		onError: (error) => toast.error(error.message),
 	});
@@ -86,10 +100,18 @@ export function useLinearIssueActions() {
 
 	const update = useCallback(
 		(issue: LinearIssue, changes: LinearIssueChanges) => {
+			if (backend === "local") {
+				localUpdateMutation.mutate({ issueId: issue.id, ...changes });
+				return;
+			}
 			if (!organizationId) return;
-			updateMutation.mutate({ organizationId, issueId: issue.id, ...changes });
+			cloudUpdateMutation.mutate({
+				organizationId,
+				issueId: issue.id,
+				...changes,
+			});
 		},
-		[organizationId, updateMutation],
+		[backend, organizationId, cloudUpdateMutation, localUpdateMutation],
 	);
 
 	const importToTasks = useCallback(
@@ -100,6 +122,7 @@ export function useLinearIssueActions() {
 	return {
 		addToWorkspace,
 		update,
+		canImportToTasks: backend === "cloud",
 		importToTasks,
 		isImporting: importMutation.isPending,
 	};

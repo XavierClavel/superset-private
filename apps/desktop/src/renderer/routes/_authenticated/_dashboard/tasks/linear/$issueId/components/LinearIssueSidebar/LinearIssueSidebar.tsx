@@ -24,7 +24,8 @@ const PROPERTY_BUTTON_CLASS =
 
 export function LinearIssueSidebar({ issue }: LinearIssueSidebarProps) {
 	const { t } = useLingui();
-	const { update, importToTasks, isImporting } = useLinearIssueActions();
+	const { update, canImportToTasks, importToTasks, isImporting } =
+		useLinearIssueActions();
 	const priorityLabels: Record<TaskPriority, string> = {
 		none: t({ message: "No priority" }),
 		urgent: t({ message: "Urgent" }),
@@ -134,16 +135,18 @@ export function LinearIssueSidebar({ issue }: LinearIssueSidebarProps) {
 						)}
 					</div>
 
-					<Button
-						variant="outline"
-						size="sm"
-						className="w-full gap-1.5"
-						disabled={isImporting}
-						onClick={() => importToTasks(issue)}
-					>
-						<HiOutlineArrowDownTray className="size-4" />
-						<Trans>Import to tasks</Trans>
-					</Button>
+					{canImportToTasks && (
+						<Button
+							variant="outline"
+							size="sm"
+							className="w-full gap-1.5"
+							disabled={isImporting}
+							onClick={() => importToTasks(issue)}
+						>
+							<HiOutlineArrowDownTray className="size-4" />
+							<Trans>Import to tasks</Trans>
+						</Button>
+					)}
 				</div>
 			</ScrollArea>
 		</div>

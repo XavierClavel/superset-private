@@ -1,5 +1,1 @@
-export {
-	type TabValue,
-	type TaskSource,
-	TasksTopBar,
-} from "./TasksTopBar";
+export { type TaskSource, TasksTopBar } from "./TasksTopBar";

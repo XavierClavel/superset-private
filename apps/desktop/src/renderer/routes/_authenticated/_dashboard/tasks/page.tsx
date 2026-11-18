@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { resolveProjectFilterParams } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter/project-filter-utils";
 import { TasksView } from "./components/TasksView";
 import { Route as TasksLayoutRoute } from "./layout";
+import { parseStatusFilter } from "./utils/statusFilter";
 
 export const Route = createFileRoute("/_authenticated/_dashboard/tasks/")({
 	// Legacy PR-tab URLs redirect before anything renders — a render-time
@@ -24,16 +25,20 @@ export const Route = createFileRoute("/_authenticated/_dashboard/tasks/")({
 });
 
 function TasksPage() {
-	const { tab, assignee, label, search, type, project, projects, state } =
+	const { status, assignee, label, search, type, project, projects, state } =
 		TasksLayoutRoute.useSearch();
 	// Stable identity: effects downstream key off this array.
 	const initialProjects = useMemo(
 		() => resolveProjectFilterParams(projects, project, undefined),
 		[projects, project],
 	);
+	const initialStatuses = useMemo(
+		() => (status === undefined ? undefined : parseStatusFilter(status)),
+		[status],
+	);
 	return (
 		<TasksView
-			initialTab={tab}
+			initialStatuses={initialStatuses}
 			initialAssignee={assignee}
 			initialLabel={label}
 			initialSearch={search}

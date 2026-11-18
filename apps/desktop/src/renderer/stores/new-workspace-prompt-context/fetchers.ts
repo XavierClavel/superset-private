@@ -1,6 +1,8 @@
+import type { LinearBackend } from "renderer/hooks/useLinearBackend";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
+import { electronTrpcClient } from "renderer/lib/trpc-client";
 import { readPullRequestDetail } from "renderer/routes/_authenticated/_dashboard/pull-requests/utils/pullRequestClient";
 import type { PromptContextBody } from "./store";
 
@@ -61,12 +63,18 @@ export async function fetchInternalTaskBody(args: {
 export async function fetchLinearIssueBody(args: {
 	organizationId: string;
 	identifier: string;
+	backend: LinearBackend;
 }): Promise<PromptContextBody | null> {
 	try {
-		const result = await apiTrpcClient.integration.linear.issue.query({
-			organizationId: args.organizationId,
-			issueId: args.identifier,
-		});
+		const result =
+			args.backend === "local"
+				? await electronTrpcClient.linear.issue.query({
+						issueId: args.identifier,
+					})
+				: await apiTrpcClient.integration.linear.issue.query({
+						organizationId: args.organizationId,
+						issueId: args.identifier,
+					});
 		const text = (result.description ?? "").trim();
 		return text ? { text } : null;
 	} catch (err) {

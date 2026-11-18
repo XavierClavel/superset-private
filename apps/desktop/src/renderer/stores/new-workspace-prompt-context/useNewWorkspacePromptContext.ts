@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { resolveHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
+import { useLinearBackend } from "renderer/hooks/useLinearBackend";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import type {
@@ -35,6 +36,7 @@ export function useNewWorkspacePromptContext(args: {
 	const { machineId, activeHostUrl } = useLocalHostService();
 	const activeOrganizationId = useActiveOrganizationId();
 	const relayUrl = useRelayUrl();
+	const linearBackend = useLinearBackend();
 
 	const hostUrl = useMemo(() => {
 		const id = hostId ?? machineId;
@@ -70,15 +72,27 @@ export function useNewWorkspacePromptContext(args: {
 				store.register(`task:${taskId}`, () =>
 					fetchInternalTaskBody({ taskId }),
 				);
-			} else if (issue.source === "linear" && activeOrganizationId) {
+			} else if (
+				issue.source === "linear" &&
+				activeOrganizationId &&
+				linearBackend
+			) {
 				const identifier = issue.slug;
 				const organizationId = activeOrganizationId;
+				const backend = linearBackend;
 				store.register(`linear-issue:${identifier}`, () =>
-					fetchLinearIssueBody({ organizationId, identifier }),
+					fetchLinearIssueBody({ organizationId, identifier, backend }),
 				);
 			}
 		}
-	}, [projectId, hostUrl, linkedPR, linkedIssues, activeOrganizationId]);
+	}, [
+		projectId,
+		hostUrl,
+		linkedPR,
+		linkedIssues,
+		activeOrganizationId,
+		linearBackend,
+	]);
 
 	return useMemo<NewWorkspacePromptContextApi>(
 		() => ({

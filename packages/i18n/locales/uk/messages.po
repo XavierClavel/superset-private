@@ -255,6 +255,10 @@ msgstr "{0, plural, one {Працює # сеанс} few {Працюють # се
 msgid "{0, plural, one {# skipped} other {# skipped}}"
 msgstr "{0, plural, one {# пропущено} few {# пропущено} many {# пропущено} other {# пропущено}}"
 
+#. placeholder {0}: value.length
+msgid "{0, plural, one {# status} other {# statuses}}"
+msgstr "{0, plural, one {# статус} few {# статуси} many {# статусів} other {# статусу}}"
+
 #. placeholder {0}: subagents.length
 msgid "{0, plural, one {# subagent} other {# subagents}}"
 msgstr "{0, plural, one {# субагент} few {# субагенти} many {# субагентів} other {# субагента}}"
@@ -2060,6 +2064,9 @@ msgstr "Додати фільтр"
 
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Додайте скрипт запуску життєвого циклу в налаштуваннях проєкту або позначте скрипт термінала як запуск робочого простору."
+
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "Додайте ключ API Linear у розділі Налаштування > Інтеграції."
 
 msgid "Add a project to see GitHub issues."
 msgstr "Додайте проєкт, щоб бачити issues з GitHub."
@@ -6445,6 +6452,9 @@ msgstr "Створити хмарне середовище"
 msgid "Create a Dev"
 msgstr "Створити Dev"
 
+msgid "Create a key in Linear"
+msgstr "Створити ключ у Linear"
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Створіть новий ключ API для зовнішніх інтеграцій, як-от Claude Desktop або Claude Code."
 
@@ -8604,6 +8614,9 @@ msgstr "Не вдалося відв'язати PR: {0}"
 msgid "Failed to remove terminal"
 msgstr "Не вдалося видалити термінал"
 
+msgid "Failed to remove the API key"
+msgstr "Не вдалося видалити ключ API"
+
 msgid "Failed to rename"
 msgstr "Не вдалося перейменувати"
 
@@ -8689,6 +8702,9 @@ msgstr "Не вдалося зберегти промпт"
 
 msgid "Failed to save team"
 msgstr "Не вдалося зберегти команду"
+
+msgid "Failed to save the API key"
+msgstr "Не вдалося зберегти ключ API"
 
 msgid "Failed to send"
 msgstr "Не вдалося надіслати"
@@ -11269,6 +11285,15 @@ msgstr "Висота рядка"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Ключ API Linear"
+
+msgid "Linear API key removed"
+msgstr "Ключ API Linear видалено"
+
+msgid "Linear API key saved"
+msgstr "Ключ API Linear збережено"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Термін дії авторизації Linear минув. Підключіться знову, щоб відновити синхронізацію."
 
@@ -11286,6 +11311,9 @@ msgstr "Issues Linear"
 
 msgid "Linear project"
 msgstr "Проєкт Linear"
+
+msgid "Linear rejected this API key."
+msgstr "Linear відхилив цей ключ API."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14858,8 +14886,14 @@ msgstr "Пароль для {email}"
 msgid "Paste"
 msgstr "Вставити"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Вставте особистий ключ API Linear, щоб працювати з Linear у Завданнях. Ключ зберігається лише на цьому комп'ютері."
+
 msgid "Paste a link"
 msgstr "Вставте посилання"
+
+msgid "Paste a new key to replace the saved one"
+msgstr "Вставте новий ключ, щоб замінити збережений"
 
 msgid "Paste an API key instead"
 msgstr "Натомість вставити ключ API"
@@ -16322,6 +16356,9 @@ msgstr "Прибрати значок"
 
 msgid "Remove image"
 msgstr "Прибрати зображення"
+
+msgid "Remove key"
+msgstr "Видалити ключ"
 
 msgid "Remove link"
 msgstr "Прибрати посилання"
@@ -19270,6 +19307,9 @@ msgstr "Статус змінено"
 #. placeholder {0}: i18n._(BOARD_COLUMN_LABELS[column])
 msgid "Status is {0}"
 msgstr "Статус: {0}"
+
+msgid "Status: {title}"
+msgstr "Статус: {title}"
 
 msgid "Stay connected (refresh tokens)"
 msgstr "Залишатися підключеним (токени оновлення)"

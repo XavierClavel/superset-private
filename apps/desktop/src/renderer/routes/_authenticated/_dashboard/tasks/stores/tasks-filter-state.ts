@@ -5,34 +5,17 @@ import {
 } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter/project-filter-utils";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import {
+	parseStatusFilter,
+	type StatusFilterValue,
+	serializeStatusFilter,
+} from "../utils/statusFilter";
 
 export type ViewMode = "table" | "board";
 export type TypeTab = "tasks" | "linear" | "issues";
-export type FilterTab =
-	| "all"
-	| "active"
-	| "backlog"
-	| "unstarted"
-	| "started"
-	| "completed"
-	| "canceled";
-
-const FILTER_TABS = new Set<unknown>([
-	"all",
-	"active",
-	"backlog",
-	"unstarted",
-	"started",
-	"completed",
-	"canceled",
-]);
-
-function isFilterTab(value: unknown): value is FilterTab {
-	return FILTER_TABS.has(value);
-}
 
 interface TasksFilterState {
-	tab: FilterTab;
+	statuses: StatusFilterValue[];
 	assignee: string | null;
 	label: string | null;
 	search: string;
@@ -42,7 +25,7 @@ interface TasksFilterState {
 	linearTeamFilter: string | null;
 	linearAssigneeFilter: string | null;
 	includeClosedIssues: boolean;
-	setTab: (tab: FilterTab) => void;
+	setStatuses: (statuses: StatusFilterValue[]) => void;
 	setAssignee: (assignee: string | null) => void;
 	setLabel: (label: string | null) => void;
 	setSearch: (search: string) => void;
@@ -56,7 +39,7 @@ interface TasksFilterState {
 
 type PersistedTasksFilterState = Pick<
 	TasksFilterState,
-	| "tab"
+	| "statuses"
 	| "viewMode"
 	| "typeTab"
 	| "projectFilters"
@@ -73,7 +56,10 @@ export function migrateTasksFilterState(
 			? (persistedState as Record<string, unknown>)
 			: {};
 	return {
-		tab: isFilterTab(state.tab) ? state.tab : "all",
+		statuses: parseStatusFilter(
+			state.statuses ??
+				(state.tab === "active" ? ["unstarted", "started"] : [state.tab]),
+		),
 		typeTab:
 			state.typeTab === "issues" || state.typeTab === "linear"
 				? state.typeTab
@@ -98,7 +84,7 @@ export function migrateTasksFilterState(
 export const useTasksFilterStore = create<TasksFilterState>()(
 	persist(
 		(set) => ({
-			tab: "all",
+			statuses: [],
 			assignee: null,
 			label: null,
 			search: "",
@@ -108,7 +94,13 @@ export const useTasksFilterStore = create<TasksFilterState>()(
 			linearTeamFilter: null,
 			linearAssigneeFilter: null,
 			includeClosedIssues: false,
-			setTab: (tab) => set({ tab }),
+			setStatuses: (statuses) =>
+				set((state) =>
+					serializeStatusFilter(state.statuses) ===
+					serializeStatusFilter(statuses)
+						? state
+						: { statuses },
+				),
 			setAssignee: (assignee) => set({ assignee }),
 			setLabel: (label) => set({ label }),
 			setSearch: (search) => set({ search }),
@@ -131,13 +123,13 @@ export const useTasksFilterStore = create<TasksFilterState>()(
 		}),
 		{
 			name: "tasks-filter-state",
-			version: 6,
+			version: 7,
 			migrate: migrateTasksFilterState,
 			partialize: (state) => ({
 				projectFilters: state.projectFilters,
 				linearTeamFilter: state.linearTeamFilter,
 				linearAssigneeFilter: state.linearAssigneeFilter,
-				tab: state.tab,
+				statuses: state.statuses,
 				typeTab: state.typeTab,
 				viewMode: state.viewMode,
 				includeClosedIssues: state.includeClosedIssues,
@@ -146,8 +138,8 @@ export const useTasksFilterStore = create<TasksFilterState>()(
 	),
 );
 
-interface TasksFilters {
-	tab: FilterTab;
+export interface TasksFilters {
+	statuses: StatusFilterValue[];
 	assignee: string | null;
 	label: string | null;
 	search: string;
@@ -160,7 +152,8 @@ export function tasksSearchFromFilters(
 	filters: TasksFilters,
 ): Record<string, string> {
 	const out: Record<string, string> = {};
-	if (filters.tab !== "all") out.tab = filters.tab;
+	const status = serializeStatusFilter(filters.statuses);
+	if (status) out.status = status;
 	if (filters.assignee) out.assignee = filters.assignee;
 	if (filters.label) out.label = filters.label;
 	if (filters.search) out.search = filters.search;
