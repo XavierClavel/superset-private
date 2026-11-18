@@ -1,7 +1,7 @@
 import { Database } from "bun:sqlite";
 import { afterAll, describe, expect, it } from "bun:test";
 import { randomUUID } from "node:crypto";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { eq } from "drizzle-orm";
@@ -9,7 +9,7 @@ import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 import type { HostDb } from "../../../db";
 import * as schema from "../../../db/schema";
-import { projects, workspaces } from "../../../db/schema";
+import { hostAgentConfigs, projects, workspaces } from "../../../db/schema";
 import { createUserSimpleGit } from "../../../runtime/git/simple-git";
 import type { HostServiceContext } from "../../../types";
 import { createCallerFactory } from "../../index";
@@ -287,5 +287,36 @@ describe("detached-HEAD repos (v1 importer)", () => {
 		expect(created.type).toBe("local");
 		expect(created.branch).toBe(branch);
 		expect(created.worktreePath).toBe(root);
+	});
+});
+
+describe("agent folder trust", () => {
+	it("trusts the imported checkout in each configured agent's trust store", async () => {
+		const db = createTestDb();
+		const ctx = createTestContext(db, createRecordingApiStub().api);
+		const root = await createTempGitRepo();
+		const claudeConfigDir = mkdtempSync(join(tmpdir(), "claude-config-"));
+		tempRepoDirs.push(claudeConfigDir);
+		db.insert(hostAgentConfigs)
+			.values({
+				id: randomUUID(),
+				presetId: "claude",
+				label: "Claude",
+				command: "claude",
+				promptTransport: "argv",
+				envJson: JSON.stringify({ CLAUDE_CONFIG_DIR: claudeConfigDir }),
+				displayOrder: 0,
+			})
+			.run();
+
+		const { repoPath } = await createFromImportLocal(ctx, {
+			name: "Trusted",
+			repoPath: root,
+		});
+
+		const state = JSON.parse(
+			readFileSync(join(claudeConfigDir, ".claude.json"), "utf-8"),
+		);
+		expect(state.projects[repoPath].hasTrustDialogAccepted).toBe(true);
 	});
 });

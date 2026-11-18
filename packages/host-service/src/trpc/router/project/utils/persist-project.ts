@@ -5,18 +5,19 @@ import {
 	getLocalProject,
 } from "../../../../projects/local-project-store";
 import type { HostServiceContext } from "../../../../types";
+import { seedProjectTrust } from "../../workspace-creation/shared/seed-agent-trust";
 import type { ResolvedRepo } from "./resolve-repo";
 
 export interface ProjectIdentityFields {
 	name?: string;
 }
 
-export function persistLocalProject(
+export async function persistLocalProject(
 	ctx: HostServiceContext,
 	projectId: string,
 	resolved: ResolvedRepo,
 	identity?: ProjectIdentityFields,
-): void {
+): Promise<void> {
 	const existing = getLocalProject(ctx.db, projectId);
 	const repoFields = {
 		repoPath: resolved.repoPath,
@@ -42,4 +43,5 @@ export function persistLocalProject(
 	if (row) {
 		emitProjectChanged(ctx.eventBus, existing ? "updated" : "created", row);
 	}
+	await seedProjectTrust(ctx.db, resolved.repoPath);
 }

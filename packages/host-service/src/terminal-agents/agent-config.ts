@@ -92,6 +92,15 @@ export function resolveHostAgentConfig(
 	return null;
 }
 
+export function listHostAgentConfigs(db: HostDb): ResolvedHostAgentConfig[] {
+	return db
+		.select()
+		.from(hostAgentConfigs)
+		.orderBy(asc(hostAgentConfigs.displayOrder))
+		.all()
+		.map(rowToConfig);
+}
+
 /**
  * The account env an agent config launches under. The Usage tab's default
  * account supplies `CLAUDE_CONFIG_DIR` / `CODEX_HOME`, and per-agent env
