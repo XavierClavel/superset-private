@@ -1,13 +1,11 @@
 /**
- * Pre-trusts a host-created folder in the launching agent CLIs' trust
- * stores, so their first interactive launch skips the "do you trust this
- * folder?" dialog. Session folders need this because they are standalone
- * repos: agent CLIs treat a git repo root as its own trust domain (worktrees
- * inherit from the main checkout, plain dirs from trusted ancestors, but a
- * fresh standalone repo inherits nothing), so every new session would
- * otherwise prompt. Auto-trusting is sound only because the host itself just
- * created the folder as an empty scaffold — never seed a folder with
- * pre-existing user content.
+ * Pre-trusts a folder in the agent CLIs' trust stores, so their first
+ * interactive launch skips the "do you trust this folder?" dialog. Agent CLIs
+ * treat a git repo root as its own trust domain: worktrees inherit from the
+ * main checkout, plain dirs from trusted ancestors, but a standalone repo
+ * inherits nothing. Only two kinds of folder are seeded: session folders,
+ * which the host creates as empty scaffolds, and project checkouts, because
+ * adding a project is the user's decision to trust that repo.
  *
  * Each store is the CLI's own sanctioned escape hatch: Claude's untrusted-
  * folder error says to set `projects[<path>].hasTrustDialogAccepted: true`
@@ -31,6 +29,7 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { resolveWriteTarget } from "@superset/agent-setup";
 import type { HostDb } from "../../../../db";
+import { listHostAgentConfigs } from "../../../../terminal-agents/agent-config";
 import { resolveDefaultAccountEnv } from "../../usage/default-account";
 
 type TrustFamily = "claude" | "codex" | "agy";
@@ -253,8 +252,17 @@ export async function seedAgentFolderTrust(
 		}
 	} catch (err) {
 		console.warn(
-			`[agents.run] failed to pre-trust session folder '${folderPath}' for agent '${config.presetId}':`,
+			`[agent-trust] failed to pre-trust folder '${folderPath}' for agent '${config.presetId}':`,
 			err,
 		);
+	}
+}
+
+export async function seedProjectTrust(
+	db: HostDb,
+	repoPath: string,
+): Promise<void> {
+	for (const config of listHostAgentConfigs(db)) {
+		await seedAgentFolderTrust(db, repoPath, config);
 	}
 }
