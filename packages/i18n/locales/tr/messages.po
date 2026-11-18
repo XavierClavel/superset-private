@@ -2067,6 +2067,9 @@ msgstr "Filtre ekle"
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Proje Ayarları'nda bir yaşam döngüsü çalıştırma betiği ekleyin veya bir terminal betiğini çalışma alanı çalıştırması olarak işaretleyin."
 
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "Ayarlar > Entegrasyonlar bölümünden bir Linear API anahtarı ekleyin."
+
 msgid "Add a project to see GitHub issues."
 msgstr "GitHub issue'larını görmek için bir proje ekleyin."
 
@@ -6451,6 +6454,12 @@ msgstr "Bulut ortamı oluştur"
 msgid "Create a Dev"
 msgstr "Dev oluştur"
 
+msgid "Create a key in Linear"
+msgstr "Linear'da anahtar oluştur"
+
+msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
+msgstr "Sağlayıcıda aynı konuşma bağlamına sahip yerel bir fork oluşturur. Özgün oturum değişmeden kalır."
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Claude Desktop veya Claude Code gibi harici entegrasyonlar için yeni bir API anahtarı oluşturun."
 
@@ -8610,6 +8619,9 @@ msgstr "PR bağlantısı kaldırılamadı: {0}"
 msgid "Failed to remove terminal"
 msgstr "Terminal kaldırılamadı"
 
+msgid "Failed to remove the API key"
+msgstr "API anahtarı kaldırılamadı"
+
 msgid "Failed to rename"
 msgstr "Yeniden adlandırılamadı"
 
@@ -8695,6 +8707,9 @@ msgstr "İstem kaydedilemedi"
 
 msgid "Failed to save team"
 msgstr "Takım kaydedilemedi"
+
+msgid "Failed to save the API key"
+msgstr "API anahtarı kaydedilemedi"
 
 msgid "Failed to send"
 msgstr "Gönderilemedi"
@@ -11275,6 +11290,15 @@ msgstr "Satır yüksekliği"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Linear API anahtarı"
+
+msgid "Linear API key removed"
+msgstr "Linear API anahtarı kaldırıldı"
+
+msgid "Linear API key saved"
+msgstr "Linear API anahtarı kaydedildi"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Linear yetkilendirmesinin süresi doldu. Eşitlemeyi sürdürmek için yeniden bağlanın."
 
@@ -11292,6 +11316,9 @@ msgstr "Linear issue'ları"
 
 msgid "Linear project"
 msgstr "Linear projesi"
+
+msgid "Linear rejected this API key."
+msgstr "Linear bu API anahtarını reddetti."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,6 +14891,9 @@ msgstr "{email} için parola"
 msgid "Paste"
 msgstr "Yapıştır"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Görevler'de Linear'ı kullanmak için kişisel bir Linear API anahtarı yapıştırın. Anahtar bu bilgisayarda kalır."
+
 msgid "Paste a link"
 msgstr "Bağlantı yapıştır"
 
@@ -14872,6 +14902,8 @@ msgstr "Bunun yerine bir API anahtarı yapıştır"
 
 msgid "Paste attachment"
 msgstr "Eki yapıştır"
+msgid "Paste a new key to replace the saved one"
+msgstr "Kayıtlı anahtarı değiştirmek için yeni bir anahtar yapıştırın"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Bunu Paradev CLI'ye yapıştırın:"
@@ -16328,6 +16360,9 @@ msgstr "Simgeyi kaldır"
 
 msgid "Remove image"
 msgstr "Görseli kaldır"
+
+msgid "Remove key"
+msgstr "Anahtarı kaldır"
 
 msgid "Remove link"
 msgstr "Bağlantıyı kaldır"

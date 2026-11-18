@@ -79,22 +79,21 @@ export function useDashboardNavigation() {
 			}),
 
 		isTasksOpen: !!matchRoute({ to: "/tasks", fuzzy: true }),
-		openTasks: () =>
-			gateFeature(GATED_FEATURES.TASKS, () => {
-				const tasksFilters = useTasksFilterStore.getState();
-				navigate({
-					to: "/tasks",
-					search: tasksSearchFromFilters({
-						tab: tasksFilters.tab,
-						assignee: tasksFilters.assignee,
-						label: tasksFilters.label,
-						search: tasksFilters.search,
-						typeTab: tasksFilters.typeTab,
-						projectFilters: tasksFilters.projectFilters,
-						includeClosedIssues: tasksFilters.includeClosedIssues,
-					}),
-				});
-			}),
+		openTasks: () => {
+			const tasksFilters = useTasksFilterStore.getState();
+			return navigate({
+				to: "/tasks",
+				search: tasksSearchFromFilters({
+					tab: tasksFilters.tab,
+					assignee: tasksFilters.assignee,
+					label: tasksFilters.label,
+					search: tasksFilters.search,
+					typeTab: tasksFilters.typeTab,
+					projectFilters: tasksFilters.projectFilters,
+					includeClosedIssues: tasksFilters.includeClosedIssues,
+				}),
+			});
+		},
 
 		isPullRequestsOpen: !!matchRoute({ to: "/pull-requests", fuzzy: true }),
 		openPullRequests: () => {

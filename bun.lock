@@ -155,6 +155,7 @@
         "@hono/node-server": "2.0.10",
         "@hookform/resolvers": "5.2.2",
         "@lezer/highlight": "1.2.3",
+        "@linear/sdk": "68.1.1",
         "@lingui/babel-plugin-lingui-macro": "6.12.0",
         "@lingui/core": "6.12.0",
         "@lingui/react": "6.12.0",

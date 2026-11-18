@@ -2067,6 +2067,9 @@ msgstr "필터 추가"
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "프로젝트 설정에서 라이프사이클 실행 스크립트를 추가하거나, 터미널 스크립트를 워크스페이스 실행으로 지정하세요."
 
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "설정 > 연동에서 Linear API 키를 추가하세요."
+
 msgid "Add a project to see GitHub issues."
 msgstr "GitHub 이슈를 보려면 프로젝트를 추가하세요."
 
@@ -6451,6 +6454,12 @@ msgstr "클라우드 환경 만들기"
 msgid "Create a Dev"
 msgstr "Dev 만들기"
 
+msgid "Create a key in Linear"
+msgstr "Linear에서 키 만들기"
+
+msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
+msgstr "같은 대화 컨텍스트로 제공자의 네이티브 포크를 만듭니다. 원래 세션은 그대로 유지됩니다."
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Claude Desktop이나 Claude Code 같은 외부 연동에 사용할 새 API 키를 만듭니다."
 
@@ -8610,6 +8619,9 @@ msgstr "PR 링크를 제거하지 못했습니다: {0}"
 msgid "Failed to remove terminal"
 msgstr "터미널을 제거하지 못했습니다"
 
+msgid "Failed to remove the API key"
+msgstr "API 키를 제거하지 못했습니다"
+
 msgid "Failed to rename"
 msgstr "이름을 변경하지 못했습니다"
 
@@ -8695,6 +8707,9 @@ msgstr "프롬프트를 저장하지 못했습니다"
 
 msgid "Failed to save team"
 msgstr "팀을 저장하지 못했습니다"
+
+msgid "Failed to save the API key"
+msgstr "API 키를 저장하지 못했습니다"
 
 msgid "Failed to send"
 msgstr "전송 실패"
@@ -11275,6 +11290,15 @@ msgstr "줄 높이"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Linear API 키"
+
+msgid "Linear API key removed"
+msgstr "Linear API 키를 제거했습니다"
+
+msgid "Linear API key saved"
+msgstr "Linear API 키를 저장했습니다"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Linear 인증이 만료되었습니다. 동기화를 재개하려면 다시 연결하세요."
 
@@ -11292,6 +11316,9 @@ msgstr "Linear 이슈"
 
 msgid "Linear project"
 msgstr "Linear 프로젝트"
+
+msgid "Linear rejected this API key."
+msgstr "Linear가 이 API 키를 거부했습니다."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,6 +14891,9 @@ msgstr "{email}의 비밀번호"
 msgid "Paste"
 msgstr "붙여넣기"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Linear 개인 API 키를 붙여 넣으면 작업에서 Linear를 사용할 수 있습니다. 키는 이 컴퓨터에만 저장됩니다."
+
 msgid "Paste a link"
 msgstr "링크 붙여넣기"
 
@@ -14872,6 +14902,8 @@ msgstr "대신 API 키 붙여 넣기"
 
 msgid "Paste attachment"
 msgstr "첨부 파일 붙여넣기"
+msgid "Paste a new key to replace the saved one"
+msgstr "저장된 키를 바꾸려면 새 키를 붙여 넣으세요"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Paradev CLI에 붙여 넣으세요:"
@@ -16328,6 +16360,9 @@ msgstr "아이콘 제거"
 
 msgid "Remove image"
 msgstr "이미지 제거"
+
+msgid "Remove key"
+msgstr "키 제거"
 
 msgid "Remove link"
 msgstr "링크 제거"

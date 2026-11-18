@@ -20,8 +20,10 @@ import {
 } from "renderer/components/Paywall";
 import { env } from "renderer/env.renderer";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
+import { useLinearBackend } from "renderer/hooks/useLinearBackend";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
+import { electronTrpc } from "renderer/lib/electron-trpc";
 import { HighlightText } from "renderer/routes/_authenticated/settings/components/HighlightText";
 import { useSettingsSearchQuery } from "renderer/stores/settings-state";
 import {
@@ -29,6 +31,7 @@ import {
 	isItemVisible,
 	type SettingItemId,
 } from "../../../utils/settings-search";
+import { LinearApiKeyDialog } from "./components/LinearApiKeyDialog";
 
 interface IntegrationsSettingsProps {
 	visibleItems?: SettingItemId[] | null;
@@ -102,6 +105,14 @@ export function IntegrationsSettings({
 			{ enabled: !!activeOrganizationId },
 		);
 
+	const usesLinearApiKey = useLinearBackend() === "local";
+	const { data: linearApiKey, isPending: isLinearApiKeyPending } =
+		electronTrpc.linear.status.useQuery(undefined, {
+			enabled: usesLinearApiKey,
+		});
+	const [isLinearApiKeyDialogOpen, setIsLinearApiKeyDialogOpen] =
+		useState(false);
+
 	// These three keep a disconnected row around, which integration.list does
 	// not filter out — their per-provider getConnection does.
 	const { data: sentryConnection, isPending: isSentryPending } =
@@ -158,11 +169,16 @@ export function IntegrationsSettings({
 	const slackConnection = integrations?.find((i) => i.provider === "slack");
 
 	const providerStates: Record<IntegrationProvider, ProviderState> = {
-		linear: {
-			isConnected: !!linearConnection && !linearConnection.needsReconnect,
-			connectedOrgName: linearConnection?.externalOrgName,
-			isLoading: isLinearPending,
-		},
+		linear: usesLinearApiKey
+			? {
+					isConnected: !!linearApiKey?.connected,
+					isLoading: isLinearApiKeyPending,
+				}
+			: {
+					isConnected: !!linearConnection && !linearConnection.needsReconnect,
+					connectedOrgName: linearConnection?.externalOrgName,
+					isLoading: isLinearPending,
+				},
 		github: {
 			isConnected: activeGithubInstallations.length > 0,
 			connectedOrgName:
@@ -240,8 +256,12 @@ export function IntegrationsSettings({
 					const itemId = integrationSettingItemId(integration.provider);
 					if (!isItemVisible(itemId, visibleItems)) return null;
 					const state = providerStates[integration.provider];
-					const gate = PRO_GATED[integration.provider];
 					const openWeb = () => handleOpenWeb(integration.webPath);
+					const opensApiKeyDialog =
+						integration.provider === "linear" && usesLinearApiKey;
+					const gate = opensApiKeyDialog
+						? undefined
+						: PRO_GATED[integration.provider];
 					return (
 						<IntegrationRow
 							key={integration.provider}
@@ -254,7 +274,13 @@ export function IntegrationsSettings({
 							connectedOrgName={state.connectedOrgName}
 							isLoading={state.isLoading}
 							showProBadge={!!gate && planReady && !hasAccess(gate)}
-							onManage={gate ? () => gateFeature(gate, openWeb) : openWeb}
+							onManage={
+								opensApiKeyDialog
+									? () => setIsLinearApiKeyDialogOpen(true)
+									: gate
+										? () => gateFeature(gate, openWeb)
+										: openWeb
+							}
 						/>
 					);
 				})}
@@ -265,6 +291,12 @@ export function IntegrationsSettings({
 					Manage integrations in the web app to connect and configure services.
 				</Trans>
 			</p>
+
+			<LinearApiKeyDialog
+				open={isLinearApiKeyDialogOpen}
+				onOpenChange={setIsLinearApiKeyDialogOpen}
+				isConnected={providerStates.linear.isConnected}
+			/>
 		</div>
 	);
 }

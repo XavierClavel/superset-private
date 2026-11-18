@@ -2067,6 +2067,9 @@ msgstr "フィルターを追加"
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "プロジェクト設定でライフサイクルの実行スクリプトを追加するか、ターミナルスクリプトをワークスペース実行に指定してください。"
 
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "設定 > 連携 で Linear の APIキーを追加してください。"
+
 msgid "Add a project to see GitHub issues."
 msgstr "プロジェクトを追加するとGitHub issueが表示されます。"
 
@@ -6451,6 +6454,12 @@ msgstr "クラウド環境を作成"
 msgid "Create a Dev"
 msgstr "Devを作成"
 
+msgid "Create a key in Linear"
+msgstr "Linear でキーを作成"
+
+msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
+msgstr "同じ会話コンテキストを持つネイティブのフォークをプロバイダー側に作成します。元のセッションは変更されません。"
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Claude DesktopやClaude Codeなどの外部連携用に新しいAPIキーを作成します。"
 
@@ -8610,6 +8619,9 @@ msgstr "PRリンクの削除に失敗しました: {0}"
 msgid "Failed to remove terminal"
 msgstr "ターミナルの削除に失敗しました"
 
+msgid "Failed to remove the API key"
+msgstr "APIキーを削除できませんでした"
+
 msgid "Failed to rename"
 msgstr "名前の変更に失敗しました"
 
@@ -8695,6 +8707,9 @@ msgstr "プロンプトの保存に失敗しました"
 
 msgid "Failed to save team"
 msgstr "チームの保存に失敗しました"
+
+msgid "Failed to save the API key"
+msgstr "APIキーを保存できませんでした"
 
 msgid "Failed to send"
 msgstr "送信に失敗しました"
@@ -11275,6 +11290,15 @@ msgstr "行の高さ"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Linear の APIキー"
+
+msgid "Linear API key removed"
+msgstr "Linear の APIキーを削除しました"
+
+msgid "Linear API key saved"
+msgstr "Linear の APIキーを保存しました"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Linearの認可が期限切れです。再接続すると同期を再開します。"
 
@@ -11292,6 +11316,9 @@ msgstr "Linear issue"
 
 msgid "Linear project"
 msgstr "Linear プロジェクト"
+
+msgid "Linear rejected this API key."
+msgstr "Linear がこの APIキーを拒否しました。"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,6 +14891,9 @@ msgstr "{email}のパスワード"
 msgid "Paste"
 msgstr "貼り付け"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Linear の個人用 APIキーを貼り付けると、タスクで Linear を使えます。キーはこのコンピューターにのみ保存されます。"
+
 msgid "Paste a link"
 msgstr "リンクを貼り付け"
 
@@ -14872,6 +14902,8 @@ msgstr "代わりにAPIキーを貼り付ける"
 
 msgid "Paste attachment"
 msgstr "添付ファイルをペースト"
+msgid "Paste a new key to replace the saved one"
+msgstr "保存済みのキーを置き換えるには新しいキーを貼り付けてください"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "これをParadev CLIに貼り付けてください:"
@@ -16328,6 +16360,9 @@ msgstr "アイコンを削除"
 
 msgid "Remove image"
 msgstr "画像を削除"
+
+msgid "Remove key"
+msgstr "キーを削除"
 
 msgid "Remove link"
 msgstr "リンクを削除"

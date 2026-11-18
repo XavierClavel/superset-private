@@ -2067,6 +2067,9 @@ msgstr "Filter hinzufügen"
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Füge in den Projekteinstellungen ein Lifecycle-Run-Skript hinzu oder markiere ein Terminal-Skript als Arbeitsbereich-Run."
 
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "Füge unter Einstellungen > Integrationen einen Linear-API-Schlüssel hinzu."
+
 msgid "Add a project to see GitHub issues."
 msgstr "Füge ein Projekt hinzu, um GitHub-Issues zu sehen."
 
@@ -6451,6 +6454,12 @@ msgstr "Cloud-Umgebung erstellen"
 msgid "Create a Dev"
 msgstr "Dev erstellen"
 
+msgid "Create a key in Linear"
+msgstr "Schlüssel in Linear erstellen"
+
+msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
+msgstr "Erstellt beim Anbieter einen nativen Fork mit demselben Gesprächskontext. Die ursprüngliche Sitzung bleibt unverändert."
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Erstelle einen neuen API-Schlüssel für externe Integrationen wie Claude Desktop oder Claude Code."
 
@@ -8610,6 +8619,9 @@ msgstr "PR-Link konnte nicht entfernt werden: {0}"
 msgid "Failed to remove terminal"
 msgstr "Terminal konnte nicht entfernt werden"
 
+msgid "Failed to remove the API key"
+msgstr "API-Schlüssel konnte nicht entfernt werden"
+
 msgid "Failed to rename"
 msgstr "Umbenennen fehlgeschlagen"
 
@@ -8695,6 +8707,9 @@ msgstr "Prompt konnte nicht gespeichert werden"
 
 msgid "Failed to save team"
 msgstr "Team konnte nicht gespeichert werden"
+
+msgid "Failed to save the API key"
+msgstr "API-Schlüssel konnte nicht gespeichert werden"
 
 msgid "Failed to send"
 msgstr "Senden fehlgeschlagen"
@@ -11275,6 +11290,15 @@ msgstr "Zeilenhöhe"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Linear-API-Schlüssel"
+
+msgid "Linear API key removed"
+msgstr "Linear-API-Schlüssel entfernt"
+
+msgid "Linear API key saved"
+msgstr "Linear-API-Schlüssel gespeichert"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Die Linear-Autorisierung ist abgelaufen. Verbinde neu, um die Synchronisierung fortzusetzen."
 
@@ -11292,6 +11316,9 @@ msgstr "Linear-Issues"
 
 msgid "Linear project"
 msgstr "Linear-Projekt"
+
+msgid "Linear rejected this API key."
+msgstr "Linear hat diesen API-Schlüssel abgelehnt."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,6 +14891,9 @@ msgstr "Passwort für {email}"
 msgid "Paste"
 msgstr "Einfügen"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Füge einen persönlichen Linear-API-Schlüssel ein, um Linear in Aufgaben zu nutzen. Der Schlüssel bleibt auf diesem Computer."
+
 msgid "Paste a link"
 msgstr "Link einfügen"
 
@@ -14872,6 +14902,8 @@ msgstr "Stattdessen einen API-Schlüssel einfügen"
 
 msgid "Paste attachment"
 msgstr "Anhang einfügen"
+msgid "Paste a new key to replace the saved one"
+msgstr "Füge einen neuen Schlüssel ein, um den gespeicherten zu ersetzen"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Füge das in die Paradev-CLI ein:"
@@ -16328,6 +16360,9 @@ msgstr "Icon entfernen"
 
 msgid "Remove image"
 msgstr "Bild entfernen"
+
+msgid "Remove key"
+msgstr "Schlüssel entfernen"
 
 msgid "Remove link"
 msgstr "Link entfernen"

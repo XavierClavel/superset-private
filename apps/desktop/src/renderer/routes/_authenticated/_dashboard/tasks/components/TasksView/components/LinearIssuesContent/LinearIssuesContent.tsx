@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { LuRefreshCw } from "react-icons/lu";
 import { SiLinear } from "react-icons/si";
 import {
-	useLinearConnection,
+	useLinearAccount,
 	useLinearWorkspace,
 } from "../../../../hooks/useLinearWorkspace";
 import type { ViewMode } from "../../../../stores/tasks-filter-state";
@@ -29,9 +29,8 @@ export function LinearIssuesContent({
 	onOpen,
 }: LinearIssuesContentProps) {
 	const { t } = useLingui();
-	const connection = useLinearConnection();
-	const isConnected = !!connection.data && !connection.data.needsReconnect;
-	const workspace = useLinearWorkspace({ enabled: isConnected });
+	const account = useLinearAccount();
+	const workspace = useLinearWorkspace({ enabled: account.isConnected });
 	const {
 		issues,
 		error,
@@ -55,9 +54,9 @@ export function LinearIssuesContent({
 		return () => observer.disconnect();
 	}, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-	if (connection.isLoading) return null;
-	if (!isConnected) {
-		return <LinearCTA needsReconnect={!!connection.data?.needsReconnect} />;
+	if (account.isLoading) return null;
+	if (!account.isConnected) {
+		return <LinearCTA needsReconnect={account.needsReconnect} />;
 	}
 
 	const showTeam = !filters.teamId && (workspace.data?.teams.length ?? 0) > 1;

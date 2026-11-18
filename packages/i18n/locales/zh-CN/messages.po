@@ -2067,6 +2067,9 @@ msgstr "添加筛选条件"
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "在项目设置中添加生命周期运行脚本，或将某个终端脚本标记为工作区运行命令。"
 
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "请在 设置 > 集成 中添加 Linear API密钥。"
+
 msgid "Add a project to see GitHub issues."
 msgstr "添加项目以查看GitHub议题。"
 
@@ -6451,6 +6454,12 @@ msgstr "创建云环境"
 msgid "Create a Dev"
 msgstr "创建 Dev"
 
+msgid "Create a key in Linear"
+msgstr "在 Linear 中创建密钥"
+
+msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
+msgstr "在提供方创建一个具有相同对话上下文的原生分叉。原会话保持不变。"
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "为Claude Desktop或Claude Code等外部集成创建新的API密钥。"
 
@@ -8610,6 +8619,9 @@ msgstr "移除PR链接失败：{0}"
 msgid "Failed to remove terminal"
 msgstr "移除终端失败"
 
+msgid "Failed to remove the API key"
+msgstr "无法移除 API密钥"
+
 msgid "Failed to rename"
 msgstr "重命名失败"
 
@@ -8695,6 +8707,9 @@ msgstr "保存提示词失败"
 
 msgid "Failed to save team"
 msgstr "保存团队失败"
+
+msgid "Failed to save the API key"
+msgstr "无法保存 API密钥"
 
 msgid "Failed to send"
 msgstr "发送失败"
@@ -11275,6 +11290,15 @@ msgstr "行高"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Linear API密钥"
+
+msgid "Linear API key removed"
+msgstr "已移除 Linear API密钥"
+
+msgid "Linear API key saved"
+msgstr "已保存 Linear API密钥"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Linear授权已过期。重新连接以恢复同步。"
 
@@ -11292,6 +11316,9 @@ msgstr "Linear议题"
 
 msgid "Linear project"
 msgstr "Linear 项目"
+
+msgid "Linear rejected this API key."
+msgstr "Linear 拒绝了此 API密钥。"
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,6 +14891,9 @@ msgstr "{email}的密码"
 msgid "Paste"
 msgstr "粘贴"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "粘贴 Linear 个人 API密钥即可在任务中使用 Linear。密钥只保存在这台电脑上。"
+
 msgid "Paste a link"
 msgstr "粘贴链接"
 
@@ -14872,6 +14902,8 @@ msgstr "改为粘贴 API 密钥"
 
 msgid "Paste attachment"
 msgstr "粘贴附件"
+msgid "Paste a new key to replace the saved one"
+msgstr "粘贴新密钥以替换已保存的密钥"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "把它粘贴到Paradev CLI："
@@ -16328,6 +16360,9 @@ msgstr "移除图标"
 
 msgid "Remove image"
 msgstr "移除图片"
+
+msgid "Remove key"
+msgstr "移除密钥"
 
 msgid "Remove link"
 msgstr "移除链接"

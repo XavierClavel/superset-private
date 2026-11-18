@@ -7,6 +7,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useLinearBackend } from "renderer/hooks/useLinearBackend";
 import { useTaskTracker } from "renderer/hooks/useTaskTracker";
 import { useDebouncedSearchNavigation } from "renderer/routes/_authenticated/_dashboard/hooks/useDebouncedSearchNavigation";
 import { useProjectQueryTargets } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectQueryTargets";
@@ -79,6 +80,7 @@ export function TasksView({
 	const labelFilter = initialLabel ?? storedLabel;
 	const typeTab: TypeTab = initialType ?? storedTypeTab;
 	const taskTracker = useTaskTracker();
+	const linearBackend = useLinearBackend();
 	const projectFilters = initialProjects ?? storedProjectFilters;
 	const includeClosedIssues =
 		initialState === undefined
@@ -333,13 +335,13 @@ export function TasksView({
 	const showIssues = typeTab === "issues";
 	const taskSource: TaskSource = showIssues
 		? "issues"
-		: taskTracker === "linear"
+		: taskTracker === "linear" || linearBackend === "local"
 			? "linear"
 			: "tasks";
 	const showTasks = taskSource === "tasks";
 	const showLinear = taskSource === "linear";
 
-	if (!showIssues && !taskTracker) {
+	if (!showIssues && (!taskTracker || !linearBackend)) {
 		return <div className="flex-1" />;
 	}
 

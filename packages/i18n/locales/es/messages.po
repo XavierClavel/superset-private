@@ -2067,6 +2067,9 @@ msgstr "Añadir un filtro"
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Añade un script de ejecución del ciclo de vida en la configuración del proyecto o marca un script de terminal como la ejecución del espacio de trabajo."
 
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "Añade una clave de API de Linear en Configuración > Integraciones."
+
 msgid "Add a project to see GitHub issues."
 msgstr "Añade un proyecto para ver los issues de GitHub."
 
@@ -6451,6 +6454,12 @@ msgstr "Crear un entorno en la nube"
 msgid "Create a Dev"
 msgstr "Crear un Dev"
 
+msgid "Create a key in Linear"
+msgstr "Crear una clave en Linear"
+
+msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
+msgstr "Crea una bifurcación nativa del proveedor con el mismo contexto de conversación. La sesión original no se modifica."
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Crea una clave de API nueva para integraciones externas como Claude Desktop o Claude Code."
 
@@ -8610,6 +8619,9 @@ msgstr "No se pudo quitar el enlace de la PR: {0}"
 msgid "Failed to remove terminal"
 msgstr "No se pudo quitar la terminal"
 
+msgid "Failed to remove the API key"
+msgstr "No se pudo quitar la clave de API"
+
 msgid "Failed to rename"
 msgstr "No se pudo cambiar el nombre"
 
@@ -8695,6 +8707,9 @@ msgstr "No se pudo guardar el prompt"
 
 msgid "Failed to save team"
 msgstr "No se pudo guardar el equipo"
+
+msgid "Failed to save the API key"
+msgstr "No se pudo guardar la clave de API"
 
 msgid "Failed to send"
 msgstr "No se pudo enviar"
@@ -11275,6 +11290,15 @@ msgstr "Interlineado"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "Clave de API de Linear"
+
+msgid "Linear API key removed"
+msgstr "Clave de API de Linear quitada"
+
+msgid "Linear API key saved"
+msgstr "Clave de API de Linear guardada"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "La autorización de Linear ha caducado. Vuelve a conectarla para reanudar la sincronización."
 
@@ -11292,6 +11316,9 @@ msgstr "Issues de Linear"
 
 msgid "Linear project"
 msgstr "Proyecto de Linear"
+
+msgid "Linear rejected this API key."
+msgstr "Linear rechazó esta clave de API."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,6 +14891,9 @@ msgstr "Contraseña de {email}"
 msgid "Paste"
 msgstr "Pegar"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Pega una clave de API personal de Linear para usar Linear en Tareas. La clave se queda en este equipo."
+
 msgid "Paste a link"
 msgstr "Pega un enlace"
 
@@ -14872,6 +14902,8 @@ msgstr "Pegar una clave de API en su lugar"
 
 msgid "Paste attachment"
 msgstr "Pegar archivo adjunto"
+msgid "Paste a new key to replace the saved one"
+msgstr "Pega una clave nueva para reemplazar la guardada"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Pega esto en la CLI de Paradev:"
@@ -16328,6 +16360,9 @@ msgstr "Quitar el icono"
 
 msgid "Remove image"
 msgstr "Quitar imagen"
+
+msgid "Remove key"
+msgstr "Quitar clave"
 
 msgid "Remove link"
 msgstr "Quitar enlace"

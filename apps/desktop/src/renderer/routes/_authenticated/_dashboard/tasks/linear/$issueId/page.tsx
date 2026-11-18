@@ -3,12 +3,11 @@ import { ScrollArea } from "@superset/ui/scroll-area";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo } from "react";
 import { MarkdownEditor } from "renderer/components/MarkdownEditor";
-import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { resolveProjectFilterParams } from "renderer/routes/_authenticated/_dashboard/components/ProjectFilter/project-filter-utils";
 import { WorkItemDetailHeader } from "renderer/routes/_authenticated/_dashboard/components/WorkItemDetailHeader";
 import { WorkItemDetailState } from "renderer/routes/_authenticated/_dashboard/components/WorkItemDetailState";
 import { StatusIcon } from "../../components/TasksView/components/shared/StatusIcon";
+import { useLinearIssue } from "../../hooks/useLinearIssue";
 import { useLinearIssueActions } from "../../hooks/useLinearIssueActions";
 import { Route as TasksLayoutRoute } from "../../layout";
 import { tasksSearchFromFilters } from "../../stores/tasks-filter-state";
@@ -21,14 +20,11 @@ export const Route = createFileRoute(
 	component: LinearIssueDetailPage,
 });
 
-const ISSUE_STALE_MS = 30_000;
-
 function LinearIssueDetailPage() {
 	const { t } = useLingui();
 	const { issueId } = Route.useParams();
 	const search = TasksLayoutRoute.useSearch();
 	const navigate = useNavigate();
-	const organizationId = useActiveOrganizationId();
 	const { addToWorkspace } = useLinearIssueActions();
 
 	const backSearch = useMemo(
@@ -45,11 +41,7 @@ function LinearIssueDetailPage() {
 		[search.assignee, search.projects, search.search, search.state, search.tab],
 	);
 
-	const { data, isLoading, error, refetch } =
-		cloudTrpc.integration.linear.issue.useQuery(
-			{ organizationId: organizationId ?? "", issueId },
-			{ enabled: !!organizationId, staleTime: ISSUE_STALE_MS, retry: false },
-		);
+	const { data, isLoading, error, refetch } = useLinearIssue(issueId);
 
 	const header = (
 		<WorkItemDetailHeader

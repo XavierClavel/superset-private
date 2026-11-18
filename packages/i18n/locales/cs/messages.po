@@ -2067,6 +2067,9 @@ msgstr "Přidat filtr"
 msgid "Add a lifecycle run script in Project Settings or mark a terminal script as the workspace run."
 msgstr "Přidejte lifecycle run skript v nastavení projektu, nebo označte terminálový skript jako spuštění pracovního prostoru."
 
+msgid "Add a Linear API key in Settings > Integrations."
+msgstr "Přidejte API klíč Linear v Nastavení > Integrace."
+
 msgid "Add a project to see GitHub issues."
 msgstr "Přidejte projekt a uvidíte GitHub issues."
 
@@ -6451,6 +6454,12 @@ msgstr "Vytvořit cloudové prostředí"
 msgid "Create a Dev"
 msgstr "Vytvořit Deva"
 
+msgid "Create a key in Linear"
+msgstr "Vytvořit klíč v Linear"
+
+msgid "Create a native provider fork with the same conversation context. The original session stays unchanged."
+msgstr "Vytvoří nativní fork u poskytovatele se stejným kontextem konverzace. Původní relace zůstane beze změny."
+
 msgid "Create a new API key for external integrations like Claude Desktop or Claude Code."
 msgstr "Vytvořte nový API klíč pro externí integrace, jako je Claude Desktop nebo Claude Code."
 
@@ -8610,6 +8619,9 @@ msgstr "Nepodařilo se odebrat propojení s PR: {0}"
 msgid "Failed to remove terminal"
 msgstr "Nepodařilo se odebrat terminál"
 
+msgid "Failed to remove the API key"
+msgstr "API klíč se nepodařilo odebrat"
+
 msgid "Failed to rename"
 msgstr "Nepodařilo se přejmenovat"
 
@@ -8695,6 +8707,9 @@ msgstr "Nepodařilo se uložit prompt"
 
 msgid "Failed to save team"
 msgstr "Nepodařilo se uložit tým"
+
+msgid "Failed to save the API key"
+msgstr "API klíč se nepodařilo uložit"
 
 msgid "Failed to send"
 msgstr "Odeslání selhalo"
@@ -11275,6 +11290,15 @@ msgstr "Výška řádku"
 msgid "Linear"
 msgstr "Linear"
 
+msgid "Linear API key"
+msgstr "API klíč Linear"
+
+msgid "Linear API key removed"
+msgstr "API klíč Linear byl odebrán"
+
+msgid "Linear API key saved"
+msgstr "API klíč Linear byl uložen"
+
 msgid "Linear authorization expired. Reconnect to resume syncing."
 msgstr "Autorizace Linearu vypršela. Připojte se znovu a synchronizace bude pokračovat."
 
@@ -11292,6 +11316,9 @@ msgstr "Linear issues"
 
 msgid "Linear project"
 msgstr "Projekt v Linearu"
+
+msgid "Linear rejected this API key."
+msgstr "Linear tento API klíč odmítl."
 
 #. placeholder {0}: m.startLine
 #. placeholder {0}: metadata.startLine
@@ -14864,6 +14891,9 @@ msgstr "Heslo pro {email}"
 msgid "Paste"
 msgstr "Vložit"
 
+msgid "Paste a Linear personal API key to use Linear in Tasks. The key stays on this computer."
+msgstr "Vložte osobní API klíč Linear a používejte Linear v Úkolech. Klíč zůstane na tomto počítači."
+
 msgid "Paste a link"
 msgstr "Vložte odkaz"
 
@@ -14872,6 +14902,8 @@ msgstr "Místo toho vložit klíč API"
 
 msgid "Paste attachment"
 msgstr "Vložit přílohu"
+msgid "Paste a new key to replace the saved one"
+msgstr "Vložte nový klíč, který nahradí uložený"
 
 msgid "Paste this into Paradev CLI:"
 msgstr "Vložte to do Paradev CLI:"
@@ -16328,6 +16360,9 @@ msgstr "Odebrat ikonu"
 
 msgid "Remove image"
 msgstr "Odebrat obrázek"
+
+msgid "Remove key"
+msgstr "Odebrat klíč"
 
 msgid "Remove link"
 msgstr "Odebrat odkaz"
