@@ -12,7 +12,8 @@ import { env } from "renderer/env.renderer";
 import { useAppVersionHistoryStore } from "renderer/stores/app-version-history";
 import { useDesktopNoticeDismissalsStore } from "renderer/stores/desktop-notice-dismissals";
 import { useDesktopNoticePreviewStore } from "renderer/stores/desktop-notice-preview";
-import { lt, prerelease } from "semver";
+import { lt } from "semver";
+import { isCanaryVersion } from "shared/auto-update";
 import {
 	BRAND_RENAME_NOTICE_ID,
 	createBrandRenameNotice,
@@ -26,7 +27,7 @@ const REFETCH_INTERVAL_MS = 30 * 60 * 1000;
 const MINIMUM_VERSION_NOTICE_ID = "minimum-version";
 
 function getChannel(version: string): "stable" | "canary" {
-	return prerelease(version)?.length ? "canary" : "stable";
+	return isCanaryVersion(version) ? "canary" : "stable";
 }
 
 interface UseDesktopNoticesResult {

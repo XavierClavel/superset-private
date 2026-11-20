@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { app, nativeImage } from "electron";
 import { env } from "main/env.main";
-import { prerelease } from "semver";
+import { isCanaryVersion } from "shared/auto-update";
 import { getWorkspaceName } from "shared/env.shared";
 
 type RGB = [number, number, number];
@@ -58,12 +58,8 @@ const pickWorkspaceColor = (() => {
 	};
 })();
 
-/**
- * Returns true for prerelease versions like "0.0.53-canary".
- */
 function isCanaryBuild(): boolean {
-	const components = prerelease(app.getVersion());
-	return components !== null && components.length > 0;
+	return isCanaryVersion(app.getVersion());
 }
 
 /**

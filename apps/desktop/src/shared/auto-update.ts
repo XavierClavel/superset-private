@@ -1,3 +1,5 @@
+import { prerelease } from "semver";
+
 export const AUTO_UPDATE_STATUS = {
 	IDLE: "idle",
 	CHECKING: "checking",
@@ -35,3 +37,8 @@ export const RELEASES_REPO = {
 } as const;
 
 export const RELEASES_URL = `https://github.com/${RELEASES_REPO.owner}/${RELEASES_REPO.repo}/releases`;
+
+/** Fork releases are prereleases too (`-fork.<run>`), and they are stable builds. */
+export function isCanaryVersion(version: string): boolean {
+	return prerelease(version)?.[0] === "canary";
+}

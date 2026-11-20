@@ -70,28 +70,43 @@ is allowed.
   servers as official Superset, and keeps every session and project.
 - **Updates come from this repository**: `RELEASES_REPO` in
   `apps/desktop/src/shared/auto-update.ts` sets where installed builds look for updates and where
-  electron-builder publishes, so an official release no longer replaces a fork build.
+  electron-builder publishes, so an official release does not replace a fork build.
+- **A release on every merge to main**: `.github/workflows/release-fork.yml`. Fork versions end in
+  `-fork.<run>`, and only `-canary` versions count as canary (`isCanaryVersion`), so a fork build
+  reads the stable feed and shows the stable icon and notices. `build-desktop.yml` trusts a
+  self-signed signing certificate on the runner, because electron-builder signs only with trusted
+  identities.
 
 ## Releasing
 
-Installed builds read
-`https://github.com/XavierClavel/superset-private/releases/latest/download/latest-mac.yml`. An
-update arrives only when all of these hold:
+Every push to `main` runs `release-fork.yml`. It builds `<apps/desktop version>-fork.<run number>`
+(for example `2.0.9-fork.14`), signs it, and publishes it as the latest release. Installed builds
+read `https://github.com/XavierClavel/superset-private/releases/latest/download/latest-mac.yml`
+and install it at their next check, every 4 hours or from "Check for Updates". The run number only
+goes up, and after a rebase the upstream version does too, so each release is newer than the one
+before.
 
-- A published release (not a draft) holds the `latest-mac.yml`, `.zip` and `.zip.blockmap` that
-  `bun run build` writes to `apps/desktop/release/`, for example
-  `gh release create v<version> apps/desktop/release/*.{yml,zip,blockmap,dmg} --repo XavierClavel/superset-private`.
-- Its version (`apps/desktop/package.json`) is higher than the installed one. After a rebase it
-  is upstream's; a fork-only release bumps the patch above the last fork release.
-- The app can read the release without credentials. This repository is private, so it gets a 404:
-  make it public, or publish to a public releases-only repository and set `RELEASES_REPO` to it.
-- The new build is signed with the same certificate as the installed one: macOS refuses an update
-  otherwise. Without a signing identity, builds are only ad-hoc signed and every update is
-  refused; sign every build with one Developer ID or self-signed code-signing certificate.
+macOS installs an update only when it is signed with the same certificate as the installed build.
+Releases are signed with a self-signed code-signing certificate, held in the `MAC_CERTIFICATE`
+(base64 `.p12`) and `MAC_CERTIFICATE_PASSWORD` repository secrets. The original is in
+`~/.superset-fork/codesign.p12`, with its password in `~/.superset-fork/codesign.password`.
+Losing it means a new certificate and one more install by hand. There is no notarization: that
+needs an Apple Developer ID.
 
-Switching from official Superset to a fork build is a manual install: drag the fork's app over
-`/Applications/Superset.app`. The sign-in (`~/.paradev/auth-token.enc`) is encrypted with a key
-derived from the machine, not the app, so the fork build stays signed in.
+A `bun run build` on this Mac is ad-hoc signed, so it cannot update to a release. To get back on
+the release track, install the latest release by hand:
+
+```bash
+gh release download --repo XavierClavel/superset-private --pattern '*-arm64-mac.zip' --dir /tmp/superset-release
+ditto -x -k /tmp/superset-release/*-arm64-mac.zip /tmp/superset-release
+mv /Applications/Superset.app /tmp/superset-release/Superset-previous.app
+ditto /tmp/superset-release/Superset.app /Applications/Superset.app
+```
+
+Keychain access asks once after a change of certificate ("Superset Safe Storage"): choose Always
+Allow. Switching from official Superset to a fork build is the same manual install. The sign-in
+(`~/.paradev/auth-token.enc`) is encrypted with a key derived from the machine, not the app, so the
+fork build stays signed in.
 
 ## Building on Windows
 

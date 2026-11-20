@@ -156,8 +156,20 @@ jobs:
           security list-keychains -d user -s "$KEYCHAIN" $(security list-keychains -d user | tr -d '"')
           rm -f "$CERT_PATH"
 
-          security find-identity -v -p codesigning "$KEYCHAIN" | grep -q "Developer ID Application" || {
-            echo "::error::No Developer ID Application identity in the signing keychain"
+          has_valid_identity() {
+            security find-identity -v -p codesigning "$KEYCHAIN" | grep -qE '[0-9]+\) [0-9A-F]{40} '
+          }
+          # electron-builder signs only with identities macOS lists as valid, and
+          # a self-signed certificate is valid only once trusted for code signing.
+          if ! has_valid_identity; then
+            CERT_PEM="$RUNNER_TEMP/certificate.pem"
+            security find-certificate -p "$KEYCHAIN" > "$CERT_PEM"
+            sudo security add-trusted-cert -d -r trustRoot -p codeSign \
+              -k /Library/Keychains/System.keychain "$CERT_PEM"
+            rm -f "$CERT_PEM"
+          fi
+          has_valid_identity || {
+            echo "::error::No valid code-signing identity in the signing keychain"
             exit 1
           }
           echo "CSC_KEYCHAIN=$KEYCHAIN" >> "$GITHUB_ENV"
