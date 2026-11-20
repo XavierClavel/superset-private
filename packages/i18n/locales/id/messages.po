@@ -4109,6 +4109,9 @@ msgstr "Karier"
 msgid "Carousel"
 msgstr "Carousel"
 
+msgid "Catch-up"
+msgstr "Susulan"
+
 msgid "Category"
 msgstr "Kategori"
 
@@ -4178,6 +4181,9 @@ msgstr "Ubah status"
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Ubah status (saat ini: {0})"
+
+msgid "Change the trigger in Claude Jobs."
+msgstr "Ubah pemicu di Claude Jobs."
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4496,6 +4502,9 @@ msgstr "Claude kini berjalan di workspace component-showcase."
 
 msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
 msgstr "Claude Jobs {outdatedVersion} terlalu lama untuk Paradev. Buka untuk memperbaruinya, atau instal versi terbaru."
+
+msgid "Claude Jobs folder"
+msgstr "Folder Claude Jobs"
 
 msgid "Claude Jobs is not installed."
 msgstr "Claude Jobs belum terinstal."
@@ -6188,6 +6197,7 @@ msgstr "Tidak dapat memuat {filename}"
 msgid "Couldn't load agent settings: {0}"
 msgstr "Tidak bisa memuat pengaturan agen: {0}"
 
+#. placeholder {0}: errorMessage(statusQuery.error)
 #. placeholder {0}: loadError.message
 msgid "Couldn't load automation: {0}"
 msgstr "Tidak bisa memuat otomatisasi: {0}"
@@ -6467,9 +6477,6 @@ msgstr "Buat environment cloud"
 msgid "Create a Dev"
 msgstr "Buat Dev"
 
-msgid "Create a job in Claude Jobs and it shows here."
-msgstr "Buat job di Claude Jobs dan job itu akan muncul di sini."
-
 msgid "Create a key in Linear"
 msgstr "Buat kunci di Linear"
 
@@ -6538,6 +6545,9 @@ msgstr "Buat grup baru"
 
 msgid "Create new project"
 msgstr "Buat proyek baru"
+
+msgid "Create one here, or in Claude Jobs."
+msgstr "Buat di sini, atau di Claude Jobs."
 
 msgid "Create one to start a cloud workspace from it."
 msgstr "Buat satu untuk memulai workspace cloud dari sana."
@@ -6735,6 +6745,9 @@ msgstr "Pembuat: {0}"
 msgid "Credentials stay on the server"
 msgstr "Kredensial tetap di server"
 
+msgid "Cron expression"
+msgstr "Ekspresi cron"
+
 #. placeholder {0}: job.cron
 msgid "Cron: {0}"
 msgstr "Cron: {0}"
@@ -6892,6 +6905,12 @@ msgstr "Hari dalam bulan"
 
 msgid "Day One"
 msgstr "Hari pertama"
+
+msgid "Days of the month"
+msgstr "Hari dalam bulan"
+
+msgid "Days of the week"
+msgstr "Hari dalam minggu"
 
 msgid "days running three agents at once"
 msgstr "hari menjalankan tiga agen sekaligus"

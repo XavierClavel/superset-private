@@ -4109,6 +4109,9 @@ msgstr "Kariéra"
 msgid "Carousel"
 msgstr "Karusel"
 
+msgid "Catch-up"
+msgstr "Dohnání"
+
 msgid "Category"
 msgstr "Kategorie"
 
@@ -4178,6 +4181,9 @@ msgstr "Změnit stav"
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Změnit stav (aktuálně: {0})"
+
+msgid "Change the trigger in Claude Jobs."
+msgstr "Spouštěč změňte v Claude Jobs."
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4496,6 +4502,9 @@ msgstr "Claude teď běží v pracovním prostoru component-showcase."
 
 msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
 msgstr "Claude Jobs {outdatedVersion} je pro Paradev příliš starý. Otevřete ho a aktualizujte, nebo nainstalujte nejnovější verzi."
+
+msgid "Claude Jobs folder"
+msgstr "Složka Claude Jobs"
 
 msgid "Claude Jobs is not installed."
 msgstr "Claude Jobs není nainstalovaný."
@@ -6188,6 +6197,7 @@ msgstr "Soubor {filename} se nepodařilo načíst"
 msgid "Couldn't load agent settings: {0}"
 msgstr "Nepodařilo se načíst nastavení agenta: {0}"
 
+#. placeholder {0}: errorMessage(statusQuery.error)
 #. placeholder {0}: loadError.message
 msgid "Couldn't load automation: {0}"
 msgstr "Nepodařilo se načíst automatizaci: {0}"
@@ -6467,9 +6477,6 @@ msgstr "Vytvořit cloudové prostředí"
 msgid "Create a Dev"
 msgstr "Vytvořit Deva"
 
-msgid "Create a job in Claude Jobs and it shows here."
-msgstr "Vytvořte úlohu v Claude Jobs a zobrazí se zde."
-
 msgid "Create a key in Linear"
 msgstr "Vytvořit klíč v Linear"
 
@@ -6538,6 +6545,9 @@ msgstr "Vytvořit novou skupinu"
 
 msgid "Create new project"
 msgstr "Vytvořit nový projekt"
+
+msgid "Create one here, or in Claude Jobs."
+msgstr "Vytvořte ji zde nebo v Claude Jobs."
 
 msgid "Create one to start a cloud workspace from it."
 msgstr "Vytvořte jedno, abyste z něj mohli spustit cloudový pracovní prostor."
@@ -6735,6 +6745,9 @@ msgstr "Autor: {0}"
 msgid "Credentials stay on the server"
 msgstr "Přihlašovací údaje zůstávají na serveru"
 
+msgid "Cron expression"
+msgstr "Výraz cron"
+
 #. placeholder {0}: job.cron
 msgid "Cron: {0}"
 msgstr "Cron: {0}"
@@ -6892,6 +6905,12 @@ msgstr "Den v měsíci"
 
 msgid "Day One"
 msgstr "První den"
+
+msgid "Days of the month"
+msgstr "Dny v měsíci"
+
+msgid "Days of the week"
+msgstr "Dny v týdnu"
 
 msgid "days running three agents at once"
 msgstr "dní se třemi agenty najednou"

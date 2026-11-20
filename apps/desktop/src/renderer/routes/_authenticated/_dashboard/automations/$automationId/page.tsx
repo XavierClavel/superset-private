@@ -7,6 +7,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { TRPCClientError } from "@trpc/client";
 import { useMemo, useState } from "react";
 import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
@@ -21,6 +22,7 @@ import { dispatchErrorCode, runErrorHelp } from "../utils/runErrorHelp";
 import { AutomationBody } from "./components/AutomationBody";
 import { AutomationBreadcrumbBar } from "./components/AutomationBreadcrumbBar";
 import { AutomationDetailHeader } from "./components/AutomationDetailHeader";
+import { ClaudeJobDetail } from "./components/ClaudeJobDetail";
 import { VersionHistorySheet } from "./components/VersionHistorySheet";
 import { WrongOrganizationNotice } from "./components/WrongOrganizationNotice";
 
@@ -31,7 +33,7 @@ type AutomationDetailSearch = {
 export const Route = createFileRoute(
 	"/_authenticated/_dashboard/automations/$automationId/",
 )({
-	component: AutomationDetailPage,
+	component: AutomationDetailRoute,
 	validateSearch: (
 		search: Record<string, unknown>,
 	): AutomationDetailSearch => ({
@@ -53,6 +55,14 @@ function organizationFromError(params: unknown): { id: string | null } | null {
 }
 
 const RUNS_PAGE_SIZE = 20;
+
+function AutomationDetailRoute() {
+	const { automationId } = Route.useParams();
+	const backend = usePlanBackend();
+	if (backend === "local") return <ClaudeJobDetail jobId={automationId} />;
+	if (backend === "cloud") return <AutomationDetailPage />;
+	return null;
+}
 
 function AutomationDetailPage() {
 	const { t } = useLingui();

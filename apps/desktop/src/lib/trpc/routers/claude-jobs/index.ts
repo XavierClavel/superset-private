@@ -1,3 +1,5 @@
+import { homedir } from "node:os";
+import { join } from "node:path";
 import { msg } from "@lingui/core/macro";
 import { i18n } from "@superset/i18n";
 import { TRPCError } from "@trpc/server";
@@ -8,12 +10,25 @@ import {
 	type ClaudeJobsCli,
 	createClaudeJobsCli,
 } from "./utils/claude-jobs-cli";
+import { jobIdFor } from "./utils/job-id";
 
 /** The first version with every command used here: `delete` came in 0.15.0. */
 const MIN_CLAUDE_JOBS_VERSION = "0.15.0";
 const STATUS_VERSION = 1;
 
 const jobInput = z.object({ id: z.string().min(1) });
+
+const saveInput = z.object({
+	id: z.string().min(1).optional(),
+	name: z.string().trim().min(1),
+	prompt: z.string().trim().min(1),
+	hour: z.number().int().min(0).max(23),
+	minute: z.number().int().min(0).max(59),
+	weekdays: z.array(z.number().int().min(1).max(7)),
+	month_days: z.array(z.number().int().min(1).max(31)),
+	cron: z.string().trim().min(1).nullable(),
+	cwd: z.string().min(1).nullable(),
+});
 
 function isAtLeast(version: string, minimum: string): boolean {
 	const parts = version.split(".").map(Number);
@@ -31,6 +46,7 @@ function isAtLeast(version: string, minimum: string): boolean {
  */
 export function createClaudeJobsRouter(
 	cli: ClaudeJobsCli = createClaudeJobsCli(),
+	defaultCwd = join(homedir(), ".claude-jobs", "workspace"),
 ) {
 	// An older binary opens its window on a command it does not know.
 	async function run(args: string[], input?: string): Promise<string> {
@@ -48,6 +64,26 @@ export function createClaudeJobsRouter(
 		return cli.run(args, input);
 	}
 
+	async function readJobs(): Promise<ClaudeJob[]> {
+		const status = JSON.parse(await run(["status"])) as {
+			version: number;
+			jobs: ClaudeJob[];
+		};
+		if (status.version !== STATUS_VERSION) {
+			throw new TRPCError({
+				code: "PRECONDITION_FAILED",
+				message: i18n._(
+					msg({
+						message: "This version of Claude Jobs is newer than Paradev reads.",
+					}),
+				),
+			});
+		}
+		return status.jobs.map((job) =>
+			job.cwd === defaultCwd ? { ...job, cwd: null } : job,
+		);
+	}
+
 	return router({
 		status: publicProcedure.query(async (): Promise<ClaudeJobsStatus> => {
 			const version = await cli.version();
@@ -55,22 +91,7 @@ export function createClaudeJobsRouter(
 			if (!isAtLeast(version, MIN_CLAUDE_JOBS_VERSION)) {
 				return { state: "outdated", version };
 			}
-			const status = JSON.parse(await run(["status"])) as {
-				version: number;
-				jobs: ClaudeJob[];
-			};
-			if (status.version !== STATUS_VERSION) {
-				throw new TRPCError({
-					code: "PRECONDITION_FAILED",
-					message: i18n._(
-						msg({
-							message:
-								"This version of Claude Jobs is newer than Paradev reads.",
-						}),
-					),
-				});
-			}
-			return { state: "ready", jobs: status.jobs };
+			return { state: "ready", jobs: await readJobs() };
 		}),
 
 		start: publicProcedure.input(jobInput).mutation(async ({ input }) => {
@@ -82,6 +103,20 @@ export function createClaudeJobsRouter(
 			.mutation(async ({ input }) => {
 				await run(["save"], JSON.stringify(input));
 			}),
+
+		save: publicProcedure.input(saveInput).mutation(async ({ input }) => {
+			const id =
+				input.id ??
+				jobIdFor(
+					input.name,
+					(await readJobs()).map((job) => job.id),
+				);
+			await run(
+				["save"],
+				JSON.stringify({ ...input, id, cwd: input.cwd ?? defaultCwd }),
+			);
+			return { id };
+		}),
 
 		delete: publicProcedure.input(jobInput).mutation(async ({ input }) => {
 			await run(["delete", input.id]);
