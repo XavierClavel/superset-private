@@ -3410,6 +3410,9 @@ msgstr "Otomasyon bulunamadı"
 msgid "Automation not found."
 msgstr "Otomasyon bulunamadı."
 
+msgid "Automation run"
+msgstr "Otomasyon çalıştırması"
+
 msgid "Automation saved"
 msgstr "Otomasyon kaydedildi"
 
@@ -6302,6 +6305,9 @@ msgstr "Birleştirme kuyruğundan çıkarılamadı"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Yerel oturum kaydı kaldırılamadı"
+
+msgid "Couldn't remove the run"
+msgstr "Çalıştırma kaldırılamadı"
 
 msgid "Couldn't rename the group"
 msgstr "Grup yeniden adlandırılamadı"

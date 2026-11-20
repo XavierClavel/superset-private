@@ -20,8 +20,8 @@ import type {
 } from "lib/trpc/routers/claude-jobs/types";
 import { LuChevronRight, LuMessageSquare } from "react-icons/lu";
 import { MarkdownRenderer } from "renderer/components/MarkdownRenderer";
+import { useOpenClaudeJobRun } from "renderer/routes/_authenticated/_dashboard/hooks/useOpenClaudeJobRun";
 import { CLAUDE_JOB_RUN_STATUS_META } from "../../../../../../../utils/claudeJobRunStatus";
-import { useOpenClaudeJobRun } from "./hooks/useOpenClaudeJobRun";
 
 const TRIGGER_LABELS: Record<ClaudeJobTrigger, MessageDescriptor> = {
 	schedule: msg({ message: "Schedule" }),

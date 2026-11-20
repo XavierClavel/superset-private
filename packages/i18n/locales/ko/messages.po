@@ -3410,6 +3410,9 @@ msgstr "자동화를 찾을 수 없습니다"
 msgid "Automation not found."
 msgstr "자동화를 찾을 수 없습니다."
 
+msgid "Automation run"
+msgstr "자동화 실행"
+
 msgid "Automation saved"
 msgstr "자동화가 저장되었습니다"
 
@@ -6302,6 +6305,9 @@ msgstr "머지 대기열에서 빼지 못했습니다"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "로컬 로그인 정보를 제거하지 못했습니다"
+
+msgid "Couldn't remove the run"
+msgstr "실행을 제거할 수 없습니다"
 
 msgid "Couldn't rename the group"
 msgstr "그룹 이름을 바꿀 수 없습니다"

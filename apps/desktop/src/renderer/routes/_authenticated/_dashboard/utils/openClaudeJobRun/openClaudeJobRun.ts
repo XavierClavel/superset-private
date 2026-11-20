@@ -1,7 +1,5 @@
 import type { HostServiceClient } from "renderer/lib/host-service-client";
-
-/** Marks the one session workspace where Claude Jobs runs open as chats. */
-export const CLAUDE_JOBS_WORKSPACE_TAG = "claude-jobs";
+import { isClaudeJobsWorkspace } from "../claudeJobsWorkspace";
 
 export interface OpenedRun {
 	workspaceId: string;
@@ -23,11 +21,7 @@ export async function openClaudeJobRun({
 	createWorkspace: () => Promise<string>;
 }): Promise<OpenedRun> {
 	const workspaces = await client.workspace.list.query();
-	const shared = workspaces.find(
-		(workspace) =>
-			workspace.projectId === null &&
-			(workspace.tags ?? []).includes(CLAUDE_JOBS_WORKSPACE_TAG),
-	);
+	const shared = workspaces.find(isClaudeJobsWorkspace);
 	const workspaceId = shared?.id ?? (await createWorkspace());
 
 	const sessions = shared

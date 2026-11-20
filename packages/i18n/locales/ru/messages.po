@@ -3410,6 +3410,9 @@ msgstr "Автоматизация не найдена"
 msgid "Automation not found."
 msgstr "Автоматизация не найдена."
 
+msgid "Automation run"
+msgstr "Запуск автоматизации"
+
 msgid "Automation saved"
 msgstr "Автоматизация сохранена"
 
@@ -6302,6 +6305,9 @@ msgstr "Не удалось убрать из очереди объединен�
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Не удалось удалить локальный вход"
+
+msgid "Couldn't remove the run"
+msgstr "Не удалось убрать запуск"
 
 msgid "Couldn't rename the group"
 msgstr "Не удалось переименовать группу"

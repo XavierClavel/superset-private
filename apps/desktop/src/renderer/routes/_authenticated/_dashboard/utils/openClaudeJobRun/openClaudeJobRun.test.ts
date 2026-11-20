@@ -1,9 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import type { HostServiceClient } from "renderer/lib/host-service-client";
-import {
-	CLAUDE_JOBS_WORKSPACE_TAG,
-	openClaudeJobRun,
-} from "./openClaudeJobRun";
+import { CLAUDE_JOBS_WORKSPACE_TAG } from "../claudeJobsWorkspace";
+import { openClaudeJobRun } from "./openClaudeJobRun";
 
 const RUN_SESSION = "fc9652a7-1d7f-4456-b149-ccdc83a7a4f7";
 

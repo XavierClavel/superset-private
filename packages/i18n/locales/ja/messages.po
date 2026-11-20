@@ -3410,6 +3410,9 @@ msgstr "オートメーションが見つかりません"
 msgid "Automation not found."
 msgstr "オートメーションが見つかりません。"
 
+msgid "Automation run"
+msgstr "オートメーションの実行"
+
 msgid "Automation saved"
 msgstr "オートメーションを保存しました"
 
@@ -6302,6 +6305,9 @@ msgstr "マージキューから外せませんでした"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "ローカルのサインインを削除できませんでした"
+
+msgid "Couldn't remove the run"
+msgstr "実行を削除できませんでした"
 
 msgid "Couldn't rename the group"
 msgstr "グループ名を変更できませんでした"

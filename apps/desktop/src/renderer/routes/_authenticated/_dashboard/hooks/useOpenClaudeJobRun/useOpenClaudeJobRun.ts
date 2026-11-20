@@ -6,10 +6,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import { useWorkspaceCreates } from "renderer/stores/workspace-creates";
-import {
-	CLAUDE_JOBS_WORKSPACE_TAG,
-	openClaudeJobRun,
-} from "../../utils/openClaudeJobRun";
+import { CLAUDE_JOBS_WORKSPACE_TAG } from "../../utils/claudeJobsWorkspace";
+import { openClaudeJobRun } from "../../utils/openClaudeJobRun";
 
 /** Opens a finished run as a chat in the shared Automations workspace. */
 export function useOpenClaudeJobRun() {
