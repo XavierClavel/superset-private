@@ -4494,6 +4494,15 @@ msgstr "Claude Code, Codex, Cursor, OpenCode và nhiều nữa."
 msgid "Claude is now running in workspace component-showcase."
 msgstr "Claude hiện đang chạy trong workspace component-showcase."
 
+msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
+msgstr "Claude Jobs {outdatedVersion} quá cũ đối với Paradev. Hãy mở ứng dụng để cập nhật, hoặc cài đặt phiên bản mới nhất."
+
+msgid "Claude Jobs is not installed."
+msgstr "Claude Jobs chưa được cài đặt."
+
+msgid "Claude Jobs stops running it. This can't be undone."
+msgstr "Claude Jobs sẽ ngừng chạy nó. Không thể hoàn tác thao tác này."
+
 msgid "Clean up idle worktrees"
 msgstr "Dọn dẹp worktree không hoạt động"
 
@@ -6461,6 +6470,9 @@ msgstr "Tạo environment đám mây"
 msgid "Create a Dev"
 msgstr "Tạo Dev"
 
+msgid "Create a job in Claude Jobs and it shows here."
+msgstr "Tạo một job trong Claude Jobs và nó sẽ hiện ở đây."
+
 msgid "Create a key in Linear"
 msgstr "Tạo khóa trong Linear"
 
@@ -6726,6 +6738,10 @@ msgstr "Người tạo: {0}"
 msgid "Credentials stay on the server"
 msgstr "Thông tin xác thực được giữ trên máy chủ"
 
+#. placeholder {0}: job.cron
+msgid "Cron: {0}"
+msgstr "Cron: {0}"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Các component dùng chung nhiều tính năng, nằm ngoài packages/ui — hãy xem ở đây trước khi dựng cái mới"
 
@@ -6946,6 +6962,7 @@ msgstr "Ủy quyền"
 msgid "Delete"
 msgstr "Xóa"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Delete \"{0}\" permanently?"
 msgstr "Xóa vĩnh viễn \"{0}\"?"
@@ -7119,6 +7136,7 @@ msgctxt "github release action"
 msgid "Deleted"
 msgstr "Đã xóa"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Deleted \"{0}\""
 msgstr "Đã xóa \"{0}\""
@@ -7636,6 +7654,9 @@ msgstr "Tải xuống lại"
 
 msgid "Download app"
 msgstr "Tải ứng dụng"
+
+msgid "Download Claude Jobs"
+msgstr "Tải xuống Claude Jobs"
 
 msgid "Download didn't start?"
 msgstr "Không thấy tải xuống?"
@@ -10465,6 +10486,9 @@ msgstr "Cài đặt & khởi động lại"
 msgid "Install a plugin in the Paradev app and every agent can use it."
 msgstr "Cài plugin trong ứng dụng Paradev và mọi agent đều dùng được."
 
+msgid "Install Claude Jobs"
+msgstr "Cài đặt Claude Jobs"
+
 msgid "Install Command Line Tools"
 msgstr "Cài đặt Command Line Tools"
 
@@ -10559,6 +10583,9 @@ msgstr "Mất kết nối Internet"
 
 msgid "Interrupt"
 msgstr "Ngắt lời"
+
+msgid "interrupted"
+msgstr "bị gián đoạn"
 
 msgid "Interval"
 msgstr "Khoảng thời gian"
@@ -12645,6 +12672,7 @@ msgstr "Kết quả kế tiếp"
 msgid "Next Right Sidebar Tab"
 msgstr "Tab kế tiếp của thanh bên phải"
 
+#. placeholder {0}: formatDateTime(nextRunAt, undefined)
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Lần chạy tiếp theo {0}"
@@ -12758,6 +12786,9 @@ msgstr "Không tìm thấy tác giả nào."
 
 msgid "No automations match"
 msgstr "Không có tự động hóa nào khớp"
+
+msgid "No automations yet"
+msgstr "Chưa có tự động hóa nào"
 
 #. placeholder {0}: params?.period
 msgid "No billing period starts on {0}."
@@ -13652,6 +13683,9 @@ msgstr "trên {offScopeHostName}, sẽ không chạy ở đây"
 msgid "On a date"
 msgstr "Vào một ngày"
 
+msgid "On a free plan, automations run on this Mac with Claude Jobs, an app that runs Claude Code on a schedule."
+msgstr "Với gói miễn phí, các tự động hóa chạy trên máy Mac này bằng Claude Jobs, một ứng dụng chạy Claude Code theo lịch."
+
 msgid "On a Mac, Git comes with Apple's Command Line Tools."
 msgstr "Trên Mac, Git đi kèm với Command Line Tools của Apple."
 
@@ -14000,6 +14034,9 @@ msgstr "Mở ChatGPT để đăng nhập"
 
 msgid "Open Claude Code, Codex, OpenCode, and Pi sessions as chats"
 msgstr "Mở phiên Claude Code, Codex, OpenCode và Pi dưới dạng trò chuyện"
+
+msgid "Open Claude Jobs"
+msgstr "Mở Claude Jobs"
 
 msgid "Open Command Palette"
 msgstr "Mở bảng lệnh"
@@ -17176,6 +17213,7 @@ msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
 msgstr "Chạy \"gh auth login\" hoặc đặt GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
+#. placeholder {0}: job.name
 msgid "Run {0} now"
 msgstr "Chạy {0} ngay"
 
@@ -17336,6 +17374,9 @@ msgstr "Chạy bên trong ứng dụng Paradev trên thiết bị đó, nên c�
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "Kết quả chạy nằm trong một workspace. Xem diff, merge những gì tốt."
+
+msgid "Runs on this Mac with Claude Jobs."
+msgstr "Chạy trên máy Mac này bằng Claude Jobs."
 
 msgid "Runs that found no host online"
 msgstr "Các lượt chạy không tìm được host trực tuyến"
@@ -19489,6 +19530,9 @@ msgstr "gói đăng ký"
 msgid "Subscription"
 msgstr "Gói đăng ký"
 
+msgid "succeeded"
+msgstr "thành công"
+
 msgid "Success"
 msgstr "Thành công"
 
@@ -20921,6 +20965,9 @@ msgstr "Người dùng này đang chạy dịch vụ host cho thiết bị này 
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Người dùng này đang chạy dịch vụ host cho thiết bị này nên phải giữ vai trò chủ sở hữu."
 
+msgid "This version of Claude Jobs is newer than Paradev reads."
+msgstr "Phiên bản Claude Jobs này mới hơn phiên bản Paradev có thể đọc."
+
 msgid "This view hit an error"
 msgstr "Khung hiển thị này gặp lỗi"
 
@@ -21041,6 +21088,9 @@ msgstr "Thời gian đến workspace đầu tiên"
 
 msgid "Time zone"
 msgstr "Múi giờ"
+
+msgid "timed out"
+msgstr "hết thời gian"
 
 msgid "Tinted"
 msgstr "Phủ màu"
@@ -21737,6 +21787,12 @@ msgstr "Cập nhật nhánh"
 msgid "Update check failed. Please try again."
 msgstr "Kiểm tra cập nhật thất bại. Vui lòng thử lại."
 
+msgid "Update Claude Jobs"
+msgstr "Cập nhật Claude Jobs"
+
+msgid "Update Claude Jobs to {MIN_CLAUDE_JOBS_VERSION} or later."
+msgstr "Cập nhật Claude Jobs lên phiên bản {MIN_CLAUDE_JOBS_VERSION} trở lên."
+
 msgid "Update couldn't preserve sessions"
 msgstr "Bản cập nhật không giữ được các phiên"
 
@@ -22288,6 +22344,9 @@ msgstr "Muốn có sớm hơn? <0>Hãy nói với chúng tôi trên Discord</0>.
 msgid "Warn before closing a running terminal"
 msgstr "Cảnh báo trước khi đóng terminal đang chạy"
 
+msgid "warning"
+msgstr "cảnh báo"
+
 msgid "Warning"
 msgstr "Cảnh báo"
 
@@ -22558,6 +22617,12 @@ msgstr "Tiếp theo"
 
 msgid "When a channel notifies you"
 msgstr "Khi một kênh thông báo cho bạn"
+
+msgid "When a pull request is merged in {repos}"
+msgstr "Khi một pull request được merge trong {repos}"
+
+msgid "When a pull request is opened in {repos}"
+msgstr "Khi một pull request được mở trong {repos}"
 
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Khi trigger kích hoạt, chiếc Mac bạn chọn mở một workspace mới và agent bắt đầu với prompt của bạn. Lượt chạy do sự kiện có kèm sự kiện đó, nên agent biết cần xem gì. Trả lời trong lượt chạy để tiếp tục."
