@@ -3410,6 +3410,9 @@ msgstr "Otomatisasi tidak ditemukan"
 msgid "Automation not found."
 msgstr "Otomatisasi tidak ditemukan."
 
+msgid "Automation run"
+msgstr "Eksekusi otomatisasi"
+
 msgid "Automation saved"
 msgstr "Otomatisasi disimpan"
 
@@ -6302,6 +6305,9 @@ msgstr "Gagal mengeluarkan dari antrean merge"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Tidak bisa menghapus sesi masuk lokal"
+
+msgid "Couldn't remove the run"
+msgstr "Tidak dapat menghapus run"
 
 msgid "Couldn't rename the group"
 msgstr "Tidak dapat mengganti nama grup"

@@ -1,7 +1,7 @@
 import type { SessionStatus } from "@superset/chat/protocol";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import type { ChatDb, ChatSessionRow } from "../db";
-import { chatSessionsLocal } from "../db";
+import { chatJournal, chatSessionsLocal } from "../db";
 
 export type SessionRowInsert = typeof chatSessionsLocal.$inferInsert & {
 	closedAt: number | null;
@@ -158,5 +158,29 @@ export class ChatSessionStore {
 			.where(eq(chatSessionsLocal.scopeId, scopeId))
 			.orderBy(desc(chatSessionsLocal.updatedAt))
 			.all();
+	}
+
+	/**
+	 * The chats in a scope that took a prompt sent through Paradev. Only those
+	 * carry a `clientId`: the history an agent replays on resume does not.
+	 */
+	promptedInScope(scopeId: string): string[] {
+		return this.db
+			.selectDistinct({ sessionId: chatJournal.sessionId })
+			.from(chatJournal)
+			.innerJoin(
+				chatSessionsLocal,
+				eq(chatSessionsLocal.sessionId, chatJournal.sessionId),
+			)
+			.where(
+				and(
+					eq(chatSessionsLocal.scopeId, scopeId),
+					sql`json_extract(${chatJournal.eventJson}, '$.type') = 'item'`,
+					sql`json_extract(${chatJournal.eventJson}, '$.item.kind') = 'user_message'`,
+					sql`json_extract(${chatJournal.eventJson}, '$.item.clientId') is not null`,
+				),
+			)
+			.all()
+			.map((row) => row.sessionId);
 	}
 }

@@ -3410,6 +3410,9 @@ msgstr "Automatisierung nicht gefunden"
 msgid "Automation not found."
 msgstr "Automatisierung nicht gefunden."
 
+msgid "Automation run"
+msgstr "Automatisierungslauf"
+
 msgid "Automation saved"
 msgstr "Automatisierung gespeichert"
 
@@ -6302,6 +6305,9 @@ msgstr "Konnte nicht aus der Merge-Warteschlange entfernt werden"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Die lokale Anmeldung konnte nicht entfernt werden"
+
+msgid "Couldn't remove the run"
+msgstr "Der Lauf konnte nicht entfernt werden"
 
 msgid "Couldn't rename the group"
 msgstr "Gruppe konnte nicht umbenannt werden"

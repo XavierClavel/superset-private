@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 
 export type SidebarSectionKey =
+	| "automations"
 	| "channels"
 	| "cloud"
 	| "devs"
@@ -22,6 +23,7 @@ export const useSidebarSectionsCollapseStore =
 			persist(
 				(set) => ({
 					collapsed: {
+						automations: false,
 						channels: false,
 						cloud: false,
 						devs: false,
@@ -47,6 +49,7 @@ export const useSidebarSectionsCollapseStore =
 							const state = persisted as { isCollapsed?: boolean };
 							return {
 								collapsed: {
+									automations: false,
 									channels: false,
 									cloud: false,
 									devs: false,

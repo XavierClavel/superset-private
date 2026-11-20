@@ -3410,6 +3410,9 @@ msgstr "Automatisering niet gevonden"
 msgid "Automation not found."
 msgstr "Automatisering niet gevonden."
 
+msgid "Automation run"
+msgstr "Automatiseringsrun"
+
 msgid "Automation saved"
 msgstr "Automatisering opgeslagen"
 
@@ -6302,6 +6305,9 @@ msgstr "Verwijderen uit mergewachtrij mislukt"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Kan de lokale login niet verwijderen"
+
+msgid "Couldn't remove the run"
+msgstr "Kan de run niet verwijderen"
 
 msgid "Couldn't rename the group"
 msgstr "Kan de groep niet hernoemen"

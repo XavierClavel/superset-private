@@ -3410,6 +3410,9 @@ msgstr "Automatización no encontrada"
 msgid "Automation not found."
 msgstr "Automatización no encontrada."
 
+msgid "Automation run"
+msgstr "Ejecución de automatización"
+
 msgid "Automation saved"
 msgstr "Automatización guardada"
 
@@ -6302,6 +6305,9 @@ msgstr "No se pudo quitar de la cola de fusión"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "No se pudo eliminar el inicio de sesión local"
+
+msgid "Couldn't remove the run"
+msgstr "No se pudo quitar la ejecución"
 
 msgid "Couldn't rename the group"
 msgstr "No se pudo cambiar el nombre del grupo"

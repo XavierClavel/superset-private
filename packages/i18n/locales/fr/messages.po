@@ -3410,6 +3410,9 @@ msgstr "Automatisation introuvable"
 msgid "Automation not found."
 msgstr "Automatisation introuvable."
 
+msgid "Automation run"
+msgstr "Exécution d'automatisation"
+
 msgid "Automation saved"
 msgstr "Automatisation enregistrée"
 
@@ -6302,6 +6305,9 @@ msgstr "Impossible de retirer de la file de fusion"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Impossible de supprimer la connexion locale"
+
+msgid "Couldn't remove the run"
+msgstr "Impossible de retirer l'exécution"
 
 msgid "Couldn't rename the group"
 msgstr "Impossible de renommer le groupe"

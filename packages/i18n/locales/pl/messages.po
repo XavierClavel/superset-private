@@ -3410,6 +3410,9 @@ msgstr "Nie znaleziono automatyzacji"
 msgid "Automation not found."
 msgstr "Nie znaleziono automatyzacji."
 
+msgid "Automation run"
+msgstr "Uruchomienie automatyzacji"
+
 msgid "Automation saved"
 msgstr "Automatyzacja zapisana"
 
@@ -6302,6 +6305,9 @@ msgstr "Nie udało się usunąć z kolejki scalania"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Nie udało się usunąć lokalnego logowania"
+
+msgid "Couldn't remove the run"
+msgstr "Nie udało się usunąć uruchomienia"
 
 msgid "Couldn't rename the group"
 msgstr "Nie udało się zmienić nazwy grupy"

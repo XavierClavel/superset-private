@@ -3410,6 +3410,9 @@ msgstr "Automação não encontrada"
 msgid "Automation not found."
 msgstr "Automação não encontrada."
 
+msgid "Automation run"
+msgstr "Execução da automação"
+
 msgid "Automation saved"
 msgstr "Automação salva"
 
@@ -6302,6 +6305,9 @@ msgstr "Não foi possível remover da fila de merge"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Não foi possível remover o login local"
+
+msgid "Couldn't remove the run"
+msgstr "Não foi possível remover a execução"
 
 msgid "Couldn't rename the group"
 msgstr "Não foi possível renomear o grupo"

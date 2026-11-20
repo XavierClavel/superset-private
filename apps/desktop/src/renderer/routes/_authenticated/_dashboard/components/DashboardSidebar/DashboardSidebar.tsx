@@ -34,6 +34,7 @@ import { useLocalHostService } from "renderer/routes/_authenticated/providers/Lo
 import { useNotificationStore } from "renderer/stores/notifications";
 import { useReleaseNotesCardStore } from "renderer/stores/release-notes-card";
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
+import { DashboardSidebarAutomationsSection } from "./components/DashboardSidebarAutomationsSection";
 import { DashboardSidebarBulkActions } from "./components/DashboardSidebarBulkActions";
 import { DashboardSidebarBulkDeleteMount } from "./components/DashboardSidebarBulkDeleteMount";
 import { DashboardSidebarChannelsSection } from "./components/DashboardSidebarChannelsSection";
@@ -514,6 +515,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 				onRenameSection={renameSection}
 				onToggleSectionCollapse={toggleSectionCollapsed}
 			/>
+			{!isCollapsed && <DashboardSidebarAutomationsSection />}
 			{!isCollapsed && (
 				<div className="mt-3 first:mt-0">
 					<DashboardSidebarBulkActions projects={orderedGroups}>

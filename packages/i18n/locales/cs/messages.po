@@ -3410,6 +3410,9 @@ msgstr "Automatizace nenalezena"
 msgid "Automation not found."
 msgstr "Automatizace nenalezena."
 
+msgid "Automation run"
+msgstr "Běh automatizace"
+
 msgid "Automation saved"
 msgstr "Automatizace uložena"
 
@@ -6302,6 +6305,9 @@ msgstr "Z fronty slučování se nepodařilo odebrat"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Nepodařilo se odebrat místní přihlášení"
+
+msgid "Couldn't remove the run"
+msgstr "Běh se nepodařilo odebrat"
 
 msgid "Couldn't rename the group"
 msgstr "Skupinu se nepodařilo přejmenovat"

@@ -3410,6 +3410,9 @@ msgstr "Automation not found"
 msgid "Automation not found."
 msgstr "Automation not found."
 
+msgid "Automation run"
+msgstr "Automation run"
+
 msgid "Automation saved"
 msgstr "Automation saved"
 
@@ -6302,6 +6305,9 @@ msgstr "Couldn't remove from the merge queue"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Couldn't remove the local sign-in"
+
+msgid "Couldn't remove the run"
+msgstr "Couldn't remove the run"
 
 msgid "Couldn't rename the group"
 msgstr "Couldn't rename the group"
