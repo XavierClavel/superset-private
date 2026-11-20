@@ -24,6 +24,8 @@ export interface ClaudeJobRun {
 	cost_usd: number | null;
 	result: string | null;
 	error: string | null;
+	/** The Claude Code conversation of the run. */
+	session_id: string | null;
 	/** What a running run last said it was doing. */
 	progress?: { text: string } | null;
 }

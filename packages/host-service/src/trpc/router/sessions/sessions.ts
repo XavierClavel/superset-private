@@ -64,6 +64,14 @@ export const sessionsRouter = router({
 				})
 				.filter((session) => presetForAcpHarness(session.harness));
 		}),
+	prompted: protectedProcedure
+		.input(z.object({ workspaceId: z.string().uuid() }))
+		.query(({ ctx, input }) => {
+			requireSessionWorkspace(ctx, input.workspaceId);
+			return requireChatRuntime(ctx).sessions.promptedInScope(
+				input.workspaceId,
+			);
+		}),
 	get: protectedProcedure.input(sessionInput).query(({ ctx, input }) => {
 		const { chat: _chat, ...result } = requireChatSession(
 			ctx,

@@ -3404,6 +3404,9 @@ msgstr "Автоматизацію не знайдено"
 msgid "Automation not found."
 msgstr "Автоматизацію не знайдено."
 
+msgid "Automation run"
+msgstr "Запуск автоматизації"
+
 msgid "Automation saved"
 msgstr "Автоматизацію збережено"
 
@@ -6250,6 +6253,9 @@ msgstr "Не вдалося автоматично назвати «{name}»"
 msgid "Couldn't open in Chat Interface"
 msgstr "Не вдалося відкрити в інтерфейсі чату"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Не вдалося відкрити запуск як чат"
+
 msgid "Couldn't open the screenshot"
 msgstr "Не вдалося відкрити знімок екрана"
 
@@ -6293,6 +6299,9 @@ msgstr "Не вдалося прибрати з черги злиття"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Не вдалося видалити локальні дані входу"
+
+msgid "Couldn't remove the run"
+msgstr "Не вдалося прибрати запуск"
 
 msgid "Couldn't rename the group"
 msgstr "Не вдалося перейменувати групу"
@@ -13993,6 +14002,9 @@ msgstr "Усе одно відкрити"
 
 msgid "Open App Store"
 msgstr "Відкрити App Store"
+
+msgid "Open as a chat"
+msgstr "Відкрити як чат"
 
 msgid "Open as comment pane"
 msgstr "Відкрити як панель коментарів"

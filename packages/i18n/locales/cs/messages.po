@@ -3410,6 +3410,9 @@ msgstr "Automatizace nenalezena"
 msgid "Automation not found."
 msgstr "Automatizace nenalezena."
 
+msgid "Automation run"
+msgstr "Běh automatizace"
+
 msgid "Automation saved"
 msgstr "Automatizace uložena"
 
@@ -6256,6 +6259,9 @@ msgstr "Nepodařilo se automaticky pojmenovat „{name}“"
 msgid "Couldn't open in Chat Interface"
 msgstr "Nepodařilo se otevřít v rozhraní chatu"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Běh se nepodařilo otevřít jako chat"
+
 msgid "Couldn't open the screenshot"
 msgstr "Snímek obrazovky se nepodařilo otevřít"
 
@@ -6299,6 +6305,9 @@ msgstr "Z fronty slučování se nepodařilo odebrat"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Nepodařilo se odebrat místní přihlášení"
+
+msgid "Couldn't remove the run"
+msgstr "Běh se nepodařilo odebrat"
 
 msgid "Couldn't rename the group"
 msgstr "Skupinu se nepodařilo přejmenovat"
@@ -13999,6 +14008,9 @@ msgstr "Přesto otevřít"
 
 msgid "Open App Store"
 msgstr "Otevřít App Store"
+
+msgid "Open as a chat"
+msgstr "Otevřít jako chat"
 
 msgid "Open as comment pane"
 msgstr "Otevřít jako panel komentářů"

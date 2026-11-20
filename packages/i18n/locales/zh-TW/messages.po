@@ -3410,6 +3410,9 @@ msgstr "未找到自動化"
 msgid "Automation not found."
 msgstr "未找到自動化。"
 
+msgid "Automation run"
+msgstr "自動化執行"
+
 msgid "Automation saved"
 msgstr "自動化已儲存"
 
@@ -6256,6 +6259,9 @@ msgstr "無法自動命名「{name}」"
 msgid "Couldn't open in Chat Interface"
 msgstr "無法在聊天介面中開啟"
 
+msgid "Couldn't open the run as a chat"
+msgstr "無法以聊天形式開啟此次執行"
+
 msgid "Couldn't open the screenshot"
 msgstr "無法開啟螢幕擷取畫面"
 
@@ -6299,6 +6305,9 @@ msgstr "無法移出合併佇列"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "無法移除本地登入"
+
+msgid "Couldn't remove the run"
+msgstr "無法移除此次執行"
 
 msgid "Couldn't rename the group"
 msgstr "無法重新命名群組"
@@ -13999,6 +14008,9 @@ msgstr "仍然開啟"
 
 msgid "Open App Store"
 msgstr "開啟 App Store"
+
+msgid "Open as a chat"
+msgstr "以聊天形式開啟"
 
 msgid "Open as comment pane"
 msgstr "作為評論面板開啟"

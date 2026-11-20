@@ -3410,6 +3410,9 @@ msgstr "Automation not found"
 msgid "Automation not found."
 msgstr "Automation not found."
 
+msgid "Automation run"
+msgstr "Automation run"
+
 msgid "Automation saved"
 msgstr "Automation saved"
 
@@ -6256,6 +6259,9 @@ msgstr "Couldn't name \"{name}\" automatically"
 msgid "Couldn't open in Chat Interface"
 msgstr "Couldn't open in Chat Interface"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Couldn't open the run as a chat"
+
 msgid "Couldn't open the screenshot"
 msgstr "Couldn't open the screenshot"
 
@@ -6299,6 +6305,9 @@ msgstr "Couldn't remove from the merge queue"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Couldn't remove the local sign-in"
+
+msgid "Couldn't remove the run"
+msgstr "Couldn't remove the run"
 
 msgid "Couldn't rename the group"
 msgstr "Couldn't rename the group"
@@ -13999,6 +14008,9 @@ msgstr "Open Anyway"
 
 msgid "Open App Store"
 msgstr "Open App Store"
+
+msgid "Open as a chat"
+msgstr "Open as a chat"
 
 msgid "Open as comment pane"
 msgstr "Open as comment pane"
