@@ -3,6 +3,8 @@ import { createClaudeJobsRouter } from ".";
 import type { ClaudeJob } from "./types";
 import type { ClaudeJobsCli } from "./utils/claude-jobs-cli";
 
+const DEFAULT_CWD = "/Users/me/.claude-jobs/workspace";
+
 const JOB: ClaudeJob = {
 	id: "daily-report",
 	name: "Daily report",
@@ -28,11 +30,16 @@ function caller(
 		version: async () => version,
 		run: async (args, input) => {
 			calls.push({ args, input });
-			return args[0] === "status" ? JSON.stringify(status) : "";
+			if (args[0] === "status") return JSON.stringify(status);
+			if (args[0] === "save") return input ?? "";
+			return "";
 		},
 		open: async () => {},
 	};
-	return { calls, call: createClaudeJobsRouter(cli).createCaller({} as never) };
+	return {
+		calls,
+		call: createClaudeJobsRouter(cli, DEFAULT_CWD).createCaller({} as never),
+	};
 }
 
 describe("Claude Jobs as the automations of a free plan", () => {
@@ -75,6 +82,28 @@ describe("Claude Jobs as the automations of a free plan", () => {
 				input: JSON.stringify({ id: JOB.id, enabled: false }),
 			},
 		]);
+	});
+
+	test("a job in Claude Jobs' own folder has no project, and keeps that folder when saved", async () => {
+		const { call, calls } = caller("0.15.0", {
+			version: 1,
+			jobs: [{ ...JOB, cwd: DEFAULT_CWD }],
+		});
+		expect(await call.status()).toEqual({
+			state: "ready",
+			jobs: [{ ...JOB, cwd: null }],
+		});
+		await call.save({ ...JOB, cwd: null });
+		expect(JSON.parse(calls.at(-1)?.input ?? "{}").cwd).toBe(DEFAULT_CWD);
+	});
+
+	test("a new job gets an id no job has, and saves only the fields edited here", async () => {
+		const { call, calls } = caller("0.15.0");
+		const { id: _, recent, enabled, event, next_run, ...fields } = JOB;
+		const saved = await call.save(fields);
+		const sent = JSON.parse(calls.at(-1)?.input ?? "{}");
+		expect(sent).toEqual({ ...fields, id: `${JOB.id}-2` });
+		expect(saved).toEqual({ id: sent.id });
 	});
 
 	test("starts and deletes the job asked for", async () => {

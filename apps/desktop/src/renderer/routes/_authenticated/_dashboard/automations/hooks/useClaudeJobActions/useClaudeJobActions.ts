@@ -4,10 +4,11 @@ import { alert } from "@superset/ui/atoms/Alert";
 import { toast } from "@superset/ui/sonner";
 import type { ClaudeJob } from "lib/trpc/routers/claude-jobs/types";
 import { electronTrpc } from "renderer/lib/electron-trpc";
+import type { ClaudeJobSaveInput } from "../../utils/claudeJobDraft";
 
 type JobRef = Pick<ClaudeJob, "id" | "name">;
 
-/** Run, pause, resume and delete Claude Jobs jobs, with their toasts. */
+/** Save, run, pause, resume and delete Claude Jobs jobs, with their toasts. */
 export function useClaudeJobActions() {
 	const { t } = useLingui();
 	const utils = electronTrpc.useUtils();
@@ -22,9 +23,24 @@ export function useClaudeJobActions() {
 	const deleteMutation = electronTrpc.claudeJobs.delete.useMutation({
 		onSettled: refresh,
 	});
+	const saveMutation = electronTrpc.claudeJobs.save.useMutation({
+		onSettled: refresh,
+	});
 	const openMutation = electronTrpc.claudeJobs.open.useMutation({
 		onError: (error) => toast.error(errorMessage(error)),
 	});
+
+	const save = (input: ClaudeJobSaveInput, onSaved?: (id: string) => void) =>
+		saveMutation.mutate(input, {
+			onSuccess: ({ id }) => {
+				toast.success(t({ message: "Automation saved" }));
+				onSaved?.(id);
+			},
+			onError: (error) =>
+				toast.error(
+					errorMessage(error, t({ message: "Failed to update automation" })),
+				),
+		});
 
 	const runNow = ({ id, name }: JobRef) =>
 		startMutation.mutate(
@@ -92,6 +108,8 @@ export function useClaudeJobActions() {
 		});
 
 	return {
+		save,
+		isSaving: saveMutation.isPending,
 		runNow,
 		setEnabled,
 		confirmDelete,

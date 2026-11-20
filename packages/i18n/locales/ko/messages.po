@@ -4109,6 +4109,9 @@ msgstr "채용"
 msgid "Carousel"
 msgstr "캐러셀"
 
+msgid "Catch-up"
+msgstr "밀린 실행"
+
 msgid "Category"
 msgstr "카테고리"
 
@@ -4178,6 +4181,9 @@ msgstr "상태 변경"
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "상태 변경 (현재: {0})"
+
+msgid "Change the trigger in Claude Jobs."
+msgstr "트리거는 Claude Jobs에서 변경하세요."
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4496,6 +4502,9 @@ msgstr "이제 워크스페이스 component-showcase에서 Claude가 실행 중�
 
 msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
 msgstr "Claude Jobs {outdatedVersion}은(는) Paradev에서 쓰기에 너무 오래되었습니다. 앱을 열어 업데이트하거나 최신 버전을 설치하세요."
+
+msgid "Claude Jobs folder"
+msgstr "Claude Jobs 폴더"
 
 msgid "Claude Jobs is not installed."
 msgstr "Claude Jobs가 설치되어 있지 않습니다."
@@ -6191,6 +6200,7 @@ msgstr "{filename}을(를) 불러올 수 없습니다"
 msgid "Couldn't load agent settings: {0}"
 msgstr "에이전트 설정을 불러오지 못했습니다: {0}"
 
+#. placeholder {0}: errorMessage(statusQuery.error)
 #. placeholder {0}: loadError.message
 msgid "Couldn't load automation: {0}"
 msgstr "자동화를 불러오지 못했습니다: {0}"
@@ -6470,9 +6480,6 @@ msgstr "클라우드 환경 만들기"
 msgid "Create a Dev"
 msgstr "Dev 만들기"
 
-msgid "Create a job in Claude Jobs and it shows here."
-msgstr "Claude Jobs에서 작업을 만들면 여기에 표시됩니다."
-
 msgid "Create a key in Linear"
 msgstr "Linear에서 키 만들기"
 
@@ -6541,6 +6548,9 @@ msgstr "새 그룹 만들기"
 
 msgid "Create new project"
 msgstr "새 프로젝트 만들기"
+
+msgid "Create one here, or in Claude Jobs."
+msgstr "여기 또는 Claude Jobs에서 만드세요."
 
 msgid "Create one to start a cloud workspace from it."
 msgstr "환경을 만들면 이를 기반으로 클라우드 워크스페이스를 시작할 수 있습니다."
@@ -6738,6 +6748,9 @@ msgstr "작성자: {0}"
 msgid "Credentials stay on the server"
 msgstr "자격 증명은 서버에 보관됩니다"
 
+msgid "Cron expression"
+msgstr "Cron 표현식"
+
 #. placeholder {0}: job.cron
 msgid "Cron: {0}"
 msgstr "Cron: {0}"
@@ -6898,6 +6911,12 @@ msgstr "데이 원"
 
 msgid "days"
 msgstr "일"
+
+msgid "Days of the month"
+msgstr "매월 날짜"
+
+msgid "Days of the week"
+msgstr "요일"
 
 msgid "days running three agents at once"
 msgstr "에이전트 세 개를 동시에 돌린 일수"

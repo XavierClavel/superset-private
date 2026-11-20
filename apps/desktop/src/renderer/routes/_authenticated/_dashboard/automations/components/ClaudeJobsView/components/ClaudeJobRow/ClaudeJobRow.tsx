@@ -28,6 +28,7 @@ interface ClaudeJobRowProps {
 	job: ClaudeJob;
 	now: Date;
 	isStarting: boolean;
+	onOpen: () => void;
 	onRunNow: () => void;
 	onToggleEnabled: () => void;
 	onDelete: () => void;
@@ -37,6 +38,7 @@ export function ClaudeJobRow({
 	job,
 	now,
 	isStarting,
+	onOpen,
 	onRunNow,
 	onToggleEnabled,
 	onDelete,
@@ -52,7 +54,18 @@ export function ClaudeJobRow({
 	const nextRunAt = job.next_run ? new Date(job.next_run) : null;
 
 	return (
-		<TableRow className="group/row h-10 border-border/50 text-sm hover:bg-accent/50">
+		<TableRow
+			tabIndex={0}
+			onClick={onOpen}
+			onKeyDown={(event) => {
+				if (event.target !== event.currentTarget) return;
+				if (event.key === "Enter" || event.key === " ") {
+					event.preventDefault();
+					onOpen();
+				}
+			}}
+			className="group/row h-10 cursor-pointer border-border/50 text-sm outline-none hover:bg-accent/50 focus-visible:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring/40 focus-visible:ring-inset"
+		>
 			<TableCell className="pl-4">
 				<span
 					className={cn(
@@ -117,7 +130,7 @@ export function ClaudeJobRow({
 				)}
 			</TableCell>
 
-			<TableCell className="pr-4">
+			<TableCell className="pr-4" onClick={(event) => event.stopPropagation()}>
 				<span className="flex items-center justify-end gap-0.5">
 					<Tooltip>
 						<TooltipTrigger asChild>

@@ -4109,6 +4109,9 @@ msgstr "Carrières"
 msgid "Carousel"
 msgstr "Carrousel"
 
+msgid "Catch-up"
+msgstr "Rattrapage"
+
 msgid "Category"
 msgstr "Catégorie"
 
@@ -4178,6 +4181,9 @@ msgstr "Changer l'état"
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Changer le statut (actuel : {0})"
+
+msgid "Change the trigger in Claude Jobs."
+msgstr "Modifiez le déclencheur dans Claude Jobs."
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4496,6 +4502,9 @@ msgstr "Claude s'exécute désormais dans l'espace de travail component-showcase
 
 msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
 msgstr "Claude Jobs {outdatedVersion} est trop ancien pour Paradev. Ouvrez-le pour le mettre à jour, ou installez la dernière version."
+
+msgid "Claude Jobs folder"
+msgstr "Dossier de Claude Jobs"
 
 msgid "Claude Jobs is not installed."
 msgstr "Claude Jobs n'est pas installé."
@@ -6191,6 +6200,7 @@ msgstr "Impossible de charger {filename}"
 msgid "Couldn't load agent settings: {0}"
 msgstr "Impossible de charger les paramètres de l'agent : {0}"
 
+#. placeholder {0}: errorMessage(statusQuery.error)
 #. placeholder {0}: loadError.message
 msgid "Couldn't load automation: {0}"
 msgstr "Impossible de charger l'automatisation : {0}"
@@ -6470,9 +6480,6 @@ msgstr "Créer un environnement cloud"
 msgid "Create a Dev"
 msgstr "Créer un Dev"
 
-msgid "Create a job in Claude Jobs and it shows here."
-msgstr "Créez un job dans Claude Jobs pour le voir ici."
-
 msgid "Create a key in Linear"
 msgstr "Créer une clé dans Linear"
 
@@ -6541,6 +6548,9 @@ msgstr "Créer un nouveau groupe"
 
 msgid "Create new project"
 msgstr "Créer un projet"
+
+msgid "Create one here, or in Claude Jobs."
+msgstr "Créez-en une ici ou dans Claude Jobs."
 
 msgid "Create one to start a cloud workspace from it."
 msgstr "Créez-en un pour démarrer un espace de travail cloud à partir de celui-ci."
@@ -6738,6 +6748,9 @@ msgstr "Créateur : {0}"
 msgid "Credentials stay on the server"
 msgstr "Les identifiants restent sur le serveur"
 
+msgid "Cron expression"
+msgstr "Expression cron"
+
 #. placeholder {0}: job.cron
 msgid "Cron: {0}"
 msgstr "Cron : {0}"
@@ -6898,6 +6911,12 @@ msgstr "Premier jour"
 
 msgid "days"
 msgstr "jours"
+
+msgid "Days of the month"
+msgstr "Jours du mois"
+
+msgid "Days of the week"
+msgstr "Jours de la semaine"
 
 msgid "days running three agents at once"
 msgstr "jours à faire tourner trois agents à la fois"

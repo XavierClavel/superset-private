@@ -4109,6 +4109,9 @@ msgstr "招聘"
 msgid "Carousel"
 msgstr "轮播"
 
+msgid "Catch-up"
+msgstr "补运行"
+
 msgid "Category"
 msgstr "分类"
 
@@ -4178,6 +4181,9 @@ msgstr "更改状态"
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "更改状态（当前：{0}）"
+
+msgid "Change the trigger in Claude Jobs."
+msgstr "请在 Claude Jobs 中更改触发器。"
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4496,6 +4502,9 @@ msgstr "Claude已在工作区component-showcase中运行。"
 
 msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
 msgstr "Claude Jobs {outdatedVersion} 对 Paradev 来说太旧了。请打开它进行更新，或安装最新版本。"
+
+msgid "Claude Jobs folder"
+msgstr "Claude Jobs 文件夹"
 
 msgid "Claude Jobs is not installed."
 msgstr "未安装 Claude Jobs。"
@@ -6191,6 +6200,7 @@ msgstr "无法加载 {filename}"
 msgid "Couldn't load agent settings: {0}"
 msgstr "无法加载智能体设置：{0}"
 
+#. placeholder {0}: errorMessage(statusQuery.error)
 #. placeholder {0}: loadError.message
 msgid "Couldn't load automation: {0}"
 msgstr "无法加载自动化：{0}"
@@ -6470,9 +6480,6 @@ msgstr "创建云环境"
 msgid "Create a Dev"
 msgstr "创建 Dev"
 
-msgid "Create a job in Claude Jobs and it shows here."
-msgstr "在 Claude Jobs 中创建任务后，它会显示在这里。"
-
 msgid "Create a key in Linear"
 msgstr "在 Linear 中创建密钥"
 
@@ -6541,6 +6548,9 @@ msgstr "创建新分组"
 
 msgid "Create new project"
 msgstr "新建项目"
+
+msgid "Create one here, or in Claude Jobs."
+msgstr "在这里或在 Claude Jobs 中创建一个。"
 
 msgid "Create one to start a cloud workspace from it."
 msgstr "创建一个环境即可基于它启动云端工作区。"
@@ -6738,6 +6748,9 @@ msgstr "创建者：{0}"
 msgid "Credentials stay on the server"
 msgstr "凭据保留在服务器上"
 
+msgid "Cron expression"
+msgstr "Cron 表达式"
+
 #. placeholder {0}: job.cron
 msgid "Cron: {0}"
 msgstr "Cron：{0}"
@@ -6898,6 +6911,12 @@ msgstr "元老"
 
 msgid "days"
 msgstr "天"
+
+msgid "Days of the month"
+msgstr "每月日期"
+
+msgid "Days of the week"
+msgstr "星期"
 
 msgid "days running three agents at once"
 msgstr "同时运行三个智能体的天数"
