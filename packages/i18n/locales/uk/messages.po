@@ -6250,6 +6250,9 @@ msgstr "Не вдалося автоматично назвати «{name}»"
 msgid "Couldn't open in Chat Interface"
 msgstr "Не вдалося відкрити в інтерфейсі чату"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Не вдалося відкрити запуск як чат"
+
 msgid "Couldn't open the screenshot"
 msgstr "Не вдалося відкрити знімок екрана"
 
@@ -13993,6 +13996,9 @@ msgstr "Усе одно відкрити"
 
 msgid "Open App Store"
 msgstr "Відкрити App Store"
+
+msgid "Open as a chat"
+msgstr "Відкрити як чат"
 
 msgid "Open as comment pane"
 msgstr "Відкрити як панель коментарів"

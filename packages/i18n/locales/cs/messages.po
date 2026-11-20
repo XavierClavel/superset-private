@@ -6256,6 +6256,9 @@ msgstr "Nepodařilo se automaticky pojmenovat „{name}“"
 msgid "Couldn't open in Chat Interface"
 msgstr "Nepodařilo se otevřít v rozhraní chatu"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Běh se nepodařilo otevřít jako chat"
+
 msgid "Couldn't open the screenshot"
 msgstr "Snímek obrazovky se nepodařilo otevřít"
 
@@ -13999,6 +14002,9 @@ msgstr "Přesto otevřít"
 
 msgid "Open App Store"
 msgstr "Otevřít App Store"
+
+msgid "Open as a chat"
+msgstr "Otevřít jako chat"
 
 msgid "Open as comment pane"
 msgstr "Otevřít jako panel komentářů"

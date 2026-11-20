@@ -6256,6 +6256,9 @@ msgstr "Không thể tự động đặt tên cho \"{name}\""
 msgid "Couldn't open in Chat Interface"
 msgstr "Không thể mở trong giao diện chat"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Không thể mở lần chạy dưới dạng chat"
+
 msgid "Couldn't open the screenshot"
 msgstr "Không thể mở ảnh chụp màn hình"
 
@@ -13999,6 +14002,9 @@ msgstr "Vẫn mở"
 
 msgid "Open App Store"
 msgstr "Mở App Store"
+
+msgid "Open as a chat"
+msgstr "Mở dưới dạng chat"
 
 msgid "Open as comment pane"
 msgstr "Mở dạng khung bình luận"

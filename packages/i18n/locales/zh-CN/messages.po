@@ -6256,6 +6256,9 @@ msgstr "无法自动命名“{name}”"
 msgid "Couldn't open in Chat Interface"
 msgstr "无法在聊天界面中打开"
 
+msgid "Couldn't open the run as a chat"
+msgstr "无法以聊天形式打开此次运行"
+
 msgid "Couldn't open the screenshot"
 msgstr "无法打开截图"
 
@@ -13999,6 +14002,9 @@ msgstr "仍然打开"
 
 msgid "Open App Store"
 msgstr "打开 App Store"
+
+msgid "Open as a chat"
+msgstr "以聊天形式打开"
 
 msgid "Open as comment pane"
 msgstr "作为评论面板打开"

@@ -6256,6 +6256,9 @@ msgstr "\"{name}\"의 이름을 자동으로 지정하지 못했습니다"
 msgid "Couldn't open in Chat Interface"
 msgstr "채팅 인터페이스에서 열 수 없습니다"
 
+msgid "Couldn't open the run as a chat"
+msgstr "실행을 채팅으로 열 수 없습니다"
+
 msgid "Couldn't open the screenshot"
 msgstr "스크린샷을 열 수 없습니다"
 
@@ -13999,6 +14002,9 @@ msgstr "그래도 열기"
 
 msgid "Open App Store"
 msgstr "App Store 열기"
+
+msgid "Open as a chat"
+msgstr "채팅으로 열기"
 
 msgid "Open as comment pane"
 msgstr "코멘트 패널으로 열기"

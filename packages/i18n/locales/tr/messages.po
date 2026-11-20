@@ -6256,6 +6256,9 @@ msgstr "\"{name}\" otomatik olarak adlandırılamadı"
 msgid "Couldn't open in Chat Interface"
 msgstr "Sohbet arayüzünde açılamadı"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Çalıştırma sohbet olarak açılamadı"
+
 msgid "Couldn't open the screenshot"
 msgstr "Ekran görüntüsü açılamadı"
 
@@ -13999,6 +14002,9 @@ msgstr "Yine de aç"
 
 msgid "Open App Store"
 msgstr "App Store’u aç"
+
+msgid "Open as a chat"
+msgstr "Sohbet olarak aç"
 
 msgid "Open as comment pane"
 msgstr "Yorum bölmesi olarak aç"

@@ -1,11 +1,13 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import { Trans } from "@lingui/react/macro";
 import { i18n } from "@superset/i18n";
 import {
 	formatCurrency,
 	formatDateTime,
 	formatElapsed,
 } from "@superset/i18n/format";
+import { Button } from "@superset/ui/button";
 import {
 	Collapsible,
 	CollapsibleContent,
@@ -16,9 +18,10 @@ import type {
 	ClaudeJobRun,
 	ClaudeJobTrigger,
 } from "lib/trpc/routers/claude-jobs/types";
-import { LuChevronRight } from "react-icons/lu";
+import { LuChevronRight, LuMessageSquare } from "react-icons/lu";
 import { MarkdownRenderer } from "renderer/components/MarkdownRenderer";
 import { CLAUDE_JOB_RUN_STATUS_META } from "../../../../../../../utils/claudeJobRunStatus";
+import { useOpenClaudeJobRun } from "./hooks/useOpenClaudeJobRun";
 
 const TRIGGER_LABELS: Record<ClaudeJobTrigger, MessageDescriptor> = {
 	schedule: msg({ message: "Schedule" }),
@@ -29,6 +32,8 @@ const TRIGGER_LABELS: Record<ClaudeJobTrigger, MessageDescriptor> = {
 
 export function ClaudeJobRunItem({ run }: { run: ClaudeJobRun }) {
 	const status = CLAUDE_JOB_RUN_STATUS_META[run.status];
+	const openRun = useOpenClaudeJobRun();
+	const sessionId = run.status === "running" ? null : run.session_id;
 	const startedAt = new Date(run.started_at);
 	const details =
 		run.status === "running" ? (run.progress?.text ?? null) : run.error;
@@ -52,6 +57,18 @@ export function ClaudeJobRunItem({ run }: { run: ClaudeJobRun }) {
 				{run.cost_usd !== null && <span>{formatCurrency(run.cost_usd)}</span>}
 			</CollapsibleTrigger>
 			<CollapsibleContent className="cursor-text select-text border-t border-border px-4 py-3 text-sm">
+				{sessionId && (
+					<Button
+						variant="outline"
+						size="sm"
+						className="float-right ml-3 h-7 gap-1.5"
+						onClick={() => openRun.mutate(sessionId)}
+						disabled={openRun.isPending}
+					>
+						<LuMessageSquare className="size-3.5" />
+						<Trans>Open as a chat</Trans>
+					</Button>
+				)}
 				{details && (
 					<p className="whitespace-pre-wrap text-muted-foreground">{details}</p>
 				)}
