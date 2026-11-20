@@ -1,5 +1,5 @@
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 
@@ -7,7 +7,7 @@ const ISSUE_STALE_MS = 30_000;
 
 export function useLinearIssue(issueId: string) {
 	const organizationId = useActiveOrganizationId();
-	const backend = useLinearBackend();
+	const backend = usePlanBackend();
 	const options = { staleTime: ISSUE_STALE_MS, retry: false };
 	const cloud = cloudTrpc.integration.linear.issue.useQuery(
 		{ organizationId: organizationId ?? "", issueId },

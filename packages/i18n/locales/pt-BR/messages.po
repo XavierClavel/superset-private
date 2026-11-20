@@ -4494,6 +4494,15 @@ msgstr "Claude Code, Codex, Cursor, OpenCode e outros."
 msgid "Claude is now running in workspace component-showcase."
 msgstr "O Claude está rodando agora na área de trabalho component-showcase."
 
+msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
+msgstr "O Claude Jobs {outdatedVersion} é antigo demais para o Paradev. Abra-o para atualizá-lo ou instale a versão mais recente."
+
+msgid "Claude Jobs is not installed."
+msgstr "O Claude Jobs não está instalado."
+
+msgid "Claude Jobs stops running it. This can't be undone."
+msgstr "O Claude Jobs deixa de executá-lo. Isso não pode ser desfeito."
+
 msgid "Clean up stale TODOs…"
 msgstr "Limpe os TODOs antigos…"
 
@@ -6458,6 +6467,9 @@ msgstr "Criar um ambiente na nuvem"
 msgid "Create a Dev"
 msgstr "Criar um Dev"
 
+msgid "Create a job in Claude Jobs and it shows here."
+msgstr "Crie um job no Claude Jobs e ele aparecerá aqui."
+
 msgid "Create a key in Linear"
 msgstr "Criar uma chave no Linear"
 
@@ -6723,6 +6735,10 @@ msgstr "Criador: {0}"
 msgid "Credentials stay on the server"
 msgstr "As credenciais ficam no servidor"
 
+#. placeholder {0}: job.cron
+msgid "Cron: {0}"
+msgstr "Cron: {0}"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "Componentes usados por várias funcionalidades que vivem fora de packages/ui — confira aqui antes de criar um novo"
 
@@ -6937,6 +6953,7 @@ msgstr "Delegado"
 msgid "Delete"
 msgstr "Excluir"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Delete \"{0}\" permanently?"
 msgstr "Excluir \"{0}\" permanentemente?"
@@ -7107,6 +7124,7 @@ msgctxt "github release action"
 msgid "Deleted"
 msgstr "Excluído"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Deleted \"{0}\""
 msgstr "\"{0}\" excluída"
@@ -7624,6 +7642,9 @@ msgstr "Baixar novamente"
 
 msgid "Download app"
 msgstr "Baixar o app"
+
+msgid "Download Claude Jobs"
+msgstr "Baixar o Claude Jobs"
 
 msgid "Download didn't start?"
 msgstr "O download não começou?"
@@ -10453,6 +10474,9 @@ msgstr "Instalar e reiniciar"
 msgid "Install a plugin in the Paradev app and every agent can use it."
 msgstr "Instale um plugin no app do Paradev e qualquer agente poderá usá-lo."
 
+msgid "Install Claude Jobs"
+msgstr "Instale o Claude Jobs"
+
 msgid "Install Command Line Tools"
 msgstr "Instalar Command Line Tools"
 
@@ -10547,6 +10571,9 @@ msgstr "Sem internet"
 
 msgid "Interrupt"
 msgstr "Interromper"
+
+msgid "interrupted"
+msgstr "interrompida"
 
 msgid "Interval"
 msgstr "Intervalo"
@@ -12633,6 +12660,7 @@ msgstr "Próxima ocorrência"
 msgid "Next Right Sidebar Tab"
 msgstr "Próxima aba da barra lateral direita"
 
+#. placeholder {0}: formatDateTime(nextRunAt, undefined)
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "Próxima execução {0}"
@@ -12746,6 +12774,9 @@ msgstr "Nenhum autor encontrado."
 
 msgid "No automations match"
 msgstr "Nenhuma automação corresponde"
+
+msgid "No automations yet"
+msgstr "Nenhuma automação ainda"
 
 #. placeholder {0}: params?.period
 msgid "No billing period starts on {0}."
@@ -13640,6 +13671,9 @@ msgstr "em {offScopeHostName}, não vai rodar aqui"
 msgid "On a date"
 msgstr "Em uma data"
 
+msgid "On a free plan, automations run on this Mac with Claude Jobs, an app that runs Claude Code on a schedule."
+msgstr "No plano gratuito, as automações são executadas neste Mac com o Claude Jobs, um app que executa o Claude Code conforme uma agenda."
+
 msgid "On a Mac, Git comes with Apple's Command Line Tools."
 msgstr "No Mac, o Git vem com as Command Line Tools da Apple."
 
@@ -13988,6 +14022,9 @@ msgstr "Abrir o ChatGPT para entrar"
 
 msgid "Open Claude Code, Codex, OpenCode, and Pi sessions as chats"
 msgstr "Abrir sessões do Claude Code, do Codex, do OpenCode e do Pi como chats"
+
+msgid "Open Claude Jobs"
+msgstr "Abrir o Claude Jobs"
 
 msgid "Open Command Palette"
 msgstr "Abrir a paleta de comandos"
@@ -17164,6 +17201,7 @@ msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
 msgstr "Execute \"gh auth login\" ou defina GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
+#. placeholder {0}: job.name
 msgid "Run {0} now"
 msgstr "Executar {0} agora"
 
@@ -17324,6 +17362,9 @@ msgstr "Executa dentro do app Paradev naquele dispositivo, então atualizá-lo s
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "As execuções chegam em uma área de trabalho. Revise o diff e mescle o que estiver bom."
+
+msgid "Runs on this Mac with Claude Jobs."
+msgstr "Executado neste Mac com o Claude Jobs."
 
 msgid "Runs that found no host online"
 msgstr "Execuções que não encontraram host online"
@@ -19477,6 +19518,9 @@ msgstr "assinatura"
 msgid "Subscription"
 msgstr "Assinatura"
 
+msgid "succeeded"
+msgstr "bem-sucedida"
+
 msgid "Success"
 msgstr "Sucesso"
 
@@ -20909,6 +20953,9 @@ msgstr "Este usuário roda o serviço de host deste dispositivo e não pode ser 
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "Este usuário roda o serviço de host deste dispositivo e precisa continuar como proprietário."
 
+msgid "This version of Claude Jobs is newer than Paradev reads."
+msgstr "Esta versão do Claude Jobs é mais nova do que o Paradev consegue ler."
+
 msgid "This view hit an error"
 msgstr "Esta visualização deu erro"
 
@@ -21029,6 +21076,9 @@ msgstr "Tempo até a primeira área de trabalho"
 
 msgid "Time zone"
 msgstr "Fuso horário"
+
+msgid "timed out"
+msgstr "tempo esgotado"
 
 msgid "Tinted"
 msgstr "Colorido"
@@ -21725,6 +21775,12 @@ msgstr "Atualizar branch"
 msgid "Update check failed. Please try again."
 msgstr "Falha ao verificar atualizações. Tente novamente."
 
+msgid "Update Claude Jobs"
+msgstr "Atualize o Claude Jobs"
+
+msgid "Update Claude Jobs to {MIN_CLAUDE_JOBS_VERSION} or later."
+msgstr "Atualize o Claude Jobs para a versão {MIN_CLAUDE_JOBS_VERSION} ou posterior."
+
 msgid "Update couldn't preserve sessions"
 msgstr "A atualização não conseguiu preservar as sessões"
 
@@ -22276,6 +22332,9 @@ msgstr "Quer algo antes? <0>Conte para a gente no Discord</0>. Boa parte do que 
 msgid "Warn before closing a running terminal"
 msgstr "Avisar antes de fechar um terminal em execução"
 
+msgid "warning"
+msgstr "aviso"
+
 msgid "Warning"
 msgstr "Aviso"
 
@@ -22546,6 +22605,12 @@ msgstr "O que vem a seguir"
 
 msgid "When a channel notifies you"
 msgstr "Quando um canal notificar você"
+
+msgid "When a pull request is merged in {repos}"
+msgstr "Quando um pull request é mesclado em {repos}"
+
+msgid "When a pull request is opened in {repos}"
+msgstr "Quando um pull request é aberto em {repos}"
 
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "Quando um gatilho dispara, o Mac escolhido abre uma nova área de trabalho e o agente começa pelo seu prompt. Execuções por evento incluem o evento, então o agente sabe o que olhar. Responda na execução para continuar."

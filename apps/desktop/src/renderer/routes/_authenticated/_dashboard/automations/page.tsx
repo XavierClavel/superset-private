@@ -65,6 +65,7 @@ import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import { useRecentProjects } from "renderer/hooks/host-projects/useRecentProjects";
 import { useCreateAgentSession } from "renderer/hooks/useCreateAgentSession";
 import { useNow } from "renderer/hooks/useNow";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { authClient } from "renderer/lib/auth-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
@@ -84,6 +85,7 @@ import { AutomationGroupHeaderRow } from "./components/AutomationGroupHeaderRow"
 import { AutomationRow } from "./components/AutomationRow";
 import { AutomationStatCards } from "./components/AutomationStatCards";
 import { AutomationsEmptyState } from "./components/AutomationsEmptyState";
+import { ClaudeJobsView } from "./components/ClaudeJobsView";
 import { HostOfflineRunDialog } from "./components/HostOfflineRunDialog";
 import { useArchiveAutomations } from "./hooks/useArchiveAutomations";
 import { useRowSelection } from "./hooks/useRowSelection";
@@ -102,6 +104,13 @@ export const Route = createFileRoute("/_authenticated/_dashboard/automations/")(
 		component: AutomationsPage,
 	},
 );
+
+function AutomationsPage() {
+	const backend = usePlanBackend();
+	if (backend === "local") return <ClaudeJobsView />;
+	if (backend === "cloud") return <CloudAutomationsPage />;
+	return null;
+}
 
 type Scope = "mine" | "team" | "archived";
 
@@ -129,7 +138,7 @@ const UNGROUPED_KEY = "\u0000ungrouped";
 const AUTOMATION_AGENT_PROMPT =
 	"Help me create a Paradev automation. Use the superset:automate skill if it's available, otherwise the `superset` CLI (start with `superset automations --help`). Ask me what the automation should do and what should fire it — a schedule, or an event like a Slack message, GitHub pull request, or Linear issue. Confirm that, the target project, and the agent, then create the automation and trigger a first run so we can review the result together.";
 
-function AutomationsPage() {
+function CloudAutomationsPage() {
 	const { t } = useLingui();
 	const { data: session } = authClient.useSession();
 	const currentUserId = session?.user?.id;

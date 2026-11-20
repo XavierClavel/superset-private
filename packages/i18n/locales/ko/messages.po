@@ -4494,6 +4494,15 @@ msgstr "Claude Code, Codex, Cursor, OpenCode 등이 있습니다."
 msgid "Claude is now running in workspace component-showcase."
 msgstr "이제 워크스페이스 component-showcase에서 Claude가 실행 중입니다."
 
+msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
+msgstr "Claude Jobs {outdatedVersion}은(는) Paradev에서 쓰기에 너무 오래되었습니다. 앱을 열어 업데이트하거나 최신 버전을 설치하세요."
+
+msgid "Claude Jobs is not installed."
+msgstr "Claude Jobs가 설치되어 있지 않습니다."
+
+msgid "Claude Jobs stops running it. This can't be undone."
+msgstr "Claude Jobs가 더 이상 실행하지 않습니다. 이 작업은 되돌릴 수 없습니다."
+
 msgid "Clean up stale TODOs…"
 msgstr "오래된 TODO 정리…"
 
@@ -6458,6 +6467,9 @@ msgstr "클라우드 환경 만들기"
 msgid "Create a Dev"
 msgstr "Dev 만들기"
 
+msgid "Create a job in Claude Jobs and it shows here."
+msgstr "Claude Jobs에서 작업을 만들면 여기에 표시됩니다."
+
 msgid "Create a key in Linear"
 msgstr "Linear에서 키 만들기"
 
@@ -6723,6 +6735,10 @@ msgstr "작성자: {0}"
 msgid "Credentials stay on the server"
 msgstr "자격 증명은 서버에 보관됩니다"
 
+#. placeholder {0}: job.cron
+msgid "Cron: {0}"
+msgstr "Cron: {0}"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "packages/ui 밖에 있는 기능 공통 컴포넌트 — 새로 만들기 전에 여기를 확인하세요"
 
@@ -6937,6 +6953,7 @@ msgstr "위임"
 msgid "Delete"
 msgstr "삭제"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Delete \"{0}\" permanently?"
 msgstr "\"{0}\"을(를) 영구적으로 삭제할까요?"
@@ -7107,6 +7124,7 @@ msgctxt "github release action"
 msgid "Deleted"
 msgstr "삭제됨"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Deleted \"{0}\""
 msgstr "\"{0}\"을(를) 삭제했습니다"
@@ -7624,6 +7642,9 @@ msgstr "다시 다운로드"
 
 msgid "Download app"
 msgstr "앱 다운로드"
+
+msgid "Download Claude Jobs"
+msgstr "Claude Jobs 다운로드"
 
 msgid "Download didn't start?"
 msgstr "다운로드가 시작되지 않았나요?"
@@ -10453,6 +10474,9 @@ msgstr "설치 후 재시작"
 msgid "Install a plugin in the Paradev app and every agent can use it."
 msgstr "Paradev 앱에서 플러그인을 설치하면 모든 에이전트가 사용할 수 있습니다."
 
+msgid "Install Claude Jobs"
+msgstr "Claude Jobs 설치"
+
 msgid "Install Command Line Tools"
 msgstr "Command Line Tools 설치"
 
@@ -10547,6 +10571,9 @@ msgstr "인터넷 연결 끊김"
 
 msgid "Interrupt"
 msgstr "중단"
+
+msgid "interrupted"
+msgstr "중단됨"
 
 msgid "Interval"
 msgstr "간격"
@@ -12633,6 +12660,7 @@ msgstr "다음 일치 항목"
 msgid "Next Right Sidebar Tab"
 msgstr "오른쪽 사이드바 다음 탭"
 
+#. placeholder {0}: formatDateTime(nextRunAt, undefined)
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "다음 실행 {0}"
@@ -12746,6 +12774,9 @@ msgstr "작성자를 찾을 수 없습니다."
 
 msgid "No automations match"
 msgstr "일치하는 자동화가 없습니다"
+
+msgid "No automations yet"
+msgstr "아직 자동화가 없습니다"
 
 #. placeholder {0}: params?.period
 msgid "No billing period starts on {0}."
@@ -13640,6 +13671,9 @@ msgstr "{offScopeHostName}에 있음, 여기서는 실행되지 않습니다"
 msgid "On a date"
 msgstr "특정 날짜"
 
+msgid "On a free plan, automations run on this Mac with Claude Jobs, an app that runs Claude Code on a schedule."
+msgstr "무료 플랜에서는 자동화가 이 Mac의 Claude Jobs에서 실행됩니다. Claude Jobs는 Claude Code를 일정에 따라 실행하는 앱입니다."
+
 msgid "On a Mac, Git comes with Apple's Command Line Tools."
 msgstr "Mac에서는 Git이 Apple의 Command Line Tools에 포함되어 있습니다."
 
@@ -13988,6 +14022,9 @@ msgstr "ChatGPT를 열어 로그인"
 
 msgid "Open Claude Code, Codex, OpenCode, and Pi sessions as chats"
 msgstr "Claude Code, Codex, OpenCode 및 Pi 세션을 채팅으로 열기"
+
+msgid "Open Claude Jobs"
+msgstr "Claude Jobs 열기"
 
 msgid "Open Command Palette"
 msgstr "명령 팔레트 열기"
@@ -17164,6 +17201,7 @@ msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
 msgstr "\"gh auth login\"을 실행하거나 GITHUB_TOKEN을 설정하세요"
 
 #. placeholder {0}: automation.name
+#. placeholder {0}: job.name
 msgid "Run {0} now"
 msgstr "{0} 지금 실행"
 
@@ -17324,6 +17362,9 @@ msgstr "해당 기기의 Paradev 앱 안에서 실행되므로, 업데이트하�
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "실행 결과는 워크스페이스에 도착합니다. 차이를 검토하고 괜찮은 것만 머지하세요."
+
+msgid "Runs on this Mac with Claude Jobs."
+msgstr "이 Mac의 Claude Jobs에서 실행됩니다."
 
 msgid "Runs that found no host online"
 msgstr "온라인 호스트를 찾지 못한 실행"
@@ -19477,6 +19518,9 @@ msgstr "구독"
 msgid "Subscription"
 msgstr "구독"
 
+msgid "succeeded"
+msgstr "성공"
+
 msgid "Success"
 msgstr "성공"
 
@@ -20909,6 +20953,9 @@ msgstr "이 사용자는 이 기기의 호스트 서비스를 실행 중이므�
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "이 사용자는 이 기기의 호스트 서비스를 실행 중이므로 소유자로 남아야 합니다."
 
+msgid "This version of Claude Jobs is newer than Paradev reads."
+msgstr "이 Claude Jobs 버전은 Paradev가 읽을 수 있는 버전보다 최신입니다."
+
 msgid "This view hit an error"
 msgstr "이 화면에서 오류가 발생했습니다"
 
@@ -21029,6 +21076,9 @@ msgstr "첫 워크스페이스까지 걸린 시간"
 
 msgid "Time zone"
 msgstr "시간대"
+
+msgid "timed out"
+msgstr "시간 초과"
 
 msgid "Tinted"
 msgstr "색조"
@@ -21725,6 +21775,12 @@ msgstr "브랜치 업데이트"
 msgid "Update check failed. Please try again."
 msgstr "업데이트 확인에 실패했습니다. 다시 시도해 주세요."
 
+msgid "Update Claude Jobs"
+msgstr "Claude Jobs 업데이트"
+
+msgid "Update Claude Jobs to {MIN_CLAUDE_JOBS_VERSION} or later."
+msgstr "Claude Jobs를 {MIN_CLAUDE_JOBS_VERSION} 이상으로 업데이트하세요."
+
 msgid "Update couldn't preserve sessions"
 msgstr "업데이트가 세션을 유지하지 못했습니다"
 
@@ -22276,6 +22332,9 @@ msgstr "더 빨리 필요한 기능이 있나요? <0>Discord에서 알려 주세
 msgid "Warn before closing a running terminal"
 msgstr "실행 중인 터미널을 닫기 전에 경고"
 
+msgid "warning"
+msgstr "경고"
+
 msgid "Warning"
 msgstr "경고"
 
@@ -22546,6 +22605,12 @@ msgstr "다음 계획"
 
 msgid "When a channel notifies you"
 msgstr "채널에서 알림을 보낼 때"
+
+msgid "When a pull request is merged in {repos}"
+msgstr "{repos}에서 풀 리퀘스트가 머지될 때"
+
+msgid "When a pull request is opened in {repos}"
+msgstr "{repos}에서 풀 리퀘스트가 열릴 때"
 
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "트리거가 실행되면 선택한 Mac이 새 워크스페이스를 열고 에이전트가 프롬프트를 시작합니다. 이벤트로 시작된 실행에는 이벤트가 포함되어 에이전트가 무엇을 봐야 할지 압니다. 계속하려면 실행에 답장하세요."

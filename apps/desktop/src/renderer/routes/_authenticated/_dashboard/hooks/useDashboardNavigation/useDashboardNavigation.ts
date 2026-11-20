@@ -1,8 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
-import { GATED_FEATURES, usePaywall } from "renderer/components/Paywall";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useMatchRoute } from "renderer/hooks/useMatchRoute";
-import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { useIsChatSection } from "renderer/routes/_authenticated/_dashboard/hooks/useIsChatSection";
 import {
 	pullRequestsSearchFromFilters,
@@ -25,33 +23,8 @@ import {
 export function useDashboardNavigation() {
 	const navigate = useNavigate();
 	const matchRoute = useMatchRoute();
-	const { gateFeature, hasAccess } = usePaywall();
-	const cloudUtils = cloudTrpc.useUtils();
 	const organizationId = useActiveOrganizationId();
 	const isChatSection = useIsChatSection();
-
-	// Automations are Pro, but an org that already has some (a downgrade) can
-	// still reach the list to pause, edit, or delete them; the page gates the
-	// actions that need the plan. A Free org with none meets the paywall here.
-	// If the list can't be read the answer is unknown, so let the click
-	// through: an empty list page gates every action itself, and a wrong
-	// paywall on a downgraded org would be the worse mistake.
-	const openAutomations = async () => {
-		if (hasAccess(GATED_FEATURES.AUTOMATIONS)) {
-			navigate({ to: "/automations" });
-			return;
-		}
-		const automations = await cloudUtils.automation.list
-			.fetch()
-			.catch(() => null);
-		if (automations === null || automations.length > 0) {
-			navigate({ to: "/automations" });
-			return;
-		}
-		gateFeature(GATED_FEATURES.AUTOMATIONS, () => {
-			navigate({ to: "/automations" });
-		});
-	};
 
 	return {
 		isHomeOpen: !!matchRoute({ to: "/new-workspace" }),
@@ -71,7 +44,7 @@ export function useDashboardNavigation() {
 		openWorkspaces: () => navigate({ to: "/workspaces" }),
 
 		isAutomationsOpen: !!matchRoute({ to: "/automations", fuzzy: true }),
-		openAutomations,
+		openAutomations: () => navigate({ to: "/automations" }),
 		openFailedAutomations: () =>
 			navigate({
 				to: "/automations/runs",
