@@ -1,9 +1,7 @@
 import { useDraggable, useDroppable } from "@dnd-kit/core";
-import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { SelectUser } from "@superset/db/schema";
 import { i18n } from "@superset/i18n";
-import { formatCompactRelativeTime } from "@superset/i18n/format";
 import { useFormat } from "@superset/i18n/react";
 import { CLOUD_HOST_ID } from "@superset/shared/host-routing";
 import {
@@ -33,6 +31,7 @@ import type { AutomationLastRun } from "renderer/routes/_authenticated/_dashboar
 import type { ProjectOption } from "renderer/routes/_authenticated/components/DashboardNewWorkspaceModal/components/DashboardNewWorkspaceForm/PromptGroup/types";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
 import type { RowSelectEvent } from "../../hooks/useRowSelection";
+import { compactAgo, compactUntil } from "../../utils/compactTime";
 import { RUN_STATUS_META } from "../../utils/runStatus";
 import { runWorkspaceSearch } from "../../utils/runWorkspaceSearch";
 import { AutomationActionsMenuItems } from "./components/AutomationActionsMenuItems";
@@ -80,23 +79,6 @@ interface AutomationRowProps {
 	onArchive: (automation: AutomationListItem) => void;
 	onRestore: (automation: AutomationListItem) => void;
 	onDelete: (automation: AutomationListItem) => void;
-}
-
-// Both directions come from Intl.RelativeTimeFormat: it renders the compact
-// "3d ago" / "in 2h" shape in every locale, so these need no catalog entries
-// beyond the two "right now" cases where a bare unit would read oddly.
-function compactUntil(at: number, now: Date): string {
-	if (at - now.getTime() < 60_000) {
-		return i18n._(msg({ message: "soon" }));
-	}
-	return formatCompactRelativeTime(at, now);
-}
-
-function compactAgo(at: number, now: Date): string {
-	if (now.getTime() - at < 60_000) {
-		return i18n._(msg({ message: "just now" }));
-	}
-	return formatCompactRelativeTime(at, now);
 }
 
 export function AutomationRow({

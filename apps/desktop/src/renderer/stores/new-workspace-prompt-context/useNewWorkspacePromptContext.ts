@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react";
 import { resolveHostUrl } from "renderer/hooks/host-service/useHostTargetUrl";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { useRelayUrl } from "renderer/hooks/useRelayUrl";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import type {
@@ -36,7 +36,7 @@ export function useNewWorkspacePromptContext(args: {
 	const { machineId, activeHostUrl } = useLocalHostService();
 	const activeOrganizationId = useActiveOrganizationId();
 	const relayUrl = useRelayUrl();
-	const linearBackend = useLinearBackend();
+	const linearBackend = usePlanBackend();
 
 	const hostUrl = useMemo(() => {
 		const id = hostId ?? machineId;

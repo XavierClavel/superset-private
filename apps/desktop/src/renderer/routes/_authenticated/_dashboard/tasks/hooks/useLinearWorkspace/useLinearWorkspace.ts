@@ -1,5 +1,5 @@
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 
@@ -14,7 +14,7 @@ export function useLinearConnection({ enabled = true } = {}) {
 }
 
 export function useLinearAccount() {
-	const backend = useLinearBackend();
+	const backend = usePlanBackend();
 	const cloud = useLinearConnection({ enabled: backend === "cloud" });
 	const local = electronTrpc.linear.status.useQuery(undefined, {
 		enabled: backend === "local",
@@ -38,7 +38,7 @@ export function useLinearAccount() {
 
 export function useLinearWorkspace({ enabled = true } = {}) {
 	const organizationId = useActiveOrganizationId();
-	const backend = useLinearBackend();
+	const backend = usePlanBackend();
 	const options = { staleTime: WORKSPACE_STALE_MS, retry: false };
 	const cloud = cloudTrpc.integration.linear.workspace.useQuery(
 		{ organizationId: organizationId ?? "" },

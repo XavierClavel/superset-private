@@ -4494,6 +4494,15 @@ msgstr "Claude Code、Codex、Cursor、OpenCode等。"
 msgid "Claude is now running in workspace component-showcase."
 msgstr "Claude已在工作区component-showcase中运行。"
 
+msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
+msgstr "Claude Jobs {outdatedVersion} 对 Paradev 来说太旧了。请打开它进行更新，或安装最新版本。"
+
+msgid "Claude Jobs is not installed."
+msgstr "未安装 Claude Jobs。"
+
+msgid "Claude Jobs stops running it. This can't be undone."
+msgstr "Claude Jobs 将不再运行它。此操作无法撤销。"
+
 msgid "Clean up stale TODOs…"
 msgstr "清理过期的TODO…"
 
@@ -6458,6 +6467,9 @@ msgstr "创建云环境"
 msgid "Create a Dev"
 msgstr "创建 Dev"
 
+msgid "Create a job in Claude Jobs and it shows here."
+msgstr "在 Claude Jobs 中创建任务后，它会显示在这里。"
+
 msgid "Create a key in Linear"
 msgstr "在 Linear 中创建密钥"
 
@@ -6723,6 +6735,10 @@ msgstr "创建者：{0}"
 msgid "Credentials stay on the server"
 msgstr "凭据保留在服务器上"
 
+#. placeholder {0}: job.cron
+msgid "Cron: {0}"
+msgstr "Cron：{0}"
+
 msgid "Cross-feature components living outside packages/ui — check here before building a new one"
 msgstr "位于packages/ui之外的跨功能组件——新建组件之前先来这里看看"
 
@@ -6937,6 +6953,7 @@ msgstr "委派"
 msgid "Delete"
 msgstr "删除"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Delete \"{0}\" permanently?"
 msgstr "永久删除“{0}”？"
@@ -7107,6 +7124,7 @@ msgctxt "github release action"
 msgid "Deleted"
 msgstr "已删除"
 
+#. placeholder {0}: job.name
 #. placeholder {0}: only.name
 msgid "Deleted \"{0}\""
 msgstr "“{0}”已删除"
@@ -7624,6 +7642,9 @@ msgstr "重新下载"
 
 msgid "Download app"
 msgstr "下载应用"
+
+msgid "Download Claude Jobs"
+msgstr "下载 Claude Jobs"
 
 msgid "Download didn't start?"
 msgstr "下载没有开始？"
@@ -10453,6 +10474,9 @@ msgstr "安装并重启"
 msgid "Install a plugin in the Paradev app and every agent can use it."
 msgstr "在 Paradev 应用中安装插件，每个智能体都能使用它。"
 
+msgid "Install Claude Jobs"
+msgstr "安装 Claude Jobs"
+
 msgid "Install Command Line Tools"
 msgstr "安装 Command Line Tools"
 
@@ -10547,6 +10571,9 @@ msgstr "网络已断开"
 
 msgid "Interrupt"
 msgstr "打断"
+
+msgid "interrupted"
+msgstr "已中断"
 
 msgid "Interval"
 msgstr "间隔"
@@ -12633,6 +12660,7 @@ msgstr "下一个匹配"
 msgid "Next Right Sidebar Tab"
 msgstr "右侧边栏下一个标签页"
 
+#. placeholder {0}: formatDateTime(nextRunAt, undefined)
 #. placeholder {0}: formatDateTimeInTimezone( new Date(automation.nextRunAt), automation.timezone ?? "UTC", )
 msgid "Next run {0}"
 msgstr "下次运行{0}"
@@ -12746,6 +12774,9 @@ msgstr "未找到作者。"
 
 msgid "No automations match"
 msgstr "没有匹配的自动化"
+
+msgid "No automations yet"
+msgstr "还没有自动化"
 
 #. placeholder {0}: params?.period
 msgid "No billing period starts on {0}."
@@ -13640,6 +13671,9 @@ msgstr "在{offScopeHostName}上，不会在这里运行"
 msgid "On a date"
 msgstr "指定日期"
 
+msgid "On a free plan, automations run on this Mac with Claude Jobs, an app that runs Claude Code on a schedule."
+msgstr "在免费套餐下，自动化通过 Claude Jobs 在这台 Mac 上运行。Claude Jobs 是一款按计划运行 Claude Code 的应用。"
+
 msgid "On a Mac, Git comes with Apple's Command Line Tools."
 msgstr "在 Mac 上，Git 随 Apple 的 Command Line Tools 一起提供。"
 
@@ -13988,6 +14022,9 @@ msgstr "打开 ChatGPT 登录"
 
 msgid "Open Claude Code, Codex, OpenCode, and Pi sessions as chats"
 msgstr "以聊天形式打开 Claude Code、Codex、OpenCode 和 Pi 会话"
+
+msgid "Open Claude Jobs"
+msgstr "打开 Claude Jobs"
 
 msgid "Open Command Palette"
 msgstr "打开命令面板"
@@ -17164,6 +17201,7 @@ msgid "Run \"gh auth login\" or set GITHUB_TOKEN"
 msgstr "运行 \"gh auth login\" 或设置 GITHUB_TOKEN"
 
 #. placeholder {0}: automation.name
+#. placeholder {0}: job.name
 msgid "Run {0} now"
 msgstr "立即运行{0}"
 
@@ -17324,6 +17362,9 @@ msgstr "运行在该设备的 Paradev 应用内，因此更新它意味着更新
 
 msgid "Runs land in a workspace. Review the diff, merge what's good."
 msgstr "运行结果会落在一个工作区里。审查差异，把合适的合并进去。"
+
+msgid "Runs on this Mac with Claude Jobs."
+msgstr "通过 Claude Jobs 在这台 Mac 上运行。"
 
 msgid "Runs that found no host online"
 msgstr "未找到在线主机的运行"
@@ -19477,6 +19518,9 @@ msgstr "订阅"
 msgid "Subscription"
 msgstr "订阅"
 
+msgid "succeeded"
+msgstr "成功"
+
 msgid "Success"
 msgstr "成功"
 
@@ -20909,6 +20953,9 @@ msgstr "此用户在此设备上运行主机服务，无法被移除。"
 msgid "This user runs the host service for this device and must remain an owner."
 msgstr "此用户在此设备上运行主机服务，必须保持所有者身份。"
 
+msgid "This version of Claude Jobs is newer than Paradev reads."
+msgstr "此版本的 Claude Jobs 比 Paradev 能读取的版本更新。"
+
 msgid "This view hit an error"
 msgstr "此视图出错了"
 
@@ -21029,6 +21076,9 @@ msgstr "到首个工作区的时间"
 
 msgid "Time zone"
 msgstr "时区"
+
+msgid "timed out"
+msgstr "超时"
 
 msgid "Tinted"
 msgstr "色调"
@@ -21725,6 +21775,12 @@ msgstr "更新分支"
 msgid "Update check failed. Please try again."
 msgstr "检查更新失败。请重试。"
 
+msgid "Update Claude Jobs"
+msgstr "更新 Claude Jobs"
+
+msgid "Update Claude Jobs to {MIN_CLAUDE_JOBS_VERSION} or later."
+msgstr "请将 Claude Jobs 更新到 {MIN_CLAUDE_JOBS_VERSION} 或更高版本。"
+
 msgid "Update couldn't preserve sessions"
 msgstr "更新无法保留会话"
 
@@ -22276,6 +22332,9 @@ msgstr "想让某件事早点做？<0>在Discord上告诉我们</0>。这里的�
 msgid "Warn before closing a running terminal"
 msgstr "关闭正在运行的终端前发出警告"
 
+msgid "warning"
+msgstr "警告"
+
 msgid "Warning"
 msgstr "警告"
 
@@ -22546,6 +22605,12 @@ msgstr "接下来"
 
 msgid "When a channel notifies you"
 msgstr "当频道通知你时"
+
+msgid "When a pull request is merged in {repos}"
+msgstr "当 {repos} 中的拉取请求被合并时"
+
+msgid "When a pull request is opened in {repos}"
+msgstr "当 {repos} 中有拉取请求被打开时"
 
 msgid "When a trigger fires, the Mac you picked opens a new workspace and the agent starts on your prompt. Event runs include the event, so the agent knows what to look at. Reply to the run to keep going."
 msgstr "触发器触发时，你选的 Mac 会打开一个新工作区，智能体开始执行你的提示词。由事件触发的运行会带上该事件，所以智能体知道要看什么。在运行中回复即可继续。"

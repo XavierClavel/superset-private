@@ -5,8 +5,8 @@ import { useNavigate } from "@tanstack/react-router";
 import { useCallback } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
 import { useOpenNewWorkspace } from "renderer/hooks/useOpenNewWorkspace";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import {
@@ -29,7 +29,7 @@ export function useLinearIssueActions() {
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const organizationId = useActiveOrganizationId();
-	const backend = useLinearBackend();
+	const backend = usePlanBackend();
 	const utils = cloudTrpc.useUtils();
 	const localUtils = electronTrpc.useUtils();
 	const openNewWorkspace = useOpenNewWorkspace();

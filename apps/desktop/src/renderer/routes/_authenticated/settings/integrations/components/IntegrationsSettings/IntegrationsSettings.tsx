@@ -20,7 +20,7 @@ import {
 } from "renderer/components/Paywall";
 import { env } from "renderer/env.renderer";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
@@ -105,7 +105,7 @@ export function IntegrationsSettings({
 			{ enabled: !!activeOrganizationId },
 		);
 
-	const usesLinearApiKey = useLinearBackend() === "local";
+	const usesLinearApiKey = usePlanBackend() === "local";
 	const { data: linearApiKey, isPending: isLinearApiKeyPending } =
 		electronTrpc.linear.status.useQuery(undefined, {
 			enabled: usesLinearApiKey,
