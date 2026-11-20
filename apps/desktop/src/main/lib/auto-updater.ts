@@ -15,12 +15,13 @@ import {
 	isUpstreamServerError,
 } from "main/lib/update-error-classification";
 import { redactUpdateError } from "main/lib/update-error-redaction";
-import { gte, prerelease } from "semver";
+import { gte } from "semver";
 import {
 	AUTO_UPDATE_STATUS,
 	type AutoUpdateProgress,
 	type AutoUpdateStatus,
 	type AutoUpdateStatusEvent,
+	isCanaryVersion,
 	RELEASES_URL,
 } from "shared/auto-update";
 import { PLATFORM } from "shared/constants";
@@ -62,25 +63,14 @@ const INSTALL_TIME_CHECK_TIMEOUT_MS = 2000;
 // The message electron-updater attaches to the `error` event of a failed check.
 const FEED_READ_ERROR_PREFIX = "Cannot check for updates";
 
-/**
- * Detect if this is a prerelease build from app version using semver.
- * Versions like "0.0.53-canary" have prerelease component ["canary"].
- * Stable versions like "0.0.53" have no prerelease component.
- */
-function isPrereleaseBuild(): boolean {
-	const version = app.getVersion();
-	const prereleaseComponents = prerelease(version);
-	return prereleaseComponents !== null && prereleaseComponents.length > 0;
-}
-
-const IS_PRERELEASE = isPrereleaseBuild();
+const IS_CANARY = isCanaryVersion(app.getVersion());
 const IS_AUTO_UPDATE_PLATFORM = PLATFORM.IS_MAC || PLATFORM.IS_LINUX;
 
 // Use explicit feed URLs to ensure we always fetch platform-specific manifests
 // (for example latest-mac.yml and latest-linux.yml) from the correct release.
 // - Stable: fetches from /releases/latest/download/ (latest non-prerelease)
 // - Canary: fetches from /releases/download/desktop-canary/ (rolling canary tag)
-const UPDATE_FEED_URL = IS_PRERELEASE
+const UPDATE_FEED_URL = IS_CANARY
 	? `${RELEASES_URL}/download/desktop-canary`
 	: `${RELEASES_URL}/latest/download`;
 
@@ -557,8 +547,8 @@ export function setupAutoUpdater(): void {
 	autoUpdater.autoInstallOnAppQuit = true;
 	autoUpdater.disableDifferentialDownload = true;
 
-	// Allow downgrade for prerelease builds so users can switch back to stable
-	autoUpdater.allowDowngrade = IS_PRERELEASE;
+	// Allow downgrade for canary builds so users can switch back to stable
+	autoUpdater.allowDowngrade = IS_CANARY;
 
 	// Use generic provider with explicit feed URL so electron-updater can request
 	// the correct manifest for the current platform from GitHub release assets.
@@ -568,7 +558,7 @@ export function setupAutoUpdater(): void {
 	});
 
 	log.info(
-		`[auto-updater] Initialized: version=${app.getVersion()}, channel=${IS_PRERELEASE ? "canary" : "stable"}, feedURL=${UPDATE_FEED_URL}`,
+		`[auto-updater] Initialized: version=${app.getVersion()}, channel=${IS_CANARY ? "canary" : "stable"}, feedURL=${UPDATE_FEED_URL}`,
 	);
 
 	autoUpdater.on("error", (error, message?: string) => {

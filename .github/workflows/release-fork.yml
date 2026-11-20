@@ -1,0 +1,67 @@
+# Every push to main publishes <apps/desktop version>-fork.<run number> as the latest release, which installed fork
+# builds update to. macOS installs an update only when it is signed with the same certificate as the installed build:
+# the MAC_CERTIFICATE secret (FORK.md, "Releasing").
+name: Release Fork
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: release-fork
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/build-desktop.yml
+    with:
+      channel: stable
+      version_suffix: -fork.${{ github.run_number }}
+      artifact_prefix: desktop
+      artifact_retention_days: 7
+    secrets: inherit
+
+  publish:
+    name: Publish GitHub Release
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          path: release-artifacts
+          pattern: desktop-*
+          merge-multiple: true
+
+      - name: Merge macOS auto-update manifests
+        uses: ./.github/actions/merge-mac-manifests
+        with:
+          artifact-prefix: desktop
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          VERSION="$(node -p "require('./apps/desktop/package.json').version")-fork.${{ github.run_number }}"
+          # electron-builder names the Linux manifest after the prerelease tag; installed builds read latest-linux.yml.
+          for file in release-artifacts/*-linux.yml; do
+            [ "$file" = release-artifacts/latest-linux.yml ] || cp "$file" release-artifacts/latest-linux.yml
+          done
+          gh release create "v$VERSION" release-artifacts/* \
+            --target "$GITHUB_SHA" \
+            --title "Superset fork $VERSION" \
+            --generate-notes \
+            --latest
