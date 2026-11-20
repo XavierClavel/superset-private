@@ -5,7 +5,7 @@ name: Release Fork
 
 on:
   push:
-    branches: [main, fix-autoupdate-public-rep-5ecfb8ab]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
