@@ -2572,12 +2572,16 @@ function queueInitialCommand(
 		}
 		// Even after the marker, the TTY is still in canonical mode (the marker
 		// fires from precmd, before the line editor takes over), so whatever we
-		// type here rides the kernel's MAX_CANON line limit. Long commands go
-		// to disk; only a short source line is typed.
+		// type here rides the kernel's MAX_CANON line limit. A typed newline is
+		// an Enter keypress: line-editor plugins that auto-close quotes (fish
+		// autopair, zsh-autopair) make the first line complete, so it runs alone
+		// and the rest of the prompt is lost. Long or multi-line commands go to
+		// disk; only a short source line is typed.
 		let typedText = effectiveCommand;
 		if (
+			effectiveCommand.includes("\n") ||
 			Buffer.byteLength(effectiveCommand, "utf8") >
-			MAX_TYPED_INITIAL_COMMAND_BYTES
+				MAX_TYPED_INITIAL_COMMAND_BYTES
 		) {
 			const staged = stageInitialCommandScript(session, effectiveCommand);
 			if (staged) {

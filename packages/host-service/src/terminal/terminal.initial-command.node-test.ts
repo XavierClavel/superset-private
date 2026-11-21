@@ -127,6 +127,37 @@ describe("initialCommand delivery", () => {
 		await disposeSessionAndWait(terminalId, db);
 	});
 
+	test("a multi-line initialCommand is staged, not typed line by line", async () => {
+		const terminalId = `e2e-multiline-${randomUUID().slice(0, 8)}`;
+		const outFile = path.join(TEST_HOME, `multiline-${terminalId}`);
+		const payload = "first line : test1\nsecond line after the break";
+		const command = `printf '%s' '${payload}' > "${outFile}"`;
+
+		const session = await createTerminalSessionInternal({
+			terminalId,
+			workspaceId,
+			db,
+			listed: true,
+			initialCommand: command,
+		});
+		assert.ok(!("error" in session), "error" in session ? session.error : "");
+		if ("error" in session) return;
+
+		await waitFor(
+			() =>
+				fs.existsSync(outFile) && fs.readFileSync(outFile, "utf8") === payload,
+			10_000,
+		);
+
+		const snap = await snapshotSession({ terminalId, workspaceId, db });
+		assert.ok(!("error" in snap), JSON.stringify(snap));
+		if ("error" in snap) return;
+		assert.ok(snap.text.includes("superset-launch-"));
+		assert.ok(!snap.text.includes("second line after the break"));
+
+		await disposeSessionAndWait(terminalId, db);
+	});
+
 	test("staging failure falls back to typing the full command", async () => {
 		const terminalId = `e2e-fallback-${randomUUID().slice(0, 8)}`;
 		const outFile = path.join(TEST_HOME, `fallback-${terminalId}`);
