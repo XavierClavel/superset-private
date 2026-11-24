@@ -4109,6 +4109,9 @@ msgstr "Tuyển dụng"
 msgid "Carousel"
 msgstr "Carousel"
 
+msgid "Catch-up"
+msgstr "Chạy bù"
+
 msgid "Category"
 msgstr "Danh mục"
 
@@ -4178,6 +4181,9 @@ msgstr "Đổi trạng thái"
 #. placeholder {0}: issue.state.name
 msgid "Change status from {0}"
 msgstr "Đổi trạng thái (hiện tại: {0})"
+
+msgid "Change the trigger in Claude Jobs."
+msgstr "Hãy đổi trình kích hoạt trong Claude Jobs."
 
 #. placeholder {0}: organizationRoleName(role)
 msgid "Change to {0}"
@@ -4496,6 +4502,9 @@ msgstr "Claude hiện đang chạy trong workspace component-showcase."
 
 msgid "Claude Jobs {outdatedVersion} is too old for Paradev. Open it to update it, or install the latest version."
 msgstr "Claude Jobs {outdatedVersion} quá cũ đối với Paradev. Hãy mở ứng dụng để cập nhật, hoặc cài đặt phiên bản mới nhất."
+
+msgid "Claude Jobs folder"
+msgstr "Thư mục Claude Jobs"
 
 msgid "Claude Jobs is not installed."
 msgstr "Claude Jobs chưa được cài đặt."
@@ -6191,6 +6200,7 @@ msgstr "Không thể tải {filename}"
 msgid "Couldn't load agent settings: {0}"
 msgstr "Không thể tải cài đặt agent: {0}"
 
+#. placeholder {0}: errorMessage(statusQuery.error)
 #. placeholder {0}: loadError.message
 msgid "Couldn't load automation: {0}"
 msgstr "Không thể tải tự động hóa: {0}"
@@ -6470,9 +6480,6 @@ msgstr "Tạo environment đám mây"
 msgid "Create a Dev"
 msgstr "Tạo Dev"
 
-msgid "Create a job in Claude Jobs and it shows here."
-msgstr "Tạo một job trong Claude Jobs và nó sẽ hiện ở đây."
-
 msgid "Create a key in Linear"
 msgstr "Tạo khóa trong Linear"
 
@@ -6541,6 +6548,9 @@ msgstr "Tạo nhóm mới"
 
 msgid "Create new project"
 msgstr "Tạo dự án mới"
+
+msgid "Create one here, or in Claude Jobs."
+msgstr "Tạo một tự động hóa ở đây hoặc trong Claude Jobs."
 
 msgid "Create one to start a cloud workspace from it."
 msgstr "Tạo một môi trường để khởi động workspace trên cloud từ đó."
@@ -6738,6 +6748,9 @@ msgstr "Người tạo: {0}"
 msgid "Credentials stay on the server"
 msgstr "Thông tin xác thực được giữ trên máy chủ"
 
+msgid "Cron expression"
+msgstr "Biểu thức cron"
+
 #. placeholder {0}: job.cron
 msgid "Cron: {0}"
 msgstr "Cron: {0}"
@@ -6898,6 +6911,12 @@ msgstr "Ngày đầu"
 
 msgid "days"
 msgstr "ngày"
+
+msgid "Days of the month"
+msgstr "Các ngày trong tháng"
+
+msgid "Days of the week"
+msgstr "Các ngày trong tuần"
 
 msgid "days running three agents at once"
 msgstr "số ngày chạy ba agent cùng lúc"

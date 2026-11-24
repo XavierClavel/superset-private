@@ -17,7 +17,10 @@ import {
 	TableRow,
 } from "@superset/ui/table";
 import { cn } from "@superset/ui/utils";
+import { useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { LuCalendarClock, LuRotateCw, LuTriangleAlert } from "react-icons/lu";
+import { useCreateAgentSession } from "renderer/hooks/useCreateAgentSession";
 import { useNow } from "renderer/hooks/useNow";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { DATA_TABLE_HEAD_CELL } from "renderer/routes/_authenticated/_dashboard/components/DataTableHeader";
@@ -26,7 +29,8 @@ import { PageHeader } from "renderer/routes/_authenticated/_dashboard/components
 import { useClaudeJobActions } from "../../hooks/useClaudeJobActions";
 import { ClaudeJobRow } from "./components/ClaudeJobRow";
 import { ClaudeJobsUnavailable } from "./components/ClaudeJobsUnavailable";
-import { CLAUDE_JOBS_URL } from "./constants";
+import { NewClaudeJobDialog } from "./components/NewClaudeJobDialog";
+import { CLAUDE_JOBS_AGENT_PROMPT, CLAUDE_JOBS_URL } from "./constants";
 
 const STATUS_REFRESH_MS = 15_000;
 
@@ -38,6 +42,10 @@ export function ClaudeJobsView() {
 	});
 	const actions = useClaudeJobActions();
 	const status = statusQuery.data;
+	const navigate = useNavigate();
+	const [newJobOpen, setNewJobOpen] = useState(false);
+	const { createSession, isPending: creatingWithAgent } =
+		useCreateAgentSession();
 
 	const content = (() => {
 		if (statusQuery.isPending) {
@@ -98,11 +106,11 @@ export function ClaudeJobsView() {
 							<Trans>No automations yet</Trans>
 						</EmptyTitle>
 						<EmptyDescription>
-							<Trans>Create a job in Claude Jobs and it shows here.</Trans>
+							<Trans>Create one here, or in Claude Jobs.</Trans>
 						</EmptyDescription>
 					</EmptyHeader>
-					<Button variant="outline" size="sm" onClick={actions.openApp}>
-						<Trans>Open Claude Jobs</Trans>
+					<Button size="sm" onClick={() => setNewJobOpen(true)}>
+						<Trans>New automation</Trans>
 					</Button>
 				</Empty>
 			);
@@ -134,6 +142,12 @@ export function ClaudeJobsView() {
 								job={job}
 								now={now}
 								isStarting={actions.startingId === job.id}
+								onOpen={() =>
+									navigate({
+										to: "/automations/$automationId",
+										params: { automationId: job.id },
+									})
+								}
 								onRunNow={() => actions.runNow(job)}
 								onToggleEnabled={() => actions.setEnabled(job, !job.enabled)}
 								onDelete={() => actions.confirmDelete(job)}
@@ -153,9 +167,15 @@ export function ClaudeJobsView() {
 					<FeatureHeader
 						title={<Trans>Automations</Trans>}
 						docsUrl={CLAUDE_JOBS_URL}
-						onCreate={actions.openApp}
-						isCreating={false}
-						showCreate={false}
+						onCreate={() => void createSession(CLAUDE_JOBS_AGENT_PROMPT)}
+						isCreating={creatingWithAgent}
+						showCreate={status?.state === "ready"}
+						createDescription={<Trans>Describe the work to your agent</Trans>}
+						primaryAction={{
+							label: <Trans>New automation</Trans>,
+							onSelect: () => setNewJobOpen(true),
+							disabled: false,
+						}}
 					/>
 					<div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
 						<Trans>Runs on this Mac with Claude Jobs.</Trans>
@@ -173,6 +193,7 @@ export function ClaudeJobsView() {
 					<div className="mt-5">{content}</div>
 				</div>
 			</div>
+			<NewClaudeJobDialog open={newJobOpen} onOpenChange={setNewJobOpen} />
 		</div>
 	);
 }

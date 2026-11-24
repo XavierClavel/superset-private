@@ -24,6 +24,8 @@ export interface ClaudeJobRun {
 	cost_usd: number | null;
 	result: string | null;
 	error: string | null;
+	/** What a running run last said it was doing. */
+	progress?: { text: string } | null;
 }
 
 export interface ClaudeJobEvent {
@@ -42,7 +44,8 @@ export interface ClaudeJob {
 	weekdays: number[];
 	month_days: number[];
 	cron: string | null;
-	cwd: string;
+	/** Null for Claude Jobs' own folder, where a job with no project runs. */
+	cwd: string | null;
 	enabled: boolean;
 	event: ClaudeJobEvent | null;
 	next_run: string | null;
