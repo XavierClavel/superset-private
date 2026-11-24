@@ -2369,6 +2369,9 @@ msgstr "Configuraciones de agente"
 msgid "Agent credentials changed"
 msgstr "Las credenciales del agente cambiaron"
 
+msgid "Agent documents"
+msgstr "Documentos de agentes"
+
 msgid "Agent finished"
 msgstr "El agente terminó"
 
@@ -4470,6 +4473,9 @@ msgstr "Elige cuándo te avisa Paradev."
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "Elige dónde se abren los agentes iniciados desde comentarios, el modo de diseño y Pages."
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "Elige dónde publica Claude los informes y otros documentos: una página de Paradev que tu organización puede ver y comentar, o un artefacto privado de Claude."
+
 msgid "Choose your default skin tone"
 msgstr "Elige tu tono de piel predeterminado"
 
@@ -4481,6 +4487,9 @@ msgstr "CI falló"
 
 msgid "Clarify this"
 msgstr "Aclara esto"
+
+msgid "Claude artifacts"
+msgstr "Artefactos de Claude"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Sesiones de Claude Code, con claude --resume"
@@ -6447,6 +6456,9 @@ msgstr "No se pudo actualizar la cola"
 
 msgid "Couldn't update thread"
 msgstr "No se pudo actualizar el hilo"
+
+msgid "Couldn't update where agents publish"
+msgstr "No se pudo cambiar dónde publican los agentes"
 
 msgid "Couldn't upload {name}"
 msgstr "No se pudo subir {name}"

@@ -2369,6 +2369,9 @@ msgstr "Agentconfiguraties"
 msgid "Agent credentials changed"
 msgstr "Agentgegevens gewijzigd"
 
+msgid "Agent documents"
+msgstr "Agentdocumenten"
+
 msgid "Agent finished"
 msgstr "Agent klaar"
 
@@ -4470,6 +4473,9 @@ msgstr "Kies wanneer Paradev je een seintje geeft."
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "Kies waar agents worden geopend die vanuit opmerkingen, de ontwerpmodus en Pages worden gestart."
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "Kies waar Claude rapporten en andere documenten publiceert: een Paradev-pagina die je organisatie kan bekijken en becommentariëren, of een privé Claude-artefact."
+
 msgid "Choose your default skin tone"
 msgstr "Kies je standaard huidskleur"
 
@@ -4481,6 +4487,9 @@ msgstr "CI mislukt"
 
 msgid "Clarify this"
 msgstr "Verduidelijk dit"
+
+msgid "Claude artifacts"
+msgstr "Claude-artefacten"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Claude Code-sessies, met claude --resume"
@@ -6447,6 +6456,9 @@ msgstr "Kan de wachtrij niet bijwerken"
 
 msgid "Couldn't update thread"
 msgstr "Kan thread niet bijwerken"
+
+msgid "Couldn't update where agents publish"
+msgstr "Kan niet wijzigen waar agents publiceren"
 
 msgid "Couldn't upload {name}"
 msgstr "{name} uploaden mislukt"

@@ -2369,6 +2369,9 @@ msgstr "智能体配置"
 msgid "Agent credentials changed"
 msgstr "智能体凭据已更改"
 
+msgid "Agent documents"
+msgstr "智能体文档"
+
 msgid "Agent finished"
 msgstr "智能体已完成"
 
@@ -4470,6 +4473,9 @@ msgstr "选择Paradev在什么时候通知你。"
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "选择从评论、设计模式和 Pages 启动的智能体的打开位置。"
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "选择 Claude 发布报告和其他文档的位置：组织成员可以查看和评论的 Paradev 页面，或私有的 Claude 工件。"
+
 msgid "Choose your default skin tone"
 msgstr "选择默认肤色"
 
@@ -4481,6 +4487,9 @@ msgstr "CI失败"
 
 msgid "Clarify this"
 msgstr "阐明这里"
+
+msgid "Claude artifacts"
+msgstr "Claude 工件"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Claude Code 会话（使用 claude --resume）"
@@ -6447,6 +6456,9 @@ msgstr "无法更新队列"
 
 msgid "Couldn't update thread"
 msgstr "无法更新讨论"
+
+msgid "Couldn't update where agents publish"
+msgstr "无法更改智能体的发布位置"
 
 msgid "Couldn't upload {name}"
 msgstr "无法上传 {name}"

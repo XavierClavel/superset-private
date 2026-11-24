@@ -9,6 +9,9 @@ case "$SUPERSET_PAGES_NUDGE" in
   0|off|OFF|false|FALSE|no|NO) exit 0 ;;
 esac
 
+APP_HOME="${SUPERSET_HOME_DIR:-$(dirname "$0")/..}"
+[ "$(head -n 1 "$APP_HOME/publish-target" 2>/dev/null | tr -d '[:space:]')" = "artifact" ] && exit 0
+
 json_field() {
   printf '%s' "$INPUT" | grep -oE "\"$1\"[[:space:]]*:[[:space:]]*\"[^\"]*\"" | head -n 1 | grep -oE '"[^"]*"$' | tr -d '"'
 }

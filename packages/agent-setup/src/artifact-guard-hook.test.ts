@@ -7,6 +7,7 @@ import {
 	getArtifactGuardScriptContent,
 } from "./artifact-guard-hook";
 import { getTemplatePath } from "./config";
+import { writePublishTarget } from "./publish-target";
 
 function renderScript(): string {
 	return readFileSync(
@@ -25,6 +26,7 @@ function runGuard(
 			...process.env,
 			SUPERSET_TERMINAL_ID: "terminal-test",
 			SUPERSET_ARTIFACT_GUARD_STATE_DIR: stateDir,
+			SUPERSET_HOME_DIR: appHomeDir,
 			...envOverrides,
 		},
 		stdin: Buffer.from(JSON.stringify(input)),
@@ -46,9 +48,11 @@ function decisionOf(stdout: string): string | null {
 }
 
 let stateDir = "";
+let appHomeDir = "";
 
 function freshStateDir(): void {
 	stateDir = mkdtempSync(path.join(tmpdir(), "artifact-guard-state-"));
+	appHomeDir = mkdtempSync(path.join(tmpdir(), "artifact-guard-home-"));
 }
 
 const publishInput = (sessionId: string) => ({
@@ -144,6 +148,18 @@ describe("artifact guard hook", () => {
 			});
 			expect(stdout).toBe("");
 		}
+	});
+
+	it("lets every publish through when the user picked Claude artifacts", () => {
+		freshStateDir();
+		writePublishTarget("artifact", appHomeDir);
+		expect(runGuard(publishInput("session-a")).stdout).toBe("");
+	});
+
+	it("still nudges when the user picked Paradev Pages", () => {
+		freshStateDir();
+		writePublishTarget("page", appHomeDir);
+		expect(decisionOf(runGuard(publishInput("session-a")).stdout)).toBe("deny");
 	});
 
 	it("renders the marker into the provisioned script", () => {

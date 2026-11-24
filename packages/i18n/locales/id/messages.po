@@ -2369,6 +2369,9 @@ msgstr "Konfigurasi Agen"
 msgid "Agent credentials changed"
 msgstr "Kredensial agen berubah"
 
+msgid "Agent documents"
+msgstr "Dokumen agen"
+
 msgid "Agent finished"
 msgstr "Agen selesai"
 
@@ -4470,6 +4473,9 @@ msgstr "Pilih kapan Paradev memberi tahu Anda."
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "Pilih tempat membuka agen yang dimulai dari komentar, mode desain, dan Pages."
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "Pilih tempat Claude menerbitkan laporan dan dokumen lain: halaman Paradev yang dapat dilihat dan dikomentari organisasi Anda, atau artefak Claude pribadi."
+
 msgid "Choose your default skin tone"
 msgstr "Pilih warna kulit default"
 
@@ -4481,6 +4487,9 @@ msgstr "CI gagal"
 
 msgid "Clarify this"
 msgstr "Perjelas ini"
+
+msgid "Claude artifacts"
+msgstr "Artefak Claude"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Sesi Claude Code, dengan claude --resume"
@@ -6447,6 +6456,9 @@ msgstr "Tidak dapat memperbarui antrean"
 
 msgid "Couldn't update thread"
 msgstr "Tidak bisa memperbarui thread"
+
+msgid "Couldn't update where agents publish"
+msgstr "Tidak dapat mengubah tempat agen menerbitkan"
 
 msgid "Couldn't upload {name}"
 msgstr "Gagal mengunggah {name}"

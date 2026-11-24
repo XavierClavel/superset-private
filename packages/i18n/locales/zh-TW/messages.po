@@ -2369,6 +2369,9 @@ msgstr "代理程式配置"
 msgid "Agent credentials changed"
 msgstr "代理憑證已變更"
 
+msgid "Agent documents"
+msgstr "代理程式文件"
+
 msgid "Agent finished"
 msgstr "代理程式已完成"
 
@@ -4470,6 +4473,9 @@ msgstr "選擇Paradev在什麼時候通知你。"
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "選擇從留言、設計模式和 Pages 啟動的代理程式的開啟位置。"
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "選擇 Claude 發布報告和其他文件的位置：組織成員可以檢視和留言的 Paradev 頁面，或私人的 Claude 成品。"
+
 msgid "Choose your default skin tone"
 msgstr "選擇預設膚色"
 
@@ -4481,6 +4487,9 @@ msgstr "CI失敗"
 
 msgid "Clarify this"
 msgstr "闡明這裡"
+
+msgid "Claude artifacts"
+msgstr "Claude 成品"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Claude Code 工作階段（使用 claude --resume）"
@@ -6447,6 +6456,9 @@ msgstr "無法更新佇列"
 
 msgid "Couldn't update thread"
 msgstr "無法更新討論"
+
+msgid "Couldn't update where agents publish"
+msgstr "無法變更代理程式的發布位置"
 
 msgid "Couldn't upload {name}"
 msgstr "無法上傳 {name}"

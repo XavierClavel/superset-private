@@ -16,6 +16,10 @@
 			"types": "./src/paths.ts",
 			"default": "./src/paths.ts"
 		},
+		"./publish-target": {
+			"types": "./src/publish-target.ts",
+			"default": "./src/publish-target.ts"
+		},
 		"./claude-project-links": {
 			"types": "./src/claude-project-links.ts",
 			"default": "./src/claude-project-links.ts"
