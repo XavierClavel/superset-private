@@ -3,6 +3,11 @@ import {
 	teardownSingleAgent,
 	writeSharedDisabledAgentIds,
 } from "@superset/agent-setup";
+import {
+	PUBLISH_TARGETS,
+	readPublishTarget,
+	writePublishTarget,
+} from "@superset/agent-setup/publish-target";
 import type { SupportedLocale } from "@superset/i18n/locales";
 import { isSupportedLocale } from "@superset/i18n/locales";
 import {
@@ -294,6 +299,15 @@ export const createSettingsRouter = () => {
 					})
 					.run();
 
+				return { success: true };
+			}),
+
+		getPublishTarget: publicProcedure.query(() => readPublishTarget()),
+
+		setPublishTarget: publicProcedure
+			.input(z.object({ target: z.enum(PUBLISH_TARGETS) }))
+			.mutation(({ input }) => {
+				writePublishTarget(input.target);
 				return { success: true };
 			}),
 

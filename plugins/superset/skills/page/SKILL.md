@@ -91,8 +91,14 @@ So when the user asks for a page, or for anything a teammate will open, this
 skill is the one that runs. Reach for `Artifact` only when the user names it,
 or when there is no Paradev workspace to publish into. Inside a Paradev
 terminal a first `Artifact` publish is denied by a hook that points back here;
-that denial is the reminder, not an error to work around. Someone who wants it
-gone entirely sets `SUPERSET_PAGES_NUDGE=off` in their terminal environment.
+that denial is the reminder, not an error to work around.
+
+The user can choose Claude artifacts instead, in Settings > General > Agent
+documents. That choice is saved in `$SUPERSET_HOME_DIR/publish-target`
+(`~/.paradev/publish-target` when the variable is unset): when it reads
+`artifact`, use `Artifact` for documents and use a page only when the user asks
+for one by name. `SUPERSET_PAGES_NUDGE=off` in the terminal environment only
+turns off the hook.
 
 ## The content policy, which is what actually bites
 

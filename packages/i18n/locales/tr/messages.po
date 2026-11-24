@@ -2369,6 +2369,9 @@ msgstr "Ajan yapılandırmaları"
 msgid "Agent credentials changed"
 msgstr "Ajan kimlik bilgileri değişti"
 
+msgid "Agent documents"
+msgstr "Ajan belgeleri"
+
 msgid "Agent finished"
 msgstr "Ajan bitirdi"
 
@@ -4470,6 +4473,9 @@ msgstr "Paradev'in sizi ne zaman uyaracağını seçin."
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "Yorumlardan, tasarım modundan ve Pages üzerinden başlatılan ajanların nerede açılacağını seçin."
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "Claude'un raporları ve diğer belgeleri nerede yayımlayacağını seçin: kuruluşunuzun görüp yorum yapabileceği bir Paradev sayfası veya özel bir Claude yapıtı."
+
 msgid "Choose your default skin tone"
 msgstr "Varsayılan ten rengini seç"
 
@@ -4481,6 +4487,9 @@ msgstr "CI başarısız"
 
 msgid "Clarify this"
 msgstr "Bunu netleştir"
+
+msgid "Claude artifacts"
+msgstr "Claude yapıtları"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Claude Code oturumları, claude --resume ile"
@@ -6447,6 +6456,9 @@ msgstr "Kuyruk güncellenemedi"
 
 msgid "Couldn't update thread"
 msgstr "Konu güncellenemedi"
+
+msgid "Couldn't update where agents publish"
+msgstr "Ajanların yayımlama yeri değiştirilemedi"
 
 msgid "Couldn't upload {name}"
 msgstr "{name} yüklenemedi"

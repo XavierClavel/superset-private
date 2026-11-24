@@ -2369,6 +2369,9 @@ msgstr "Cấu hình agent"
 msgid "Agent credentials changed"
 msgstr "Thông tin xác thực của agent đã thay đổi"
 
+msgid "Agent documents"
+msgstr "Tài liệu của tác tử"
+
 msgid "Agent finished"
 msgstr "Agent đã xong"
 
@@ -4470,6 +4473,9 @@ msgstr "Chọn khi nào Paradev báo cho bạn."
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "Chọn nơi mở tác nhân được khởi chạy từ bình luận, chế độ thiết kế và Pages."
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "Chọn nơi Claude xuất bản báo cáo và các tài liệu khác: một trang Paradev mà tổ chức của bạn có thể xem và bình luận, hoặc một artifact Claude riêng tư."
+
 msgid "Choose your default skin tone"
 msgstr "Chọn màu da mặc định"
 
@@ -4481,6 +4487,9 @@ msgstr "CI thất bại"
 
 msgid "Clarify this"
 msgstr "Làm rõ điều này"
+
+msgid "Claude artifacts"
+msgstr "Artifact Claude"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Phiên Claude Code, với claude --resume"
@@ -6447,6 +6456,9 @@ msgstr "Không thể cập nhật hàng đợi"
 
 msgid "Couldn't update thread"
 msgstr "Không thể cập nhật luồng"
+
+msgid "Couldn't update where agents publish"
+msgstr "Không thể thay đổi nơi tác tử xuất bản"
 
 msgid "Couldn't upload {name}"
 msgstr "Không tải lên được {name}"

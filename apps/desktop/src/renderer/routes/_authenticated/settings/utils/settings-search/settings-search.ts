@@ -46,6 +46,7 @@ export const SETTING_ITEM_ID = {
 	BEHAVIOR_FILE_AUTO_SAVE: "behavior-file-auto-save",
 	BEHAVIOR_AGENT_SESSION_PLACEMENT: "behavior-agent-session-placement",
 	BEHAVIOR_ACP_CHAT: "behavior-acp-chat",
+	BEHAVIOR_PUBLISH_TARGET: "behavior-publish-target",
 	BEHAVIOR_CHANGES_OPEN_TARGET: "behavior-changes-open-target",
 	BEHAVIOR_RESOURCE_MONITOR: "behavior-resource-monitor",
 	BEHAVIOR_DICTATION: "behavior-dictation",
@@ -730,6 +731,25 @@ const SETTINGS_ITEMS: SettingsItem[] = [
 			"pane",
 			"toggle",
 			"switch",
+		],
+	},
+	{
+		id: SETTING_ITEM_ID.BEHAVIOR_PUBLISH_TARGET,
+		section: "behavior",
+		title: "Agent documents",
+		description:
+			"Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact.",
+		keywords: [
+			"pages",
+			"page",
+			"artifact",
+			"artifacts",
+			"claude",
+			"publish",
+			"document",
+			"report",
+			"share",
+			"agent",
 		],
 	},
 	{

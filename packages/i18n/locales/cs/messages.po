@@ -2369,6 +2369,9 @@ msgstr "Konfigurace agentů"
 msgid "Agent credentials changed"
 msgstr "Přihlašovací údaje agenta se změnily"
 
+msgid "Agent documents"
+msgstr "Dokumenty agentů"
+
 msgid "Agent finished"
 msgstr "Agent dokončil"
 
@@ -4470,6 +4473,9 @@ msgstr "Zvolte, kdy vás Paradev upozorní."
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "Vyberte, kde se otevřou agenti spuštění z komentářů, režimu návrhu a stránek Pages."
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "Vyberte, kam Claude publikuje zprávy a další dokumenty: na stránku Paradev, kterou vaše organizace může zobrazit a komentovat, nebo do soukromého artefaktu Claude."
+
 msgid "Choose your default skin tone"
 msgstr "Vyberte výchozí odstín pleti"
 
@@ -4481,6 +4487,9 @@ msgstr "CI selhalo"
 
 msgid "Clarify this"
 msgstr "Vyjasni to"
+
+msgid "Claude artifacts"
+msgstr "Artefakty Claude"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Relace Claude Code, s claude --resume"
@@ -6447,6 +6456,9 @@ msgstr "Frontu se nepodařilo aktualizovat"
 
 msgid "Couldn't update thread"
 msgstr "Nepodařilo se aktualizovat vlákno"
+
+msgid "Couldn't update where agents publish"
+msgstr "Nepodařilo se změnit, kam agenti publikují"
 
 msgid "Couldn't upload {name}"
 msgstr "{name} se nepodařilo nahrát"

@@ -2369,6 +2369,9 @@ msgstr "エージェント設定"
 msgid "Agent credentials changed"
 msgstr "エージェントの認証情報が変更されました"
 
+msgid "Agent documents"
+msgstr "エージェントのドキュメント"
+
 msgid "Agent finished"
 msgstr "エージェントが完了しました"
 
@@ -4470,6 +4473,9 @@ msgstr "Paradevから通知するタイミングを選びます。"
 msgid "Choose where agents started from comments, design mode, and Pages open."
 msgstr "コメント、デザインモード、Pages から起動したエージェントを開く場所を選択します。"
 
+msgid "Choose where Claude publishes reports and other documents: a Paradev page your organization can see and comment on, or a private Claude artifact."
+msgstr "Claude がレポートなどのドキュメントを公開する場所を選択します。組織のメンバーが閲覧・コメントできる Paradev ページか、非公開の Claude アーティファクトです。"
+
 msgid "Choose your default skin tone"
 msgstr "デフォルトの肌の色を選択"
 
@@ -4481,6 +4487,9 @@ msgstr "CIが失敗しました"
 
 msgid "Clarify this"
 msgstr "これを明確にして"
+
+msgid "Claude artifacts"
+msgstr "Claude アーティファクト"
 
 msgid "Claude Code sessions, with claude --resume"
 msgstr "Claude Code のセッション（claude --resume で再開）"
@@ -6447,6 +6456,9 @@ msgstr "キューを更新できませんでした"
 
 msgid "Couldn't update thread"
 msgstr "スレッドを更新できませんでした"
+
+msgid "Couldn't update where agents publish"
+msgstr "エージェントの公開先を変更できませんでした"
 
 msgid "Couldn't upload {name}"
 msgstr "{name} をアップロードできませんでした"
