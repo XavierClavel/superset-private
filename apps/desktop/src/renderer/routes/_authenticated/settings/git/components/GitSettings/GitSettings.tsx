@@ -25,6 +25,7 @@ import {
 	WorktreeLocationPicker,
 } from "../../../components/WorktreeLocationPicker";
 import { useDefaultWorktreePath } from "../../../components/WorktreeLocationPicker/useDefaultWorktreePath";
+import { IdleBuildOutputCleanupSetting } from "./components/IdleBuildOutputCleanupSetting";
 
 interface GitSettingsProps {
 	hostId: string | null;
@@ -255,6 +256,10 @@ export function GitSettings({ hostId }: GitSettingsProps) {
 						onReset={() => setWorktreeBaseDir.mutate(null)}
 					/>
 				</SettingsRow>
+				<IdleBuildOutputCleanupSetting
+					hostUrl={targetHostUrl}
+					isHostOnline={isHostOnline}
+				/>
 			</section>
 		</div>
 	);

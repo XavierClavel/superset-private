@@ -4494,6 +4494,9 @@ msgstr "Claude Code, Codex, Cursor, OpenCode a další."
 msgid "Claude is now running in workspace component-showcase."
 msgstr "Claude teď běží v pracovním prostoru component-showcase."
 
+msgid "Clean up idle worktrees"
+msgstr "Čistit nečinné worktree"
+
 msgid "Clean up stale TODOs…"
 msgstr "Ukliď zastaralé TODO…"
 
@@ -6877,11 +6880,17 @@ msgstr "Den v měsíci"
 msgid "Day One"
 msgstr "První den"
 
+msgid "days"
+msgstr "dní"
+
 msgid "days running three agents at once"
 msgstr "dní se třemi agenty najednou"
 
 msgid "days running two agents at once"
 msgstr "dní se dvěma agenty najednou"
+
+msgid "Days without activity"
+msgstr "Dny bez aktivity"
 
 msgid "Deactivated"
 msgstr "Deaktivováno"
@@ -7012,6 +7021,9 @@ msgstr "Smazat skupinu…"
 
 msgid "Delete host"
 msgstr "Smazat hosta"
+
+msgid "Delete ignored build folders (node_modules, target, build) in worktrees with no activity for this many days."
+msgstr "Odstraní ignorované složky sestavení (node_modules, target, build) ve worktree bez aktivity po zadaný počet dní."
 
 msgid "Delete image"
 msgstr "Smazat obrázek"

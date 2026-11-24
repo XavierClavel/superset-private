@@ -4494,6 +4494,9 @@ msgstr "Claude Code, Codex, Cursor, OpenCode, and more."
 msgid "Claude is now running in workspace component-showcase."
 msgstr "Claude is now running in workspace component-showcase."
 
+msgid "Clean up idle worktrees"
+msgstr "Clean up idle worktrees"
+
 msgid "Clean up stale TODOs…"
 msgstr "Clean up stale TODOs…"
 
@@ -6877,11 +6880,17 @@ msgstr "Day of the month"
 msgid "Day One"
 msgstr "Day One"
 
+msgid "days"
+msgstr "days"
+
 msgid "days running three agents at once"
 msgstr "days running three agents at once"
 
 msgid "days running two agents at once"
 msgstr "days running two agents at once"
+
+msgid "Days without activity"
+msgstr "Days without activity"
 
 msgid "Deactivated"
 msgstr "Deactivated"
@@ -7012,6 +7021,9 @@ msgstr "Delete group…"
 
 msgid "Delete host"
 msgstr "Delete host"
+
+msgid "Delete ignored build folders (node_modules, target, build) in worktrees with no activity for this many days."
+msgstr "Delete ignored build folders (node_modules, target, build) in worktrees with no activity for this many days."
 
 msgid "Delete image"
 msgstr "Delete image"

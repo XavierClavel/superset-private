@@ -4494,6 +4494,9 @@ msgstr "Claude Code, Codex, Cursor, OpenCode và nhiều nữa."
 msgid "Claude is now running in workspace component-showcase."
 msgstr "Claude hiện đang chạy trong workspace component-showcase."
 
+msgid "Clean up idle worktrees"
+msgstr "Dọn dẹp worktree không hoạt động"
+
 msgid "Clean up stale TODOs…"
 msgstr "Dọn các TODO cũ…"
 
@@ -6877,11 +6880,17 @@ msgstr "Ngày trong tháng"
 msgid "Day One"
 msgstr "Ngày đầu"
 
+msgid "days"
+msgstr "ngày"
+
 msgid "days running three agents at once"
 msgstr "số ngày chạy ba agent cùng lúc"
 
 msgid "days running two agents at once"
 msgstr "số ngày chạy hai agent cùng lúc"
+
+msgid "Days without activity"
+msgstr "Số ngày không hoạt động"
 
 msgid "Deactivated"
 msgstr "Đã vô hiệu hóa"
@@ -7012,6 +7021,9 @@ msgstr "Xóa nhóm…"
 
 msgid "Delete host"
 msgstr "Xóa host"
+
+msgid "Delete ignored build folders (node_modules, target, build) in worktrees with no activity for this many days."
+msgstr "Xóa các thư mục build bị bỏ qua (node_modules, target, build) trong các worktree không có hoạt động trong số ngày này."
 
 msgid "Delete image"
 msgstr "Xóa hình ảnh"
