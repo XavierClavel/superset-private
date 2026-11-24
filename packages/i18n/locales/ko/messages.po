@@ -3410,6 +3410,9 @@ msgstr "자동화를 찾을 수 없습니다"
 msgid "Automation not found."
 msgstr "자동화를 찾을 수 없습니다."
 
+msgid "Automation run"
+msgstr "자동화 실행"
+
 msgid "Automation saved"
 msgstr "자동화가 저장되었습니다"
 
@@ -6259,6 +6262,9 @@ msgstr "\"{name}\"의 이름을 자동으로 지정하지 못했습니다"
 msgid "Couldn't open in Chat Interface"
 msgstr "채팅 인터페이스에서 열 수 없습니다"
 
+msgid "Couldn't open the run as a chat"
+msgstr "실행을 채팅으로 열 수 없습니다"
+
 msgid "Couldn't open the screenshot"
 msgstr "스크린샷을 열 수 없습니다"
 
@@ -6302,6 +6308,9 @@ msgstr "머지 대기열에서 빼지 못했습니다"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "로컬 로그인 정보를 제거하지 못했습니다"
+
+msgid "Couldn't remove the run"
+msgstr "실행을 제거할 수 없습니다"
 
 msgid "Couldn't rename the group"
 msgstr "그룹 이름을 바꿀 수 없습니다"
@@ -14011,6 +14020,9 @@ msgstr "그래도 열기"
 
 msgid "Open App Store"
 msgstr "App Store 열기"
+
+msgid "Open as a chat"
+msgstr "채팅으로 열기"
 
 msgid "Open as comment pane"
 msgstr "코멘트 패널으로 열기"

@@ -3410,6 +3410,9 @@ msgstr "Automazione non trovata"
 msgid "Automation not found."
 msgstr "Automazione non trovata."
 
+msgid "Automation run"
+msgstr "Esecuzione dell'automazione"
+
 msgid "Automation saved"
 msgstr "Automazione salvata"
 
@@ -6259,6 +6262,9 @@ msgstr "Impossibile assegnare automaticamente un nome a \"{name}\""
 msgid "Couldn't open in Chat Interface"
 msgstr "Impossibile aprire nell’interfaccia chat"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Impossibile aprire l'esecuzione come chat"
+
 msgid "Couldn't open the screenshot"
 msgstr "Impossibile aprire lo screenshot"
 
@@ -6302,6 +6308,9 @@ msgstr "Impossibile rimuovere dalla coda di unione"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Impossibile rimuovere l'accesso locale"
+
+msgid "Couldn't remove the run"
+msgstr "Impossibile rimuovere l'esecuzione"
 
 msgid "Couldn't rename the group"
 msgstr "Impossibile rinominare il gruppo"
@@ -14011,6 +14020,9 @@ msgstr "Apri comunque"
 
 msgid "Open App Store"
 msgstr "Apri App Store"
+
+msgid "Open as a chat"
+msgstr "Apri come chat"
 
 msgid "Open as comment pane"
 msgstr "Apri come pannello dei commenti"

@@ -3410,6 +3410,9 @@ msgstr "Otomatisasi tidak ditemukan"
 msgid "Automation not found."
 msgstr "Otomatisasi tidak ditemukan."
 
+msgid "Automation run"
+msgstr "Eksekusi otomatisasi"
+
 msgid "Automation saved"
 msgstr "Otomatisasi disimpan"
 
@@ -6259,6 +6262,9 @@ msgstr "Tidak dapat menamai \"{name}\" secara otomatis"
 msgid "Couldn't open in Chat Interface"
 msgstr "Tidak dapat membuka di antarmuka chat"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Tidak dapat membuka run sebagai chat"
+
 msgid "Couldn't open the screenshot"
 msgstr "Tidak dapat membuka tangkapan layar"
 
@@ -6302,6 +6308,9 @@ msgstr "Gagal mengeluarkan dari antrean merge"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Tidak bisa menghapus sesi masuk lokal"
+
+msgid "Couldn't remove the run"
+msgstr "Tidak dapat menghapus run"
 
 msgid "Couldn't rename the group"
 msgstr "Tidak dapat mengganti nama grup"
@@ -14011,6 +14020,9 @@ msgstr "Tetap Buka"
 
 msgid "Open App Store"
 msgstr "Buka App Store"
+
+msgid "Open as a chat"
+msgstr "Buka sebagai chat"
 
 msgid "Open as comment pane"
 msgstr "Buka sebagai panel komentar"

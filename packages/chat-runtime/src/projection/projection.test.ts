@@ -98,4 +98,30 @@ describe("ChatSessionStore", () => {
 	test("returns null for an unknown session", () => {
 		expect(runtime.sessions.get("nope")).toBeNull();
 	});
+
+	test("lists the chats of a scope that took a prompt sent through Paradev", () => {
+		const userMessage = (sessionId: string, clientId?: string) =>
+			runtime.journal.append(sessionId, {
+				type: "item",
+				turnId: `${sessionId}-turn`,
+				item: {
+					id: `${sessionId}-prompt`,
+					kind: "user_message",
+					startedAtMs: 1,
+					content: [{ type: "text", text: "go on" }],
+					...(clientId ? { clientId } : {}),
+				},
+			});
+		runtime.journal.open({
+			sessionId: "replayed",
+			scopeId: "w1",
+			harness: "claude-code",
+		});
+		userMessage("replayed");
+		userMessage("s1");
+		userMessage("s1", "client-1");
+		userMessage("s2", "client-2");
+
+		expect(runtime.sessions.promptedInScope("w1")).toEqual(["s1"]);
+	});
 });

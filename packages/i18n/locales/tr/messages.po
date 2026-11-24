@@ -3410,6 +3410,9 @@ msgstr "Otomasyon bulunamadı"
 msgid "Automation not found."
 msgstr "Otomasyon bulunamadı."
 
+msgid "Automation run"
+msgstr "Otomasyon çalıştırması"
+
 msgid "Automation saved"
 msgstr "Otomasyon kaydedildi"
 
@@ -6259,6 +6262,9 @@ msgstr "\"{name}\" otomatik olarak adlandırılamadı"
 msgid "Couldn't open in Chat Interface"
 msgstr "Sohbet arayüzünde açılamadı"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Çalıştırma sohbet olarak açılamadı"
+
 msgid "Couldn't open the screenshot"
 msgstr "Ekran görüntüsü açılamadı"
 
@@ -6302,6 +6308,9 @@ msgstr "Birleştirme kuyruğundan çıkarılamadı"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Yerel oturum kaydı kaldırılamadı"
+
+msgid "Couldn't remove the run"
+msgstr "Çalıştırma kaldırılamadı"
 
 msgid "Couldn't rename the group"
 msgstr "Grup yeniden adlandırılamadı"
@@ -14011,6 +14020,9 @@ msgstr "Yine de aç"
 
 msgid "Open App Store"
 msgstr "App Store’u aç"
+
+msgid "Open as a chat"
+msgstr "Sohbet olarak aç"
 
 msgid "Open as comment pane"
 msgstr "Yorum bölmesi olarak aç"

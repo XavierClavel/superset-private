@@ -25,6 +25,10 @@ import {
 	useCloudSidebarStore,
 } from "renderer/routes/_authenticated/_dashboard/stores/cloudSidebarStore";
 import { isInCloudSidebar } from "renderer/routes/_authenticated/_dashboard/utils/buildCloudSidebar";
+import {
+	isClaudeJobsFolder,
+	isClaudeJobsWorkspace,
+} from "renderer/routes/_authenticated/_dashboard/utils/claudeJobsWorkspace";
 import { useDashboardSidebarState } from "renderer/routes/_authenticated/hooks/useDashboardSidebarState";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
 import { getVisibleSidebarWorkspaces } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal";
@@ -363,16 +367,18 @@ export function useDashboardSidebarData() {
 				storedSidebarSections,
 				tagFolderWorkspaces,
 				tagFolderContext,
-			).map((section) => ({
-				id: section.sectionId,
-				projectId: section.projectId,
-				name: section.name,
-				createdAt: section.createdAt,
-				isCollapsed: section.isCollapsed,
-				tabOrder: section.tabOrder,
-				color: section.color,
-				tag: section.tag,
-			})),
+			)
+				.filter((section) => !isClaudeJobsFolder(section))
+				.map((section) => ({
+					id: section.sectionId,
+					projectId: section.projectId,
+					name: section.name,
+					createdAt: section.createdAt,
+					isCollapsed: section.isCollapsed,
+					tabOrder: section.tabOrder,
+					color: section.color,
+					tag: section.tag,
+				})),
 		[storedSidebarSections, tagFolderContext, tagFolderWorkspaces],
 	);
 	const cloudSidebarEntries = useCloudSidebarStore((state) =>
@@ -600,7 +606,13 @@ export function useDashboardSidebarData() {
 	// alike appear because a local-state row says so (the reconciler in
 	// usePlaceWorktreesInSidebar writes one for anything created outside
 	// this renderer), never because of the row's type.
-	const visibleSidebarWorkspaces = sidebarWorkspaces;
+	const visibleSidebarWorkspaces = useMemo(
+		() =>
+			sidebarWorkspaces.filter(
+				(workspace) => !isClaudeJobsWorkspace(workspace),
+			),
+		[sidebarWorkspaces],
+	);
 
 	// From the placement rows, not the host-joined list: a hidden project
 	// whose host is offline has no host metadata yet still has cached
