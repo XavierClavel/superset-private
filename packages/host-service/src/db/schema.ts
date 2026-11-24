@@ -2,6 +2,7 @@ import type {
 	AgentDefinitionId,
 	AgentIdentityId,
 } from "@superset/shared/agent-catalog";
+import { DEFAULT_IDLE_BUILD_OUTPUT_DAYS } from "@superset/shared/idle-build-output";
 import type { BranchPrefixMode } from "@superset/shared/workspace-launch";
 import {
 	index,
@@ -143,6 +144,12 @@ export const hostSettings = sqliteTable("host_settings", {
 	// inject (CLAUDE_CONFIG_DIR / CODEX_HOME). Null = the system default login.
 	defaultClaudeConfigDir: text("default_claude_config_dir"),
 	defaultCodexHome: text("default_codex_home"),
+	cleanIdleBuildOutput: integer("clean_idle_build_output", { mode: "boolean" })
+		.notNull()
+		.default(false),
+	idleBuildOutputDays: integer("idle_build_output_days")
+		.notNull()
+		.default(DEFAULT_IDLE_BUILD_OUTPUT_DAYS),
 });
 
 export const pullRequests = sqliteTable(

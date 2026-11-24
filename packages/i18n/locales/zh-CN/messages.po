@@ -4494,6 +4494,9 @@ msgstr "Claude Code、Codex、Cursor、OpenCode等。"
 msgid "Claude is now running in workspace component-showcase."
 msgstr "Claude已在工作区component-showcase中运行。"
 
+msgid "Clean up idle worktrees"
+msgstr "清理闲置的 worktree"
+
 msgid "Clean up stale TODOs…"
 msgstr "清理过期的TODO…"
 
@@ -6877,11 +6880,17 @@ msgstr "每月的日期"
 msgid "Day One"
 msgstr "元老"
 
+msgid "days"
+msgstr "天"
+
 msgid "days running three agents at once"
 msgstr "同时运行三个智能体的天数"
 
 msgid "days running two agents at once"
 msgstr "同时运行两个智能体的天数"
+
+msgid "Days without activity"
+msgstr "无活动天数"
 
 msgid "Deactivated"
 msgstr "已停用"
@@ -7012,6 +7021,9 @@ msgstr "删除分组…"
 
 msgid "Delete host"
 msgstr "删除主机"
+
+msgid "Delete ignored build folders (node_modules, target, build) in worktrees with no activity for this many days."
+msgstr "删除在此天数内无活动的 worktree 中被忽略的构建文件夹（node_modules、target、build）。"
 
 msgid "Delete image"
 msgstr "删除图片"

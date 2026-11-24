@@ -4494,6 +4494,9 @@ msgstr "Claude Code, Codex, Cursor, OpenCode 등이 있습니다."
 msgid "Claude is now running in workspace component-showcase."
 msgstr "이제 워크스페이스 component-showcase에서 Claude가 실행 중입니다."
 
+msgid "Clean up idle worktrees"
+msgstr "유휴 worktree 정리"
+
 msgid "Clean up stale TODOs…"
 msgstr "오래된 TODO 정리…"
 
@@ -6877,11 +6880,17 @@ msgstr "날짜(일)"
 msgid "Day One"
 msgstr "데이 원"
 
+msgid "days"
+msgstr "일"
+
 msgid "days running three agents at once"
 msgstr "에이전트 세 개를 동시에 돌린 일수"
 
 msgid "days running two agents at once"
 msgstr "에이전트 두 개를 동시에 돌린 일수"
+
+msgid "Days without activity"
+msgstr "활동 없는 일수"
 
 msgid "Deactivated"
 msgstr "비활성화됨"
@@ -7012,6 +7021,9 @@ msgstr "그룹 삭제…"
 
 msgid "Delete host"
 msgstr "호스트 삭제"
+
+msgid "Delete ignored build folders (node_modules, target, build) in worktrees with no activity for this many days."
+msgstr "이 일수 동안 활동이 없는 worktree에서 무시된 빌드 폴더(node_modules, target, build)를 삭제합니다."
 
 msgid "Delete image"
 msgstr "이미지 삭제"

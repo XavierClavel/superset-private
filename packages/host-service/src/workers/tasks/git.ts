@@ -6,7 +6,7 @@
 import { mkdirSync } from "node:fs";
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
 import {
 	detectExternalWorktrees,
 	EXTERNAL_WORKTREE_SOURCES,
@@ -914,6 +914,34 @@ export const gitPushSnapshotTask = defineWorkerTask<
 	},
 });
 
+export const gitRemoveIgnoredDirsTask = defineWorkerTask<
+	{ worktreePath: string; gitEnv: GitTaskEnv; dirNames: string[] },
+	{ removed: string[] }
+>({
+	type: "git/removeIgnoredDirs",
+	handler: async ({ worktreePath, gitEnv, dirNames }) => {
+		const git = createUserSimpleGit(worktreePath, { env: gitEnv });
+		// `--directory` lists an ignored folder once, as `path/`, without
+		// walking into it.
+		const raw = await git.raw([
+			"ls-files",
+			"--others",
+			"--ignored",
+			"--exclude-standard",
+			"--directory",
+			"-z",
+		]);
+		const names = new Set(dirNames);
+		const removed = raw
+			.split("\0")
+			.filter((entry) => names.has(basename(entry)));
+		for (const dir of removed) {
+			await rm(join(worktreePath, dir), { recursive: true, force: true });
+		}
+		return { removed };
+	},
+});
+
 export const gitTasks = [
 	gitStatusSnapshotTask,
 	gitStatusPartialTask,
@@ -940,4 +968,5 @@ export const gitTasks = [
 	gitPrHeadBaseTask,
 	gitRestoreWorktreeTask,
 	gitDetectExternalWorktreesTask,
+	gitRemoveIgnoredDirsTask,
 ];

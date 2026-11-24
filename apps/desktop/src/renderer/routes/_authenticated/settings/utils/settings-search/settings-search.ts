@@ -58,6 +58,7 @@ export const SETTING_ITEM_ID = {
 
 	GIT_BRANCH_PREFIX: "git-branch-prefix",
 	GIT_WORKTREE_LOCATION: "git-worktree-location",
+	GIT_IDLE_BUILD_OUTPUT_CLEANUP: "git-idle-build-output-cleanup",
 
 	AGENTS_ENABLED: "agents-enabled",
 	AGENTS_COMMANDS: "agents-commands",
@@ -837,6 +838,25 @@ const SETTINGS_ITEMS: SettingsItem[] = [
 			"storage",
 			"base",
 			"default",
+		],
+	},
+	{
+		id: SETTING_ITEM_ID.GIT_IDLE_BUILD_OUTPUT_CLEANUP,
+		section: "git",
+		title: "Clean up idle worktrees",
+		description:
+			"Delete ignored build folders in worktrees with no activity for a set number of days",
+		keywords: [
+			"git",
+			"worktree",
+			"clean",
+			"cleanup",
+			"disk",
+			"space",
+			"storage",
+			"node_modules",
+			"build",
+			"target",
 		],
 	},
 	{

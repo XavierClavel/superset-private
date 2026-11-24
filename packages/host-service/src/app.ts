@@ -43,6 +43,10 @@ import { registerBrowserCdpRoute } from "./runtime/browser-bridge/browser-cdp-ro
 import { WorkspaceFilesystemManager } from "./runtime/filesystem";
 import type { GitCredentialProvider } from "./runtime/git";
 import { createGitEnvResolver, createGitFactory } from "./runtime/git";
+import {
+	IDLE_BUILD_OUTPUT_SWEEP_INTERVAL_MS,
+	sweepIdleBuildOutput,
+} from "./runtime/idle-build-output-sweep";
 import { applyLegacyHomeMove } from "./runtime/legacy-home-paths";
 import { runProjectBackfill } from "./runtime/project-backfill";
 import { PullRequestRuntimeManager } from "./runtime/pull-requests";
@@ -424,6 +428,20 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 					ATTACHMENT_SWEEP_INTERVAL_MS,
 				);
 	attachmentSweepTimer?.unref?.();
+	const runIdleBuildOutputSweep = () =>
+		sweepIdleBuildOutput({ db, credentials: providers.credentials }).catch(
+			(err) => {
+				console.warn("[host-service] idle build output sweep failed:", err);
+			},
+		);
+	const idleBuildOutputSweepTimer =
+		process.env.SUPERSET_HOST_RUN_MODE === "sandbox"
+			? null
+			: setInterval(
+					() => void runIdleBuildOutputSweep(),
+					IDLE_BUILD_OUTPUT_SWEEP_INTERVAL_MS,
+				);
+	idleBuildOutputSweepTimer?.unref?.();
 	if (process.env.SUPERSET_HOST_RUN_MODE !== "sandbox") {
 		startLocalMobileDeviceCleanup(db);
 	}
@@ -602,6 +620,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		agentJobs.stopAll();
 		if (projectPurgeTimer) clearInterval(projectPurgeTimer);
 		if (attachmentSweepTimer) clearInterval(attachmentSweepTimer);
+		if (idleBuildOutputSweepTimer) clearInterval(idleBuildOutputSweepTimer);
 		await disposeWorkspaceTitleJobs(db);
 		// Each step is best-effort and isolated: a throw in one cleanup must
 		// not skip the others, otherwise a flaky `.stop()` could leak the

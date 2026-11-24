@@ -140,6 +140,10 @@
 			"types": "./src/attachment-limits.ts",
 			"default": "./src/attachment-limits.ts"
 		},
+		"./idle-build-output": {
+			"types": "./src/idle-build-output.ts",
+			"default": "./src/idle-build-output.ts"
+		},
 		"./agent-credentials": {
 			"types": "./src/agent-credentials.ts",
 			"default": "./src/agent-credentials.ts"
