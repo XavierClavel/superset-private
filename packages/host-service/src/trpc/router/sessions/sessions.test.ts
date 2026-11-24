@@ -284,6 +284,33 @@ describe("sessions router", () => {
 		).rejects.toMatchObject({ code: "BAD_REQUEST" });
 	});
 
+	test("lists the chats of a workspace that took a prompt sent through Paradev", async () => {
+		const typed = await caller.create({
+			workspaceId: WORKSPACE,
+			agent: "claude",
+		});
+		const opened = await caller.create({
+			workspaceId: WORKSPACE,
+			agent: "claude",
+			resumeSessionId: "job-run",
+		});
+		await waitFor(() =>
+			[typed, opened].every(
+				({ sessionId }) => runtime.live.get(sessionId)?.state.status === "idle",
+			),
+		);
+		await caller.send({
+			workspaceId: WORKSPACE,
+			sessionId: typed.sessionId,
+			prompt: "And then?",
+		});
+
+		expect(await caller.prompted({ workspaceId: WORKSPACE })).toEqual([
+			typed.sessionId,
+		]);
+		expect(await caller.prompted({ workspaceId: OTHER_WORKSPACE })).toEqual([]);
+	});
+
 	test("scopes read, send and close to the requested workspace", async () => {
 		const created = await caller.create({
 			workspaceId: WORKSPACE,

@@ -3410,6 +3410,9 @@ msgstr "Automatisering niet gevonden"
 msgid "Automation not found."
 msgstr "Automatisering niet gevonden."
 
+msgid "Automation run"
+msgstr "Automatiseringsrun"
+
 msgid "Automation saved"
 msgstr "Automatisering opgeslagen"
 
@@ -6259,6 +6262,9 @@ msgstr "Kon \"{name}\" niet automatisch een naam geven"
 msgid "Couldn't open in Chat Interface"
 msgstr "Kan niet openen in chatinterface"
 
+msgid "Couldn't open the run as a chat"
+msgstr "Kan de run niet als chat openen"
+
 msgid "Couldn't open the screenshot"
 msgstr "Kan de screenshot niet openen"
 
@@ -6302,6 +6308,9 @@ msgstr "Verwijderen uit mergewachtrij mislukt"
 
 msgid "Couldn't remove the local sign-in"
 msgstr "Kan de lokale login niet verwijderen"
+
+msgid "Couldn't remove the run"
+msgstr "Kan de run niet verwijderen"
 
 msgid "Couldn't rename the group"
 msgstr "Kan de groep niet hernoemen"
@@ -14011,6 +14020,9 @@ msgstr "Toch openen"
 
 msgid "Open App Store"
 msgstr "App Store openen"
+
+msgid "Open as a chat"
+msgstr "Openen als chat"
 
 msgid "Open as comment pane"
 msgstr "Openen als opmerkingenpaneel"

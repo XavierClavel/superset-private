@@ -1,5 +1,6 @@
 import { useLiveQuery } from "@tanstack/react-db";
 import { useMemo } from "react";
+import { CLAUDE_JOBS_WORKSPACE_TAG } from "renderer/routes/_authenticated/_dashboard/utils/claudeJobsWorkspace";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
 import { useTagFolderWorkspaces } from "renderer/routes/_authenticated/providers/TagFolderWorkspacesProvider";
 import {
@@ -45,10 +46,9 @@ export function useProjectTagFolderSections(projectId: string | null): {
 	);
 	const sections = useMemo(() => {
 		if (projectId === null) {
-			return deriveSessionTagFolders(
-				workspaces,
-				tagFolderContext.tagSettings,
-			).map(({ tag, name, color }) => ({ id: tag, name, color }));
+			return deriveSessionTagFolders(workspaces, tagFolderContext.tagSettings)
+				.filter(({ tag }) => tag !== CLAUDE_JOBS_WORKSPACE_TAG)
+				.map(({ tag, name, color }) => ({ id: tag, name, color }));
 		}
 		return deriveTagFolders(storedSections, workspaces, tagFolderContext)
 			.filter((section) => section.projectId === projectId)
