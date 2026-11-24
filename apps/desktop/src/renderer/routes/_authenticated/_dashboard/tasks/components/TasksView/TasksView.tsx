@@ -7,7 +7,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { useTaskTracker } from "renderer/hooks/useTaskTracker";
 import { useDebouncedSearchNavigation } from "renderer/routes/_authenticated/_dashboard/hooks/useDebouncedSearchNavigation";
 import { useProjectQueryTargets } from "renderer/routes/_authenticated/_dashboard/hooks/useProjectQueryTargets";
@@ -77,7 +77,7 @@ export function TasksView({
 	const labelFilter = initialLabel ?? storedLabel;
 	const typeTab: TypeTab = initialType ?? storedTypeTab;
 	const taskTracker = useTaskTracker();
-	const linearBackend = useLinearBackend();
+	const linearBackend = usePlanBackend();
 	const projectFilters = initialProjects ?? storedProjectFilters;
 	const includeClosedIssues =
 		initialState === undefined

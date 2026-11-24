@@ -31,7 +31,7 @@ import {
 import { SiLinear } from "react-icons/si";
 import { MarkdownEditor } from "renderer/components/MarkdownEditor";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { PLATFORM } from "renderer/hotkeys";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
@@ -55,7 +55,7 @@ export function CreateLinearIssueDialog({
 	const { t } = useLingui();
 	const navigate = useNavigate();
 	const organizationId = useActiveOrganizationId();
-	const backend = useLinearBackend();
+	const backend = usePlanBackend();
 	const utils = cloudTrpc.useUtils();
 	const localUtils = electronTrpc.useUtils();
 	const modKey = PLATFORM === "mac" ? "⌘" : "Ctrl";

@@ -1,4 +1,4 @@
-import type { LinearBackend } from "renderer/hooks/useLinearBackend";
+import type { PlanBackend } from "renderer/hooks/usePlanBackend";
 import { apiTrpcClient } from "renderer/lib/api-trpc-client";
 import { pullRequestRefFromUrl } from "renderer/lib/github/pullRequestRef";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
@@ -63,7 +63,7 @@ export async function fetchInternalTaskBody(args: {
 export async function fetchLinearIssueBody(args: {
 	organizationId: string;
 	identifier: string;
-	backend: LinearBackend;
+	backend: PlanBackend;
 }): Promise<PromptContextBody | null> {
 	try {
 		const result =

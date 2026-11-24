@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useActiveOrganizationId } from "renderer/hooks/useActiveOrganizationId";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
-import { useLinearBackend } from "renderer/hooks/useLinearBackend";
+import { usePlanBackend } from "renderer/hooks/usePlanBackend";
 import { cloudTrpc } from "renderer/lib/cloud-trpc";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import {
@@ -23,7 +23,7 @@ export interface LinearIssueFilters {
 
 export function useLinearIssues(filters: LinearIssueFilters) {
 	const organizationId = useActiveOrganizationId();
-	const backend = useLinearBackend();
+	const backend = usePlanBackend();
 	const search = useDebouncedValue(filters.search.trim(), SEARCH_DEBOUNCE_MS);
 
 	const input = {
