@@ -244,6 +244,38 @@ describe("getNotifyScriptContent", () => {
 		}
 	});
 
+	it("flags a tool call whose command pushes, not one whose output mentions a push", async () => {
+		const host = fakeHostService(false);
+		const toolCall = (command: string, stdout: string) =>
+			runNotifyHookAsync(
+				{
+					hook_event_name: "PostToolUse",
+					session_id: "claude-session",
+					tool_name: "Bash",
+					tool_input: { command },
+					tool_response: { stdout, stderr: "" },
+				},
+				{
+					SUPERSET_AGENT_ID: "claude",
+					SUPERSET_HOST_AGENT_HOOK_URL: `${host.url}/trpc/notifications.hook`,
+				},
+			);
+		try {
+			await toolCall(
+				"cd ../wt && git push -q origin HEAD:feat/x 2>&1 | tail -1",
+				"",
+			);
+			await toolCall(
+				"git status",
+				'(use "git push" to publish your local commits)\n',
+			);
+			expect(host.requests[0]?.json).toMatchObject({ gitPush: true });
+			expect(host.requests[1]?.json).not.toHaveProperty("gitPush");
+		} finally {
+			host.stop();
+		}
+	});
+
 	it("forwards hooks fired inside a subagent (agent_id present) to the host roster only", async () => {
 		const host = fakeHostService(false);
 		try {
@@ -396,7 +428,7 @@ describe("getNotifyScriptContent", () => {
 			"HOOK_SESSION_ID=$(json_field session_id sessionId conversationId)",
 		);
 		expect(script).toContain(
-			'dispatch_to_host "{\\"json\\":{\\"terminalId\\":\\"$(json_escape "$SUPERSET_TERMINAL_ID")\\",\\"eventType\\":\\"$(json_escape "$EVENT_TYPE")\\",\\"agent\\":{\\"agentId\\":\\"$(json_escape "$AGENT_ID")\\",\\"sessionId\\":\\"$(json_escape "$SESSION_ID")\\"}$PREVIEW_FIELD$ACCOUNT_FIELD$TRANSCRIPT_FIELD$LAUNCH_FIELD$ATTRIBUTION_FIELD$PULL_REQUEST_FIELD}}"',
+			'dispatch_to_host "{\\"json\\":{\\"terminalId\\":\\"$(json_escape "$SUPERSET_TERMINAL_ID")\\",\\"eventType\\":\\"$(json_escape "$EVENT_TYPE")\\",\\"agent\\":{\\"agentId\\":\\"$(json_escape "$AGENT_ID")\\",\\"sessionId\\":\\"$(json_escape "$SESSION_ID")\\"}$PREVIEW_FIELD$ACCOUNT_FIELD$TRANSCRIPT_FIELD$LAUNCH_FIELD$ATTRIBUTION_FIELD$PULL_REQUEST_FIELD$GIT_PUSH_FIELD}}"',
 		);
 		// One dispatcher serves both the agent and subagent payloads.
 		expect(script.split('dispatch_to_host "').length - 1).toBe(2);
