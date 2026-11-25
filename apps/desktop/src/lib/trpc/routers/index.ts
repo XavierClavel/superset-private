@@ -6,6 +6,7 @@ import { createAuthRouter } from "./auth";
 import { createAutoUpdateRouter } from "./auto-update";
 import { createBrowserRouter } from "./browser/browser";
 import { createBrowserHistoryRouter } from "./browser-history";
+import { createClaudeArtifactsRouter } from "./claude-artifacts";
 import { createClaudeJobsRouter } from "./claude-jobs";
 import { createDeviceRouter } from "./device";
 import { createDictationRouter } from "./dictation";
@@ -63,6 +64,7 @@ export const createAppRouter = (getWindow: () => BrowserWindow | null) => {
 		hostServiceCoordinator: createHostServiceCoordinatorRouter(),
 		keyboardLayout: createKeyboardLayoutRouter(),
 		linear: createLinearRouter(),
+		claudeArtifacts: createClaudeArtifactsRouter(),
 		claudeJobs: createClaudeJobsRouter(),
 		migration: createMigrationRouter(),
 	});

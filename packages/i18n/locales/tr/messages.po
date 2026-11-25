@@ -12873,6 +12873,9 @@ msgstr "Kontrol bildirilmedi."
 msgid "No Chrome, Brave, Arc, or other Chromium browsers were found."
 msgstr "Chrome, Brave, Arc veya başka bir Chromium tarayıcısı bulunamadı."
 
+msgid "No Claude artifacts yet"
+msgstr "Henüz Claude yapıtı yok"
+
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Bu makinede henüz Claude veya Codex kullanımı bulunamadı. Şimdi katılın; bir ajan kullandığınızda listede görüneceksiniz."
 
@@ -20180,6 +20183,9 @@ msgstr "Sayfayı izleyen ajan her yorumu okur. Sayfayı günceller ve konuda yan
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Uygulama {appVersion} sürümünde, ancak başka bir şeyin (muhtemelen eski bir CLI veya başka bir Paradev derlemesi) başlattığı bir ana makine hizmetine bağlı. Yeniden başlatmak onu bu uygulamanın kopyasıyla değiştirir."
+
+msgid "The artifacts your agents publish from Paradev show up here."
+msgstr "Ajanlarınızın Paradev'den yayımladığı yapıtlar burada görünür."
 
 msgid "The automation and its run history are removed. This can't be undone."
 msgstr "Otomasyon ve çalıştırma geçmişi kaldırılır. Bu işlem geri alınamaz."

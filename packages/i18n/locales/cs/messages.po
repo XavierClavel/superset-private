@@ -12873,6 +12873,9 @@ msgstr "Žádné hlášené kontroly."
 msgid "No Chrome, Brave, Arc, or other Chromium browsers were found."
 msgstr "Nebyl nalezen Chrome, Brave, Arc ani jiný prohlížeč založený na Chromiu."
 
+msgid "No Claude artifacts yet"
+msgstr "Zatím žádné artefakty Claude"
+
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Na tomto počítači zatím nebylo nalezeno žádné využití Claude ani Codex. Připojte se a objevíte se, jakmile použijete agenta."
 
@@ -20180,6 +20183,9 @@ msgstr "Agent, který stránku sleduje, čte každý komentář. Aktualizuje str
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Aplikace je ve verzi {appVersion}, ale připojená ke službě hostitele spuštěné něčím jiným, pravděpodobně starší CLI nebo jiným sestavením Paradev. Restart ji nahradí kopií této aplikace."
+
+msgid "The artifacts your agents publish from Paradev show up here."
+msgstr "Zde se zobrazí artefakty, které vaši agenti publikují z Paradevu."
 
 msgid "The automation and its run history are removed. This can't be undone."
 msgstr "Automatizace a její historie spuštění budou odstraněny. Tuto akci nelze vrátit zpět."

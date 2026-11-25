@@ -20,6 +20,10 @@
 			"types": "./src/publish-target.ts",
 			"default": "./src/publish-target.ts"
 		},
+		"./claude-artifacts": {
+			"types": "./src/claude-artifacts.ts",
+			"default": "./src/claude-artifacts.ts"
+		},
 		"./claude-project-links": {
 			"types": "./src/claude-project-links.ts",
 			"default": "./src/claude-project-links.ts"

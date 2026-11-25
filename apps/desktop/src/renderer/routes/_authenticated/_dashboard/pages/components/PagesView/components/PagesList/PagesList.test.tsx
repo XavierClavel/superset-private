@@ -7,8 +7,10 @@ import {
 	mock,
 	test,
 } from "bun:test";
+import type { ClaudeArtifact } from "@superset/agent-setup/claude-artifacts";
 import type { AppRouter } from "@superset/trpc";
 import type { TRPCLink } from "@trpc/client";
+import type { PageScope } from "../../../../utils/pageScope";
 
 (
 	globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean }
@@ -120,13 +122,25 @@ const onScopeChange = mock((_scope: string) => {});
 const onSearchChange = mock((_search: string) => {});
 const PINS = ["pin-1", "pin-2"];
 
+function artifact(id: string, title: string): ClaudeArtifact {
+	return {
+		url: `https://claude.ai/artifact/${id}`,
+		title,
+		description: null,
+		workspaceId: "ws-1",
+		publishedAt: new Date("2026-01-01T00:00:00Z").getTime(),
+	};
+}
+
 function renderList({
-	scope = "all" as "all" | "pinned" | "team" | "shared" | "mine",
+	scope = "all" as PageScope,
 	search = "",
 	authorId = null as string | null,
 	workspaceId = null as string | null,
 	currentUserId = undefined as string | undefined,
 	onTogglePin = mock((_pageId: string) => {}),
+	artifacts = [] as ClaudeArtifact[],
+	onOpenArtifact = mock((_url: string) => {}),
 } = {}) {
 	const queryClient = new QueryClient({
 		defaultOptions: { queries: { retry: false } },
@@ -146,6 +160,8 @@ function renderList({
 				onAuthorChange={mock()}
 				onWorkspaceChange={mock()}
 				onOpenPage={mock()}
+				artifacts={artifacts}
+				onOpenArtifact={onOpenArtifact}
 				currentUserId={currentUserId}
 				favoritePageIds={PINS}
 				favoritePageIdSet={new Set(PINS)}
@@ -394,6 +410,50 @@ describe("PagesList pinned tab", () => {
 		await settled();
 		expect(view.queryByText("Pinned")).toBeTruthy();
 		expect(onScopeChange).not.toHaveBeenCalled();
+	});
+});
+
+describe("PagesList Claude artifacts tab", () => {
+	test("offers the tab only once an agent published an artifact", async () => {
+		const empty = renderList();
+		await empty.settled();
+		expect(empty.view.queryByText("Claude artifacts")).toBeNull();
+		cleanup();
+
+		const published = renderList({ artifacts: [artifact("a1", "Report")] });
+		await published.settled();
+		expect(published.view.queryByText("Claude artifacts")).toBeTruthy();
+	});
+
+	test("lists the artifacts instead of asking the server for pages", async () => {
+		const report = artifact("a1", "Quality report");
+		const view = renderList({ scope: "artifacts", artifacts: [report] }).view;
+		expect(await view.findByText(report.title ?? "")).toBeTruthy();
+		expect(listInputs).toEqual([]);
+	});
+
+	test("narrows the artifacts by the search", async () => {
+		const draft = artifact("a1", "Draft notes");
+		const final = artifact("a2", "Final report");
+		const view = renderList({
+			scope: "artifacts",
+			search: "REPORT",
+			artifacts: [draft, final],
+		}).view;
+		expect(await view.findByText(final.title ?? "")).toBeTruthy();
+		expect(view.queryByText(draft.title ?? "")).toBeNull();
+	});
+
+	test("opens an artifact by its link", async () => {
+		const report = artifact("a1", "Quality report");
+		const onOpenArtifact = mock((_url: string) => {});
+		const view = renderList({
+			scope: "artifacts",
+			artifacts: [report],
+			onOpenArtifact,
+		}).view;
+		fireEvent.click(await view.findByText(report.title ?? ""));
+		expect(onOpenArtifact).toHaveBeenCalledWith(report.url);
 	});
 });
 

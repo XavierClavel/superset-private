@@ -63,6 +63,11 @@ is allowed.
   joins rows that carry the same link id (item 7 in `patches/README.md`).
 - **Mobile pane always offered**: upstream hides the simulator pane behind the `mobile-pane`
   PostHog flag (#8789); `renderer/hooks/useMobilePaneEnabled` keeps it on.
+- **Claude artifacts in the Pages tab**: a "Claude artifacts" tab lists the artifacts that agents
+  publish from Paradev terminals and chats, and opens them in the browser. The notify hook writes
+  one file per artifact to `$SUPERSET_HOME_DIR/claude-artifacts/` on each `Artifact` publish
+  (`notify-hook.template.sh`), and `@superset/agent-setup/claude-artifacts` reads them. Files, not
+  a host-service table: a fork migration would collide with upstream's next one on a rebase.
 - **Release builds share the official app's data**: a Paradev workspace's `.env` names its own
   dev instance (`SUPERSET_WORKSPACE_NAME`, localhost servers, ports). A release build ignores those
   (`apps/desktop/vite/release-env.ts`), so whatever workspace it is built in, the app uses the

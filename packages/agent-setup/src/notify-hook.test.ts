@@ -2,6 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { listClaudeArtifacts } from "./claude-artifacts";
 import { getTemplatePath } from "./config";
 import { NOTIFY_SCRIPT_MARKER } from "./notify-hook";
 import { APP_HOME_DIR_NAME } from "./paths";
@@ -92,6 +93,29 @@ function fakeHostService(ignored: boolean) {
 		requests,
 		url: `http://127.0.0.1:${server.port}`,
 		stop: () => server.stop(true),
+	};
+}
+
+const ARTIFACT_URL = "https://claude.ai/artifact/CSTx4KRPXGFoeUEGZbdNKa";
+
+function artifactToolUse(
+	toolInput: Record<string, unknown>,
+	toolResponse: Record<string, unknown>,
+) {
+	return {
+		hook_event_name: "PostToolUse",
+		session_id: "claude-session",
+		tool_name: "Artifact",
+		tool_input: toolInput,
+		tool_response: toolResponse,
+	};
+}
+
+function artifactHookEnv(home: string, workspaceId: string) {
+	return {
+		SUPERSET_AGENT_ID: "claude",
+		SUPERSET_HOME_DIR: home,
+		SUPERSET_WORKSPACE_ID: workspaceId,
 	};
 }
 
@@ -242,6 +266,71 @@ describe("getNotifyScriptContent", () => {
 		} finally {
 			host.stop();
 		}
+	});
+
+	it("records an Artifact publish for the Pages tab", async () => {
+		const home = mkdtempSync(path.join(tmpdir(), "notify-hook-artifacts-"));
+		const workspaceId = "workspace-1";
+		const title = "Quality Gate #12";
+		const description = 'PR #12 is "mergeable" as is.';
+
+		runNotifyHook(
+			artifactToolUse(
+				{ file_path: "/tmp/report.html", description },
+				{ url: ARTIFACT_URL, title, artifact_id: "5ca2ba42", updated: false },
+			),
+			artifactHookEnv(home, workspaceId),
+		);
+
+		expect(await listClaudeArtifacts(home)).toMatchObject([
+			{ url: ARTIFACT_URL, title, description, workspaceId },
+		]);
+	});
+
+	it("keeps one entry per artifact, with what its last publish said", async () => {
+		const home = mkdtempSync(path.join(tmpdir(), "notify-hook-artifacts-"));
+		const titles = ["Draft report", "Final report"];
+
+		for (const title of titles) {
+			runNotifyHook(
+				artifactToolUse(
+					{ file_path: "/tmp/report.html" },
+					{ url: ARTIFACT_URL, title, updated: true },
+				),
+				artifactHookEnv(home, "workspace-1"),
+			);
+		}
+
+		expect(await listClaudeArtifacts(home)).toMatchObject([
+			{ url: ARTIFACT_URL, title: titles.at(-1), description: null },
+		]);
+	});
+
+	it("records nothing for a tool call that published no artifact", async () => {
+		const home = mkdtempSync(path.join(tmpdir(), "notify-hook-artifacts-"));
+		const calls = [
+			{
+				...artifactToolUse(
+					{ command: "cat links.md" },
+					{ stdout: `${ARTIFACT_URL}\n`, stderr: "" },
+				),
+				tool_name: "Bash",
+			},
+			artifactToolUse(
+				{ action: "list" },
+				{ artifacts: [{ url: ARTIFACT_URL, title: "Listed" }] },
+			),
+			artifactToolUse(
+				{ url: ARTIFACT_URL, file_path: "/tmp/logo.png", asset: true },
+				{ url: ARTIFACT_URL, title: "Asset" },
+			),
+		];
+
+		for (const call of calls) {
+			runNotifyHook(call, artifactHookEnv(home, "workspace-1"));
+		}
+
+		expect(await listClaudeArtifacts(home)).toEqual([]);
 	});
 
 	it("forwards hooks fired inside a subagent (agent_id present) to the host roster only", async () => {

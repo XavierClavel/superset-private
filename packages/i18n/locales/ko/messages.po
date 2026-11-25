@@ -12873,6 +12873,9 @@ msgstr "보고된 검사가 없습니다."
 msgid "No Chrome, Brave, Arc, or other Chromium browsers were found."
 msgstr "Chrome, Brave, Arc 등 Chromium 기반 브라우저를 찾을 수 없습니다."
 
+msgid "No Claude artifacts yet"
+msgstr "아직 Claude 아티팩트가 없습니다"
+
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "이 컴퓨터에서 아직 Claude 또는 Codex 사용량을 찾지 못했습니다. 지금 참여하면 에이전트를 사용한 뒤 순위에 표시됩니다."
 
@@ -20180,6 +20183,9 @@ msgstr "페이지를 지켜보는 에이전트가 각 댓글을 읽고 페이지
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "앱은 {appVersion}이지만 다른 것(오래된 CLI나 다른 Paradev 빌드일 가능성)이 시작한 호스트 서비스에 연결되어 있습니다. 다시 시작하면 이 앱의 복사본으로 교체됩니다."
+
+msgid "The artifacts your agents publish from Paradev show up here."
+msgstr "에이전트가 Paradev에서 게시한 아티팩트가 여기에 표시됩니다."
 
 msgid "The automation and its run history are removed. This can't be undone."
 msgstr "자동화와 실행 기록이 삭제됩니다. 이 작업은 되돌릴 수 없습니다."

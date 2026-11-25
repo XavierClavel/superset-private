@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import type { ClaudeArtifact } from "@superset/agent-setup/claude-artifacts";
 import { COMPANY } from "@superset/shared/constants";
 import { Input } from "@superset/ui/input";
 import { toast } from "@superset/ui/sonner";
@@ -15,6 +16,7 @@ import { type PageScope, serverScope } from "../../../../utils/pageScope";
 import { PagesGrid } from "../../../PagesGrid";
 import { AuthorFilter, type PageAuthorOption } from "../AuthorFilter";
 import { type PageWorkspaceOption, WorkspaceFilter } from "../WorkspaceFilter";
+import { ArtifactsGrid } from "./components/ArtifactsGrid";
 
 const TABS: Array<{ value: PageScope }> = [
 	{ value: "all" },
@@ -22,6 +24,7 @@ const TABS: Array<{ value: PageScope }> = [
 	{ value: "team" },
 	{ value: "shared" },
 	{ value: "mine" },
+	{ value: "artifacts" },
 ];
 
 export interface PagesListProps {
@@ -34,6 +37,8 @@ export interface PagesListProps {
 	onAuthorChange: (authorId: string | null) => void;
 	onWorkspaceChange: (workspaceId: string | null) => void;
 	onOpenPage: (page: { slug: string }) => void;
+	artifacts: ClaudeArtifact[];
+	onOpenArtifact: (url: string) => void;
 	currentUserId: string | undefined;
 	favoritePageIds: string[];
 	favoritePageIdSet: ReadonlySet<string>;
@@ -54,6 +59,8 @@ export function PagesList({
 	onAuthorChange,
 	onWorkspaceChange,
 	onOpenPage,
+	artifacts,
+	onOpenArtifact,
 	currentUserId,
 	favoritePageIds,
 	favoritePageIdSet,
@@ -98,7 +105,7 @@ export function PagesList({
 		[search, scope, authorId, workspaceId, favoritePageIds],
 	);
 
-	const pages = usePagesList(filter);
+	const pages = usePagesList(filter, { enabled: scope !== "artifacts" });
 	const { items, hasNextPage, isFetchingNextPage, scrollRef, sentinelRef } =
 		pages;
 
@@ -108,6 +115,16 @@ export function PagesList({
 		...(workspaceId ? { workspaceId } : {}),
 		pinnedIds: favoritePageIds,
 	});
+	const matchingArtifacts = useMemo(() => {
+		const query = search.trim().toLowerCase();
+		if (!query) return artifacts;
+		return artifacts.filter((artifact) =>
+			[artifact.title, artifact.description].some((text) =>
+				text?.toLowerCase().includes(query),
+			),
+		);
+	}, [artifacts, search]);
+
 	const counts = useMemo(
 		() => ({
 			all: countsQuery.data?.all ?? 0,
@@ -115,8 +132,9 @@ export function PagesList({
 			team: countsQuery.data?.team ?? 0,
 			shared: countsQuery.data?.shared ?? 0,
 			mine: countsQuery.data?.mine ?? 0,
+			artifacts: matchingArtifacts.length,
 		}),
-		[countsQuery.data],
+		[countsQuery.data, matchingArtifacts],
 	);
 
 	const listInput = useMemo(() => pagesListInput(filter), [filter]);
@@ -164,6 +182,7 @@ export function PagesList({
 		team: t({ message: "Team" }),
 		shared: t({ message: "Shared with me" }),
 		mine: t({ message: "Just me" }),
+		artifacts: t({ message: "Claude artifacts" }),
 	};
 
 	const authorOptions = useMemo<PageAuthorOption[]>(() => {
@@ -205,7 +224,9 @@ export function PagesList({
 		() =>
 			TABS.filter(
 				(tab) =>
-					(tab.value !== "pinned" && tab.value !== "shared") ||
+					(tab.value !== "pinned" &&
+						tab.value !== "shared" &&
+						tab.value !== "artifacts") ||
 					counts[tab.value] > 0 ||
 					scope === tab.value,
 			),
@@ -256,20 +277,22 @@ export function PagesList({
 					</Tabs>
 
 					<div className="flex items-center gap-2">
-						{(workspaceOptions.length > 0 || workspaceId !== null) && (
-							<WorkspaceFilter
-								value={workspaceId}
-								options={workspaceOptions}
-								onChange={onWorkspaceChange}
-							/>
-						)}
-						{(authorOptions.length > 1 || authorId !== null) && (
-							<AuthorFilter
-								value={authorId}
-								options={authorOptions}
-								onChange={onAuthorChange}
-							/>
-						)}
+						{scope !== "artifacts" &&
+							(workspaceOptions.length > 0 || workspaceId !== null) && (
+								<WorkspaceFilter
+									value={workspaceId}
+									options={workspaceOptions}
+									onChange={onWorkspaceChange}
+								/>
+							)}
+						{scope !== "artifacts" &&
+							(authorOptions.length > 1 || authorId !== null) && (
+								<AuthorFilter
+									value={authorId}
+									options={authorOptions}
+									onChange={onAuthorChange}
+								/>
+							)}
 						<div className="relative w-56">
 							<LuSearch className="-translate-y-1/2 absolute top-1/2 left-2 size-3.5 text-muted-foreground" />
 							<Input
@@ -284,36 +307,47 @@ export function PagesList({
 					</div>
 				</div>
 
-				<PagesGrid
-					pages={items}
-					onCreate={onCreateWithAgent}
-					isCreating={creatingWithAgent}
-					pinnedPageIds={favoritePageIdSet}
-					currentUserId={currentUserId}
-					isPending={pages.isPending}
-					error={items.length === 0 ? pages.error?.message : undefined}
-					hasFilters={!orgEmpty && hasFilters}
-					onOpen={onOpenPage}
-					onTogglePin={onTogglePin}
-					onDelete={async (pageId) => {
-						await deletePage.mutateAsync({ id: pageId });
-						toast.success(
-							t({
-								message: "Page deleted",
-							}),
-						);
-					}}
-					onDuplicate={async (pageId, title) => {
-						await duplicatePage.mutateAsync({ id: pageId, title });
-						toast.success(t({ message: "Page duplicated" }));
-					}}
-				/>
+				{scope === "artifacts" ? (
+					<ArtifactsGrid
+						artifacts={matchingArtifacts}
+						workspaceNames={workspaceNames}
+						hasSearch={Boolean(search.trim())}
+						onOpen={onOpenArtifact}
+					/>
+				) : (
+					<>
+						<PagesGrid
+							pages={items}
+							onCreate={onCreateWithAgent}
+							isCreating={creatingWithAgent}
+							pinnedPageIds={favoritePageIdSet}
+							currentUserId={currentUserId}
+							isPending={pages.isPending}
+							error={items.length === 0 ? pages.error?.message : undefined}
+							hasFilters={!orgEmpty && hasFilters}
+							onOpen={onOpenPage}
+							onTogglePin={onTogglePin}
+							onDelete={async (pageId) => {
+								await deletePage.mutateAsync({ id: pageId });
+								toast.success(
+									t({
+										message: "Page deleted",
+									}),
+								);
+							}}
+							onDuplicate={async (pageId, title) => {
+								await duplicatePage.mutateAsync({ id: pageId, title });
+								toast.success(t({ message: "Page duplicated" }));
+							}}
+						/>
 
-				<LoadMoreSentinel
-					sentinelRef={sentinelRef}
-					hasNextPage={hasNextPage}
-					isFetchingNextPage={isFetchingNextPage}
-				/>
+						<LoadMoreSentinel
+							sentinelRef={sentinelRef}
+							hasNextPage={hasNextPage}
+							isFetchingNextPage={isFetchingNextPage}
+						/>
+					</>
+				)}
 			</div>
 		</div>
 	);

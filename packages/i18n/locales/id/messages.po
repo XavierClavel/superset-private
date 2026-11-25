@@ -12873,6 +12873,9 @@ msgstr "Tidak ada check yang dilaporkan."
 msgid "No Chrome, Brave, Arc, or other Chromium browsers were found."
 msgstr "Tidak ditemukan Chrome, Brave, Arc, atau browser Chromium lainnya."
 
+msgid "No Claude artifacts yet"
+msgstr "Belum ada artefak Claude"
+
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "Belum ada penggunaan Claude atau Codex di mesin ini. Gabung sekarang dan Anda akan muncul setelah memakai agen."
 
@@ -20180,6 +20183,9 @@ msgstr "Agen yang memantau halaman membaca setiap komentar. Agen memperbarui hal
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "Aplikasi berada di {appVersion} tetapi terhubung ke layanan host yang dimulai oleh hal lain, kemungkinan CLI lama atau build Paradev lain. Memulai ulang akan menggantinya dengan salinan dari aplikasi ini."
+
+msgid "The artifacts your agents publish from Paradev show up here."
+msgstr "Artefak yang diterbitkan agen Anda dari Paradev muncul di sini."
 
 msgid "The automation and its run history are removed. This can't be undone."
 msgstr "Otomatisasi dan riwayat jalannya dihapus. Tindakan ini tidak dapat dibatalkan."

@@ -155,6 +155,39 @@ json_escape() {
   printf '%s' "$1" | sed -e 's/\\/\\\\/g' -e 's/"/\\"/g'
 }
 
+# The raw JSON string literal of KEY in TEXT, escapes kept, or nothing.
+json_string() {
+  printf '%s' "$2" | grep -oE "\"$1\"[[:space:]]*:[[:space:]]*\"(\\\\.|[^\"\\\\])*\"" | head -n 1 | sed -E 's/^[^:]*:[[:space:]]*//'
+}
+
+# The Pages tab lists the artifacts published here (listClaudeArtifacts): one
+# file per artifact, replaced on each publish, so its mtime is the last publish.
+record_claude_artifact() {
+  TOOL_INPUT="${INPUT#*\"tool_input\"}"
+  TOOL_INPUT="${TOOL_INPUT%%\"tool_response\"*}"
+  TOOL_RESPONSE="${INPUT#*\"tool_response\"}"
+  case "$(json_string action "$TOOL_INPUT")" in
+    ""|'"publish"') ;;
+    *) return 0 ;;
+  esac
+  printf '%s' "$TOOL_INPUT" | grep -qE '"asset"[[:space:]]*:[[:space:]]*true' && return 0
+  ARTIFACT_URL=$(printf '%s' "$TOOL_RESPONSE" | grep -oE 'https://claude\.ai/(code/)?artifact/[A-Za-z0-9_-]+' | head -n 1)
+  [ -n "$ARTIFACT_URL" ] || return 0
+  ARTIFACT_TITLE=$(json_string title "$TOOL_RESPONSE")
+  ARTIFACT_DESCRIPTION=$(json_string description "$TOOL_INPUT")
+  ARTIFACTS_DIR="${SUPERSET_HOME_DIR:-$HOME/{{APP_HOME_DIR_NAME}}}/claude-artifacts"
+  ARTIFACT_FILE="$ARTIFACTS_DIR/${ARTIFACT_URL##*/}.json"
+  mkdir -p "$ARTIFACTS_DIR" 2>/dev/null || return 0
+  printf '{"url":"%s","title":%s,"description":%s,"workspaceId":"%s"}\n' \
+    "$ARTIFACT_URL" "${ARTIFACT_TITLE:-null}" "${ARTIFACT_DESCRIPTION:-null}" \
+    "$(json_escape "$SUPERSET_WORKSPACE_ID")" > "$ARTIFACT_FILE.tmp" 2>/dev/null \
+    && mv -f "$ARTIFACT_FILE.tmp" "$ARTIFACT_FILE"
+}
+
+if [ "$EVENT_TYPE" = "PostToolUse" ] && [ "$(json_field tool_name)" = "Artifact" ]; then
+  record_claude_artifact
+fi
+
 # Resolve the host-service endpoint at call time. SUPERSET_HOST_AGENT_HOOK_URL
 # is frozen into the agent's env at terminal creation; after a host-service
 # restart on a new port it would point at a dead socket forever (a live

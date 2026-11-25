@@ -12873,6 +12873,9 @@ msgstr "沒有檢查報告。"
 msgid "No Chrome, Brave, Arc, or other Chromium browsers were found."
 msgstr "未找到Chrome、Brave、Arc或其他Chromium瀏覽器。"
 
+msgid "No Claude artifacts yet"
+msgstr "還沒有 Claude 成品"
+
 msgid "No Claude or Codex usage found on this machine yet. Join now and you'll appear once you've used an agent."
 msgstr "這臺機器上還沒有發現Claude或Codex的用量。現在加入，用過代理程式後你就會出現在榜單上。"
 
@@ -20180,6 +20183,9 @@ msgstr "關注該頁面的代理程式會讀取每則留言，更新頁面並在
 
 msgid "The app is on {appVersion} but attached to a host service started by something else, likely an older CLI or another Paradev build. Restarting replaces it with this app's copy."
 msgstr "應用程式版本為 {appVersion}，但連接的是由其他程式（可能是舊版 CLI 或另一個 Paradev 版本）啟動的主機服務。重新啟動會將其替換為此應用程式自帶的副本。"
+
+msgid "The artifacts your agents publish from Paradev show up here."
+msgstr "你的代理程式從 Paradev 發布的成品會顯示在這裡。"
 
 msgid "The automation and its run history are removed. This can't be undone."
 msgstr "此自動化及其執行歷史將被刪除。此操作無法復原。"
