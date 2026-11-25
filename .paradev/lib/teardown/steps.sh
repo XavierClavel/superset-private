@@ -117,6 +117,20 @@ step_kill_terminal_daemons() {
   return 0
 }
 
+step_stop_local_db_stack() {
+  if [ -z "${LOCAL_PG_PORT:-}" ]; then
+    return 0
+  fi
+
+  if ! command -v docker &> /dev/null; then
+    warn "docker not available, skipping local DB stack"
+    step_skipped "local DB stack (docker missing)"
+    return 0
+  fi
+
+  bash "$PARADEV_SCRIPT_DIR/teardown.local.sh"
+}
+
 step_delete_neon_branch() {
   echo "🗄️  Deleting Neon branch..."
 

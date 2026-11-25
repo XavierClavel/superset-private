@@ -45,10 +45,13 @@ validation, and `setup.local.sh` runs everything against a local Docker stack.
 3. Brings up Postgres + neon-proxy + Redis (behind an HTTP shim, for the relay) via `docker compose` (project-scoped to this worktree)
 4. Runs `bun install` and `bun run db:migrate`
 5. Seeds a `Local Admin` dev account via `bun run db:seed-dev`
-6. Writes a gitignored `.paradev/config.local.json` overlay in the main checkout so subsequent worktrees automatically use this setup
+6. Writes a gitignored `.paradev/config.local.toml` in the main checkout so subsequent worktrees automatically use this setup. An existing `config.local.toml` is not changed: the script prints the `[setup]` lines to add.
 
 The default `setup.sh` also runs `setup.local.sh` when the main checkout has no
 `.env`, so a workspace created before the overlay exists still gets the local stack.
+
+When you delete a workspace, the default `teardown.sh` removes its local DB stack
+with the rest of the cleanup, so its ports are free for the next workspace.
 
 Re-run the script any time to refresh the workspace. To tear the local DB stack down:
 
