@@ -51,6 +51,9 @@ local_check_dependencies() {
   command -v bun &> /dev/null || missing+=("bun (https://bun.sh)")
   command -v docker &> /dev/null || missing+=("docker (https://docker.com)")
   command -v jq &> /dev/null || missing+=("jq (brew install jq)")
+  local node_dependency
+  node_dependency="$(missing_node_dependency)"
+  [ -z "$node_dependency" ] || missing+=("$node_dependency")
   if [ ${#missing[@]} -gt 0 ]; then
     error "Missing dependencies:"
     for dep in "${missing[@]}"; do echo "  - $dep"; done
@@ -304,7 +307,13 @@ PORTSJSON
 
 local_write_config_overlay() {
   echo "🔧 Writing .paradev/config.local.json (untracked overlay)..."
-  cat > "$PARADEV_SCRIPT_DIR/config.local.json" <<'CONFIGLOCAL'
+  # Paradev reads the overlay of the main checkout for every new worktree.
+  local config_dir="${SUPERSET_ROOT_PATH:-$ROOT_DIR}/.paradev"
+  if ! mkdir -p "$config_dir"; then
+    error "Could not create $config_dir"
+    return 1
+  fi
+  cat > "$config_dir/config.local.json" <<'CONFIGLOCAL'
 {
   "setup": ["./.paradev/setup.local.sh"],
   "teardown": ["./.paradev/teardown.local.sh"]

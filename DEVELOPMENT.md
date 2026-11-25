@@ -7,6 +7,7 @@ This guide is for contributors building Paradev from source. If you just want to
 | Tool | Install |
 |:-----|:--------|
 | [Bun](https://bun.sh/) v1.4.3+ (pinned in `.bun-version`) | `curl -fsSL https://bun.sh/install \| bash` |
+| [Node.js](https://nodejs.org/) 22.22.2+, 24.15.0+ or 26+ (builds native modules) | `nvm install 24` |
 | [Docker](https://docs.docker.com/get-docker/) | Docker Desktop or OrbStack |
 | `jq` | `brew install jq` |
 | Git 2.20+ and [`gh`](https://cli.github.com/) | `brew install gh` |
@@ -44,7 +45,10 @@ validation, and `setup.local.sh` runs everything against a local Docker stack.
 3. Brings up Postgres + neon-proxy + Redis (behind an HTTP shim, for the relay) via `docker compose` (project-scoped to this worktree)
 4. Runs `bun install` and `bun run db:migrate`
 5. Seeds a `Local Admin` dev account via `bun run db:seed-dev`
-6. Writes a gitignored `.paradev/config.local.json` overlay so subsequent worktrees automatically use this setup
+6. Writes a gitignored `.paradev/config.local.json` overlay in the main checkout so subsequent worktrees automatically use this setup
+
+The default `setup.sh` also runs `setup.local.sh` when the main checkout has no
+`.env`, so a workspace created before the overlay exists still gets the local stack.
 
 Re-run the script any time to refresh the workspace. To tear the local DB stack down:
 

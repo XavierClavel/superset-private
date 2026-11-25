@@ -38,6 +38,12 @@ step_check_dependencies() {
     missing+=("jq (Run: brew install jq)")
   fi
 
+  local node_dependency
+  node_dependency="$(missing_node_dependency)"
+  if [ -n "$node_dependency" ]; then
+    missing+=("$node_dependency")
+  fi
+
   if [ ${#missing[@]} -gt 0 ]; then
     error "Missing dependencies:"
     for dep in "${missing[@]}"; do
