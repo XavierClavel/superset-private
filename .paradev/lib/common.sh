@@ -20,6 +20,29 @@ step_skipped() {
   SKIPPED_STEPS+=("$1")
 }
 
+NODE_VERSION_REQUIREMENT="22.22.2+, 24.15.0+ or 26+"
+
+# Native modules (better-sqlite3) build with the latest node-gyp, which only
+# runs on these Node versions.
+node_version_supported() {
+  local version major minor patch
+  version="$(node -p 'process.versions.node' 2>/dev/null)" || return 1
+  IFS=. read -r major minor patch <<< "$version"
+  case "$major" in
+    22) [ "$minor" -gt 22 ] || { [ "$minor" -eq 22 ] && [ "$patch" -ge 2 ]; } ;;
+    24) [ "$minor" -ge 15 ] ;;
+    *) [ "$major" -ge 26 ] ;;
+  esac
+}
+
+missing_node_dependency() {
+  if ! command -v node &> /dev/null; then
+    echo "node $NODE_VERSION_REQUIREMENT (https://nodejs.org, or: nvm install 24)"
+  elif ! node_version_supported; then
+    echo "node $NODE_VERSION_REQUIREMENT, found $(node -v) (Run: nvm install 24 && nvm alias default 24)"
+  fi
+}
+
 escape_env_value() {
   local value="${1-}"
   value="${value//\\/\\\\}"

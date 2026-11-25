@@ -13,6 +13,13 @@ setup_main() {
     return 1
   fi
 
+  if [ -n "${SUPERSET_ROOT_PATH:-}" ] && [ ! -f "$SUPERSET_ROOT_PATH/.env" ]; then
+    warn "No root .env at $SUPERSET_ROOT_PATH/.env: using the local stack (setup.local.sh)"
+    echo ""
+    bash "$PARADEV_SCRIPT_DIR/setup.local.sh"
+    return
+  fi
+
   echo "🚀 Setting up Paradev workspace..."
   echo ""
 
