@@ -10,12 +10,14 @@ export function deriveTerminalAgentStatus({
 	lastEventType,
 	lastEventAt,
 	lastSeenAt,
+	looping,
 }: {
 	lastEventType: string;
 	lastEventAt: number;
 	lastSeenAt: number | undefined;
+	looping?: boolean;
 }): PaneStatus {
-	const status = agentStatusFromEvent(lastEventType);
+	const status = agentStatusFromEvent(lastEventType, looping);
 	if (status === "review") {
 		return lastEventAt > (lastSeenAt ?? 0) ? "review" : "idle";
 	}

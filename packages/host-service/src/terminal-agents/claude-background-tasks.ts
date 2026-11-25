@@ -5,6 +5,7 @@ const READ_CHUNK_BYTES = 1024 * 1024;
 const MAX_TRACKED_TASKS = 64;
 const NEWLINE = 0x0a;
 const TASK_ID = /<task-id>([^<]+)<\/task-id>/;
+const LOOP_TOOLS = ["ScheduleWakeup", "CronCreate", "CronDelete"];
 
 type Json = Record<string, unknown>;
 
@@ -33,6 +34,9 @@ function parseLine(line: string): Json | null {
  * either. Background subagents are left out: their own hooks report them.
  * Only their descriptions are kept, which hooks do not carry.
  *
+ * Also tracks a running `/loop`: a wakeup scheduled for later, or a recurring
+ * cron job not yet deleted.
+ *
  * Reads only the bytes appended since the last call.
  */
 export class ClaudeBackgroundTasks {
@@ -42,7 +46,10 @@ export class ClaudeBackgroundTasks {
 	private readonly launches = new Map<string, string>();
 	private readonly running = new Map<string, BackgroundTask>();
 	private readonly subagentDescriptions = new Map<string, string>();
-	/** Changes whenever the tasks or the subagent descriptions change. */
+	private readonly loopCalls = new Map<string, { name: string; input: Json }>();
+	private wakeupAt = 0;
+	private readonly crons = new Set<string>();
+	/** Changes whenever the tasks, the subagent descriptions or the loop change. */
 	revision = 0;
 	private pending: Promise<BackgroundTask[]> = Promise.resolve([]);
 
@@ -87,7 +94,14 @@ export class ClaudeBackgroundTasks {
 		this.launches.clear();
 		this.running.clear();
 		this.subagentDescriptions.clear();
+		this.loopCalls.clear();
+		this.wakeupAt = 0;
+		this.crons.clear();
 		this.revision++;
+	}
+
+	looping(): boolean {
+		return this.wakeupAt > this.now() || this.crons.size > 0;
 	}
 
 	subagentDescription(subagentId: string): string | undefined {
@@ -116,13 +130,20 @@ export class ClaudeBackgroundTasks {
 			if (taskId && this.running.delete(taskId)) this.revision++;
 			return;
 		}
+		for (const toolUseId of this.loopCalls.keys()) {
+			if (line.includes(toolUseId)) {
+				this.noteLoopResult(parseLine(line));
+				return;
+			}
+		}
 		if (line.includes('"isAsync":true')) {
 			this.noteSubagent(parseLine(line));
 			return;
 		}
 		if (
 			line.includes('"run_in_background":true') ||
-			line.includes('"Monitor"')
+			line.includes('"Monitor"') ||
+			LOOP_TOOLS.some((name) => line.includes(`"${name}"`))
 		) {
 			this.noteLaunches(parseLine(line));
 			return;
@@ -141,7 +162,12 @@ export class ClaudeBackgroundTasks {
 			const id = asString(block?.id);
 			const input = asObject(block?.input);
 			if (block?.type !== "tool_use" || !id || !input) continue;
-			const isMonitor = block.name === "Monitor";
+			const name = asString(block.name);
+			if (name && LOOP_TOOLS.includes(name)) {
+				this.loopCalls.set(id, { name, input });
+				continue;
+			}
+			const isMonitor = name === "Monitor";
 			if (!isMonitor && input.run_in_background !== true) continue;
 			this.launches.set(
 				id,
@@ -152,6 +178,28 @@ export class ClaudeBackgroundTasks {
 				if (oldest !== undefined) this.launches.delete(oldest);
 			}
 		}
+	}
+
+	private noteLoopResult(entry: Json | null): void {
+		if (entry?.type !== "user") return;
+		const toolUseId = this.toolUseIdOf(entry);
+		const call =
+			toolUseId === undefined ? undefined : this.loopCalls.get(toolUseId);
+		if (!toolUseId || !call) return;
+		this.loopCalls.delete(toolUseId);
+		const result = asObject(entry.toolUseResult);
+		if (call.name === "ScheduleWakeup") {
+			const scheduledFor = result?.scheduledFor;
+			this.wakeupAt = typeof scheduledFor === "number" ? scheduledFor : 0;
+		} else if (call.name === "CronCreate") {
+			const cronId = asString(result?.id);
+			if (!cronId || result?.recurring !== true) return;
+			this.crons.add(cronId);
+		} else {
+			const cronId = asString(call.input.id);
+			if (!cronId || !this.crons.delete(cronId)) return;
+		}
+		this.revision++;
 	}
 
 	private noteSubagent(entry: Json | null): void {

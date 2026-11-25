@@ -560,6 +560,7 @@ export function useAccessibleWorkspaces(
 					lastEventType: binding.lastEventType,
 					lastEventAt: binding.lastEventAt,
 					lastSeenAt: terminalSeenAt[binding.terminalId],
+					looping: binding.looping,
 				});
 				const prev = byWorkspace.get(binding.workspaceId) ?? {
 					status: "idle" as PaneStatus,

@@ -52,6 +52,17 @@ describe("deriveTerminalAgentStatus", () => {
 		).toBe("idle");
 	});
 
+	it("maps a Stop to working while a loop will start another turn", () => {
+		expect(
+			deriveTerminalAgentStatus({
+				lastEventType: "Stop",
+				lastEventAt: 100,
+				lastSeenAt: 100,
+				looping: true,
+			}),
+		).toBe("working");
+	});
+
 	it("maps Failed to failed regardless of seen timestamp", () => {
 		expect(
 			deriveTerminalAgentStatus({

@@ -21,6 +21,7 @@ export function isActiveAgentStatus(
 
 export function agentStatusFromEvent(
 	lastEventType: string,
+	looping = false,
 ): ActiveAgentStatus | null {
 	switch (lastEventType) {
 		case "Start":
@@ -30,7 +31,7 @@ export function agentStatusFromEvent(
 		case "Failed":
 			return "failed";
 		case "Stop":
-			return "review";
+			return looping ? "working" : "review";
 		default:
 			return null;
 	}

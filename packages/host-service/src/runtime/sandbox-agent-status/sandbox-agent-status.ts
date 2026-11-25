@@ -23,7 +23,9 @@ export function startSandboxAgentStatusReporter(args: {
 		highestAgentStatus(
 			args.store
 				.list()
-				.map((binding) => agentStatusFromEvent(binding.lastEventType)),
+				.map((binding) =>
+					agentStatusFromEvent(binding.lastEventType, binding.looping),
+				),
 		);
 
 	const send = async () => {

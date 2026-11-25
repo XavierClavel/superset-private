@@ -58,6 +58,53 @@ describe("TerminalAgentStore", () => {
 		}
 	});
 
+	it("marks a terminal looping while its Claude session has a wakeup scheduled", async () => {
+		const dir = mkdtempSync(path.join(tmpdir(), "store-bg-"));
+		const transcript = path.join(dir, "session.jsonl");
+		writeFileSync(
+			transcript,
+			[
+				{
+					type: "assistant",
+					message: {
+						content: [
+							{
+								type: "tool_use",
+								id: "tool-1",
+								name: "ScheduleWakeup",
+								input: { delaySeconds: 600, prompt: "/x" },
+							},
+						],
+					},
+				},
+				{
+					type: "user",
+					message: {
+						content: [{ type: "tool_result", tool_use_id: "tool-1" }],
+					},
+					toolUseResult: { scheduledFor: Date.now() + 600_000 },
+				},
+			]
+				.map((entry) => `${JSON.stringify(entry)}\n`)
+				.join(""),
+		);
+		try {
+			store.recordEvent({
+				terminalId: "t1",
+				workspaceId: WORKSPACE,
+				eventType: "Stop",
+				agentId: "claude",
+				occurredAt: Date.now(),
+			});
+			expect(store.get("t1")?.looping).toBeUndefined();
+
+			expect(await store.refreshBackgroundTasks("t1", transcript)).toBe(true);
+			expect(store.get("t1")?.looping).toBe(true);
+		} finally {
+			rmSync(dir, { recursive: true });
+		}
+	});
+
 	it("names a background subagent with the description from the transcript", async () => {
 		const dir = mkdtempSync(path.join(tmpdir(), "store-bg-"));
 		const transcript = path.join(dir, "session.jsonl");
