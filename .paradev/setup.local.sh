@@ -306,20 +306,29 @@ PORTSJSON
 }
 
 local_write_config_overlay() {
-  echo "🔧 Writing .paradev/config.local.json (untracked overlay)..."
-  # Paradev reads the overlay of the main checkout for every new worktree.
+  echo "🔧 Writing .paradev/config.local.toml (untracked overlay)..."
+  # Paradev reads config.local.toml from the main checkout only.
   local config_dir="${SUPERSET_ROOT_PATH:-$ROOT_DIR}/.paradev"
+  local config_file="$config_dir/config.local.toml"
+  if [ -f "$config_file" ]; then
+    if grep -q "setup.local.sh" "$config_file"; then
+      success "config.local.toml already uses setup.local.sh"
+    else
+      warn "$config_file exists; add this to it so worktrees use the local stack:"
+      echo '  [setup]'
+      echo '  run = ["./.paradev/setup.local.sh"]'
+    fi
+    return 0
+  fi
   if ! mkdir -p "$config_dir"; then
     error "Could not create $config_dir"
     return 1
   fi
-  cat > "$config_dir/config.local.json" <<'CONFIGLOCAL'
-{
-  "setup": ["./.paradev/setup.local.sh"],
-  "teardown": ["./.paradev/teardown.local.sh"]
-}
+  cat > "$config_file" <<'CONFIGLOCAL'
+[setup]
+run = ["./.paradev/setup.local.sh"]
 CONFIGLOCAL
-  success "config.local.json written — worktrees will use setup.local.sh"
+  success "config.local.toml written — worktrees will use setup.local.sh"
   return 0
 }
 

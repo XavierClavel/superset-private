@@ -34,6 +34,10 @@ teardown_main() {
     step_failed "Delete Neon branch"
   fi
 
+  if ! step_stop_local_db_stack; then
+    step_failed "Stop local DB stack"
+  fi
+
   # Step 5: Deallocate port base
   if ! step_deallocate_port; then
     step_failed "Deallocate port base"
