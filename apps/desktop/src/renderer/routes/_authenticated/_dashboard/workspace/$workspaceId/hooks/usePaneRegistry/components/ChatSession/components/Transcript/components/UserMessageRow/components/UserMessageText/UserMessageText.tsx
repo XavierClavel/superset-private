@@ -9,6 +9,7 @@ import type { ComposerChip } from "@superset/chat-ui/PromptInput";
 import { type ComponentProps, type ReactNode, useMemo } from "react";
 import { useIsDarkTheme } from "renderer/assets/app-icons/preset-icons";
 import { env } from "renderer/env.renderer";
+import { commandChip } from "renderer/routes/_authenticated/components/AgentComposer/utils/commandChip";
 import {
 	linkedContextChip,
 	linkedContextData,
@@ -17,7 +18,6 @@ import {
 	CHAT_MARKDOWN_COMPONENTS,
 	CHAT_REMARK_PLUGINS,
 } from "../../../../../../constants";
-import { commandChip } from "../../../../../../utils/commandChip";
 import { fileMentionChip } from "../../../../../../utils/fileMentions";
 import { linkChip } from "../../../../../../utils/linkChip";
 import type { MessageSegment } from "../../../../../../utils/messageElements";

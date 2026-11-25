@@ -158,3 +158,56 @@ describe("agentTooling.listSlashCommands", () => {
 		).toEqual(["from-config-env"]);
 	});
 });
+
+describe("agentTooling.listLaunchSlashCommands", () => {
+	const PROJECT_ID = "4d3a0e9a-9abc-4abc-8def-0123456789ab";
+
+	function writeProjectSkill(name: string): void {
+		const skillDir = join(worktree, ".claude", "skills", name);
+		mkdirSync(skillDir, { recursive: true });
+		writeFileSync(
+			join(skillDir, "SKILL.md"),
+			`---\ndescription: ${name}\n---\n`,
+		);
+	}
+
+	function customNames(commands: Array<{ kind: string; name: string }>) {
+		return commands.filter((c) => c.kind === "custom").map((c) => c.name);
+	}
+
+	beforeEach(() => {
+		const configDir = join(root, "account");
+		writeCommand(configDir, "from-account");
+		seedAgentConfig({ CLAUDE_CONFIG_DIR: configDir });
+	});
+
+	it("rejects an unknown project with NOT_FOUND", async () => {
+		await expect(
+			createCaller().listLaunchSlashCommands({
+				projectId: PROJECT_ID,
+				agent: CONFIG_ID,
+			}),
+		).rejects.toMatchObject({ code: "NOT_FOUND" });
+	});
+
+	it("reads the project's repository skills", async () => {
+		db.insert(schema.projects)
+			.values({ id: PROJECT_ID, repoPath: worktree })
+			.run();
+		const skill = "project-skill";
+		writeProjectSkill(skill);
+
+		const result = await createCaller().listLaunchSlashCommands({
+			projectId: PROJECT_ID,
+			agent: CONFIG_ID,
+		});
+		expect(customNames(result)).toEqual(["from-account", skill]);
+	});
+
+	it("reads the agent's own skills without a project", async () => {
+		const result = await createCaller().listLaunchSlashCommands({
+			agent: CONFIG_ID,
+		});
+		expect(customNames(result)).toEqual(["from-account"]);
+	});
+});

@@ -1,5 +1,5 @@
+import { LEADING_COMMAND } from "renderer/routes/_authenticated/components/AgentComposer/utils/commandChip";
 import type { ChatForkTarget } from "../../../../types";
-import { LEADING_COMMAND } from "../../../../utils/commandChip";
 
 export const FORK_TARGET_ARGS: Record<ChatForkTarget, string> = {
 	workspace: "here",

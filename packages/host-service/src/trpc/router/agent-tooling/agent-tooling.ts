@@ -7,10 +7,12 @@ import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { buildChatAgentEnv } from "../../../chat-v3/agentEnv";
 import { workspaces } from "../../../db/schema";
+import { getLocalProject } from "../../../projects/local-project-store";
 import { resolveHostAgentConfig } from "../../../terminal-agents/agent-config";
 import type { HostServiceContext } from "../../../types";
 import { queryProcedure, router } from "../../index";
 import { resolveDefaultAccountEnv } from "../usage/default-account";
+import { defaultSessionsRoot } from "../workspace-creation/shared/session-paths";
 import { listAgentSlashCommands } from "./discovery";
 import { isMcpServerAgent, listMcpServers } from "./mcp-servers";
 
@@ -19,6 +21,28 @@ import { isMcpServerAgent, listMcpServers } from "./mcp-servers";
 // mobile can resolve it.
 export type { McpServerEntry } from "@superset/shared/mcp-servers";
 export type { SlashCommand } from "@superset/shared/slash-commands";
+
+function listSlashCommandsIn(
+	ctx: HostServiceContext,
+	worktreePath: string,
+	agent: string,
+): Promise<SlashCommand[]> {
+	const config = resolveHostAgentConfig(ctx.db, agent);
+	const presetId = config?.presetId ?? agent;
+	// Same precedence as the agent launch itself: the config's own env
+	// wins over the host-default account, so discovery reads the config
+	// dir the CLI will actually run with.
+	const env = {
+		...resolveDefaultAccountEnv(ctx.db, presetId),
+		...(config?.env ?? {}),
+	};
+	return listAgentSlashCommands({
+		worktreePath,
+		agentId: agent,
+		presetId,
+		env,
+	});
+}
 
 function findWorkspace(ctx: HostServiceContext, workspaceId: string) {
 	const workspace = ctx.db.query.workspaces
@@ -44,21 +68,27 @@ export const agentToolingRouter = router({
 		.input(z.object({ workspaceId: z.string(), agent: z.string() }))
 		.query(async ({ ctx, input }): Promise<SlashCommand[]> => {
 			const workspace = findWorkspace(ctx, input.workspaceId);
-			const config = resolveHostAgentConfig(ctx.db, input.agent);
-			const presetId = config?.presetId ?? input.agent;
-			// Same precedence as the agent launch itself: the config's own env
-			// wins over the host-default account, so discovery reads the config
-			// dir the CLI will actually run with.
-			const env = {
-				...resolveDefaultAccountEnv(ctx.db, presetId),
-				...(config?.env ?? {}),
-			};
-			return listAgentSlashCommands({
-				worktreePath: workspace.worktreePath,
-				agentId: input.agent,
-				presetId,
-				env,
-			});
+			return listSlashCommandsIn(ctx, workspace.worktreePath, input.agent);
+		}),
+
+	/**
+	 * The slash commands and skills the given agent can use in a workspace
+	 * not created yet: the project's repository, or with no project, a fresh
+	 * session folder that holds none of its own.
+	 */
+	listLaunchSlashCommands: queryProcedure
+		.input(z.object({ projectId: z.string().optional(), agent: z.string() }))
+		.query(async ({ ctx, input }): Promise<SlashCommand[]> => {
+			if (!input.projectId)
+				return listSlashCommandsIn(ctx, defaultSessionsRoot(), input.agent);
+			const project = getLocalProject(ctx.db, input.projectId);
+			if (!project) {
+				throw new TRPCError({
+					code: "NOT_FOUND",
+					message: `Project ${input.projectId} not found on this host`,
+				});
+			}
+			return listSlashCommandsIn(ctx, project.repoPath, input.agent);
 		}),
 
 	listMcpServers: queryProcedure

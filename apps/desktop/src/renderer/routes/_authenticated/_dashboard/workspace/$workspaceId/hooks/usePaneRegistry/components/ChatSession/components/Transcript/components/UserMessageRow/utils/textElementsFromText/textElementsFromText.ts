@@ -1,5 +1,5 @@
 import type { AvailableCommand, TextElement } from "@superset/chat/protocol";
-import { LEADING_COMMAND } from "../../../../../../utils/commandChip";
+import { LEADING_COMMAND } from "renderer/routes/_authenticated/components/AgentComposer/utils/commandChip";
 import { findMcpServerTokens } from "../../../../../../utils/mcpServerChips";
 
 const encoder = new TextEncoder();
