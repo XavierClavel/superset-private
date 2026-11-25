@@ -71,6 +71,31 @@ describe("ClaudeBackgroundTasks", () => {
 		expect((await reader.read(file)).map((task) => task.id)).toEqual(["m1"]);
 	});
 
+	test("drops a background shell that TaskStop stopped", async () => {
+		const file = transcript();
+		const reader = new ClaudeBackgroundTasks();
+		appendFileSync(
+			file,
+			launch("tool-1", "Bash", {
+				command: "bun dev",
+				run_in_background: true,
+			}) + result("tool-1", { backgroundTaskId: "b1" }),
+		);
+		expect((await reader.read(file)).map((task) => task.id)).toEqual(["b1"]);
+
+		appendFileSync(
+			file,
+			launch("tool-2", "TaskStop", { task_id: "b1" }) +
+				result("tool-2", {
+					message: "Successfully stopped task: b1 (bun dev)",
+					task_id: "b1",
+					task_type: "local_bash",
+					command: "bun dev",
+				}),
+		);
+		expect(await reader.read(file)).toEqual([]);
+	});
+
 	test("ignores task ids from other tools and foreground commands", async () => {
 		const file = transcript();
 		appendFileSync(
