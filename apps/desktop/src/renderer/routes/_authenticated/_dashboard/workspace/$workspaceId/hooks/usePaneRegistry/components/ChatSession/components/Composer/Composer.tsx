@@ -48,6 +48,11 @@ import {
 } from "renderer/routes/_authenticated/components/AgentComposer/components/ModePicker";
 import { useFooterTier } from "renderer/routes/_authenticated/components/AgentComposer/hooks/useFooterTier";
 import { useGitHubMentionProviders } from "renderer/routes/_authenticated/components/AgentComposer/hooks/useGitHubMentionProviders";
+import {
+	commandChip,
+	isSigilSkill,
+	LEADING_COMMAND,
+} from "renderer/routes/_authenticated/components/AgentComposer/utils/commandChip";
 import { useCollections } from "renderer/routes/_authenticated/providers/CollectionsProvider";
 import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/HostWorkspacesProvider";
 import { useChatComposerStore } from "../../../../stores/chatComposerStore";
@@ -56,11 +61,6 @@ import { useChatWiring } from "../../hooks/useSessionClient";
 import { useChatPaneActions } from "../../providers/ChatPaneActionsProvider";
 import type { ChatForkTarget } from "../../types";
 import { chatContextLine, chatReferenceChip } from "../../utils/chatReference";
-import {
-	commandChip,
-	isSigilSkill,
-	LEADING_COMMAND,
-} from "../../utils/commandChip";
 import { fileMentionChip, fileMentionMatches } from "../../utils/fileMentions";
 import { mcpContextLine } from "../../utils/mcpServerChips";
 import { elementsForChips } from "../../utils/messageElements";

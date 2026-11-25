@@ -14,9 +14,9 @@ import { toast } from "@superset/ui/sonner";
 import { type RefObject, useCallback, useMemo, useState } from "react";
 import { useCreateAutomation } from "renderer/routes/_authenticated/_dashboard/hooks/useCreateAutomation";
 import { useWorkspace } from "renderer/routes/_authenticated/_dashboard/workspace/providers/WorkspaceProvider";
+import { commandChip } from "renderer/routes/_authenticated/components/AgentComposer/utils/commandChip";
 import { fastOption } from "renderer/routes/_authenticated/components/AgentComposer/utils/toggleOption";
 import type { ChatForkTarget } from "../../../../types";
-import { commandChip } from "../../../../utils/commandChip";
 import {
 	APP_COMMANDS,
 	type AppCommand,

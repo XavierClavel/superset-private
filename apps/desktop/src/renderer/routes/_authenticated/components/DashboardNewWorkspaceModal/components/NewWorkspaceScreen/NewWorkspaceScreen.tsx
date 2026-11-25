@@ -99,6 +99,7 @@ import { useBaseBranchReset } from "./hooks/useBaseBranchReset";
 import { useConsumeHostIntent } from "./hooks/useConsumeHostIntent";
 import { useCreateProjectEnvironment } from "./hooks/useCreateProjectEnvironment";
 import { useGitHubRepositoryProjects } from "./hooks/useGitHubRepositoryProjects";
+import { useLaunchSlashCommands } from "./hooks/useLaunchSlashCommands";
 import { useLinkedIssueNaming } from "./hooks/useLinkedIssueNaming";
 import { useSamplePromptSelection } from "./hooks/useSamplePromptSelection";
 import { useWorkspaceSettingMentionProviders } from "./hooks/useWorkspaceSettingMentionProviders";
@@ -596,6 +597,12 @@ export function NewWorkspaceScreen({
 		);
 		return agent ? launchPresetIdOf(agent) : null;
 	}, [agentConfigs, selectedAgent]);
+	const launchCommands = useLaunchSlashCommands({
+		hostUrl: isCloudHost ? null : launchHostUrl,
+		projectId,
+		isSession,
+		agent: selectedAgent === "none" ? null : selectedAgent,
+	});
 	const modelSupport = selectedPresetId
 		? getAgentModelSupport(selectedPresetId)
 		: undefined;
@@ -1252,6 +1259,7 @@ export function NewWorkspaceScreen({
 								handleSubmit();
 								return false;
 							}}
+							commands={launchCommands}
 							mentionProviders={mentionProviders}
 							pending={isStarting}
 							placeholder={t({ message: "Do anything in Paradev" })}
@@ -1346,6 +1354,7 @@ export function NewWorkspaceScreen({
 							handleSubmit();
 							return false;
 						}}
+						commands={launchCommands}
 						mentionProviders={mentionProviders}
 						pending={isStarting}
 						placeholder={promptPlaceholder}
