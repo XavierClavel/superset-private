@@ -63,6 +63,7 @@ import {
 	type PullRequestUrlRef,
 	uniquePullRequestRefs,
 } from "./utils/pull-request-url";
+import { readPushedBranches } from "./utils/pushed-branches";
 import {
 	readWorkspaceRefs,
 	type WorkspaceRefsSnapshot,
@@ -90,9 +91,9 @@ const REPO_PULL_REQUEST_CACHE_MAX_TTL_MS = 30 * 60_000;
 const MISSING_WORKTREE_PROBE_INTERVAL_MS = 30_000;
 const PAST_PULL_REQUEST_LOOKUP_BATCH = 8;
 const PAST_PULL_REQUEST_REFRESH_STATES: string[] = ["open", "draft", "queued"];
-// Bash tool calls time out after 10 minutes; a PR older than the call that
-// printed it was not opened by it.
-const SESSION_PULL_REQUEST_MAX_AGE_MS = 15 * 60_000;
+// Bash tool calls time out after 10 minutes; a PR opened or a push made
+// earlier than that is not the call's own.
+const TOOL_CALL_MAX_AGE_MS = 15 * 60_000;
 // Dedup + link-assignment key. Branch stays case-sensitive: `feature` and
 // `Feature` are distinct branches with distinct PRs, so collapsing them here
 // would mislink. Case drift is tolerated only in the fallback in
@@ -759,7 +760,7 @@ export class PullRequestRuntimeManager {
 			.from(workspaces)
 			.where(eq(workspaces.id, workspaceId))
 			.get();
-		if (!workspace?.projectId || workspace.archivedAt != null) return;
+		if (!workspace || workspace.archivedAt != null) return;
 		const refs = uniquePullRequestRefs(urls);
 		if (refs.length === 0) return;
 
@@ -786,18 +787,17 @@ export class PullRequestRuntimeManager {
 				if (
 					!fetched ||
 					fetched.createdAt === null ||
-					now - fetched.createdAt > SESSION_PULL_REQUEST_MAX_AGE_MS
+					now - fetched.createdAt > TOOL_CALL_MAX_AGE_MS
 				) {
 					continue;
 				}
-				const rowId = this.upsertPullRequestNode({
-					projectId: target.projectId,
-					repo: target.repo,
-					node: fetched.node,
-					details: undefined,
+				this.linkSessionPullRequest(
+					workspace,
+					target.projectId,
+					target.repo,
+					fetched.node,
 					now,
-				});
-				this.recordWorkspacePullRequestLink(workspaceId, rowId, now);
+				);
 				recorded = true;
 			} catch (error) {
 				console.warn(
@@ -814,17 +814,106 @@ export class PullRequestRuntimeManager {
 		}
 	}
 
+	/**
+	 * Links the open PRs of the branches a session's tool call pushed, found
+	 * in the reflogs of every project repo. `since` is the session's previous
+	 * hook event: a push before it belongs to another call.
+	 */
+	async recordSessionPushes(
+		workspaceId: string,
+		since: number | undefined,
+	): Promise<void> {
+		const workspace = this.db
+			.select()
+			.from(workspaces)
+			.where(eq(workspaces.id, workspaceId))
+			.get();
+		if (!workspace || workspace.archivedAt != null) return;
+
+		const now = Date.now();
+		const cutoff = Math.max(since ?? 0, now - TOOL_CALL_MAX_AGE_MS);
+		let recorded = false;
+		for (const project of this.db.select().from(projects).all()) {
+			const branches = await readPushedBranches(
+				project.repoPath,
+				project.remoteName ?? "origin",
+				cutoff,
+			);
+			if (branches.length === 0) continue;
+			const repo = await this.getProjectRepository(project.id);
+			if (!repo) continue;
+			for (const branch of branches) {
+				if (branch === repo.defaultBranch) continue;
+				try {
+					const node = await this.getCachedPullRequestByHead(
+						repo,
+						{ owner: repo.owner, repo: repo.name, branch },
+						{ bypassCache: true },
+					);
+					if (node?.state !== "OPEN") continue;
+					this.linkSessionPullRequest(workspace, project.id, repo, node, now);
+					recorded = true;
+				} catch (error) {
+					console.warn(
+						"[host-service:pull-request-runtime] Failed to record pushed PR",
+						{ workspaceId, projectId: project.id, branch, error },
+					);
+				}
+			}
+		}
+
+		if (recorded) {
+			await this.enqueueWorkspaceSync(workspaceId, { bypassCache: true });
+		}
+	}
+
+	private linkSessionPullRequest(
+		workspace: typeof workspaces.$inferSelect,
+		projectId: string,
+		repo: NormalizedRepoIdentity,
+		node: GitHubPullRequestNode,
+		now: number,
+	): void {
+		const rowId = this.upsertPullRequestNode({
+			projectId,
+			repo,
+			node,
+			details: undefined,
+			now,
+		});
+		this.recordWorkspacePullRequestLink(workspace.id, rowId, now);
+		// A project-less session has no branch of its own: its PR is the last
+		// one it opened or pushed to, unless the user unlinked that one.
+		if (
+			workspace.projectId === null &&
+			rowId !== workspace.suppressedPullRequestId
+		) {
+			this.db
+				.update(workspaces)
+				.set({ pullRequestId: rowId })
+				.where(
+					and(eq(workspaces.id, workspace.id), isNull(workspaces.archivedAt)),
+				)
+				.run();
+		}
+	}
+
 	private async resolvePullRequestProject(
-		workspaceProjectId: string,
+		workspaceProjectId: string | null,
 		ref: PullRequestUrlRef,
 	): Promise<{ projectId: string; repo: NormalizedRepoIdentity } | null> {
 		const isSameRepo = (owner: string | null, name: string | null) =>
 			owner?.toLowerCase() === ref.owner.toLowerCase() &&
 			name?.toLowerCase() === ref.repo.toLowerCase();
 
-		const workspaceRepo = await this.getProjectRepository(workspaceProjectId);
-		if (workspaceRepo && isSameRepo(workspaceRepo.owner, workspaceRepo.name)) {
-			return { projectId: workspaceProjectId, repo: workspaceRepo };
+		if (workspaceProjectId) {
+			const workspaceRepo = await this.getProjectRepository(workspaceProjectId);
+			if (
+				workspaceRepo &&
+				isSameRepo(workspaceRepo.owner, workspaceRepo.name)
+			) {
+				return { projectId: workspaceProjectId, repo: workspaceRepo };
+			}
 		}
 
 		const otherProject = this.db
@@ -847,7 +936,7 @@ export class PullRequestRuntimeManager {
 		// sweep's read+write and clobber the newer snapshot. enqueueWorkspaceSync
 		// coalesces — if a sync is already running for a workspace, this just
 		// flips its rerunPending flag.
-		// Session workspaces (null projectId) have no remote and no PRs, and
+		// Session workspaces (null projectId) have no branch to sync, and
 		// archived workspaces are frozen. Filtered in JS: the unit-test fakes
 		// stub select().from().all() without a where() builder.
 		const ids = this.db
@@ -928,7 +1017,7 @@ export class PullRequestRuntimeManager {
 			this.forgetMissingWorktree(workspaceId);
 			return;
 		}
-		// Session workspaces (null projectId) have no remote and no PRs; the
+		// Session workspaces (null projectId) have no branch to sync; the
 		// GitWatcher still fires for their repos, so gate here too. Archived
 		// workspaces are frozen tombstones — never resync or relink them.
 		if (workspace.projectId === null || workspace.archivedAt !== null) {
@@ -1074,8 +1163,53 @@ export class PullRequestRuntimeManager {
 					.filter((id) => id !== null),
 			),
 		];
+		await Promise.all([
+			...projectIds.map((projectId) => this.refreshProject(projectId)),
+			this.refreshSessionPullRequests(),
+		]);
+	}
+
+	// A session's PRs belong to projects whose sweep never lists the session,
+	// so their state is refreshed here.
+	private async refreshSessionPullRequests(): Promise<void> {
+		const sessionIds = this.db
+			.select({
+				id: workspaces.id,
+				projectId: workspaces.projectId,
+				archivedAt: workspaces.archivedAt,
+			})
+			.from(workspaces)
+			.all()
+			.filter((row) => row.projectId === null && row.archivedAt == null)
+			.map((row) => row.id);
+		if (sessionIds.length === 0) return;
+
+		const projectIds = this.db
+			.selectDistinct({ projectId: pullRequests.projectId })
+			.from(workspacePullRequests)
+			.innerJoin(
+				pullRequests,
+				eq(workspacePullRequests.pullRequestId, pullRequests.id),
+			)
+			.where(
+				and(
+					inArray(workspacePullRequests.workspaceId, sessionIds),
+					inArray(pullRequests.state, PAST_PULL_REQUEST_REFRESH_STATES),
+				),
+			)
+			.all()
+			.map((row) => row.projectId);
 		await Promise.all(
-			projectIds.map((projectId) => this.refreshProject(projectId)),
+			projectIds.map(async (projectId) => {
+				const repo = await this.getProjectRepository(projectId);
+				if (!repo) return;
+				await this.refreshPastPullRequests(
+					projectId,
+					repo,
+					sessionIds,
+					new Set(),
+				);
+			}),
 		);
 	}
 

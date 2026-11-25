@@ -51,6 +51,7 @@ const hookInput = z.object({
 	transcriptPath: z.string().max(4096).optional(),
 	// A malformed list must never cost the lifecycle event it rides on.
 	pullRequestUrls: z.array(z.string()).max(50).optional().catch(undefined),
+	gitPush: z.boolean().optional().catch(undefined),
 });
 
 function trimOrUndefined(value: string | undefined): string | undefined {
@@ -118,6 +119,20 @@ export const notificationsRouter = router({
 				)
 				.catch((error) => {
 					console.warn("[notifications/hook] Failed to record session PRs", {
+						terminalId: input.terminalId,
+						error,
+					});
+				});
+		}
+
+		if (input.gitPush) {
+			void ctx.runtime.pullRequests
+				.recordSessionPushes(
+					terminalSession.originWorkspaceId,
+					ctx.terminalAgentStore.get(input.terminalId)?.lastEventAt,
+				)
+				.catch((error) => {
+					console.warn("[notifications/hook] Failed to record pushed PRs", {
 						terminalId: input.terminalId,
 						error,
 					});

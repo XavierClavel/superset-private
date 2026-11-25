@@ -1,5 +1,5 @@
 import { Database } from "bun:sqlite";
-import { describe, expect, it, mock } from "bun:test";
+import { describe, expect, it, mock, setSystemTime } from "bun:test";
 import { homedir } from "node:os";
 import { resolve } from "node:path";
 import type { AgentIdentity } from "@superset/shared/agent-identity";
@@ -53,9 +53,17 @@ function createContext(
 	recordSessionPullRequests: ReturnType<
 		typeof mock<(workspaceId: string, urls: string[]) => Promise<void>>
 	>;
+	recordSessionPushes: ReturnType<
+		typeof mock<
+			(workspaceId: string, since: number | undefined) => Promise<void>
+		>
+	>;
 } {
 	const recordSessionPullRequests = mock(
 		(_workspaceId: string, _urls: string[]) => Promise.resolve(),
+	);
+	const recordSessionPushes = mock(
+		(_workspaceId: string, _since: number | undefined) => Promise.resolve(),
 	);
 	const broadcastAgentLifecycle = mock(
 		(_event: BroadcastedAgentLifecycleEvent) => {},
@@ -106,7 +114,9 @@ function createContext(
 			broadcastWorkspaceChanged: () => {},
 		},
 		terminalAgentStore,
-		runtime: { pullRequests: { recordSessionPullRequests } },
+		runtime: {
+			pullRequests: { recordSessionPullRequests, recordSessionPushes },
+		},
 	} as unknown as HostServiceContext;
 
 	return {
@@ -117,6 +127,7 @@ function createContext(
 		taskStart,
 		terminalAgentStore,
 		recordSessionPullRequests,
+		recordSessionPushes,
 	};
 }
 
@@ -338,6 +349,37 @@ describe("notificationsRouter.hook", () => {
 		expect(recordSessionPullRequests).toHaveBeenCalledWith("workspace-1", [
 			url,
 		]);
+	});
+
+	it("hands a push to the PR runtime with the terminal's previous event as the window start", async () => {
+		const { ctx, terminalAgentStore, recordSessionPushes } =
+			createContext("workspace-1");
+		const caller = notificationsRouter.createCaller(ctx);
+		try {
+			setSystemTime(new Date("2026-11-25T10:00:00Z"));
+			await caller.hook({
+				terminalId: "terminal-1",
+				eventType: "UserPromptSubmit",
+				agent: { agentId: "claude" },
+			});
+			const previousEventAt = terminalAgentStore.get("terminal-1")?.lastEventAt;
+
+			setSystemTime(new Date("2026-11-25T10:01:00Z"));
+			await caller.hook({
+				terminalId: "terminal-1",
+				eventType: "PostToolUse",
+				agent: { agentId: "claude" },
+				gitPush: true,
+			});
+
+			expect(previousEventAt).toBeNumber();
+			expect(recordSessionPushes).toHaveBeenCalledWith(
+				"workspace-1",
+				previousEventAt,
+			);
+		} finally {
+			setSystemTime();
+		}
 	});
 
 	it("keeps the lifecycle event when the PR URL list is malformed", async () => {

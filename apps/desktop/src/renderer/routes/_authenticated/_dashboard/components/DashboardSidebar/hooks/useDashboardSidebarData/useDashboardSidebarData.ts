@@ -633,12 +633,10 @@ export function useDashboardSidebarData() {
 				hosts,
 				machineId,
 				relayUrl,
-				// Sessions (null projectId) have no remote and never carry PRs.
-				// A hidden project renders nothing, so its workspaces stop
-				// polling too.
+				// A hidden project renders nothing, so its workspaces stop polling.
 				workspaces: visibleSidebarWorkspaces.filter(
 					(workspace) =>
-						workspace.projectId !== null &&
+						workspace.projectId === null ||
 						!hiddenProjectIds.has(workspace.projectId),
 				),
 				fallbackOrganizationId: knownHostsOrgId,

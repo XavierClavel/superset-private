@@ -1,8 +1,8 @@
 import { Database } from "bun:sqlite";
 import { describe, expect, setSystemTime, test } from "bun:test";
-import { mkdtempSync, rmSync } from "node:fs";
+import { appendFileSync, mkdirSync, mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, resolve } from "node:path";
+import { dirname, join, resolve } from "node:path";
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
@@ -2467,13 +2467,19 @@ describe("PullRequestRuntimeManager session-opened PRs", () => {
 	}
 
 	function sessionExecGh(
-		prs: Array<{ number: number; headRef: string; createdAt: string }>,
+		prs: Array<{
+			number: number;
+			headRef: string;
+			createdAt: string;
+			state?: "open" | "closed";
+		}>,
 	) {
 		const toNode = (pr: (typeof prs)[number]) => ({
 			...makePrNode({
 				number: pr.number,
 				headRef: pr.headRef,
 				headSha: `sha-${pr.headRef}`,
+				state: pr.state,
 			}),
 			created_at: pr.createdAt,
 		});
@@ -2578,6 +2584,202 @@ describe("PullRequestRuntimeManager session-opened PRs", () => {
 		const history = await manager.getPullRequestHistoryByWorkspaces(["ws"]);
 		expect(history[0]?.pullRequests).toEqual([]);
 		expect(getPrByNumber(db, 3)).toBeUndefined();
+	});
+
+	function seedProjectlessSession(db: HostDb): string {
+		const repoPath = mkdtempSync(join(tmpdir(), "session-push-"));
+		seedProject(db);
+		db.update(schema.projects)
+			.set({ repoPath })
+			.where(eq(schema.projects.id, PROJECT_ID))
+			.run();
+		db.insert(schema.workspaces)
+			.values({
+				id: "session",
+				projectId: null,
+				type: "session",
+				worktreePath: join(repoPath, "session"),
+				branch: "main",
+				createdAt: Date.now(),
+			})
+			.run();
+		return repoPath;
+	}
+
+	function writeReflog(
+		repoPath: string,
+		branch: string,
+		at: number,
+		message = "update by push",
+	) {
+		const path = join(repoPath, ".git/logs/refs/remotes/origin", branch);
+		mkdirSync(dirname(path), { recursive: true });
+		appendFileSync(
+			path,
+			`${"0".repeat(40)} ${"1".repeat(40)} test <test@example.com> ${Math.floor(at / 1000)} +0000\t${message}\n`,
+		);
+	}
+
+	const currentPullRequestNumber = async (manager: PullRequestRuntimeManager) =>
+		(await manager.getPullRequestsByWorkspaces(["session"]))[0]?.pullRequest
+			?.number;
+
+	const historyNumbers = async (manager: PullRequestRuntimeManager) =>
+		(
+			await manager.getPullRequestHistoryByWorkspaces(["session"])
+		)[0]?.pullRequests
+			.map((pr) => pr.number)
+			.sort();
+
+	test("makes a PR a project-less session opened its own PR", async () => {
+		const db = createRealDb();
+		const repoPath = seedProjectlessSession(db);
+		const manager = createManager(db, {
+			execGh: sessionExecGh([
+				{ number: 12, headRef: "v4-pp/1-mapper", createdAt: minutesAgo(1) },
+			]),
+		});
+
+		try {
+			await withSilencedWarnings(() =>
+				manager.recordSessionPullRequests("session", [prUrl(12)]),
+			);
+
+			expect(await currentPullRequestNumber(manager)).toBe(12);
+		} finally {
+			rmSync(repoPath, { recursive: true, force: true });
+		}
+	});
+
+	test("makes the PR of a branch a project-less session pushed its own PR, however old the PR", async () => {
+		const db = createRealDb();
+		const repoPath = seedProjectlessSession(db);
+		const since = Date.now() - 5_000;
+		writeReflog(repoPath, "feature/stacked", Date.now());
+		const manager = createManager(db, {
+			execGh: sessionExecGh([
+				{ number: 31, headRef: "feature/stacked", createdAt: minutesAgo(600) },
+			]),
+		});
+
+		try {
+			await withSilencedWarnings(() =>
+				manager.recordSessionPushes("session", since),
+			);
+
+			expect(await currentPullRequestNumber(manager)).toBe(31);
+			expect(await historyNumbers(manager)).toEqual([31]);
+		} finally {
+			rmSync(repoPath, { recursive: true, force: true });
+		}
+	});
+
+	test("links only the open PRs of non-default branches pushed since the session's previous event", async () => {
+		const db = createRealDb();
+		const repoPath = seedProjectlessSession(db);
+		const since = Date.now() - 5_000;
+		writeReflog(repoPath, "pushed", Date.now());
+		writeReflog(repoPath, "pushed-before", since - 60_000);
+		writeReflog(repoPath, "fetched", Date.now(), "fetch: fast-forward");
+		writeReflog(repoPath, "main", Date.now());
+		writeReflog(repoPath, "merged", Date.now());
+		const manager = createManager(db, {
+			git: defaultBranchGit("main"),
+			execGh: sessionExecGh([
+				{ number: 1, headRef: "pushed", createdAt: minutesAgo(60) },
+				{ number: 2, headRef: "pushed-before", createdAt: minutesAgo(60) },
+				{ number: 3, headRef: "fetched", createdAt: minutesAgo(60) },
+				{ number: 4, headRef: "main", createdAt: minutesAgo(60) },
+				{
+					number: 5,
+					headRef: "merged",
+					createdAt: minutesAgo(60),
+					state: "closed",
+				},
+			]),
+		});
+
+		try {
+			await withSilencedWarnings(() =>
+				manager.recordSessionPushes("session", since),
+			);
+
+			expect(await historyNumbers(manager)).toEqual([1]);
+		} finally {
+			rmSync(repoPath, { recursive: true, force: true });
+		}
+	});
+
+	test("keeps a PR the user unlinked from a session unlinked when the session pushes to it again", async () => {
+		const db = createRealDb();
+		const repoPath = seedProjectlessSession(db);
+		seedPullRequest(db, {
+			id: "pr-31",
+			prNumber: 31,
+			headBranch: "feature/stacked",
+			headSha: "old-sha",
+		});
+		db.update(workspaces)
+			.set({ suppressedPullRequestId: "pr-31" })
+			.where(eq(workspaces.id, "session"))
+			.run();
+		writeReflog(repoPath, "feature/stacked", Date.now());
+		const manager = createManager(db, {
+			execGh: sessionExecGh([
+				{ number: 31, headRef: "feature/stacked", createdAt: minutesAgo(600) },
+			]),
+		});
+
+		try {
+			await withSilencedWarnings(() =>
+				manager.recordSessionPushes("session", Date.now() - 5_000),
+			);
+
+			expect(await currentPullRequestNumber(manager)).toBeUndefined();
+			expect(await historyNumbers(manager)).toEqual([31]);
+		} finally {
+			rmSync(repoPath, { recursive: true, force: true });
+		}
+	});
+
+	test("refreshes a project-less session's PR in the periodic sweep", async () => {
+		const db = createRealDb();
+		const repoPath = seedProjectlessSession(db);
+		seedPullRequest(db, {
+			id: "pr-31",
+			prNumber: 31,
+			headBranch: "feature/stacked",
+			headSha: "sha-feature/stacked",
+		});
+		db.update(workspaces)
+			.set({ pullRequestId: "pr-31" })
+			.where(eq(workspaces.id, "session"))
+			.run();
+		db.insert(schema.workspacePullRequests)
+			.values({ workspaceId: "session", pullRequestId: "pr-31", linkedAt: 1 })
+			.run();
+		const manager = createManager(db, {
+			execGh: sessionExecGh([
+				{
+					number: 31,
+					headRef: "feature/stacked",
+					createdAt: minutesAgo(600),
+					state: "closed",
+				},
+			]),
+		});
+		const sweep = (
+			manager as unknown as { refreshEligibleProjects(): Promise<void> }
+		).refreshEligibleProjects.bind(manager);
+
+		try {
+			await withSilencedWarnings(sweep);
+
+			const current = await manager.getPullRequestsByWorkspaces(["session"]);
+			expect(current[0]?.pullRequest?.state).toBe("closed");
+		} finally {
+			rmSync(repoPath, { recursive: true, force: true });
+		}
 	});
 });
 
