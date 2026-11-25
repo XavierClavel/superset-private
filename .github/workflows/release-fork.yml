@@ -63,5 +63,6 @@ jobs:
           gh release create "v$VERSION" release-artifacts/* \
             --target "$GITHUB_SHA" \
             --title "Superset fork $VERSION" \
+            --notes-file .github/release-fork-notes.md \
             --generate-notes \
             --latest

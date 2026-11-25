@@ -77,6 +77,26 @@ is allowed.
   self-signed signing certificate on the runner, because electron-builder signs only with trusted
   identities.
 
+## Installing on macOS
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/XavierClavel/superset-private/main/scripts/install-fork-mac.sh | bash
+```
+
+The script installs the latest release in `/Applications` and moves the app already there to a
+temporary folder. Use it instead of the `.dmg`: releases are not notarized, and macOS calls an app
+"damaged" when a browser downloaded it. A browser marks its downloads as quarantined, curl does not.
+An app already copied from the `.dmg` opens once the mark is removed:
+
+```bash
+xattr -dr com.apple.quarantine /Applications/Superset.app
+```
+
+Keychain access asks once after a change of certificate ("Superset Safe Storage"): choose Always
+Allow. Switching from official Superset to a fork build is the same install. The sign-in
+(`~/.paradev/auth-token.enc`) is encrypted with a key derived from the machine, not the app, so the
+fork build stays signed in.
+
 ## Releasing
 
 Every push to `main` runs `release-fork.yml`. It builds `<apps/desktop version>-fork.<run number>`
@@ -94,19 +114,9 @@ Losing it means a new certificate and one more install by hand. There is no nota
 needs an Apple Developer ID.
 
 A `bun run build` on this Mac is ad-hoc signed, so it cannot update to a release. To get back on
-the release track, install the latest release by hand:
+the release track, install the latest release ("Installing on macOS").
 
-```bash
-gh release download --repo XavierClavel/superset-private --pattern '*-arm64-mac.zip' --dir /tmp/superset-release
-ditto -x -k /tmp/superset-release/*-arm64-mac.zip /tmp/superset-release
-mv /Applications/Superset.app /tmp/superset-release/Superset-previous.app
-ditto /tmp/superset-release/Superset.app /Applications/Superset.app
-```
-
-Keychain access asks once after a change of certificate ("Superset Safe Storage"): choose Always
-Allow. Switching from official Superset to a fork build is the same manual install. The sign-in
-(`~/.paradev/auth-token.enc`) is encrypted with a key derived from the machine, not the app, so the
-fork build stays signed in.
+The release notes start with `.github/release-fork-notes.md`, the install steps.
 
 ## Building on Windows
 
