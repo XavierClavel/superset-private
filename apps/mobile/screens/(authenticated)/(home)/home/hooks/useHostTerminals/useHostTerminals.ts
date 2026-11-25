@@ -105,6 +105,7 @@ function attentionFromEvent(
 	lastEventType: string,
 	lastEventAt: number,
 	lastSeenAt: number | undefined,
+	looping: boolean,
 ): TerminalAttention | null {
 	switch (lastEventType) {
 		case "PermissionRequest":
@@ -114,6 +115,7 @@ function attentionFromEvent(
 		case "Failed":
 			return "failed";
 		case "Stop":
+			if (looping) return "working";
 			return lastEventAt > (lastSeenAt ?? 0) ? "review" : null;
 		default:
 			return null;
@@ -197,6 +199,7 @@ export function useHostsTerminals(
 							binding.lastEventType,
 							binding.lastEventAt,
 							terminalSeenAt[session.terminalId],
+							binding.looping === true,
 						)
 					: null;
 				const row: TerminalRowData = {

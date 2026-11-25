@@ -618,6 +618,9 @@ export class TerminalAgentStore extends EventEmitter {
 		if (background?.tasks.length) {
 			binding = { ...binding, backgroundTasks: background.tasks };
 		}
+		if (background?.reader.looping()) {
+			binding = { ...binding, looping: true };
+		}
 		const roster = this.pruneSubagents(binding.terminalId);
 		if (!roster) return binding;
 		const live = [...roster.values()]

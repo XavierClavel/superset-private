@@ -67,5 +67,7 @@ export interface TerminalAgentBinding {
 	subagents?: TerminalSubagent[];
 	chatSessionId?: string;
 	backgroundTasks?: BackgroundTask[];
+	/** Set while a `/loop` will start another turn after this one stops. */
+	looping?: true;
 	queuedPrompts?: number;
 }

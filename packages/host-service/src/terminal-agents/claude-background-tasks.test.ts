@@ -99,6 +99,56 @@ describe("ClaudeBackgroundTasks", () => {
 		expect(reader.subagentDescription("a1")).toBe("Review the diff");
 	});
 
+	test("loops while a wakeup is scheduled for later", async () => {
+		const file = transcript();
+		let now = 1_000;
+		const reader = new ClaudeBackgroundTasks(() => now);
+		appendFileSync(
+			file,
+			launch("tool-1", "ScheduleWakeup", { delaySeconds: 60, prompt: "/x" }) +
+				result("tool-1", { scheduledFor: 61_000, clampedDelaySeconds: 60 }),
+		);
+		await reader.read(file);
+		expect(reader.looping()).toBe(true);
+
+		now = 61_000;
+		expect(reader.looping()).toBe(false);
+
+		now = 1_000;
+		appendFileSync(
+			file,
+			launch("tool-2", "ScheduleWakeup", { stop: true }) +
+				result("tool-2", { scheduledFor: 0, stopped: true }),
+		);
+		await reader.read(file);
+		expect(reader.looping()).toBe(false);
+	});
+
+	test("loops while a recurring cron job lives", async () => {
+		const file = transcript();
+		const reader = new ClaudeBackgroundTasks();
+		appendFileSync(
+			file,
+			launch("tool-1", "CronCreate", { cron: "0 9 * * *", recurring: false }) +
+				result("tool-1", { id: "once", recurring: false }) +
+				launch("tool-2", "CronCreate", {
+					cron: "*/5 * * * *",
+					recurring: true,
+				}) +
+				result("tool-2", { id: "every5", recurring: true }),
+		);
+		await reader.read(file);
+		expect(reader.looping()).toBe(true);
+
+		appendFileSync(
+			file,
+			launch("tool-3", "CronDelete", { id: "every5" }) +
+				result("tool-3", { id: "every5" }),
+		);
+		await reader.read(file);
+		expect(reader.looping()).toBe(false);
+	});
+
 	test("keeps a line split across two reads", async () => {
 		const file = transcript();
 		const reader = new ClaudeBackgroundTasks();

@@ -361,6 +361,7 @@ export function DashboardSidebarWorkspaceStatusProvider({
 						lastEventType: binding.lastEventType,
 						lastEventAt: binding.lastEventAt,
 						lastSeenAt: terminalSeenAt[binding.terminalId],
+						looping: binding.looping,
 					}),
 				);
 			}

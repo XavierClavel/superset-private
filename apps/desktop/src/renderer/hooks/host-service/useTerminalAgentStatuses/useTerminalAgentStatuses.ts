@@ -26,6 +26,7 @@ export function useTerminalAgentStatuses(
 					lastEventType: binding.lastEventType,
 					lastEventAt: binding.lastEventAt,
 					lastSeenAt: terminalSeenAt[binding.terminalId],
+					looping: binding.looping,
 				}),
 			);
 		}

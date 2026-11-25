@@ -92,6 +92,7 @@ function countAttentionWorkspaces(
 				lastEventType: binding.lastEventType,
 				lastEventAt: binding.lastEventAt,
 				lastSeenAt: terminalSeenAt[binding.terminalId],
+				looping: binding.looping,
 			});
 			if (
 				status === "permission" ||
