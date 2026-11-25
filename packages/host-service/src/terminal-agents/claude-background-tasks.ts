@@ -30,8 +30,10 @@ function parseLine(line: string): Json | null {
 /**
  * Background shells and monitors of a Claude Code session, read from its
  * transcript. A task starts with the tool result that names it and ends with
- * the `<task-notification>` Claude queues for it. Hooks give no signal for
- * either. Background subagents are left out: their own hooks report them.
+ * the `<task-notification>` Claude queues for it, or with the result of the
+ * `TaskStop` call that stopped it, for which Claude queues no notification.
+ * Hooks give no signal for either. Background subagents are left out: their
+ * own hooks report them.
  * Only their descriptions are kept, which hooks do not carry.
  *
  * Also tracks a running `/loop`: a wakeup scheduled for later, or a recurring
@@ -150,7 +152,17 @@ export class ClaudeBackgroundTasks {
 		}
 		if (line.includes('"backgroundTaskId"') || line.includes('"taskId"')) {
 			this.noteStart(parseLine(line));
+			return;
 		}
+		if (line.includes('"task_id"')) {
+			this.noteStop(parseLine(line));
+		}
+	}
+
+	private noteStop(entry: Json | null): void {
+		if (entry?.type !== "user") return;
+		const taskId = asString(asObject(entry.toolUseResult)?.task_id);
+		if (taskId && this.running.delete(taskId)) this.revision++;
 	}
 
 	private noteLaunches(entry: Json | null): void {
