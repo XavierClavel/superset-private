@@ -51,6 +51,7 @@ export const SETTING_ITEM_ID = {
 	BEHAVIOR_RESOURCE_MONITOR: "behavior-resource-monitor",
 	BEHAVIOR_DICTATION: "behavior-dictation",
 	BEHAVIOR_PARADEV_ANYWHERE: "behavior-paradev-anywhere",
+	BEHAVIOR_COLLAPSIBLE_SIDEBAR_NAV: "behavior-collapsible-sidebar-nav",
 	USAGE_IN_SIDEBAR: "usage-in-sidebar",
 	BEHAVIOR_STAR_GITHUB: "behavior-star-github",
 
@@ -824,6 +825,24 @@ const SETTINGS_ITEMS: SettingsItem[] = [
 			"cli",
 			"self-hosted",
 			"devices",
+		],
+	},
+	{
+		id: SETTING_ITEM_ID.BEHAVIOR_COLLAPSIBLE_SIDEBAR_NAV,
+		section: "behavior",
+		title: "Collapsible sidebar menu",
+		description:
+			"Fold the sidebar menu into a row of icons that unfolds when you point at it",
+		keywords: [
+			"sidebar",
+			"menu",
+			"navigation",
+			"collapse",
+			"collapsible",
+			"fold",
+			"compact",
+			"icons",
+			"hover",
 		],
 	},
 	{

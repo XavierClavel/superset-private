@@ -4973,6 +4973,9 @@ msgstr "Recolher área de trabalho"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Menu lateral recolhível"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Bloco de raciocínio recolhível com rótulo de duração"
 
@@ -9219,6 +9222,9 @@ msgstr "Focar a aba anterior da área de trabalho ativa"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Focar o campo de busca na visualização de tarefas"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Recolhe o menu lateral em uma linha de ícones. Aponte para os ícones para expandi-lo ou clique em um para abri-lo."
 
 msgid "Folder"
 msgstr "Pasta"

@@ -4973,6 +4973,9 @@ msgstr "Arbeitsbereich einklappen"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Einklappbares Seitenleistenmenü"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Einklappbarer Denkblock mit Dauerangabe"
 
@@ -9219,6 +9222,9 @@ msgstr "Den vorherigen Tab im aktiven Arbeitsbereich fokussieren"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Das Suchfeld in der Aufgabenansicht fokussieren"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Klappt das Seitenleistenmenü zu einer Symbolleiste zusammen. Zeige auf die Symbole, um es aufzuklappen, oder klicke auf eines, um es zu öffnen."
 
 msgid "Folder"
 msgstr "Ordner"

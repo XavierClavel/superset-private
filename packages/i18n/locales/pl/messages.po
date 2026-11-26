@@ -4973,6 +4973,9 @@ msgstr "Zwiń obszar roboczy"
 msgid "Collapsible"
 msgstr "Element zwijany"
 
+msgid "Collapsible sidebar menu"
+msgstr "Zwijane menu paska bocznego"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Zwijany blok myślenia z etykietą czasu trwania"
 
@@ -9219,6 +9222,9 @@ msgstr "Aktywuj poprzednią kartę w aktywnym obszarze roboczym"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Aktywuj pole wyszukiwania w widoku zadań"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Zwija menu paska bocznego do rzędu ikon. Wskaż ikony, aby je rozwinąć, lub kliknij jedną, aby ją otworzyć."
 
 msgid "Folder"
 msgstr "Folder"

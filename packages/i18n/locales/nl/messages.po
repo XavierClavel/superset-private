@@ -4973,6 +4973,9 @@ msgstr "Werkruimte inklappen"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Inklapbaar zijbalkmenu"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Inklapbaar denkblok met duurlabel"
 
@@ -9219,6 +9222,9 @@ msgstr "Het vorige tabblad in de actieve werkruimte focussen"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Het zoekveld in de takenweergave focussen"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Klapt het zijbalkmenu in tot een rij pictogrammen. Wijs de pictogrammen aan om het uit te klappen, of klik op een pictogram om het te openen."
 
 msgid "Folder"
 msgstr "Map"

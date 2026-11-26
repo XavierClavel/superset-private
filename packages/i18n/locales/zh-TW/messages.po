@@ -4973,6 +4973,9 @@ msgstr "收起工作區"
 msgid "Collapsible"
 msgstr "可摺疊面板"
 
+msgid "Collapsible sidebar menu"
+msgstr "可摺疊側邊欄選單"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "可摺疊的思考塊，帶時長標籤"
 
@@ -9219,6 +9222,9 @@ msgstr "聚焦目前工作區中的上一個分頁"
 
 msgid "Focus the search input in the tasks view"
 msgstr "聚焦任務檢視中的搜尋框"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "將側邊欄選單摺疊為一列圖示。將指標停留在圖示上即可展開，點擊圖示即可開啟對應項目。"
 
 msgid "Folder"
 msgstr "資料夾"

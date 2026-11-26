@@ -4973,6 +4973,9 @@ msgstr "Sbalit pracovní prostor"
 msgid "Collapsible"
 msgstr "Sbalitelný panel"
 
+msgid "Collapsible sidebar menu"
+msgstr "Sbalitelná nabídka postranního panelu"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Sbalitelný blok přemýšlení s údajem o trvání"
 
@@ -9219,6 +9222,9 @@ msgstr "Zaměřit předchozí kartu v aktivním pracovním prostoru"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Zaměřit vyhledávací pole v zobrazení úkolů"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Sbalí nabídku postranního panelu do řady ikon. Najetím na ikony ji rozbalíte, kliknutím jednu otevřete."
 
 msgid "Folder"
 msgstr "Složka"

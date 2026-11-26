@@ -4973,6 +4973,9 @@ msgstr "Contraer el espacio de trabajo"
 msgid "Collapsible"
 msgstr "Plegable"
 
+msgid "Collapsible sidebar menu"
+msgstr "Menú lateral plegable"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Bloque de razonamiento plegable con etiqueta de duración"
 
@@ -9219,6 +9222,9 @@ msgstr "Enfocar la pestaña anterior del espacio de trabajo activo"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Enfocar el campo de búsqueda en la vista de tareas"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Pliega el menú lateral en una fila de iconos. Pasa el puntero sobre los iconos para desplegarlo o haz clic en uno para abrirlo."
 
 msgid "Folder"
 msgstr "Carpeta"

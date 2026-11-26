@@ -4973,6 +4973,9 @@ msgstr "Collapse workspace"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Collapsible sidebar menu"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Collapsible thinking block with duration label"
 
@@ -9219,6 +9222,9 @@ msgstr "Focus the previous tab in the active workspace"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Focus the search input in the tasks view"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
 
 msgid "Folder"
 msgstr "Folder"

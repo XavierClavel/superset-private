@@ -4973,6 +4973,9 @@ msgstr "Çalışma alanını daralt"
 msgid "Collapsible"
 msgstr "Daraltılabilir"
 
+msgid "Collapsible sidebar menu"
+msgstr "Daraltılabilir kenar çubuğu menüsü"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Süre etiketli, daraltılabilir düşünme bloğu"
 
@@ -9219,6 +9222,9 @@ msgstr "Etkin çalışma alanındaki önceki sekmeye odaklan"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Görevler görünümündeki arama girişine odaklan"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Kenar çubuğu menüsünü bir simge satırına daraltır. Genişletmek için simgelerin üzerine gelin veya açmak için birine tıklayın."
 
 msgid "Folder"
 msgstr "Klasör"

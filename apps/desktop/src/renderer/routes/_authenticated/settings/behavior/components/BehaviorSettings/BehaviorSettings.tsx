@@ -49,6 +49,10 @@ export function BehaviorSettings({ visibleItems }: BehaviorSettingsProps) {
 		SETTING_ITEM_ID.BEHAVIOR_PARADEV_ANYWHERE,
 		visibleItems,
 	);
+	const showCollapsibleSidebarNav = isItemVisible(
+		SETTING_ITEM_ID.BEHAVIOR_COLLAPSIBLE_SIDEBAR_NAV,
+		visibleItems,
+	);
 	const showStarGithub = isItemVisible(
 		SETTING_ITEM_ID.BEHAVIOR_STAR_GITHUB,
 		visibleItems,
@@ -58,6 +62,7 @@ export function BehaviorSettings({ visibleItems }: BehaviorSettingsProps) {
 	const changesOpenTarget = useSettings((s) => s.changesOpenTarget);
 	const dictationEnabled = useSettings((s) => s.dictationEnabled);
 	const paradevAnywhereShown = useSettings((s) => s.showParadevAnywhereButton);
+	const collapsibleSidebarNav = useSettings((s) => s.collapsibleSidebarNav);
 	const updateSetting = useSettings((s) => s.update);
 
 	const { data: confirmOnQuit, isLoading: isConfirmLoading } =
@@ -275,6 +280,35 @@ export function BehaviorSettings({ visibleItems }: BehaviorSettingsProps) {
 							checked={paradevAnywhereShown}
 							onCheckedChange={(shown) =>
 								updateSetting("showParadevAnywhereButton", shown)
+							}
+						/>
+					</div>
+				)}
+
+				{showCollapsibleSidebarNav && (
+					<div className="flex items-center justify-between">
+						<div className="space-y-0.5">
+							<Label
+								htmlFor="collapsible-sidebar-nav"
+								className="text-sm font-medium"
+							>
+								<HighlightText
+									text={t({ message: "Collapsible sidebar menu" })}
+									query={searchQuery}
+								/>
+							</Label>
+							<p className="text-xs text-muted-foreground">
+								<Trans>
+									Fold the sidebar menu into a row of icons. Point at the icons
+									to unfold it, or click one to open it.
+								</Trans>
+							</p>
+						</div>
+						<Switch
+							id="collapsible-sidebar-nav"
+							checked={collapsibleSidebarNav}
+							onCheckedChange={(enabled) =>
+								updateSetting("collapsibleSidebarNav", enabled)
 							}
 						/>
 					</div>

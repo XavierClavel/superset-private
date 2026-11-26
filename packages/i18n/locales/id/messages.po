@@ -4973,6 +4973,9 @@ msgstr "Ciutkan workspace"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Menu bilah samping yang dapat dilipat"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Blok berpikir yang bisa diciutkan dengan label durasi"
 
@@ -9219,6 +9222,9 @@ msgstr "Fokus ke tab sebelumnya di workspace aktif"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Fokus ke kolom pencarian di tampilan tugas"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Lipat menu bilah samping menjadi deretan ikon. Arahkan penunjuk ke ikon untuk membukanya, atau klik salah satu ikon untuk membukanya."
 
 msgid "Folder"
 msgstr "Folder"

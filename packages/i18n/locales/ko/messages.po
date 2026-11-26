@@ -4973,6 +4973,9 @@ msgstr "워크스페이스 접기"
 msgid "Collapsible"
 msgstr "접이식 영역"
 
+msgid "Collapsible sidebar menu"
+msgstr "접을 수 있는 사이드바 메뉴"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "소요 시간 레이블이 있는 접을 수 있는 사고 블록"
 
@@ -9219,6 +9222,9 @@ msgstr "활성 워크스페이스의 이전 탭에 포커스합니다"
 
 msgid "Focus the search input in the tasks view"
 msgstr "작업 보기의 검색 입력창에 포커스합니다"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "사이드바 메뉴를 아이콘 한 줄로 접습니다. 아이콘 위에 포인터를 올리면 펼쳐지고, 아이콘을 클릭하면 해당 항목이 열립니다."
 
 msgid "Folder"
 msgstr "폴더"

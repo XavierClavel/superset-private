@@ -4973,6 +4973,9 @@ msgstr "Свернуть рабочую область"
 msgid "Collapsible"
 msgstr "Сворачиваемый блок"
 
+msgid "Collapsible sidebar menu"
+msgstr "Сворачиваемое меню боковой панели"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Сворачиваемый блок размышлений с меткой длительности"
 
@@ -9219,6 +9222,9 @@ msgstr "Перейти на предыдущую вкладку в активн�
 
 msgid "Focus the search input in the tasks view"
 msgstr "Фокус на поле поиска в разделе задач"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Сворачивает меню боковой панели в ряд значков. Наведите указатель на значки, чтобы развернуть его, или нажмите на значок, чтобы открыть раздел."
 
 msgid "Folder"
 msgstr "Папка"

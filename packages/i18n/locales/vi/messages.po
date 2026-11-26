@@ -4973,6 +4973,9 @@ msgstr "Thu gọn workspace"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Menu thanh bên có thể thu gọn"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Khối suy nghĩ thu gọn được, kèm nhãn thời lượng"
 
@@ -9219,6 +9222,9 @@ msgstr "Chuyển tới tab trước trong workspace hiện tại"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Chuyển focus tới ô tìm kiếm trong màn hình tác vụ"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Thu gọn menu thanh bên thành một hàng biểu tượng. Trỏ vào các biểu tượng để mở rộng, hoặc nhấp vào một biểu tượng để mở mục đó."
 
 msgid "Folder"
 msgstr "Thư mục"

@@ -4973,6 +4973,9 @@ msgstr "Réduire l'espace de travail"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Menu latéral repliable"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Bloc de réflexion repliable avec libellé de durée"
 
@@ -9219,6 +9222,9 @@ msgstr "Activer l'onglet précédent dans l'espace de travail actif"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Activer le champ de recherche dans la vue des tâches"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Replie le menu latéral en une rangée d'icônes. Survolez les icônes pour le déplier, ou cliquez sur l'une d'elles pour l'ouvrir."
 
 msgid "Folder"
 msgstr "Dossier"

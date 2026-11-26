@@ -4967,6 +4967,9 @@ msgstr "Згорнути робочий простір"
 msgid "Collapsible"
 msgstr "Згортуваний блок"
 
+msgid "Collapsible sidebar menu"
+msgstr "Згортуване меню бічної панелі"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Згортуваний блок міркувань із міткою тривалості"
 
@@ -9213,6 +9216,9 @@ msgstr "Перейти до попередньої вкладки в актив�
 
 msgid "Focus the search input in the tasks view"
 msgstr "Перевести фокус на поле пошуку в розділі завдань"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Згортає меню бічної панелі в ряд значків. Наведіть вказівник на значки, щоб розгорнути його, або натисніть значок, щоб відкрити розділ."
 
 msgid "Folder"
 msgstr "Папка"

@@ -1,5 +1,4 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { FEATURE_FLAGS } from "@superset/shared/constants";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -7,7 +6,6 @@ import {
 } from "@superset/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { cn } from "@superset/ui/utils";
-import { useFeatureFlagEnabled } from "posthog-js/react";
 import { GoGitPullRequest } from "react-icons/go";
 import { HiOutlineClipboardDocumentList } from "react-icons/hi2";
 import {
@@ -21,7 +19,6 @@ import {
 import { TbStack2 } from "react-icons/tb";
 import { VscFolderOpened, VscNewFolder } from "react-icons/vsc";
 import { ZoomStable } from "renderer/components/ZoomStable";
-import { env } from "renderer/env.renderer";
 import { useZoomFactor } from "renderer/hooks/useZoomFactor";
 import { useHotkeyDisplay } from "renderer/hotkeys";
 import { electronTrpc } from "renderer/lib/electron-trpc";
@@ -40,10 +37,12 @@ import { useDashboardNavigation } from "renderer/routes/_authenticated/_dashboar
 import { useFailedAutomations } from "renderer/routes/_authenticated/_dashboard/hooks/useFailedAutomations";
 import { useOpenNewWorkspaceInViewedProject } from "renderer/routes/_authenticated/_dashboard/hooks/useOpenNewWorkspaceInViewedProject";
 import { STROKE_WIDTH_THICK } from "renderer/screens/main/components/WorkspaceSidebar/constants";
+import { useSettings } from "renderer/stores/settings";
 import { COLLAPSED_WORKSPACE_SIDEBAR_WIDTH } from "renderer/stores/workspace-sidebar-state";
 import { useCommandPaletteToggle } from "../../hooks/useCommandPaletteToggle";
-import { SidebarNewWorkspaceButton } from "../SidebarNewWorkspaceButton";
-import { SidebarSearchButton } from "../SidebarSearchButton";
+import { SidebarNavList } from "./components/SidebarNavList";
+import { SidebarNavPeek } from "./components/SidebarNavPeek";
+import { useSidebarNavVisibility } from "./hooks/useSidebarNavVisibility";
 
 interface DashboardSidebarHeaderProps {
 	isCollapsed?: boolean;
@@ -62,15 +61,10 @@ export function DashboardSidebarHeader({
 	// Default to Mac while loading so we don't briefly cover the traffic lights.
 	const isMac = platform === undefined || platform === "darwin";
 	const zoomFactor = useZoomFactor();
-	// `?? false`: the hook returns undefined until PostHog flags resolve.
-	// Dev builds bypass the flag — the local dev account isn't in the
-	// @superset.sh release condition.
-	const isPluginsEnabled =
-		(useFeatureFlagEnabled(FEATURE_FLAGS.PLUGINS) ?? false) ||
-		env.NODE_ENV === "development";
+	const { isPluginsEnabled, isUsageInSidebarEnabled } =
+		useSidebarNavVisibility();
 	const { myFailedCount } = useFailedAutomations();
-	const { data: isUsageInSidebarEnabled } =
-		electronTrpc.settings.getShowUsageInSidebar.useQuery();
+	const collapsibleSidebarNav = useSettings((s) => s.collapsibleSidebarNav);
 
 	if (isCollapsed) {
 		return (
@@ -403,167 +397,7 @@ export function DashboardSidebarHeader({
 				<div className="drag h-full min-w-0 flex-1" />
 			</div>
 
-			<SidebarNewWorkspaceButton />
-			<SidebarSearchButton />
-
-			<button
-				type="button"
-				onClick={navigation.openWorkspaces}
-				className={cn(
-					"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-					navigation.isWorkspacesOpen
-						? "bg-fill-selected text-foreground"
-						: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-				)}
-			>
-				<TbStack2
-					className="size-4 shrink-0 text-muted-foreground"
-					strokeWidth={1.5}
-				/>
-				<span className="flex-1 text-left">
-					<Trans>Workspaces</Trans>
-				</span>
-			</button>
-
-			<div className="relative">
-				<button
-					type="button"
-					onClick={navigation.openAutomations}
-					className={cn(
-						"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-						navigation.isAutomationsOpen
-							? "bg-fill-selected text-foreground"
-							: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-					)}
-				>
-					<LuClock
-						className="size-4 shrink-0 text-muted-foreground"
-						strokeWidth={1.5}
-					/>
-					<span className="flex-1 text-left">
-						<Trans>Automations</Trans>
-					</span>
-				</button>
-				{myFailedCount > 0 && (
-					<button
-						type="button"
-						onClick={navigation.openFailedAutomations}
-						title={t({
-							message: `${myFailedCount} of your automations failed their last run`,
-						})}
-						className="absolute right-2 top-1/2 flex h-4 min-w-4 -translate-y-1/2 items-center justify-center rounded-full bg-red-500/15 px-1 text-[10px] font-medium tabular-nums text-red-600 transition-colors hover:bg-red-500/25 dark:text-red-400"
-					>
-						{myFailedCount > 9 ? "9+" : myFailedCount}
-					</button>
-				)}
-			</div>
-
-			<button
-				type="button"
-				onClick={navigation.openTasks}
-				aria-label={t({
-					message: "Tasks",
-				})}
-				aria-current={navigation.isTasksOpen ? "page" : undefined}
-				className={cn(
-					"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-					navigation.isTasksOpen
-						? "bg-fill-selected text-foreground"
-						: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-				)}
-			>
-				<HiOutlineClipboardDocumentList className="size-4 shrink-0 text-muted-foreground" />
-				<span className="flex-1 text-left">
-					<Trans>Tasks</Trans>
-				</span>
-			</button>
-
-			<button
-				type="button"
-				onClick={navigation.openPullRequests}
-				aria-label={t({
-					message: "Pull requests",
-				})}
-				aria-current={navigation.isPullRequestsOpen ? "page" : undefined}
-				className={cn(
-					"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-					navigation.isPullRequestsOpen
-						? "bg-fill-selected text-foreground"
-						: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-				)}
-			>
-				<GoGitPullRequest className="size-4 shrink-0 text-muted-foreground" />
-				<span className="flex-1 text-left">
-					<Trans>Pull requests</Trans>
-				</span>
-			</button>
-
-			{isUsageInSidebarEnabled && (
-				<button
-					type="button"
-					onClick={navigation.openUsage}
-					aria-label={t({
-						message: "Usage",
-					})}
-					className="flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium text-muted-foreground transition-colors hover:bg-fill-hover hover:text-foreground"
-				>
-					<LuGauge
-						className="size-4 shrink-0 text-muted-foreground"
-						strokeWidth={1.5}
-					/>
-					<span className="flex-1 text-left">
-						<Trans>Usage</Trans>
-					</span>
-				</button>
-			)}
-
-			<button
-				type="button"
-				onClick={navigation.openPages}
-				aria-label={t({
-					message: "Pages",
-				})}
-				aria-current={navigation.isPagesOpen ? "page" : undefined}
-				className={cn(
-					"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-					navigation.isPagesOpen
-						? "bg-fill-selected text-foreground"
-						: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-				)}
-			>
-				<LuFileText
-					className="size-4 shrink-0 text-muted-foreground"
-					strokeWidth={1.5}
-				/>
-				<span className="flex-1 text-left">
-					<Trans>Pages</Trans>
-				</span>
-			</button>
-
-			{isPluginsEnabled && (
-				<button
-					type="button"
-					onClick={navigation.openPlugins}
-					aria-label={t({
-						message: "Plugins",
-					})}
-					aria-current={navigation.isPluginsOpen ? "page" : undefined}
-					className={cn(
-						"flex h-7 w-full items-center gap-2 rounded-md px-2 text-[13px] font-medium transition-colors",
-						navigation.isPluginsOpen
-							? "bg-fill-selected text-foreground"
-							: "text-muted-foreground hover:bg-fill-hover hover:text-foreground",
-					)}
-				>
-					<LuPuzzle
-						className="size-4 shrink-0 text-muted-foreground"
-						strokeWidth={1.5}
-					/>
-					<span className="flex-1 text-left">
-						<Trans>Plugins</Trans>
-					</span>
-				</button>
-			)}
+			{collapsibleSidebarNav ? <SidebarNavPeek /> : <SidebarNavList />}
 		</div>
 	);
 }

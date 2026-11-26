@@ -4973,6 +4973,9 @@ msgstr "Comprimi il workspace"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "Menu laterale comprimibile"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "Blocco di ragionamento comprimibile con etichetta della durata"
 
@@ -9219,6 +9222,9 @@ msgstr "Attiva la scheda precedente nel workspace attivo"
 
 msgid "Focus the search input in the tasks view"
 msgstr "Attiva il campo di ricerca nella vista task"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "Comprime il menu laterale in una riga di icone. Passa il puntatore sulle icone per espanderlo, oppure fai clic su una per aprirla."
 
 msgid "Folder"
 msgstr "Cartella"

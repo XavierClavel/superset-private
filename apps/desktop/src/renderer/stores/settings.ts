@@ -12,6 +12,8 @@ interface Settings {
 	changesOpenTarget: ChangesOpenTarget;
 	dictationEnabled: boolean;
 	showParadevAnywhereButton: boolean;
+	/** Folds the sidebar navigation into a row of icons that unfolds on hover. */
+	collapsibleSidebarNav: boolean;
 }
 
 interface SettingsStore extends Settings {
@@ -27,6 +29,7 @@ export const useSettings = create<SettingsStore>()(
 			changesOpenTarget: "pane",
 			dictationEnabled: true,
 			showParadevAnywhereButton: true,
+			collapsibleSidebarNav: false,
 			update: (key, value) => set({ [key]: value }),
 		}),
 		{ name: "settings" },

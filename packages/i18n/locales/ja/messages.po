@@ -4973,6 +4973,9 @@ msgstr "ワークスペースを折りたたむ"
 msgid "Collapsible"
 msgstr "Collapsible"
 
+msgid "Collapsible sidebar menu"
+msgstr "折りたたみ式サイドバーメニュー"
+
 msgid "Collapsible thinking block with duration label"
 msgstr "所要時間ラベル付きの折りたためる思考ブロック"
 
@@ -9219,6 +9222,9 @@ msgstr "アクティブなワークスペースの前のタブにフォーカス
 
 msgid "Focus the search input in the tasks view"
 msgstr "タスクビューの検索入力にフォーカスする"
+
+msgid "Fold the sidebar menu into a row of icons. Point at the icons to unfold it, or click one to open it."
+msgstr "サイドバーメニューをアイコンの列に折りたたみます。アイコンにポインタを合わせると展開し、クリックするとその項目を開きます。"
 
 msgid "Folder"
 msgstr "フォルダ"
