@@ -12808,6 +12808,9 @@ msgstr "没有可用于设置环境的代理"
 msgid "No agent is configured on this host"
 msgstr "此主机上未配置任何智能体"
 
+msgid "No agent is working and nothing needs you"
+msgstr "没有正在工作的智能体，也没有需要你处理的事项"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}上没有配置智能体"
@@ -18465,6 +18468,9 @@ msgstr "在聊天输入框中显示麦克风。如果 Codex 已登录 ChatGPT，
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "在主页侧边栏的“拉取请求”下方显示“用量”按钮"
+
+msgid "Show active workspaces"
+msgstr "显示活跃的工作区"
 
 msgid "Show all {count}"
 msgstr "显示全部{count}条"

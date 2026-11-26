@@ -12808,6 +12808,9 @@ msgstr "環境をセットアップできるエージェントがありません
 msgid "No agent is configured on this host"
 msgstr "このホストにはエージェントが設定されていません"
 
+msgid "No agent is working and nothing needs you"
+msgstr "作業中のエージェントも対応待ちの項目もありません"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}にはエージェントが設定されていません"
@@ -18465,6 +18468,9 @@ msgstr "チャットの入力欄にマイクを表示します。Codex が ChatG
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "ホームのサイドバーの「プルリクエスト」の下に「使用量」ボタンを表示"
+
+msgid "Show active workspaces"
+msgstr "アクティブなワークスペースを表示"
 
 msgid "Show all {count}"
 msgstr "{count}件すべて表示"

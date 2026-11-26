@@ -32,6 +32,7 @@ import {
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
 import { useDashboardSidebarProjectFolders } from "../../providers/DashboardSidebarProjectFoldersProvider";
 import { DashboardSidebarSectionHeader } from "../DashboardSidebarSectionHeader";
+import { DashboardSidebarActiveViewToggle } from "./components/DashboardSidebarActiveViewToggle";
 import { DashboardSidebarProjectsFilterInput } from "./components/DashboardSidebarProjectsFilterInput";
 import { DashboardSidebarProjectsSortMenu } from "./components/DashboardSidebarProjectsSortMenu";
 import { DashboardSidebarRecentViewToggle } from "./components/DashboardSidebarRecentViewToggle";
@@ -44,6 +45,8 @@ interface DashboardSidebarWorkspacesHeaderProps {
 	onProjectListSortModeChange: (mode: SidebarProjectListSortMode) => void;
 	isRecentView: boolean;
 	onRecentViewChange: (next: boolean) => void;
+	isActiveView: boolean;
+	onActiveViewChange: (next: boolean) => void;
 	/** Null hides the host filter (cloud rows are not inline). */
 	hostFilter: SidebarProjectHostFilter | null;
 	onHostFilterChange: (filter: SidebarProjectHostFilter) => void;
@@ -58,6 +61,8 @@ export function DashboardSidebarWorkspacesHeader({
 	onProjectListSortModeChange,
 	isRecentView,
 	onRecentViewChange,
+	isActiveView,
+	onActiveViewChange,
 	hostFilter,
 	onHostFilterChange,
 	filterQuery,
@@ -155,6 +160,10 @@ export function DashboardSidebarWorkspacesHeader({
 				onQueryChange={onFilterQueryChange}
 				isExpanded={isFilterExpanded}
 				onExpandedChange={handleFilterExpandedChange}
+			/>
+			<DashboardSidebarActiveViewToggle
+				isActiveView={isActiveView}
+				onActiveViewChange={onActiveViewChange}
 			/>
 			<DashboardSidebarRecentViewToggle
 				isRecentView={isRecentView}

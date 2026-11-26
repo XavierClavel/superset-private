@@ -12808,6 +12808,9 @@ msgstr "환경을 설정할 수 있는 에이전트가 없습니다"
 msgid "No agent is configured on this host"
 msgstr "이 호스트에 구성된 에이전트가 없습니다"
 
+msgid "No agent is working and nothing needs you"
+msgstr "작업 중인 에이전트도, 확인이 필요한 항목도 없습니다"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}에 설정된 에이전트가 없습니다"
@@ -18465,6 +18468,9 @@ msgstr "채팅 입력창에 마이크를 표시합니다. Codex가 ChatGPT에 �
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "홈 사이드바의 풀 리퀘스트 아래에 사용량 버튼을 표시합니다"
+
+msgid "Show active workspaces"
+msgstr "활성 워크스페이스 표시"
 
 msgid "Show all {count}"
 msgstr "{count}개 모두 보기"

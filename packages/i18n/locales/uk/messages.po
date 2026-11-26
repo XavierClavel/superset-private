@@ -12802,6 +12802,9 @@ msgstr "Немає агента, який може налаштувати сер
 msgid "No agent is configured on this host"
 msgstr "На цьому хості не налаштовано жодного агента"
 
+msgid "No agent is working and nothing needs you"
+msgstr "Жоден агент не працює, і ніщо не потребує вашої уваги"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "На {0} не налаштовано агентів"
@@ -18459,6 +18462,9 @@ msgstr "Показувати мікрофон у полі введення ча�
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Показувати кнопку «Використання» на бічній панелі головного екрана під «Пул-реквестами»"
+
+msgid "Show active workspaces"
+msgstr "Показати активні робочі простори"
 
 msgid "Show all {count}"
 msgstr "Показати всі ({count})"

@@ -12808,6 +12808,9 @@ msgstr "Không có agent nào để thiết lập environment"
 msgid "No agent is configured on this host"
 msgstr "Không có tác nhân nào được cấu hình trên máy chủ này"
 
+msgid "No agent is working and nothing needs you"
+msgstr "Không có tác tử nào đang làm việc và không có gì cần bạn"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Chưa cấu hình agent nào trên {0}"
@@ -18465,6 +18468,9 @@ msgstr "Hiển thị micrô trong ô soạn chat. Giọng nói được ChatGPT 
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Hiện nút Mức sử dụng trong thanh bên trang chủ, bên dưới Pull request"
+
+msgid "Show active workspaces"
+msgstr "Hiển thị không gian làm việc đang hoạt động"
 
 msgid "Show all {count}"
 msgstr "Hiện tất cả {count}"

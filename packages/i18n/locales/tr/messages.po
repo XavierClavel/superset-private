@@ -12808,6 +12808,9 @@ msgstr "Ortamı kurmak için kullanılabilir ajan yok"
 msgid "No agent is configured on this host"
 msgstr "Bu ana makinede yapılandırılmış bir ajan yok"
 
+msgid "No agent is working and nothing needs you"
+msgstr "Çalışan bir ajan yok ve sizi bekleyen bir şey yok"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0} üzerinde yapılandırılmış ajan yok"
@@ -18465,6 +18468,9 @@ msgstr "Sohbet giriş alanında bir mikrofon göster. Codex ChatGPT'de oturum a�
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Ana sayfa kenar çubuğunda, pull request'lerin altında bir Kullanım düğmesi göster"
+
+msgid "Show active workspaces"
+msgstr "Etkin çalışma alanlarını göster"
 
 msgid "Show all {count}"
 msgstr "Tümünü göster ({count})"

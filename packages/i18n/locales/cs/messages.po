@@ -12808,6 +12808,9 @@ msgstr "K nastavení prostředí není k dispozici žádný agent"
 msgid "No agent is configured on this host"
 msgstr "Na tomto hostiteli není nakonfigurován žádný agent"
 
+msgid "No agent is working and nothing needs you"
+msgstr "Žádný agent nepracuje a nic nevyžaduje vaši pozornost"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Na {0} nejsou nastavení žádní agenti"
@@ -18465,6 +18468,9 @@ msgstr "Zobrazit v editoru chatu mikrofon. Řeč přepisuje ChatGPT, pokud je k 
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Zobrazovat tlačítko Využití v postranním panelu domovské obrazovky pod pull requesty"
+
+msgid "Show active workspaces"
+msgstr "Zobrazit aktivní pracovní prostory"
 
 msgid "Show all {count}"
 msgstr "Zobrazit všech {count}"
