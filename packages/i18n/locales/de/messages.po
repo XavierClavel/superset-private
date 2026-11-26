@@ -13599,6 +13599,9 @@ msgstr "Unter {pathname} liegt nichts."
 msgid "Nothing needs a retry"
 msgstr "Nichts muss erneut ausgeführt werden"
 
+msgid "Nothing needs your attention"
+msgstr "Nichts erfordert deine Aufmerksamkeit"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "In den letzten 30 Tagen wurde noch nichts veröffentlicht. Dein Rang erscheint, sobald die Nutzung von diesem Rechner synchronisiert wird — Veröffentlichung als <0>{handle}</0>."
 

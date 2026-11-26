@@ -13599,6 +13599,9 @@ msgstr "No hay nada en {pathname}."
 msgid "Nothing needs a retry"
 msgstr "Nada necesita reintento"
 
+msgid "Nothing needs your attention"
+msgstr "Nada requiere tu atención"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Aún no has publicado nada en los últimos 30 días. Tu puesto aparecerá cuando se sincronice el uso de esta máquina, publicando como <0>{handle}</0>."
 

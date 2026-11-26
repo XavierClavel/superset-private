@@ -44,6 +44,7 @@ import { DashboardSidebarHeader } from "./components/DashboardSidebarHeader";
 import { DashboardSidebarHiddenProjects } from "./components/DashboardSidebarHiddenProjects";
 import { DashboardSidebarHoverCardOverlay } from "./components/DashboardSidebarHoverCardOverlay";
 import { DashboardSidebarLabelFilterBar } from "./components/DashboardSidebarLabelFilterBar";
+import { DashboardSidebarNotificationsSection } from "./components/DashboardSidebarNotificationsSection";
 import { DashboardSidebarPinnedSection } from "./components/DashboardSidebarPinnedSection";
 import { DashboardSidebarProjectSection } from "./components/DashboardSidebarProjectSection";
 import { DashboardSidebarSectionRenameProvider } from "./components/DashboardSidebarSectionRenameContext";
@@ -503,6 +504,13 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			{!isCollapsed && <DashboardSidebarLabelFilterBar />}
 			<DashboardSidebarPinnedSection
 				pinnedWorkspaces={displayedPinnedWorkspaces}
+				isCollapsed={isCollapsed}
+				onWorkspaceHover={refreshWorkspacePullRequest}
+			/>
+			<DashboardSidebarNotificationsSection
+				pinnedWorkspaces={pinnedWorkspaces}
+				sessionWorkspaces={sessionWorkspaces}
+				projects={sortedGroups}
 				isCollapsed={isCollapsed}
 				onWorkspaceHover={refreshWorkspacePullRequest}
 			/>

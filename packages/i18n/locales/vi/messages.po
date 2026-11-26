@@ -13599,6 +13599,9 @@ msgstr "Không có gì ở {pathname}."
 msgid "Nothing needs a retry"
 msgstr "Không có gì cần chạy lại"
 
+msgid "Nothing needs your attention"
+msgstr "Không có gì cần bạn chú ý"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Chưa có gì được công khai trong 30 ngày qua. Thứ hạng của bạn sẽ xuất hiện khi dữ liệu sử dụng từ máy này đồng bộ, công khai dưới tên <0>{handle}</0>."
 

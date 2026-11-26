@@ -13599,6 +13599,9 @@ msgstr "Na {pathname} nic není."
 msgid "Nothing needs a retry"
 msgstr "Není co opakovat"
 
+msgid "Nothing needs your attention"
+msgstr "Nic nevyžaduje vaši pozornost"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Za posledních 30 dní zatím nebylo nic publikováno. Vaše pozice se objeví, jakmile se synchronizuje využití z tohoto počítače; publikujete jako <0>{handle}</0>."
 
