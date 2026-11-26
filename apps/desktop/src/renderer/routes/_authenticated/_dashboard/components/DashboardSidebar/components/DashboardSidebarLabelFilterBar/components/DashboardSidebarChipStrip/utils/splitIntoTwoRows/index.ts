@@ -1,0 +1,1 @@
+export { splitIntoTwoRows } from "./splitIntoTwoRows";

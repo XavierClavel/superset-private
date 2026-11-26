@@ -5,6 +5,7 @@ import { cn } from "@superset/ui/utils";
 import { useNavigate } from "@tanstack/react-router";
 import {
 	type ComponentPropsWithoutRef,
+	type CSSProperties,
 	forwardRef,
 	type KeyboardEventHandler,
 	type MouseEventHandler,
@@ -23,7 +24,6 @@ import { openPullRequestLink } from "renderer/lib/github/openPullRequestLink";
 import { useDashboardSidebarWorkspacePorts } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/providers/DashboardSidebarPortsProvider";
 import { navigateToWorkspace } from "renderer/routes/_authenticated/_dashboard/utils/workspace-navigation";
 import { ProjectThumbnail } from "renderer/routes/_authenticated/components/ProjectThumbnail";
-import { WorkspaceLabelPill } from "renderer/routes/_authenticated/components/WorkspaceLabelPill";
 import { getStatusTooltip } from "renderer/screens/main/components/StatusIndicator";
 import { RenameInput } from "renderer/screens/main/components/WorkspaceSidebar/RenameInput";
 import { useBoxPressure } from "renderer/stores/box-pressure";
@@ -43,6 +43,7 @@ import { DashboardSidebarWorkspaceChips } from "./components/DashboardSidebarWor
 import { DashboardSidebarWorkspaceHostGlyph } from "./components/DashboardSidebarWorkspaceHostGlyph";
 import { DashboardSidebarWorkspaceLabelsButton } from "./components/DashboardSidebarWorkspaceLabelsButton";
 import { DashboardSidebarWorkspaceLeadIndicator } from "./components/DashboardSidebarWorkspaceLeadIndicator";
+import { toLabelRowBackground } from "./utils/toLabelRowBackground";
 
 interface DashboardSidebarExpandedWorkspaceRowProps
 	extends ComponentPropsWithoutRef<"div"> {
@@ -99,6 +100,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 			onSubmitRename,
 			onCancelRename,
 			className,
+			style,
 			...props
 		},
 		ref,
@@ -160,6 +162,19 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 				: sandboxStatus === "provisioning"
 					? t({ message: "Creating the sandbox" })
 					: null;
+		const visibleLabels =
+			!isPending && hostType === "local-device" ? labels : [];
+		const labelBackground = toLabelRowBackground(
+			visibleLabels.map((label) => label.color),
+		);
+		const isHighlighted = isActive || isSelected;
+		const labelStyle: CSSProperties | undefined = labelBackground
+			? ({
+					backgroundImage: labelBackground,
+					"--foreground": "oklch(0.145 0 0)",
+					"--muted-foreground": "oklch(0.4 0 0)",
+				} as CSSProperties)
+			: undefined;
 		const leadIndicator = (
 			<DashboardSidebarWorkspaceLeadIndicator
 				workspaceStatus={workspaceStatus}
@@ -178,9 +193,19 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 				}}
 				className={cn(
 					"relative mx-2 rounded-md text-left text-sm transition-colors",
-					isActive && "bg-fill-selected",
-					isSelected && "bg-fill-selected",
-					onClick &&
+					labelBackground
+						? cn(
+								"my-px text-foreground",
+								isHighlighted
+									? "[--label-tint:80%]"
+									: cn(
+											"[--label-tint:40%]",
+											onClick && "hover:[--label-tint:60%]",
+										),
+							)
+						: cn(isHighlighted && "bg-fill-selected"),
+					!labelBackground &&
+						onClick &&
 						(isSelected
 							? "hover:bg-fill-selected"
 							: isActive
@@ -189,6 +214,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 					className,
 				)}
 				data-selected={isSelected || undefined}
+				style={{ ...labelStyle, ...style }}
 				{...props}
 			>
 				{/* biome-ignore lint/a11y/useSemanticElements: The row contains nested action buttons, so it cannot be a native button. */}
@@ -337,6 +363,11 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 										<Trans>, selected</Trans>
 									</span>
 								)}
+								{visibleLabels.length > 0 && (
+									<span className="sr-only">
+										{`, ${visibleLabels.map((label) => label.name).join(", ")}`}
+									</span>
+								)}
 								{creator && isMine === false && (
 									<AvatarStack
 										people={[
@@ -461,26 +492,6 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 						</div>
 					</div>
 				</div>
-				{!isPending && hostType === "local-device" && labels.length > 0 && (
-					// biome-ignore lint/a11y/noStaticElementInteractions: clicks on the label strip mirror the row click; the pills are not interactive
-					// biome-ignore lint/a11y/useKeyWithClickEvents: keyboard activation lives on the workspace row button; the strip click is a pointer convenience
-					<div
-						onClick={onClick}
-						className={cn(
-							"flex flex-wrap items-center gap-1 pb-1 pr-2",
-							resolvedIndentation === "top-level"
-								? "pl-[26px]"
-								: resolvedIndentation === "grouped" || isInSection
-									? "pl-[50px]"
-									: "pl-[42px]",
-							onClick && "cursor-pointer",
-						)}
-					>
-						{labels.map((label) => (
-							<WorkspaceLabelPill key={label.id} label={label} size="xs" />
-						))}
-					</div>
-				)}
 				{!isPending && (
 					<DashboardSidebarWorkspaceChips
 						workspaceId={workspace.id}
