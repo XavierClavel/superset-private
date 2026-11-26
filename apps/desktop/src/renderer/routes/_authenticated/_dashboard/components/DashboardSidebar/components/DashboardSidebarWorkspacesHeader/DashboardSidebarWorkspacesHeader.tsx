@@ -3,6 +3,7 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@superset/ui/dropdown-menu";
 import { toast } from "@superset/ui/sonner";
@@ -10,6 +11,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef } from "react";
 import {
+	VscFolder,
 	VscFolderOpened,
 	VscGithubAlt,
 	VscLayout,
@@ -19,6 +21,7 @@ import { useOpenNewWorkspaceForLocalProject } from "renderer/hooks/useOpenNewWor
 import { useFolderFirstImport } from "renderer/routes/_authenticated/_dashboard/components/AddRepositoryModals/hooks/useFolderFirstImport";
 import type {
 	SidebarProjectHostFilter,
+	SidebarProjectListSortMode,
 	SidebarProjectSortMode,
 } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal/schema";
 import {
@@ -27,6 +30,7 @@ import {
 	useOpenTemplateGalleryModal,
 } from "renderer/stores/add-repository-modal";
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
+import { useDashboardSidebarProjectFolders } from "../../providers/DashboardSidebarProjectFoldersProvider";
 import { DashboardSidebarSectionHeader } from "../DashboardSidebarSectionHeader";
 import { DashboardSidebarProjectsFilterInput } from "./components/DashboardSidebarProjectsFilterInput";
 import { DashboardSidebarProjectsSortMenu } from "./components/DashboardSidebarProjectsSortMenu";
@@ -36,6 +40,8 @@ import { useProjectFilterExpanded } from "./hooks/useProjectFilterExpanded";
 interface DashboardSidebarWorkspacesHeaderProps {
 	sortMode: SidebarProjectSortMode;
 	onSortModeChange: (mode: SidebarProjectSortMode) => void;
+	projectListSortMode: SidebarProjectListSortMode;
+	onProjectListSortModeChange: (mode: SidebarProjectListSortMode) => void;
 	isRecentView: boolean;
 	onRecentViewChange: (next: boolean) => void;
 	/** Null hides the host filter (cloud rows are not inline). */
@@ -48,6 +54,8 @@ interface DashboardSidebarWorkspacesHeaderProps {
 export function DashboardSidebarWorkspacesHeader({
 	sortMode,
 	onSortModeChange,
+	projectListSortMode,
+	onProjectListSortModeChange,
 	isRecentView,
 	onRecentViewChange,
 	hostFilter,
@@ -84,6 +92,11 @@ export function DashboardSidebarWorkspacesHeader({
 		}
 		wasSectionCollapsedRef.current = isSectionCollapsed;
 	}, [isSectionCollapsed, onFilterQueryChange, setIsFilterExpanded]);
+	const { createFolder } = useDashboardSidebarProjectFolders();
+	const handleNewFolder = () => {
+		if (isSectionCollapsed) toggleSectionCollapsed("workspaces");
+		createFolder(null, t({ message: "New folder" }));
+	};
 	const openEmptyProject = useOpenEmptyProjectModal();
 	const openNewWorkspace = useOpenNewWorkspaceForLocalProject();
 	const openNewProject = useOpenNewProjectModal();
@@ -150,6 +163,8 @@ export function DashboardSidebarWorkspacesHeader({
 			<DashboardSidebarProjectsSortMenu
 				sortMode={sortMode}
 				onSortModeChange={onSortModeChange}
+				projectListSortMode={projectListSortMode}
+				onProjectListSortModeChange={onProjectListSortModeChange}
 				hostFilter={hostFilter}
 				onHostFilterChange={onHostFilterChange}
 			/>
@@ -199,6 +214,11 @@ export function DashboardSidebarWorkspacesHeader({
 					<DropdownMenuItem onSelect={() => openTemplateGallery()}>
 						<VscLayout className="size-4" />
 						<Trans>Start from a template</Trans>
+					</DropdownMenuItem>
+					<DropdownMenuSeparator />
+					<DropdownMenuItem onSelect={handleNewFolder}>
+						<VscFolder className="size-4" />
+						<Trans>New folder</Trans>
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>

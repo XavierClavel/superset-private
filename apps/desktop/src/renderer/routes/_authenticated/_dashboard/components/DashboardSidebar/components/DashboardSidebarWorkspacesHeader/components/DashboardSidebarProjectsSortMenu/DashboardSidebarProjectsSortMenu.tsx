@@ -13,29 +13,38 @@ import { cn } from "@superset/ui/utils";
 import { HiOutlineBarsArrowDown } from "react-icons/hi2";
 import type {
 	SidebarProjectHostFilter,
+	SidebarProjectListSortMode,
 	SidebarProjectSortMode,
 } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal/schema";
 
 const SORT_MODES: SidebarProjectSortMode[] = ["manual", "active", "created"];
+const PROJECT_LIST_SORT_MODES: SidebarProjectListSortMode[] = [
+	"manual",
+	"name",
+];
 const HOST_FILTERS: SidebarProjectHostFilter[] = ["all", "local", "cloud"];
 
 interface DashboardSidebarProjectsSortMenuProps {
 	sortMode: SidebarProjectSortMode;
 	onSortModeChange: (mode: SidebarProjectSortMode) => void;
+	projectListSortMode: SidebarProjectListSortMode;
+	onProjectListSortModeChange: (mode: SidebarProjectListSortMode) => void;
 	/** Null hides the host filter (cloud rows are not inline). */
 	hostFilter: SidebarProjectHostFilter | null;
 	onHostFilterChange: (filter: SidebarProjectHostFilter) => void;
 }
 
 /**
- * Sort-mode picker in the Projects header. Sorts the workspaces inside each
- * project — the project list itself is always the manual drag order. Lives
- * inside the header strip, which toggles the section on click, so the trigger
+ * Sort picker in the Projects header: one choice orders the projects and
+ * their folders, the other the workspaces inside each project. Lives inside
+ * the header strip, which toggles the section on click, so the trigger
  * and the (portaled, but React-bubbling) menu content both stop propagation.
  */
 export function DashboardSidebarProjectsSortMenu({
 	sortMode,
 	onSortModeChange,
+	projectListSortMode,
+	onProjectListSortModeChange,
 	hostFilter,
 	onHostFilterChange,
 }: DashboardSidebarProjectsSortMenuProps) {
@@ -51,7 +60,16 @@ export function DashboardSidebarProjectsSortMenu({
 			message: "Date created",
 		}),
 	};
-	const currentLabel = labels[sortMode];
+	const projectListLabels: Record<SidebarProjectListSortMode, string> = {
+		manual: t({
+			message: "Manual order",
+		}),
+		name: t({
+			message: "Name (A–Z)",
+		}),
+	};
+	const isCustomized =
+		sortMode !== "manual" || projectListSortMode !== "manual";
 	const hostLabels: Record<SidebarProjectHostFilter, string> = {
 		all: t({
 			message: "All workspaces",
@@ -74,14 +92,14 @@ export function DashboardSidebarProjectsSortMenu({
 						<button
 							type="button"
 							aria-label={t({
-								message: "Sort workspaces",
+								message: "Sort projects and workspaces",
 							})}
 							onClick={(event) => event.stopPropagation()}
 							onKeyDown={(event) => event.stopPropagation()}
 							className={cn(
 								"flex size-6 shrink-0 items-center justify-center rounded-md transition-colors hover:bg-fill-hover hover:text-foreground",
 								// Read as "on" whenever the list is not the plain drag order.
-								sortMode === "manual" && !isHostFiltered
+								!isCustomized && !isHostFiltered
 									? "text-muted-foreground"
 									: "text-foreground",
 							)}
@@ -93,10 +111,10 @@ export function DashboardSidebarProjectsSortMenu({
 				<TooltipContent side="bottom">
 					{isHostFiltered
 						? t({
-								message: `Sort workspaces (${currentLabel}) · ${hostLabel}`,
+								message: `Sort projects and workspaces · ${hostLabel}`,
 							})
 						: t({
-								message: `Sort workspaces (${currentLabel})`,
+								message: "Sort projects and workspaces",
 							})}
 				</TooltipContent>
 			</Tooltip>
@@ -108,7 +126,25 @@ export function DashboardSidebarProjectsSortMenu({
 			>
 				<DropdownMenuLabel className="text-xs font-normal text-muted-foreground/70">
 					{t({
-						message: "Sort by",
+						message: "Sort projects by",
+					})}
+				</DropdownMenuLabel>
+				<DropdownMenuRadioGroup
+					value={projectListSortMode}
+					onValueChange={(value) =>
+						onProjectListSortModeChange(value as SidebarProjectListSortMode)
+					}
+				>
+					{PROJECT_LIST_SORT_MODES.map((mode) => (
+						<DropdownMenuRadioItem key={mode} value={mode}>
+							{projectListLabels[mode]}
+						</DropdownMenuRadioItem>
+					))}
+				</DropdownMenuRadioGroup>
+				<DropdownMenuSeparator />
+				<DropdownMenuLabel className="text-xs font-normal text-muted-foreground/70">
+					{t({
+						message: "Sort workspaces by",
 					})}
 				</DropdownMenuLabel>
 				<DropdownMenuRadioGroup

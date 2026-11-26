@@ -1319,6 +1319,9 @@ msgstr "{productName} levantó una ronda semilla de 11,5 millones de dólares li
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} se llamaba {formerName} hasta octubre de 2026."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# proyecto} other {# proyectos}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} other {# PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "No se pudo eliminar"
 msgid "Delete file"
 msgstr "Eliminar archivo"
 
+msgid "Delete folder"
+msgstr "Eliminar carpeta"
+
 msgid "Delete group"
 msgstr "Eliminar grupo"
 
@@ -12346,6 +12352,9 @@ msgstr "Mover a segundo plano"
 msgid "Move to cloud"
 msgstr "Mover a la nube"
 
+msgid "Move to folder"
+msgstr "Mover a carpeta"
+
 msgid "Move to group"
 msgstr "Mover a un grupo"
 
@@ -12423,6 +12432,9 @@ msgstr "Nombre"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Nombre"
+
+msgid "Name (A–Z)"
+msgstr "Nombre (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Un nombre y un slug apto para URL. Ambos se pueden cambiar después."
@@ -12574,6 +12586,9 @@ msgstr "Archivo nuevo"
 msgid "New File..."
 msgstr "Archivo nuevo..."
 
+msgid "New folder"
+msgstr "Nueva carpeta"
+
 msgid "New Folder"
 msgstr "Carpeta nueva"
 
@@ -12627,6 +12642,9 @@ msgstr "Nueva shell"
 
 msgid "New stars"
 msgstr "Estrellas nuevas"
+
+msgid "New subfolder"
+msgstr "Nueva subcarpeta"
 
 msgid "new tab"
 msgstr "pestaña nueva"
@@ -19039,14 +19057,20 @@ msgstr "Ordenar por"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Ordenar por {label}, actualmente {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Ordenar proyectos y espacios de trabajo"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Ordenar proyectos y espacios de trabajo · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Ordenar proyectos por"
+
 msgid "Sort workspaces"
 msgstr "Ordenar espacios de trabajo"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Ordenar espacios de trabajo ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Ordenar espacios de trabajo ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Ordenar espacios de trabajo por"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Sonidos y tono para las tareas completadas"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip activado"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Nivel superior"
 
 msgid "Top models"
 msgstr "Modelos principales"

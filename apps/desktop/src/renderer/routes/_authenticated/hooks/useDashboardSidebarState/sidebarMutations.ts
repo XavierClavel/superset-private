@@ -94,7 +94,8 @@ export function tombstoneSidebarWorkspaceRecord(
  * workspace created by the CLI or an agent must not undo an explicit hide.
  */
 export function ensureSidebarProjectRecord(
-	collections: Pick<AppCollections, "sidebarProjects">,
+	collections: Pick<AppCollections, "sidebarProjects"> &
+		Partial<Pick<AppCollections, "sidebarProjectFolders">>,
 	projectId: string,
 	{ reveal = true }: { reveal?: boolean } = {},
 ): void {
@@ -115,9 +116,11 @@ export function ensureSidebarProjectRecord(
 		// the one you're about to work in.
 		tabOrder: getPrependTabOrder([
 			...collections.sidebarProjects.state.values(),
+			...(collections.sidebarProjectFolders?.state.values() ?? []),
 		]),
 		isCollapsed: false,
 		isHidden: false,
+		folderId: null,
 	});
 }
 

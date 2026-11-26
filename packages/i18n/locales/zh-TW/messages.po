@@ -1319,6 +1319,9 @@ msgstr "{productName} 完成了 1,150 萬美元的種子輪募資，由 Union Sq
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} 在 2026 年 10 月之前名為 {formerName}。"
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, other {# 個專案}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, other {# 個 PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "刪除失敗"
 msgid "Delete file"
 msgstr "刪除檔案"
 
+msgid "Delete folder"
+msgstr "刪除資料夾"
+
 msgid "Delete group"
 msgstr "刪除群組"
 
@@ -12346,6 +12352,9 @@ msgstr "移到背景"
 msgid "Move to cloud"
 msgstr "移至雲端"
 
+msgid "Move to folder"
+msgstr "移至資料夾"
+
 msgid "Move to group"
 msgstr "移動到群組"
 
@@ -12423,6 +12432,9 @@ msgstr "名稱"
 msgctxt "sort order"
 msgid "Name"
 msgstr "名稱"
+
+msgid "Name (A–Z)"
+msgstr "名稱 (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "名稱和一個URL友好的slug。兩者稍後都可以更改。"
@@ -12574,6 +12586,9 @@ msgstr "新建檔案"
 msgid "New File..."
 msgstr "新建檔案..."
 
+msgid "New folder"
+msgstr "新增資料夾"
+
 msgid "New Folder"
 msgstr "新建資料夾"
 
@@ -12627,6 +12642,9 @@ msgstr "新增 Shell"
 
 msgid "New stars"
 msgstr "新增星標"
+
+msgid "New subfolder"
+msgstr "新增子資料夾"
 
 msgid "new tab"
 msgstr "新分頁"
@@ -19039,14 +19057,20 @@ msgstr "排序方式"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "按{label}排序，目前為{sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "排序專案和工作區"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "排序專案和工作區 · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "專案排序方式"
+
 msgid "Sort workspaces"
 msgstr "排序工作區"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "排序工作區（{currentLabel}）"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "排序工作區（{currentLabel}） · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "工作區排序方式"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "任務完成時的聲音和鈴聲"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip顯示於"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "最上層"
 
 msgid "Top models"
 msgstr "模型排行"

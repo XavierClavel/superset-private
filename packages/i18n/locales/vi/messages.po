@@ -1319,6 +1319,9 @@ msgstr "{productName} đã gọi được vòng hạt giống 11,5 triệu USD d
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} có tên là {formerName} cho đến tháng 10 năm 2026."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, other {# dự án}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, other {# PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Xóa thất bại"
 msgid "Delete file"
 msgstr "Xóa tệp"
 
+msgid "Delete folder"
+msgstr "Xóa thư mục"
+
 msgid "Delete group"
 msgstr "Xóa nhóm"
 
@@ -12346,6 +12352,9 @@ msgstr "Chuyển sang chạy nền"
 msgid "Move to cloud"
 msgstr "Chuyển lên cloud"
 
+msgid "Move to folder"
+msgstr "Chuyển vào thư mục"
+
 msgid "Move to group"
 msgstr "Chuyển vào nhóm"
 
@@ -12423,6 +12432,9 @@ msgstr "Tên"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Tên"
+
+msgid "Name (A–Z)"
+msgstr "Tên (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Tên và một slug thân thiện với URL. Cả hai đều đổi được sau."
@@ -12574,6 +12586,9 @@ msgstr "Tệp mới"
 msgid "New File..."
 msgstr "Tệp mới..."
 
+msgid "New folder"
+msgstr "Thư mục mới"
+
 msgid "New Folder"
 msgstr "Thư mục mới"
 
@@ -12627,6 +12642,9 @@ msgstr "Shell mới"
 
 msgid "New stars"
 msgstr "Star mới"
+
+msgid "New subfolder"
+msgstr "Thư mục con mới"
 
 msgid "new tab"
 msgstr "tab mới"
@@ -19039,14 +19057,20 @@ msgstr "Sắp xếp theo"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Sắp xếp theo {label}, hiện tại {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Sắp xếp dự án và workspace"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Sắp xếp dự án và workspace · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Sắp xếp dự án theo"
+
 msgid "Sort workspaces"
 msgstr "Sắp xếp workspace"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Sắp xếp workspace ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Sắp xếp workspace ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Sắp xếp workspace theo"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Âm thanh và nhạc chuông cho tác vụ đã hoàn tất"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip bật"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Cấp cao nhất"
 
 msgid "Top models"
 msgstr "Mô hình hàng đầu"

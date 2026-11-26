@@ -1319,6 +1319,9 @@ msgstr "{productName} a levé un tour de table d’amorçage de 11,5 millions de
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} s'appelait {formerName} jusqu'en octobre 2026."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# projet} other {# projets}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} other {# PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Échec de la suppression"
 msgid "Delete file"
 msgstr "Supprimer le fichier"
 
+msgid "Delete folder"
+msgstr "Supprimer le dossier"
+
 msgid "Delete group"
 msgstr "Supprimer le groupe"
 
@@ -12346,6 +12352,9 @@ msgstr "Passer en arrière-plan"
 msgid "Move to cloud"
 msgstr "Déplacer vers le cloud"
 
+msgid "Move to folder"
+msgstr "Déplacer vers un dossier"
+
 msgid "Move to group"
 msgstr "Déplacer vers un groupe"
 
@@ -12423,6 +12432,9 @@ msgstr "Nom"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Nom"
+
+msgid "Name (A–Z)"
+msgstr "Nom (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Un nom et un slug compatible avec les URL. Les deux peuvent être modifiés plus tard."
@@ -12574,6 +12586,9 @@ msgstr "Nouveau fichier"
 msgid "New File..."
 msgstr "Nouveau fichier..."
 
+msgid "New folder"
+msgstr "Nouveau dossier"
+
 msgid "New Folder"
 msgstr "Nouveau dossier"
 
@@ -12627,6 +12642,9 @@ msgstr "Nouveau shell"
 
 msgid "New stars"
 msgstr "Nouvelles étoiles"
+
+msgid "New subfolder"
+msgstr "Nouveau sous-dossier"
 
 msgid "new tab"
 msgstr "nouvel onglet"
@@ -19039,14 +19057,20 @@ msgstr "Trier par"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Trier par {label}, actuellement {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Trier les projets et les espaces de travail"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Trier les projets et les espaces de travail · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Trier les projets par"
+
 msgid "Sort workspaces"
 msgstr "Trier les espaces de travail"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Trier les espaces de travail ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Trier les espaces de travail ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Trier les espaces de travail par"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Sons et sonnerie pour les tâches terminées"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip activé"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Niveau supérieur"
 
 msgid "Top models"
 msgstr "Modèles les plus utilisés"

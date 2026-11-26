@@ -41,6 +41,30 @@ export const dashboardSidebarProjectSchema = z.object({
 	isHidden: z.boolean().default(false),
 	tabOrder: z.number().int().default(0),
 	defaultOpenInApp: z.string().nullable().default(null),
+	// Null = top level. A folder id that no longer resolves also renders at
+	// the top level.
+	folderId: z.string().uuid().nullable().default(null),
+});
+
+/** Fills `folderId` on rows written before project folders existed. */
+export function healSidebarProject(raw: unknown): unknown {
+	if (!raw || typeof raw !== "object") return raw;
+	const row = raw as { folderId?: unknown };
+	return typeof row.folderId === "string" ? raw : { ...raw, folderId: null };
+}
+
+/**
+ * A user folder that groups projects in the sidebar. Folders nest through
+ * `parentFolderId`; folders and projects that share a parent share one
+ * `tabOrder` space.
+ */
+export const dashboardSidebarProjectFolderSchema = z.object({
+	folderId: z.string().uuid(),
+	parentFolderId: z.string().uuid().nullable().default(null),
+	name: z.string().trim().min(1),
+	createdAt: persistedDateSchema,
+	tabOrder: z.number().int().default(0),
+	isCollapsed: z.boolean().default(false),
 });
 
 const paneWorkspaceStateSchema = z.custom<WorkspaceState<unknown>>();
@@ -358,6 +382,9 @@ export type WorkspaceRunTerminalState = z.infer<
 export type DashboardSidebarSectionRow = z.infer<
 	typeof dashboardSidebarSectionSchema
 >;
+export type DashboardSidebarProjectFolderRow = z.infer<
+	typeof dashboardSidebarProjectFolderSchema
+>;
 export type TerminalPresetRow = z.infer<typeof terminalPresetSchema>;
 
 /**
@@ -493,6 +520,15 @@ export type SidebarProjectSortMode = z.infer<
 const persistedSidebarProjectSortModeSchema =
 	sidebarProjectSortModeSchema.catch("manual");
 
+const sidebarProjectListSortModeSchema = z.enum(["manual", "name"]);
+
+export type SidebarProjectListSortMode = z.infer<
+	typeof sidebarProjectListSortModeSchema
+>;
+
+const persistedSidebarProjectListSortModeSchema =
+	sidebarProjectListSortModeSchema.catch("manual");
+
 const sidebarProjectHostFilterSchema = z.enum(["all", "local", "cloud"]);
 
 export type SidebarProjectHostFilter = z.infer<
@@ -522,6 +558,8 @@ export const userPreferencesSchema = z.object({
 	changesViewMode: changesViewModeSchema.default("folders"),
 	// Ordering of the dashboard sidebar's Projects list; manual = drag order.
 	sidebarProjectSortMode: persistedSidebarProjectSortModeSchema,
+	// Ordering of the projects and project folders themselves.
+	sidebarProjectListSortMode: persistedSidebarProjectListSortModeSchema,
 	// Which workspaces the Projects list shows: every row, only the ones on
 	// a device, or only cloud sandboxes.
 	sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema,
@@ -568,6 +606,7 @@ export const DEFAULT_V2_USER_PREFERENCES: UserPreferencesRow = {
 	showPresetsBar: true,
 	changesViewMode: "folders",
 	sidebarProjectSortMode: "manual",
+	sidebarProjectListSortMode: "manual",
 	sidebarProjectHostFilter: "all",
 	sidebarRecentView: false,
 	hiddenBuiltinPresetIds: [],
@@ -670,6 +709,9 @@ export function healUserPreferences(raw: unknown): UserPreferencesRow {
 		},
 		sidebarProjectSortMode: persistedSidebarProjectSortModeSchema.parse(
 			r.sidebarProjectSortMode,
+		),
+		sidebarProjectListSortMode: persistedSidebarProjectListSortModeSchema.parse(
+			r.sidebarProjectListSortMode,
 		),
 		sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema.parse(
 			r.sidebarProjectHostFilter,

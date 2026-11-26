@@ -21,6 +21,7 @@ import {
 } from "react-icons/lu";
 import { useUserPreferences } from "renderer/hooks/useUserPreferences";
 import type { DashboardSidebarProject } from "../../../../types";
+import { DashboardSidebarMoveToFolderSubmenu } from "../../../DashboardSidebarMoveToFolderSubmenu";
 
 interface DashboardSidebarProjectContextMenuProps {
 	projectId: string;
@@ -100,6 +101,9 @@ export function DashboardSidebarProjectContextMenu({
 						<ContextMenuSeparator />
 					</>
 				)}
+				<DashboardSidebarMoveToFolderSubmenu
+					item={{ type: "project", id: projectId }}
+				/>
 				<ContextMenuItem onSelect={onHide}>
 					<LuEyeOff className="size-4 mr-2" />
 					<Trans>Hide from Sidebar</Trans>

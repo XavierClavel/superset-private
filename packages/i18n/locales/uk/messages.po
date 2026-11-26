@@ -1313,6 +1313,9 @@ msgstr "{productName} залучив $11,5 млн у seed-раунді на чо
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "До жовтня 2026 року {productName} мав назву {formerName}."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# проєкт} few {# проєкти} many {# проєктів} other {# проєкту}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} few {# PR} many {# PR} other {# PR}}"
 
@@ -7060,6 +7063,9 @@ msgstr "Не вдалося видалити"
 msgid "Delete file"
 msgstr "Видалити файл"
 
+msgid "Delete folder"
+msgstr "Видалити папку"
+
 msgid "Delete group"
 msgstr "Видалити групу"
 
@@ -12340,6 +12346,9 @@ msgstr "Перевести у фоновий режим"
 msgid "Move to cloud"
 msgstr "Перемістити в хмару"
 
+msgid "Move to folder"
+msgstr "Перемістити в папку"
+
 msgid "Move to group"
 msgstr "Перемістити до групи"
 
@@ -12417,6 +12426,9 @@ msgstr "Назва"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Назва"
+
+msgid "Name (A–Z)"
+msgstr "Назва (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Назва й slug для URL. Обидва можна змінити пізніше."
@@ -12568,6 +12580,9 @@ msgstr "Новий файл"
 msgid "New File..."
 msgstr "Новий файл..."
 
+msgid "New folder"
+msgstr "Нова папка"
+
 msgid "New Folder"
 msgstr "Нова папка"
 
@@ -12621,6 +12636,9 @@ msgstr "Нова оболонка"
 
 msgid "New stars"
 msgstr "Нові зірки"
+
+msgid "New subfolder"
+msgstr "Нова вкладена папка"
 
 msgid "new tab"
 msgstr "нова вкладка"
@@ -19033,14 +19051,20 @@ msgstr "Сортувати за"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Сортувати за: {label}, зараз {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Сортувати проєкти й робочі простори"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Сортувати проєкти й робочі простори · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Сортувати проєкти за"
+
 msgid "Sort workspaces"
 msgstr "Сортувати робочі простори"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Сортувати робочі простори ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Сортувати робочі простори ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Сортувати робочі простори за"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Звуки й мелодія для завершених завдань"
@@ -21308,6 +21332,9 @@ msgstr "Підказка з боку"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Верхній рівень"
 
 msgid "Top models"
 msgstr "Найпопулярніші моделі"

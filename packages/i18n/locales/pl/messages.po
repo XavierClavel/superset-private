@@ -1319,6 +1319,9 @@ msgstr "{productName} pozyskał 11,5 mln USD w rundzie seed prowadzonej przez Un
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} nazywał się {formerName} do października 2026 roku."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# projekt} few {# projekty} many {# projektów} other {# projektu}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} few {# PR-y} many {# PR-ów} other {# PR-a}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Usuwanie nie powiodło się"
 msgid "Delete file"
 msgstr "Usuń plik"
 
+msgid "Delete folder"
+msgstr "Usuń folder"
+
 msgid "Delete group"
 msgstr "Usuń grupę"
 
@@ -12346,6 +12352,9 @@ msgstr "Przenieś w tło"
 msgid "Move to cloud"
 msgstr "Przenieś do chmury"
 
+msgid "Move to folder"
+msgstr "Przenieś do folderu"
+
 msgid "Move to group"
 msgstr "Przenieś do grupy"
 
@@ -12423,6 +12432,9 @@ msgstr "Nazwa"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Nazwa"
+
+msgid "Name (A–Z)"
+msgstr "Nazwa (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Nazwa i slug przyjazny adresom URL. Oba można później zmienić."
@@ -12574,6 +12586,9 @@ msgstr "Nowy plik"
 msgid "New File..."
 msgstr "Nowy plik..."
 
+msgid "New folder"
+msgstr "Nowy folder"
+
 msgid "New Folder"
 msgstr "Nowy folder"
 
@@ -12627,6 +12642,9 @@ msgstr "Nowa powłoka"
 
 msgid "New stars"
 msgstr "Nowe gwiazdki"
+
+msgid "New subfolder"
+msgstr "Nowy podfolder"
 
 msgid "new tab"
 msgstr "nowa karta"
@@ -19039,14 +19057,20 @@ msgstr "Sortuj według"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Sortuj wg {label}, obecnie {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Sortuj projekty i obszary robocze"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Sortuj projekty i obszary robocze · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Sortuj projekty według"
+
 msgid "Sort workspaces"
 msgstr "Sortuj obszary robocze"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Sortuj obszary robocze ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Sortuj obszary robocze ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Sortuj obszary robocze według"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Dźwięki i dzwonek dla zakończonych zadań"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip włączony"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Najwyższy poziom"
 
 msgid "Top models"
 msgstr "Najlepsze modele"

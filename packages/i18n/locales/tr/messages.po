@@ -1319,6 +1319,9 @@ msgstr "{productName}, Union Square Ventures liderliğinde, Y Combinator ve Paul
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName}, Ekim 2026'ya kadar {formerName} adını taşıyordu."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# proje} other {# proje}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} other {# PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Silinemedi"
 msgid "Delete file"
 msgstr "Dosyayı sil"
 
+msgid "Delete folder"
+msgstr "Klasörü sil"
+
 msgid "Delete group"
 msgstr "Grubu sil"
 
@@ -12346,6 +12352,9 @@ msgstr "Arka plana taşı"
 msgid "Move to cloud"
 msgstr "Buluta taşı"
 
+msgid "Move to folder"
+msgstr "Klasöre taşı"
+
 msgid "Move to group"
 msgstr "Gruba taşı"
 
@@ -12423,6 +12432,9 @@ msgstr "Ad"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Ad"
+
+msgid "Name (A–Z)"
+msgstr "Ad (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Bir ad ve URL dostu bir slug. İkisi de sonradan değiştirilebilir."
@@ -12574,6 +12586,9 @@ msgstr "Yeni dosya"
 msgid "New File..."
 msgstr "Yeni dosya..."
 
+msgid "New folder"
+msgstr "Yeni klasör"
+
 msgid "New Folder"
 msgstr "Yeni klasör"
 
@@ -12627,6 +12642,9 @@ msgstr "Yeni kabuk"
 
 msgid "New stars"
 msgstr "Yeni yıldızlar"
+
+msgid "New subfolder"
+msgstr "Yeni alt klasör"
 
 msgid "new tab"
 msgstr "yeni sekme"
@@ -19039,14 +19057,20 @@ msgstr "Sıralama ölçütü"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "{label} ölçütüne göre sırala, şu anda {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Projeleri ve çalışma alanlarını sırala"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Projeleri ve çalışma alanlarını sırala · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Projeleri sıralama ölçütü"
+
 msgid "Sort workspaces"
 msgstr "Çalışma alanlarını sırala"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Çalışma alanlarını sırala ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Çalışma alanlarını sırala ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Çalışma alanlarını sıralama ölçütü"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Tamamlanan görevler için sesler ve zil sesi"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip açık"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "En üst düzey"
 
 msgid "Top models"
 msgstr "En çok kullanılan modeller"
