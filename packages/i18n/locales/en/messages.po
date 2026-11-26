@@ -13599,6 +13599,9 @@ msgstr "Nothing lives at {pathname}."
 msgid "Nothing needs a retry"
 msgstr "Nothing needs a retry"
 
+msgid "Nothing needs your attention"
+msgstr "Nothing needs your attention"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 

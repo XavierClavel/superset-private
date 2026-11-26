@@ -6,6 +6,7 @@ export type SidebarSectionKey =
 	| "channels"
 	| "cloud"
 	| "devs"
+	| "notifications"
 	| "pinned"
 	| "sessions"
 	| "workspaces";
@@ -27,6 +28,7 @@ export const useSidebarSectionsCollapseStore =
 						channels: false,
 						cloud: false,
 						devs: false,
+						notifications: false,
 						pinned: false,
 						sessions: false,
 						workspaces: false,
@@ -53,13 +55,14 @@ export const useSidebarSectionsCollapseStore =
 									channels: false,
 									cloud: false,
 									devs: false,
+									notifications: false,
 									pinned: false,
 									sessions: false,
 									workspaces: state.isCollapsed ?? false,
 								},
 							};
 						}
-						// v1 predates the cloud section; an absent key reads as
+						// v1 predates the cloud and notifications sections; an absent key reads as
 						// expanded, which is the default we want anyway.
 						return persisted as SidebarSectionsCollapseState;
 					},

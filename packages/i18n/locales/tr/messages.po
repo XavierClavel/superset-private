@@ -13599,6 +13599,9 @@ msgstr "{pathname} yolunda bir şey yok."
 msgid "Nothing needs a retry"
 msgstr "Yeniden denenecek bir şey yok"
 
+msgid "Nothing needs your attention"
+msgstr "İlginizi gerektiren bir şey yok"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Son 30 günde henüz hiçbir şey yayınlanmadı. Bu makinedeki kullanım eşitlendiğinde sıralamanız görünür; <0>{handle}</0> olarak yayınlanıyor."
 

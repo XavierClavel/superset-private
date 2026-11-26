@@ -13593,6 +13593,9 @@ msgstr "За адресою {pathname} нічого немає."
 msgid "Nothing needs a retry"
 msgstr "Нічого не потребує повторної спроби"
 
+msgid "Nothing needs your attention"
+msgstr "Ніщо не потребує вашої уваги"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "За останні 30 днів ще нічого не опубліковано. Ваше місце з'явиться, щойно синхронізується використання з цього комп'ютера; публікація від імені <0>{handle}</0>."
 

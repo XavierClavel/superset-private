@@ -13599,6 +13599,9 @@ msgstr "Tidak ada apa pun di {pathname}."
 msgid "Nothing needs a retry"
 msgstr "Tidak ada yang perlu dicoba ulang"
 
+msgid "Nothing needs your attention"
+msgstr "Tidak ada yang perlu Anda perhatikan"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "Belum ada yang dipublikasikan dalam 30 hari terakhir. Peringkat Anda muncul setelah penggunaan dari mesin ini tersinkron, dipublikasikan sebagai <0>{handle}</0>."
 

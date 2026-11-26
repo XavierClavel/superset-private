@@ -13599,6 +13599,9 @@ msgstr "{pathname}には何もありません。"
 msgid "Nothing needs a retry"
 msgstr "再実行が必要なものはありません"
 
+msgid "Nothing needs your attention"
+msgstr "対応が必要な項目はありません"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "直近30日に公開された実績はまだありません。このマシンの利用状況が同期されるとランクが表示されます(<0>{handle}</0>として公開)。"
 

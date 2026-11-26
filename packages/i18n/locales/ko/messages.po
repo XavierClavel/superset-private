@@ -13599,6 +13599,9 @@ msgstr "{pathname}에는 아무것도 없습니다."
 msgid "Nothing needs a retry"
 msgstr "재시도가 필요한 항목이 없습니다"
 
+msgid "Nothing needs your attention"
+msgstr "확인이 필요한 항목이 없습니다"
+
 msgid "Nothing published in the last 30 days yet. Your rank appears once usage from this machine syncs, publishing as <0>{handle}</0>."
 msgstr "최근 30일 동안 게시된 사용량이 아직 없습니다. 이 기기의 사용량이 동기화되면 <0>{handle}</0>(으)로 게시되며 순위가 표시됩니다."
 
