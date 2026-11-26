@@ -1,14 +1,16 @@
 import { OverflowFadeContainer } from "@superset/ui/overflow-fade-container";
 import { cn } from "@superset/ui/utils";
 import {
+	Children,
 	type ReactNode,
 	useCallback,
 	useLayoutEffect,
 	useRef,
 	useState,
 } from "react";
+import { splitIntoTwoRows } from "./utils/splitIntoTwoRows";
 
-/** Must match the `gap-1.5` class on the container below. */
+/** Must match the `gap-1.5` classes below. */
 const CHIP_GAP_PX = 6;
 
 interface DashboardSidebarChipStripProps {
@@ -17,9 +19,9 @@ interface DashboardSidebarChipStripProps {
 }
 
 /**
- * Strip of chips that stays a single row while everything
- * fits, wraps into a two-row grid once it doesn't, and scrolls horizontally
- * (two rows deep) beyond that.
+ * Strip of chips that stays a single row while everything fits, splits into
+ * two packed rows of balanced width once it doesn't, and scrolls
+ * horizontally beyond that.
  *
  * Layout is chosen by comparing the chips' natural widths against the
  * container, re-measured on every render and on container resizes. Pure-CSS
@@ -31,7 +33,8 @@ export function DashboardSidebarChipStrip({
 	children,
 }: DashboardSidebarChipStripProps) {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [isTwoRows, setIsTwoRows] = useState(false);
+	const [secondRowStart, setSecondRowStart] = useState<number | null>(null);
+	const chips = Children.toArray(children);
 
 	const measure = useCallback(() => {
 		const node = containerRef.current;
@@ -41,15 +44,24 @@ export function DashboardSidebarChipStrip({
 			node.clientWidth -
 			Number.parseFloat(styles.paddingLeft) -
 			Number.parseFloat(styles.paddingRight);
-		let needed = -CHIP_GAP_PX;
-		for (const child of Array.from(node.children)) {
-			needed += (child as HTMLElement).offsetWidth + CHIP_GAP_PX;
-		}
-		setIsTwoRows(needed > available);
+		const rows = node.querySelectorAll<HTMLElement>(":scope > [data-chip-row]");
+		const chipNodes = Array.from(
+			rows.length > 0 ? rows : [node],
+			(row) => Array.from(row.children) as HTMLElement[],
+		).flat();
+		const widths = chipNodes.map((chip) => chip.offsetWidth);
+		const needed =
+			widths.reduce((sum, width) => sum + width, 0) +
+			CHIP_GAP_PX * (widths.length - 1);
+		setSecondRowStart(
+			needed > available && widths.length > 1
+				? splitIntoTwoRows(widths, CHIP_GAP_PX)
+				: null,
+		);
 	}, []);
 
 	// No dependency array: chips mounting/unmounting re-renders this component,
-	// and re-measuring is cheap (setState bails when the boolean is unchanged).
+	// and re-measuring is cheap (setState bails when the value is unchanged).
 	useLayoutEffect(measure);
 
 	useLayoutEffect(() => {
@@ -60,21 +72,32 @@ export function DashboardSidebarChipStrip({
 		return () => observer.disconnect();
 	}, [measure]);
 
+	const isTwoRows = secondRowStart !== null && secondRowStart < chips.length;
+
 	return (
 		<OverflowFadeContainer
 			ref={containerRef}
 			observeChildren
 			className={cn(
-				// justify-items-start keeps chips at natural width in grid mode;
-				// stretched chips would inflate the offsetWidths measure() sums.
-				isTwoRows
-					? "grid auto-cols-max grid-flow-col grid-rows-2 justify-items-start"
-					: "flex",
-				"items-center gap-1.5 overflow-x-auto hide-scrollbar",
+				isTwoRows ? "flex flex-col gap-1.5" : "flex items-center gap-1.5",
+				"overflow-x-auto hide-scrollbar",
 				className,
 			)}
 		>
-			{children}
+			{isTwoRows
+				? [chips.slice(0, secondRowStart), chips.slice(secondRowStart)].map(
+						(row, index) => (
+							<div
+								// biome-ignore lint/suspicious/noArrayIndexKey: the two rows are fixed positions
+								key={index}
+								data-chip-row
+								className="flex w-max items-center gap-1.5"
+							>
+								{row}
+							</div>
+						),
+					)
+				: chips}
 		</OverflowFadeContainer>
 	);
 }
