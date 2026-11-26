@@ -6,7 +6,13 @@ import {
 } from "@dnd-kit/core";
 import { type ReactNode, useCallback } from "react";
 import { createPortal } from "react-dom";
+import type {
+	ProjectTreeDropTarget,
+	ProjectTreeItemRef,
+} from "renderer/routes/_authenticated/hooks/useDashboardSidebarState/utils/projectFolderMutations";
+import type { SidebarProjectListSortMode } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal/schema";
 import { DashboardSidebarProjectSection } from "../../components/DashboardSidebarProjectSection";
+import { DashboardSidebarProjectFolderRow } from "../../components/DashboardSidebarProjectTree/components/SortableProjectFolder/components/DashboardSidebarProjectFolderRow";
 import { SidebarDragOverlay } from "../../components/SidebarDragOverlay";
 import {
 	SidebarDndContextProvider,
@@ -16,7 +22,9 @@ import type {
 	DashboardSidebarPinnedWorkspace,
 	DashboardSidebarProject,
 	DashboardSidebarProjectChild,
+	DashboardSidebarProjectFolder,
 } from "../../types";
+import type { ProjectTreeRow } from "../../utils/buildSidebarProjectTree";
 import { useDashboardSidebarHoverActions } from "../DashboardSidebarHoverProvider";
 
 interface DashboardSidebarDndProviderProps {
@@ -26,7 +34,14 @@ interface DashboardSidebarDndProviderProps {
 	sessionChildren: DashboardSidebarProjectChild[];
 	isSidebarCollapsed: boolean;
 	workspaceShortcutLabels: Map<string, string>;
-	onReorderProjects: (projectIds: string[]) => void;
+	projectTreeRows: ProjectTreeRow[];
+	collapsedProjectFolderIds: ReadonlySet<string>;
+	projectListSortMode: SidebarProjectListSortMode;
+	projectFoldersById: ReadonlyMap<string, DashboardSidebarProjectFolder>;
+	onMoveProjectTreeItem: (
+		item: ProjectTreeItemRef,
+		target: ProjectTreeDropTarget,
+	) => void;
 	/**
 	 * True while `projects` is a filtered view rather than the manual order —
 	 * see useSidebarDnd's `projectDragDisabled` option.
@@ -52,7 +67,11 @@ export function DashboardSidebarDndProvider({
 	sessionChildren,
 	isSidebarCollapsed,
 	workspaceShortcutLabels,
-	onReorderProjects,
+	projectTreeRows,
+	collapsedProjectFolderIds,
+	projectListSortMode,
+	projectFoldersById,
+	onMoveProjectTreeItem,
 	isProjectDragDisabled = false,
 	isChildDragDisabled = false,
 	children,
@@ -69,7 +88,11 @@ export function DashboardSidebarDndProvider({
 		projects,
 		pinnedWorkspaces,
 		sessionChildren,
-		onReorderProjects,
+		projectTreeRows,
+		collapsedProjectFolderIds,
+		projectListSortMode,
+		projectFoldersById,
+		onMoveProjectTreeItem,
 		projectDragDisabled: isProjectDragDisabled,
 		childDragDisabled: isChildDragDisabled,
 	});
@@ -127,6 +150,7 @@ export function DashboardSidebarDndProvider({
 				collisionDetection={collisionDetection}
 				measuring={measuring}
 				onDragStart={handleDragStart}
+				onDragMove={handlers.onDragMove}
 				onDragOver={handlers.onDragOver}
 				onDragEnd={handleDragEnd}
 				onDragCancel={handleDragCancel}
@@ -155,6 +179,20 @@ export function DashboardSidebarDndProvider({
 									/>
 								</div>
 							</DndContext>
+						) : activeItem?.type === "folder" ? (
+							<DashboardSidebarProjectFolderRow
+								name={activeItem.folder.name}
+								projectCount={null}
+								isCollapsed={activeItem.folder.isCollapsed}
+								isDropTarget={false}
+								isRenaming={false}
+								renameValue=""
+								onRenameValueChange={() => {}}
+								onSubmitRename={() => {}}
+								onCancelRename={() => {}}
+								onStartRename={() => {}}
+								onToggleCollapse={() => {}}
+							/>
 						) : activeItem ? (
 							<SidebarDragOverlay
 								activeItem={activeItem}

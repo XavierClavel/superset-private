@@ -1319,6 +1319,9 @@ msgstr "{productName} 完成了 1150 万美元的种子轮融资，由 Union Squ
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} 在 2026 年 10 月之前名为 {formerName}。"
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, other {# 个项目}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, other {# 个 PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "删除失败"
 msgid "Delete file"
 msgstr "删除文件"
 
+msgid "Delete folder"
+msgstr "删除文件夹"
+
 msgid "Delete group"
 msgstr "删除分组"
 
@@ -12346,6 +12352,9 @@ msgstr "移到后台"
 msgid "Move to cloud"
 msgstr "移至云端"
 
+msgid "Move to folder"
+msgstr "移动到文件夹"
+
 msgid "Move to group"
 msgstr "移动到分组"
 
@@ -12423,6 +12432,9 @@ msgstr "名称"
 msgctxt "sort order"
 msgid "Name"
 msgstr "名称"
+
+msgid "Name (A–Z)"
+msgstr "名称 (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "名称和一个URL友好的slug。两者稍后都可以更改。"
@@ -12574,6 +12586,9 @@ msgstr "新建文件"
 msgid "New File..."
 msgstr "新建文件..."
 
+msgid "New folder"
+msgstr "新建文件夹"
+
 msgid "New Folder"
 msgstr "新建文件夹"
 
@@ -12627,6 +12642,9 @@ msgstr "新建 Shell"
 
 msgid "New stars"
 msgstr "新增星标"
+
+msgid "New subfolder"
+msgstr "新建子文件夹"
 
 msgid "new tab"
 msgstr "新标签页"
@@ -19039,14 +19057,20 @@ msgstr "排序方式"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "按{label}排序，当前为{sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "排序项目和工作区"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "排序项目和工作区 · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "项目排序方式"
+
 msgid "Sort workspaces"
 msgstr "排序工作区"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "排序工作区（{currentLabel}）"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "排序工作区（{currentLabel}） · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "工作区排序方式"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "任务完成时的声音和铃声"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip显示于"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "顶层"
 
 msgid "Top models"
 msgstr "模型排行"

@@ -1319,6 +1319,9 @@ msgstr "{productName} は、Union Square Ventures がリードし、Y Combinator
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} は 2026 年 10 月まで {formerName} という名前でした。"
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, other {# 件のプロジェクト}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, other {# 件の PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "削除に失敗しました"
 msgid "Delete file"
 msgstr "ファイルを削除"
 
+msgid "Delete folder"
+msgstr "フォルダを削除"
+
 msgid "Delete group"
 msgstr "グループを削除"
 
@@ -12346,6 +12352,9 @@ msgstr "バックグラウンドに移動"
 msgid "Move to cloud"
 msgstr "クラウドに移動"
 
+msgid "Move to folder"
+msgstr "フォルダに移動"
+
 msgid "Move to group"
 msgstr "グループへ移動"
 
@@ -12423,6 +12432,9 @@ msgstr "名前"
 msgctxt "sort order"
 msgid "Name"
 msgstr "名前"
+
+msgid "Name (A–Z)"
+msgstr "名前 (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "名前とURLフレンドリーなスラッグ。どちらも後で変更できます。"
@@ -12574,6 +12586,9 @@ msgstr "新規ファイル"
 msgid "New File..."
 msgstr "新規ファイル..."
 
+msgid "New folder"
+msgstr "新しいフォルダ"
+
 msgid "New Folder"
 msgstr "新規フォルダ"
 
@@ -12627,6 +12642,9 @@ msgstr "新しいシェル"
 
 msgid "New stars"
 msgstr "新規スター"
+
+msgid "New subfolder"
+msgstr "新しいサブフォルダ"
 
 msgid "new tab"
 msgstr "新しいタブ"
@@ -19039,14 +19057,20 @@ msgstr "並び替え"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "{label}で並べ替え、現在{sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "プロジェクトとワークスペースを並べ替え"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "プロジェクトとワークスペースを並べ替え · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "プロジェクトの並び替え"
+
 msgid "Sort workspaces"
 msgstr "ワークスペースを並べ替え"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "ワークスペースを並べ替え（{currentLabel}）"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "ワークスペースを並べ替え（{currentLabel}） · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "ワークスペースの並び替え"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "タスク完了時のサウンドと着信音"
@@ -21314,6 +21338,9 @@ msgstr "ツールチップ付き"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "最上位"
 
 msgid "Top models"
 msgstr "上位のモデル"

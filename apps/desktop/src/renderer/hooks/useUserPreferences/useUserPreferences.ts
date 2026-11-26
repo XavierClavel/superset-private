@@ -9,6 +9,7 @@ import {
 	type LinkAction,
 	type LinkTierMap,
 	type SidebarProjectHostFilter,
+	type SidebarProjectListSortMode,
 	type SidebarProjectSortMode,
 	type UserPreferencesRow,
 	V2_USER_PREFERENCES_ID,
@@ -32,6 +33,7 @@ export interface UserPreferencesApi {
 	toggleShowPresetsBar: () => void;
 	setChangesViewMode: (next: ChangesViewMode) => void;
 	setSidebarProjectSortMode: (next: SidebarProjectSortMode) => void;
+	setSidebarProjectListSortMode: (next: SidebarProjectListSortMode) => void;
 	setSidebarProjectHostFilter: (next: SidebarProjectHostFilter) => void;
 	setSidebarRecentView: (next: boolean) => void;
 	setSidebarLabelFilterId: (next: string | null) => void;
@@ -293,6 +295,23 @@ export function useUserPreferences(): UserPreferencesApi {
 		[collections],
 	);
 
+	const setSidebarProjectListSortMode = useCallback(
+		(next: SidebarProjectListSortMode) => {
+			const existing = collections.userPreferences.get(V2_USER_PREFERENCES_ID);
+			if (!existing) {
+				collections.userPreferences.insert({
+					...DEFAULT_V2_USER_PREFERENCES,
+					sidebarProjectListSortMode: next,
+				});
+				return;
+			}
+			collections.userPreferences.update(V2_USER_PREFERENCES_ID, (draft) => {
+				draft.sidebarProjectListSortMode = next;
+			});
+		},
+		[collections],
+	);
+
 	const setSidebarProjectHostFilter = useCallback(
 		(next: SidebarProjectHostFilter) => {
 			const existing = collections.userPreferences.get(V2_USER_PREFERENCES_ID);
@@ -422,6 +441,7 @@ export function useUserPreferences(): UserPreferencesApi {
 		toggleShowPresetsBar,
 		setChangesViewMode,
 		setSidebarProjectSortMode,
+		setSidebarProjectListSortMode,
 		setSidebarProjectHostFilter,
 		setSidebarRecentView,
 		setSidebarLabelFilterId,

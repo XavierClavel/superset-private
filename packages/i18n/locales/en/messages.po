@@ -1319,6 +1319,9 @@ msgstr "{productName} raised an $11.5M seed round led by Union Square Ventures, 
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} was called {formerName} until October 2026."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# project} other {# projects}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Delete failed"
 msgid "Delete file"
 msgstr "Delete file"
 
+msgid "Delete folder"
+msgstr "Delete folder"
+
 msgid "Delete group"
 msgstr "Delete group"
 
@@ -12346,6 +12352,9 @@ msgstr "Move to background"
 msgid "Move to cloud"
 msgstr "Move to cloud"
 
+msgid "Move to folder"
+msgstr "Move to folder"
+
 msgid "Move to group"
 msgstr "Move to group"
 
@@ -12423,6 +12432,9 @@ msgstr "Name"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Name"
+
+msgid "Name (A–Z)"
+msgstr "Name (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Name and a URL-friendly slug. Both can be changed later."
@@ -12574,6 +12586,9 @@ msgstr "New File"
 msgid "New File..."
 msgstr "New File..."
 
+msgid "New folder"
+msgstr "New folder"
+
 msgid "New Folder"
 msgstr "New Folder"
 
@@ -12627,6 +12642,9 @@ msgstr "New shell"
 
 msgid "New stars"
 msgstr "New stars"
+
+msgid "New subfolder"
+msgstr "New subfolder"
 
 msgid "new tab"
 msgstr "new tab"
@@ -19039,14 +19057,20 @@ msgstr "Sort by"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Sort by {label}, currently {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Sort projects and workspaces"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Sort projects and workspaces · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Sort projects by"
+
 msgid "Sort workspaces"
 msgstr "Sort workspaces"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Sort workspaces ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Sort workspaces ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Sort workspaces by"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Sounds and ringtone for completed tasks"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip on"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Top level"
 
 msgid "Top models"
 msgstr "Top models"

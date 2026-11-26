@@ -1319,6 +1319,9 @@ msgstr "{productName} 팀은 Union Square Ventures가 리드하고 Y Combinator�
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName}의 이름은 2026년 10월까지 {formerName}였습니다."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, other {프로젝트 #개}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, other {PR #개}}"
 
@@ -7066,6 +7069,9 @@ msgstr "삭제 실패"
 msgid "Delete file"
 msgstr "파일 삭제"
 
+msgid "Delete folder"
+msgstr "폴더 삭제"
+
 msgid "Delete group"
 msgstr "그룹 삭제"
 
@@ -12346,6 +12352,9 @@ msgstr "백그라운드로 이동"
 msgid "Move to cloud"
 msgstr "클라우드로 옮기기"
 
+msgid "Move to folder"
+msgstr "폴더로 이동"
+
 msgid "Move to group"
 msgstr "그룹으로 이동"
 
@@ -12423,6 +12432,9 @@ msgstr "이름"
 msgctxt "sort order"
 msgid "Name"
 msgstr "이름"
+
+msgid "Name (A–Z)"
+msgstr "이름 (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "이름과 URL에 쓰기 좋은 슬러그를 정하세요. 둘 다 나중에 바꿀 수 있습니다."
@@ -12574,6 +12586,9 @@ msgstr "새 파일"
 msgid "New File..."
 msgstr "새 파일..."
 
+msgid "New folder"
+msgstr "새 폴더"
+
 msgid "New Folder"
 msgstr "새 폴더"
 
@@ -12627,6 +12642,9 @@ msgstr "새 셸"
 
 msgid "New stars"
 msgstr "신규 스타"
+
+msgid "New subfolder"
+msgstr "새 하위 폴더"
 
 msgid "new tab"
 msgstr "새 탭"
@@ -19039,14 +19057,20 @@ msgstr "정렬 기준"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "{label} 기준 정렬, 현재 {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "프로젝트 및 워크스페이스 정렬"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "프로젝트 및 워크스페이스 정렬 · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "프로젝트 정렬 기준"
+
 msgid "Sort workspaces"
 msgstr "워크스페이스 정렬"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "워크스페이스 정렬 ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "워크스페이스 정렬 ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "워크스페이스 정렬 기준"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "완료된 작업에 사용할 소리와 벨소리"
@@ -21314,6 +21338,9 @@ msgstr "툴팁 켜짐"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "최상위"
 
 msgid "Top models"
 msgstr "상위 모델"

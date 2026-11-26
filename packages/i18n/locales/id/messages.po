@@ -1319,6 +1319,9 @@ msgstr "{productName} meraih pendanaan seed sebesar 11,5 juta dolar AS yang dipi
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} bernama {formerName} hingga Oktober 2026."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, other {# proyek}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, other {# PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Penghapusan gagal"
 msgid "Delete file"
 msgstr "Hapus file"
 
+msgid "Delete folder"
+msgstr "Hapus folder"
+
 msgid "Delete group"
 msgstr "Hapus grup"
 
@@ -12346,6 +12352,9 @@ msgstr "Pindahkan ke latar belakang"
 msgid "Move to cloud"
 msgstr "Pindahkan ke cloud"
 
+msgid "Move to folder"
+msgstr "Pindahkan ke folder"
+
 msgid "Move to group"
 msgstr "Pindahkan ke grup"
 
@@ -12423,6 +12432,9 @@ msgstr "Nama"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Nama"
+
+msgid "Name (A–Z)"
+msgstr "Nama (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Nama dan slug yang ramah URL. Keduanya bisa diubah nanti."
@@ -12574,6 +12586,9 @@ msgstr "File Baru"
 msgid "New File..."
 msgstr "File Baru..."
 
+msgid "New folder"
+msgstr "Folder baru"
+
 msgid "New Folder"
 msgstr "Folder Baru"
 
@@ -12627,6 +12642,9 @@ msgstr "Shell baru"
 
 msgid "New stars"
 msgstr "Star baru"
+
+msgid "New subfolder"
+msgstr "Subfolder baru"
 
 msgid "new tab"
 msgstr "tab baru"
@@ -19039,14 +19057,20 @@ msgstr "Urutkan menurut"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Urutkan menurut {label}, saat ini {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Urutkan proyek dan workspace"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Urutkan proyek dan workspace · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Urutkan proyek menurut"
+
 msgid "Sort workspaces"
 msgstr "Urutkan workspace"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Urutkan workspace ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Urutkan workspace ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Urutkan workspace menurut"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Suara dan nada dering untuk tugas yang selesai"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip aktif"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Tingkat teratas"
 
 msgid "Top models"
 msgstr "Model teratas"

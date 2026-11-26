@@ -1319,6 +1319,9 @@ msgstr "{productName} haalde een seedronde van 11,5 miljoen dollar op onder leid
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} heette tot oktober 2026 {formerName}."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# project} other {# projecten}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} other {# PR's}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Verwijderen mislukt"
 msgid "Delete file"
 msgstr "Bestand verwijderen"
 
+msgid "Delete folder"
+msgstr "Map verwijderen"
+
 msgid "Delete group"
 msgstr "Groep verwijderen"
 
@@ -12346,6 +12352,9 @@ msgstr "Naar de achtergrond"
 msgid "Move to cloud"
 msgstr "Naar cloud verplaatsen"
 
+msgid "Move to folder"
+msgstr "Naar map verplaatsen"
+
 msgid "Move to group"
 msgstr "Naar groep verplaatsen"
 
@@ -12423,6 +12432,9 @@ msgstr "Naam"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Naam"
+
+msgid "Name (A–Z)"
+msgstr "Naam (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Een naam en een URL-vriendelijke slug. Beide zijn later te wijzigen."
@@ -12574,6 +12586,9 @@ msgstr "Nieuw bestand"
 msgid "New File..."
 msgstr "Nieuw bestand..."
 
+msgid "New folder"
+msgstr "Nieuwe map"
+
 msgid "New Folder"
 msgstr "Nieuwe map"
 
@@ -12627,6 +12642,9 @@ msgstr "Nieuwe shell"
 
 msgid "New stars"
 msgstr "Nieuwe sterren"
+
+msgid "New subfolder"
+msgstr "Nieuwe submap"
 
 msgid "new tab"
 msgstr "nieuw tabblad"
@@ -19039,14 +19057,20 @@ msgstr "Sorteren op"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Sorteren op {label}, nu {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Projecten en werkruimtes sorteren"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Projecten en werkruimtes sorteren · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Projecten sorteren op"
+
 msgid "Sort workspaces"
 msgstr "Werkruimtes sorteren"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Werkruimtes sorteren ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Werkruimtes sorteren ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Werkruimtes sorteren op"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Geluiden en beltoon voor afgeronde taken"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip aan"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Hoogste niveau"
 
 msgid "Top models"
 msgstr "Topmodellen"

@@ -12,12 +12,15 @@ import type { inferRouterOutputs } from "@trpc/server";
 import { reclaimTerminalStateForQuota } from "renderer/lib/terminal/terminal-buffer-gc";
 import type { z } from "zod";
 import {
+	type DashboardSidebarProjectFolderRow,
 	type DashboardSidebarProjectRow,
 	type DashboardSidebarSectionRow,
+	dashboardSidebarProjectFolderSchema,
 	dashboardSidebarProjectSchema,
 	dashboardSidebarSectionSchema,
 	type FailedWorkspaceCreateRow,
 	failedWorkspaceCreateSchema,
+	healSidebarProject,
 	healUserPreferences,
 	healWorkspaceLocalState,
 	type TerminalPresetRow,
@@ -96,6 +99,13 @@ interface OrgCollections {
 		typeof workspaceLocalStateSchema,
 		z.input<typeof workspaceLocalStateSchema>
 	>;
+	sidebarProjectFolders: Collection<
+		DashboardSidebarProjectFolderRow,
+		string,
+		LocalStorageCollectionUtils,
+		typeof dashboardSidebarProjectFolderSchema,
+		z.input<typeof dashboardSidebarProjectFolderSchema>
+	>;
 	sidebarSections: Collection<
 		DashboardSidebarSectionRow,
 		string,
@@ -136,20 +146,34 @@ function getCollectionsCacheKey(organizationId: string): string {
 function createOrgCollections(organizationId: string): OrgCollections {
 	const sidebarProjects = createIndexedCollection(
 		localStorageCollectionOptions(
-			hardenLocalCollection({
-				id: `v2_sidebar_projects-${organizationId}`,
-				storageKey: `v2-sidebar-projects-${organizationId}`,
-				schema: dashboardSidebarProjectSchema,
-				// Explicit type for the same reason `withReadHeal` needs one: a
-				// passthrough generic drops the contextual typing that would
-				// otherwise narrow the key to string.
-				getKey: (item: DashboardSidebarProjectRow) => item.projectId,
-			}),
+			hardenLocalCollection(
+				{
+					id: `v2_sidebar_projects-${organizationId}`,
+					storageKey: `v2-sidebar-projects-${organizationId}`,
+					schema: dashboardSidebarProjectSchema,
+					// Explicit type for the same reason `withReadHeal` needs one: a
+					// passthrough generic drops the contextual typing that would
+					// otherwise narrow the key to string.
+					getKey: (item: DashboardSidebarProjectRow) => item.projectId,
+				},
+				healSidebarProject,
+			),
 		),
 	);
 	sidebarProjects.createIndex(
 		(sidebarProject) => sidebarProject.tabOrder,
 		basicIndexConfig,
+	);
+
+	const sidebarProjectFolders = createIndexedCollection(
+		localStorageCollectionOptions(
+			hardenLocalCollection({
+				id: `v2_sidebar_project_folders-${organizationId}`,
+				storageKey: `v2-sidebar-project-folders-${organizationId}`,
+				schema: dashboardSidebarProjectFolderSchema,
+				getKey: (item: DashboardSidebarProjectFolderRow) => item.folderId,
+			}),
+		),
 	);
 
 	const workspaceLocalState = createIndexedCollection(
@@ -235,6 +259,7 @@ function createOrgCollections(organizationId: string): OrgCollections {
 
 	return {
 		sidebarProjects,
+		sidebarProjectFolders,
 		workspaceLocalState,
 		sidebarSections,
 		terminalPresets,

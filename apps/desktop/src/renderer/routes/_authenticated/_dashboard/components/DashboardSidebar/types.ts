@@ -163,3 +163,30 @@ export interface DashboardSidebarGithubHold
 	hostName: string | null;
 	isLocalHost: boolean;
 }
+
+/** A user folder that groups projects; folders nest. */
+export interface DashboardSidebarProjectFolder {
+	id: string;
+	/** Null = top level. */
+	parentFolderId: string | null;
+	name: string;
+	isCollapsed: boolean;
+	tabOrder: number;
+}
+
+/** Where a project sits in the folder tree. */
+export interface DashboardSidebarProjectPlacement {
+	/** Null = top level. */
+	folderId: string | null;
+	tabOrder: number;
+}
+
+export type DashboardSidebarProjectTreeNode =
+	| {
+			type: "folder";
+			folder: DashboardSidebarProjectFolder;
+			children: DashboardSidebarProjectTreeNode[];
+			/** Projects in this folder and every subfolder. */
+			projectCount: number;
+	  }
+	| { type: "project"; project: DashboardSidebarProject };

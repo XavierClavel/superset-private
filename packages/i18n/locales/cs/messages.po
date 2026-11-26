@@ -1319,6 +1319,9 @@ msgstr "{productName} získal 11,5 milionu dolarů v seed kole, které vedl fond
 msgid "{productName} was called {formerName} until October 2026."
 msgstr "{productName} se až do října 2026 jmenoval {formerName}."
 
+msgid "{projectCount, plural, one {# project} other {# projects}}"
+msgstr "{projectCount, plural, one {# projekt} few {# projekty} many {# projektu} other {# projektů}}"
+
 msgid "{pullRequestCount, plural, one {# PR} other {# PRs}}"
 msgstr "{pullRequestCount, plural, one {# PR} few {# PR} many {# PR} other {# PR}}"
 
@@ -7066,6 +7069,9 @@ msgstr "Mazání selhalo"
 msgid "Delete file"
 msgstr "Smazat soubor"
 
+msgid "Delete folder"
+msgstr "Smazat složku"
+
 msgid "Delete group"
 msgstr "Smazat skupinu"
 
@@ -12346,6 +12352,9 @@ msgstr "Přesunout na pozadí"
 msgid "Move to cloud"
 msgstr "Přesunout do cloudu"
 
+msgid "Move to folder"
+msgstr "Přesunout do složky"
+
 msgid "Move to group"
 msgstr "Přesunout do skupiny"
 
@@ -12423,6 +12432,9 @@ msgstr "Název"
 msgctxt "sort order"
 msgid "Name"
 msgstr "Název"
+
+msgid "Name (A–Z)"
+msgstr "Název (A–Z)"
 
 msgid "Name and a URL-friendly slug. Both can be changed later."
 msgstr "Název a slug vhodný do URL. Obojí jde později změnit."
@@ -12574,6 +12586,9 @@ msgstr "Nový soubor"
 msgid "New File..."
 msgstr "Nový soubor..."
 
+msgid "New folder"
+msgstr "Nová složka"
+
 msgid "New Folder"
 msgstr "Nová složka"
 
@@ -12627,6 +12642,9 @@ msgstr "Nový shell"
 
 msgid "New stars"
 msgstr "Nové hvězdy"
+
+msgid "New subfolder"
+msgstr "Nová podsložka"
 
 msgid "new tab"
 msgstr "nová karta"
@@ -19039,14 +19057,20 @@ msgstr "Řadit podle"
 msgid "Sort by {label}, currently {sortLabel}"
 msgstr "Seřadit podle {label}, aktuálně {sortLabel}"
 
+msgid "Sort projects and workspaces"
+msgstr "Seřadit projekty a pracovní prostory"
+
+msgid "Sort projects and workspaces · {hostLabel}"
+msgstr "Seřadit projekty a pracovní prostory · {hostLabel}"
+
+msgid "Sort projects by"
+msgstr "Řadit projekty podle"
+
 msgid "Sort workspaces"
 msgstr "Seřadit pracovní prostory"
 
-msgid "Sort workspaces ({currentLabel})"
-msgstr "Seřadit pracovní prostory ({currentLabel})"
-
-msgid "Sort workspaces ({currentLabel}) · {hostLabel}"
-msgstr "Seřadit pracovní prostory ({currentLabel}) · {hostLabel}"
+msgid "Sort workspaces by"
+msgstr "Řadit pracovní prostory podle"
 
 msgid "Sounds and ringtone for completed tasks"
 msgstr "Zvuky a vyzvánění pro dokončené úkoly"
@@ -21314,6 +21338,9 @@ msgstr "Tooltip na"
 
 msgid "tooltip-refactor.diff"
 msgstr "tooltip-refactor.diff"
+
+msgid "Top level"
+msgstr "Nejvyšší úroveň"
 
 msgid "Top models"
 msgstr "Nejlepší modely"

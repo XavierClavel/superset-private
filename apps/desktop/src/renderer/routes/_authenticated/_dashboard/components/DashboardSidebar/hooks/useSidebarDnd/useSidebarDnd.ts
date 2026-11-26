@@ -3,6 +3,7 @@ import {
 	type CollisionDetection,
 	closestCenter,
 	type DragEndEvent,
+	type DragMoveEvent,
 	type DragOverEvent,
 	type DragStartEvent,
 	getFirstCollision,
@@ -34,19 +35,38 @@ import {
 	useState,
 } from "react";
 import { useDashboardSidebarState } from "renderer/routes/_authenticated/hooks/useDashboardSidebarState";
+import type {
+	ProjectTreeDropTarget,
+	ProjectTreeItemRef,
+} from "renderer/routes/_authenticated/hooks/useDashboardSidebarState/utils/projectFolderMutations";
+import type { SidebarProjectListSortMode } from "renderer/routes/_authenticated/providers/CollectionsProvider/dashboardSidebarLocal/schema";
 import { laneProjectIdForScope } from "renderer/routes/_authenticated/utils/workspaceTagFolders";
 import {
 	useWorkspaceTransactionsStore,
 	type WorkspaceTransactionSnapshot,
 } from "renderer/stores/workspace-creates";
+import { useProjectTreeDropIndicatorStore } from "../../stores/projectTreeDropIndicator";
 import type {
 	DashboardSidebarPinnedWorkspace,
 	DashboardSidebarProject,
 	DashboardSidebarProjectChild,
+	DashboardSidebarProjectFolder,
 	DashboardSidebarSection,
 	DashboardSidebarWorkspace,
 } from "../../types";
+import type { ProjectTreeRow } from "../../utils/buildSidebarProjectTree";
+import {
+	PROJECT_TREE_END_ID,
+	type ProjectTreeDrop,
+} from "../../utils/resolveProjectTreeDrop";
 import { DRAG_ACTIVATION_DISTANCE_PX } from "./constants";
+import {
+	computeProjectTreeDrop,
+	getDragPointerY,
+	getProjectTreeDescendantDndIds,
+	parseProjectFolderDndId,
+	toProjectTreeItem,
+} from "./projectTreeDnd";
 import {
 	buildTopLevelUnits,
 	closestUnitCenter,
@@ -300,8 +320,11 @@ function parseFlatItems(
 
 // ── Context ──────────────────────────────────────────────────────────
 
+type SidebarDndItemType = "project" | "folder" | "workspace" | "section";
+
 type SidebarDndActiveItem =
 	| { type: "project"; project: DashboardSidebarProject }
+	| { type: "folder"; folder: DashboardSidebarProjectFolder }
 	| { type: "workspace"; workspace: DashboardSidebarWorkspace }
 	| { type: "section"; section: DashboardSidebarSection };
 
@@ -320,7 +343,7 @@ interface DashboardSidebarDndValue {
 	/** Sorting strategy for a container's SortableContext (see the hook). */
 	getContainerSortingStrategy: (containerId: string) => SortingStrategy;
 	activeId: UniqueIdentifier | null;
-	activeType: "project" | "workspace" | "section" | null;
+	activeType: SidebarDndItemType | null;
 	/** Container currently holding the active workspace/section, if any. */
 	activeContainer: string | null;
 	/** Real id of the section being dragged, if the active item is a section. */
@@ -392,7 +415,15 @@ interface UseSidebarDndOptions {
 	pinnedWorkspaces: DashboardSidebarPinnedWorkspace[];
 	/** The Sessions lane, shaped like a project's children (rows + folders). */
 	sessionChildren: DashboardSidebarProjectChild[];
-	onReorderProjects: (projectIds: string[]) => void;
+	/** Visible project-tree rows (folders and projects), top to bottom. */
+	projectTreeRows: ProjectTreeRow[];
+	collapsedProjectFolderIds: ReadonlySet<string>;
+	projectListSortMode: SidebarProjectListSortMode;
+	projectFoldersById: ReadonlyMap<string, DashboardSidebarProjectFolder>;
+	onMoveProjectTreeItem: (
+		item: ProjectTreeItemRef,
+		target: ProjectTreeDropTarget,
+	) => void;
 	/**
 	 * True while a filter hides projects: the rendered project list is a
 	 * subset of the manual order, so committing a drop would rewrite tabOrder
@@ -415,7 +446,11 @@ export function useSidebarDnd({
 	projects,
 	pinnedWorkspaces,
 	sessionChildren,
-	onReorderProjects,
+	projectTreeRows,
+	collapsedProjectFolderIds,
+	projectListSortMode,
+	projectFoldersById,
+	onMoveProjectTreeItem,
 	projectDragDisabled = false,
 	childDragDisabled = false,
 }: UseSidebarDndOptions) {
@@ -498,10 +533,11 @@ export function useSidebarDnd({
 	);
 
 	const typeOf = useCallback(
-		(id: UniqueIdentifier): "project" | "workspace" | "section" | null => {
+		(id: UniqueIdentifier): SidebarDndItemType | null => {
 			const s = String(id);
 			if (s.startsWith(WS)) return "workspace";
 			if (s.startsWith(SEC)) return "section";
+			if (parseProjectFolderDndId(s)) return "folder";
 			if (projectIds.has(s)) return "project";
 			return null;
 		},
@@ -660,6 +696,11 @@ export function useSidebarDnd({
 			const project = projectsById.get(String(activeId));
 			return project ? { type: "project", project } : null;
 		}
+		if (activeType === "folder") {
+			const folderId = parseProjectFolderDndId(activeId);
+			const folder = folderId ? projectFoldersById.get(folderId) : null;
+			return folder ? { type: "folder", folder } : null;
+		}
 		const parsed = parseId(activeId);
 		if (!parsed) return null;
 		if (parsed.type === "workspace") {
@@ -668,7 +709,14 @@ export function useSidebarDnd({
 		}
 		const sec = sectionsById.get(parsed.realId);
 		return sec ? { type: "section", section: sec } : null;
-	}, [activeId, activeType, projectsById, workspacesById, sectionsById]);
+	}, [
+		activeId,
+		activeType,
+		projectsById,
+		projectFoldersById,
+		workspacesById,
+		sectionsById,
+	]);
 
 	// Color the active workspace's ghost should show based on where it would
 	// land. Only meaningful while it hovers inside a project list. Mirrors the
@@ -751,13 +799,28 @@ export function useSidebarDnd({
 		(args) => {
 			const type = typeOf(args.active.id);
 
-			if (type === "project") {
-				return closestCenter({
-					...args,
-					droppableContainers: args.droppableContainers.filter((container) =>
-						projectIds.has(String(container.id)),
-					),
-				});
+			if (type === "project" || type === "folder") {
+				// Projects and folders target project and folder rows. A folder
+				// never targets itself or anything nested in it.
+				const activeFolderId = parseProjectFolderDndId(args.active.id);
+				const excluded = activeFolderId
+					? getProjectTreeDescendantDndIds(projectTreeRows, activeFolderId)
+					: new Set([String(args.active.id)]);
+				const droppableContainers = args.droppableContainers.filter(
+					(container) => {
+						const id = String(container.id);
+						if (excluded.has(id)) return false;
+						return (
+							id === PROJECT_TREE_END_ID ||
+							toProjectTreeItem(id, projectIds) !== null
+						);
+					},
+				);
+				// A pointer over no row (its own row, a gap) means no target, so a
+				// release there is a no-op. Only a keyboard drag has no pointer.
+				return args.pointerCoordinates
+					? pointerWithin({ ...args, droppableContainers })
+					: closestCenter({ ...args, droppableContainers });
 			}
 
 			if (type === "section") {
@@ -815,7 +878,7 @@ export function useSidebarDnd({
 
 			return closestCenter(args);
 		},
-		[typeOf, projectIds, workspacesById],
+		[typeOf, projectIds, projectTreeRows, workspacesById],
 	);
 
 	// ── Persistence ──────────────────────────────────────────────────
@@ -887,6 +950,43 @@ export function useSidebarDnd({
 
 	// ── Handlers ─────────────────────────────────────────────────────
 
+	const setProjectTreeIndicator = useProjectTreeDropIndicatorStore(
+		(state) => state.setIndicator,
+	);
+	const resolveTreeDrop = useCallback(
+		(event: DragMoveEvent | DragEndEvent): ProjectTreeDrop | null => {
+			const { active, over } = event;
+			if (!over) return null;
+			const item = toProjectTreeItem(active.id, projectIds);
+			if (!item) return null;
+			return computeProjectTreeDrop({
+				rows: projectTreeRows,
+				collapsedFolderIds: collapsedProjectFolderIds,
+				active: item,
+				overId: over.id,
+				overRect: over.rect,
+				pointerY: getDragPointerY(event),
+				projectIds,
+				sortMode: projectListSortMode,
+			});
+		},
+		[
+			projectIds,
+			projectTreeRows,
+			collapsedProjectFolderIds,
+			projectListSortMode,
+		],
+	);
+
+	const onDragMove = useCallback(
+		(event: DragMoveEvent) => {
+			const type = typeOf(event.active.id);
+			if (type !== "project" && type !== "folder") return;
+			setProjectTreeIndicator(resolveTreeDrop(event)?.indicator ?? null);
+		},
+		[typeOf, resolveTreeDrop, setProjectTreeIndicator],
+	);
+
 	const onDragStart = useCallback(({ active }: DragStartEvent) => {
 		activeIdRef.current = active.id;
 		lastOverIdRef.current = null;
@@ -956,13 +1056,15 @@ export function useSidebarDnd({
 	);
 
 	const onDragEnd = useCallback(
-		({ active, over }: DragEndEvent) => {
+		(event: DragEndEvent) => {
+			const { active, over } = event;
 			const type = typeOf(active.id);
 			const snapshot = clonedRef.current;
 			clonedRef.current = null;
 			activeIdRef.current = null;
 			setActiveId(null);
 			setOverId(null);
+			setProjectTreeIndicator(null);
 
 			const revert = () => {
 				if (snapshot) commitDragItems(snapshot);
@@ -973,15 +1075,10 @@ export function useSidebarDnd({
 				return;
 			}
 
-			if (type === "project") {
-				if (active.id !== over.id && projectIds.has(String(over.id))) {
-					const order = projects.map((project) => project.id);
-					const oldIndex = order.indexOf(String(active.id));
-					const newIndex = order.indexOf(String(over.id));
-					if (oldIndex !== -1 && newIndex !== -1) {
-						onReorderProjects(arrayMove(order, oldIndex, newIndex));
-					}
-				}
+			if (type === "project" || type === "folder") {
+				const item = toProjectTreeItem(active.id, projectIds);
+				const drop = resolveTreeDrop(event);
+				if (item && drop) onMoveProjectTreeItem(item, drop.target);
 				return;
 			}
 
@@ -1109,9 +1206,10 @@ export function useSidebarDnd({
 		},
 		[
 			typeOf,
-			projects,
 			projectIds,
-			onReorderProjects,
+			resolveTreeDrop,
+			onMoveProjectTreeItem,
+			setProjectTreeIndicator,
 			commitContainerToDb,
 			persistWorkspaceDrop,
 			commitDragItems,
@@ -1146,8 +1244,9 @@ export function useSidebarDnd({
 		activeIdRef.current = null;
 		setActiveId(null);
 		setOverId(null);
+		setProjectTreeIndicator(null);
 		clonedRef.current = null;
-	}, [commitDragItems]);
+	}, [commitDragItems, setProjectTreeIndicator]);
 
 	const contextValue = useMemo<DashboardSidebarDndValue>(
 		() => ({
@@ -1193,6 +1292,6 @@ export function useSidebarDnd({
 		// its churn never fans out through the context.
 		predictedColor,
 		contextValue,
-		handlers: { onDragStart, onDragOver, onDragEnd, onDragCancel },
+		handlers: { onDragStart, onDragMove, onDragOver, onDragEnd, onDragCancel },
 	};
 }
