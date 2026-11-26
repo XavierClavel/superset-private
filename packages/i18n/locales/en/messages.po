@@ -12808,6 +12808,9 @@ msgstr "No agent is available to set up the environment"
 msgid "No agent is configured on this host"
 msgstr "No agent is configured on this host"
 
+msgid "No agent is working and nothing needs you"
+msgstr "No agent is working and nothing needs you"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "No agents configured on {0}"
@@ -18465,6 +18468,9 @@ msgstr "Show a microphone in the chat composer. Speech is transcribed by ChatGPT
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Show a Usage button in the home sidebar, under Pull requests"
+
+msgid "Show active workspaces"
+msgstr "Show active workspaces"
 
 msgid "Show all {count}"
 msgstr "Show all {count}"

@@ -12808,6 +12808,9 @@ msgstr "Tidak ada agen yang tersedia untuk menyiapkan environment"
 msgid "No agent is configured on this host"
 msgstr "Tidak ada agen yang dikonfigurasi di host ini"
 
+msgid "No agent is working and nothing needs you"
+msgstr "Tidak ada agen yang bekerja dan tidak ada yang membutuhkan Anda"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Tidak ada agen yang dikonfigurasi di {0}"
@@ -18465,6 +18468,9 @@ msgstr "Tampilkan mikrofon di kolom chat. Ucapan ditranskripsi oleh ChatGPT jika
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Tampilkan tombol Penggunaan di sidebar beranda, di bawah Pull request"
+
+msgid "Show active workspaces"
+msgstr "Tampilkan ruang kerja aktif"
 
 msgid "Show all {count}"
 msgstr "Tampilkan semua {count}"

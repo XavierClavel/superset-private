@@ -565,6 +565,8 @@ export const userPreferencesSchema = z.object({
 	sidebarProjectHostFilter: persistedSidebarProjectHostFilterSchema,
 	// Hides Projects workspaces with no agent activity in the last two weeks.
 	sidebarRecentView: z.boolean().default(false),
+	// Shows only Projects workspaces an agent is busy in or that ask for the user.
+	sidebarActiveView: z.boolean().default(false),
 	// Built-in (synthetic, app-shipped) presets the user hid from the preset
 	// bar. Synthetic presets have no terminalPresets row, so visibility can't
 	// live on the row's pinnedToBar like user presets. Pruned against
@@ -609,6 +611,7 @@ export const DEFAULT_V2_USER_PREFERENCES: UserPreferencesRow = {
 	sidebarProjectListSortMode: "manual",
 	sidebarProjectHostFilter: "all",
 	sidebarRecentView: false,
+	sidebarActiveView: false,
 	hiddenBuiltinPresetIds: [],
 	favoritePageIds: [],
 	hiddenTagFolders: {},
@@ -717,6 +720,7 @@ export function healUserPreferences(raw: unknown): UserPreferencesRow {
 			r.sidebarProjectHostFilter,
 		),
 		sidebarRecentView: r.sidebarRecentView === true,
+		sidebarActiveView: r.sidebarActiveView === true,
 		sidebarLabelFilterId:
 			typeof r.sidebarLabelFilterId === "string"
 				? r.sidebarLabelFilterId

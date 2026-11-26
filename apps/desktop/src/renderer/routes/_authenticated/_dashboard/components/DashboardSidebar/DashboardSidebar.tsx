@@ -29,6 +29,7 @@ import { useLocalHostService } from "renderer/routes/_authenticated/providers/Lo
 import { useNotificationStore } from "renderer/stores/notifications";
 import { useReleaseNotesCardStore } from "renderer/stores/release-notes-card";
 import { useSidebarSectionsCollapseStore } from "renderer/stores/sidebar-sections-collapse";
+import { DashboardSidebarActiveWorkReporter } from "./components/DashboardSidebarActiveWorkReporter";
 import { DashboardSidebarAutomationsSection } from "./components/DashboardSidebarAutomationsSection";
 import { DashboardSidebarBulkActions } from "./components/DashboardSidebarBulkActions";
 import { DashboardSidebarBulkDeleteMount } from "./components/DashboardSidebarBulkDeleteMount";
@@ -78,6 +79,7 @@ import {
 	flattenSidebarProjectTree,
 	listVisibleProjectTreeRows,
 } from "./utils/buildSidebarProjectTree";
+import { filterDashboardSidebarByActiveWork } from "./utils/filterDashboardSidebarByActiveWork";
 import { filterDashboardSidebarByLabel } from "./utils/filterDashboardSidebarByLabel";
 import { filterDashboardSidebarByRecentActivity } from "./utils/filterDashboardSidebarByRecentActivity";
 import { filterDashboardSidebarProjects } from "./utils/filterDashboardSidebarProjects";
@@ -154,6 +156,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		setSidebarProjectListSortMode,
 		setSidebarProjectHostFilter,
 		setSidebarRecentView,
+		setSidebarActiveView,
 	} = useUserPreferences();
 	const sortMode = preferences.sidebarProjectSortMode;
 	const projectListSortMode = preferences.sidebarProjectListSortMode;
@@ -164,6 +167,9 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			: "all";
 	const isRecentView = preferences.sidebarRecentView && !isCollapsed;
 	const recentViewNow = useNow(RECENT_VIEW_TICK_MS, isRecentView).getTime();
+	const isActiveView = preferences.sidebarActiveView && !isCollapsed;
+	const [activeWorkspaceIds, setActiveWorkspaceIds] =
+		useState<ReadonlySet<string> | null>(null);
 	const [projectFilterQuery, setProjectFilterQuery] = useState("");
 	// The icon rail hides the Projects header (and its filter input); a
 	// filter left active there would invisibly hide projects.
@@ -250,9 +256,16 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 				: labelView.projects,
 		[isRecentView, labelView.projects, recentViewNow],
 	);
+	const activeProjects = useMemo(
+		() =>
+			isActiveView && activeWorkspaceIds
+				? filterDashboardSidebarByActiveWork(recentProjects, activeWorkspaceIds)
+				: recentProjects,
+		[isActiveView, activeWorkspaceIds, recentProjects],
+	);
 	const hostFilteredGroups = useMemo(
-		() => filterDashboardSidebarProjectsByHost(recentProjects, hostFilter),
-		[recentProjects, hostFilter],
+		() => filterDashboardSidebarProjectsByHost(activeProjects, hostFilter),
+		[activeProjects, hostFilter],
 	);
 	const displayedPinnedWorkspaces = useMemo(
 		() =>
@@ -286,7 +299,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		labelView.sessionChildren.length === 0;
 	const isRowFilterActive =
 		trimmedFilterQuery !== "" || hostFilter !== "all" || isLabelFilterActive;
-	const isFilterActive = isRowFilterActive || isRecentView;
+	const isFilterActive = isRowFilterActive || isRecentView || isActiveView;
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -343,6 +356,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			setSidebarProjectHostFilter("all");
 			setActiveFilterLabelId(null);
 			setSidebarRecentView(false);
+			setSidebarActiveView(false);
 		},
 	});
 
@@ -353,11 +367,11 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 	const shortcutProjects = useMemo(
 		() =>
 			isRowFilterActive
-				? recentProjects
-				: recentProjects.filter((project) =>
+				? activeProjects
+				: activeProjects.filter((project) =>
 						openFolderProjectIds.has(project.id),
 					),
-		[isRowFilterActive, recentProjects, openFolderProjectIds],
+		[isRowFilterActive, activeProjects, openFolderProjectIds],
 	);
 	const workspaceShortcutLabels = useDashboardSidebarShortcuts(
 		shortcutProjects,
@@ -519,6 +533,8 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 							onProjectListSortModeChange={setSidebarProjectListSortMode}
 							isRecentView={isRecentView}
 							onRecentViewChange={setSidebarRecentView}
+							isActiveView={isActiveView}
+							onActiveViewChange={setSidebarActiveView}
 							hostFilter={isCloudEnabled ? hostFilter : null}
 							onHostFilterChange={setSidebarProjectHostFilter}
 							filterQuery={projectFilterQuery}
@@ -578,13 +594,17 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 								? t({
 										message: `No workspaces have the label ${activeFilterLabel.name}`,
 									})
-								: isRecentView
+								: isActiveView
 									? t({
-											message: "No agent activity in the last two weeks",
+											message: "No agent is working and nothing needs you",
 										})
-									: hostFilter === "cloud"
-										? t({ message: "No cloud workspaces" })
-										: t({ message: "No local workspaces" })}
+									: isRecentView
+										? t({
+												message: "No agent activity in the last two weeks",
+											})
+										: hostFilter === "cloud"
+											? t({ message: "No cloud workspaces" })
+											: t({ message: "No local workspaces" })}
 					</div>
 				)}
 		</>
@@ -615,6 +635,12 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 						workspaces={statusWorkspaces}
 						activeWorkspaceId={activeWorkspaceId}
 					>
+						{isActiveView && (
+							<DashboardSidebarActiveWorkReporter
+								openWorkspaceId={activeWorkspaceId}
+								onChange={setActiveWorkspaceIds}
+							/>
+						)}
 						{/* Port data comes from the single DashboardSidebarPortsProvider in the
 						    dashboard layout, which wraps this sidebar. */}
 						<DashboardSidebarHoverCardOverlay>

@@ -12808,6 +12808,9 @@ msgstr "Nessun agente disponibile per configurare l’ambiente"
 msgid "No agent is configured on this host"
 msgstr "Nessun agente è configurato su questo host"
 
+msgid "No agent is working and nothing needs you"
+msgstr "Nessun agente è al lavoro e niente ha bisogno di te"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Nessun agente configurato su {0}"
@@ -18465,6 +18468,9 @@ msgstr "Mostra un microfono nel campo della chat. Il parlato viene trascritto da
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Mostra un pulsante Utilizzo nella barra laterale della home, sotto Pull request"
+
+msgid "Show active workspaces"
+msgstr "Mostra le aree di lavoro attive"
 
 msgid "Show all {count}"
 msgstr "Mostra tutti i {count}"

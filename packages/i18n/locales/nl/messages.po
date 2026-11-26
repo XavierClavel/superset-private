@@ -12808,6 +12808,9 @@ msgstr "Er is geen agent beschikbaar om de omgeving in te richten"
 msgid "No agent is configured on this host"
 msgstr "Er is geen agent geconfigureerd op deze host"
 
+msgid "No agent is working and nothing needs you"
+msgstr "Geen agent is aan het werk en niets heeft je nodig"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "Geen agents geconfigureerd op {0}"
@@ -18465,6 +18468,9 @@ msgstr "Een microfoon in het chatinvoerveld tonen. Spraak wordt getranscribeerd 
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "Toon een knop Gebruik in de zijbalk van het startscherm, onder Pull requests"
+
+msgid "Show active workspaces"
+msgstr "Actieve werkruimten tonen"
 
 msgid "Show all {count}"
 msgstr "Alle {count} tonen"

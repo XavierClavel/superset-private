@@ -12808,6 +12808,9 @@ msgstr "沒有可用來設定環境的代理程式"
 msgid "No agent is configured on this host"
 msgstr "此主機上未設定任何代理程式"
 
+msgid "No agent is working and nothing needs you"
+msgstr "沒有正在工作的代理，也沒有需要你處理的事項"
+
 #. placeholder {0}: host.name
 msgid "No agents configured on {0}"
 msgstr "{0}上沒有配置代理程式"
@@ -18465,6 +18468,9 @@ msgstr "在聊天輸入框中顯示麥克風。如果 Codex 已登入 ChatGPT，
 
 msgid "Show a Usage button in the home sidebar, under Pull requests"
 msgstr "在首頁側邊欄的「拉取請求」下方顯示「用量」按鈕"
+
+msgid "Show active workspaces"
+msgstr "顯示活躍的工作區"
 
 msgid "Show all {count}"
 msgstr "顯示全部{count}條"
