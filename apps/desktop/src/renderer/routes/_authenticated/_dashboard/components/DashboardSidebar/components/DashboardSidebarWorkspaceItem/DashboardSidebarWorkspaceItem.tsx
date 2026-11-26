@@ -89,7 +89,7 @@ export function DashboardSidebarWorkspaceItem({
 					workspace: { id, hostId: workspace.hostId, projectId, name },
 				}
 			: undefined;
-	const { status: workspaceStatus } = useSidebarWorkspaceStatus(id);
+	const { status: workspaceStatus, isWaiting } = useSidebarWorkspaceStatus(id);
 	const labelsByWorkspaceId = useDashboardSidebarLabelsByWorkspace();
 	const labels = labelsByWorkspaceId.get(id) ?? EMPTY_LABELS;
 	const {
@@ -257,6 +257,7 @@ export function DashboardSidebarWorkspaceItem({
 					hostIsOnline={hostIsOnline}
 					isActive={isActive}
 					workspaceStatus={workspaceStatus}
+					isWaiting={isWaiting}
 					onClick={handleClick}
 					isCreatePending={isPending}
 					pullRequestState={pullRequest?.state ?? null}
@@ -344,6 +345,7 @@ export function DashboardSidebarWorkspaceItem({
 				shortcutLabel={shortcutLabel}
 				pinnedContext={pinnedContext}
 				workspaceStatus={workspaceStatus}
+				isWaiting={isWaiting}
 				isInSection={isInSection}
 				indentation={indentation}
 				isBulkSelectable={onSelectionClick != null}

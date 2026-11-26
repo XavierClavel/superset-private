@@ -15,6 +15,7 @@ interface DashboardSidebarCollapsedWorkspaceButtonProps
 	hostIsOnline: boolean | null;
 	isActive: boolean;
 	workspaceStatus?: ActivePaneStatus | null;
+	isWaiting?: boolean;
 	isCreatePending: boolean;
 	pullRequestState?: DashboardSidebarWorkspacePullRequest["state"] | null;
 }
@@ -30,6 +31,7 @@ export const DashboardSidebarCollapsedWorkspaceButton = forwardRef<
 			hostIsOnline,
 			isActive,
 			workspaceStatus = null,
+			isWaiting = false,
 			isCreatePending,
 			pullRequestState = null,
 			className,
@@ -58,6 +60,7 @@ export const DashboardSidebarCollapsedWorkspaceButton = forwardRef<
 					isActive={isActive}
 					variant="collapsed"
 					workspaceStatus={workspaceStatus}
+					isWaiting={isWaiting}
 					isCreatePending={isCreatePending}
 					pullRequestState={pullRequestState}
 				/>

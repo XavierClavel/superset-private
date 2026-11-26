@@ -1,1 +1,1 @@
-export { listBackgroundWork } from "./listBackgroundWork";
+export { hasBackgroundWork, listBackgroundWork } from "./listBackgroundWork";

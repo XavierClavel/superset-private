@@ -29,11 +29,14 @@ import { useHostWorkspaces } from "renderer/routes/_authenticated/providers/Host
 import { useNotificationStore } from "renderer/stores/notifications";
 import type { ActivePaneStatus, PaneStatus } from "shared/tabs-types";
 import { getProjectStatus } from "./utils/getProjectStatus";
+import { isWorkspaceWaiting } from "./utils/isWorkspaceWaiting";
 import { listBackgroundWork } from "./utils/listBackgroundWork";
 
 interface SidebarWorkspaceStatusEntry {
 	/** Highest-priority attention status across the workspace's terminals. */
 	status: ActivePaneStatus | null;
+	/** Its agents ended their turn, and a `/loop` or background work will start the next one. */
+	isWaiting: boolean;
 	/** Manual unread mark, or any terminal in review/failed. */
 	isUnread: boolean;
 	/** `terminalId → host agent binding` (source rows for mark-seen). */
@@ -50,6 +53,7 @@ interface SidebarWorkspaceStatusEntry {
 
 const EMPTY_ENTRY: SidebarWorkspaceStatusEntry = {
 	status: null,
+	isWaiting: false,
 	isUnread: false,
 	bindings: new Map(),
 	statuses: new Map(),
@@ -163,6 +167,7 @@ function entriesEqual(
 ): boolean {
 	return (
 		left.status === right.status &&
+		left.isWaiting === right.isWaiting &&
 		left.isUnread === right.isUnread &&
 		left.reportedAt === right.reportedAt &&
 		left.backgroundWork.length === right.backgroundWork.length &&
@@ -369,13 +374,15 @@ export function DashboardSidebarWorkspaceStatusProvider({
 				target.hostUrl === null
 					? reportedByWorkspaceId.get(target.workspaceId)
 					: undefined;
+			const workspaceStatus = deriveWorkspaceStatus({
+				terminalStatuses: statuses.values(),
+				hasManualUnread: Boolean(manualUnread[target.workspaceId]),
+				report,
+				seenAt: workspaceSeenAt[target.workspaceId],
+			});
 			const candidate: SidebarWorkspaceStatusEntry = {
-				...deriveWorkspaceStatus({
-					terminalStatuses: statuses.values(),
-					hasManualUnread: Boolean(manualUnread[target.workspaceId]),
-					report,
-					seenAt: workspaceSeenAt[target.workspaceId],
-				}),
+				...workspaceStatus,
+				isWaiting: isWorkspaceWaiting(bindingRows, statuses),
 				bindings,
 				statuses,
 				backgroundWork: listBackgroundWork(bindings.values(), statuses),

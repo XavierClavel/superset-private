@@ -1,3 +1,4 @@
+import { LoopSpinner } from "@superset/ui/atoms/LoopSpinner";
 import { cn } from "@superset/ui/utils";
 import { CgLaptop } from "react-icons/cg";
 import {
@@ -25,6 +26,7 @@ interface DashboardSidebarWorkspaceIconProps {
 	isActive: boolean;
 	variant: "collapsed" | "expanded";
 	workspaceStatus?: ActivePaneStatus | null;
+	isWaiting?: boolean;
 	isCreatePending: boolean;
 	pullRequestState?: DashboardSidebarWorkspacePullRequest["state"] | null;
 }
@@ -57,6 +59,7 @@ export function DashboardSidebarWorkspaceIcon({
 	isActive,
 	variant,
 	workspaceStatus = null,
+	isWaiting = false,
 	isCreatePending,
 	pullRequestState = null,
 }: DashboardSidebarWorkspaceIconProps) {
@@ -108,7 +111,9 @@ export function DashboardSidebarWorkspaceIcon({
 
 	return (
 		<>
-			{isCreatePending || workspaceStatus === "working" ? (
+			{isWaiting ? (
+				<LoopSpinner className="text-foreground/80" />
+			) : isCreatePending || workspaceStatus === "working" ? (
 				<AsciiSpinner className="text-base" />
 			) : (
 				renderPrimaryIcon()
