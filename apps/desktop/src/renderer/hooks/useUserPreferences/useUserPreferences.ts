@@ -36,7 +36,7 @@ export interface UserPreferencesApi {
 	setSidebarProjectListSortMode: (next: SidebarProjectListSortMode) => void;
 	setSidebarProjectHostFilter: (next: SidebarProjectHostFilter) => void;
 	setSidebarRecentView: (next: boolean) => void;
-	setSidebarLabelFilterId: (next: string | null) => void;
+	setSidebarLabelFilterIds: (next: string[] | null) => void;
 	setBuiltinPresetHidden: (presetId: string, hidden: boolean) => void;
 	/** Hide/show a tag folder in one project without touching anyone's tags. */
 	setTagFolderHidden: (projectId: string, tag: string, hidden: boolean) => void;
@@ -346,18 +346,18 @@ export function useUserPreferences(): UserPreferencesApi {
 		[collections],
 	);
 
-	const setSidebarLabelFilterId = useCallback(
-		(next: string | null) => {
+	const setSidebarLabelFilterIds = useCallback(
+		(next: string[] | null) => {
 			const existing = collections.userPreferences.get(V2_USER_PREFERENCES_ID);
 			if (!existing) {
 				collections.userPreferences.insert({
 					...DEFAULT_V2_USER_PREFERENCES,
-					sidebarLabelFilterId: next,
+					sidebarLabelFilterIds: next,
 				});
 				return;
 			}
 			collections.userPreferences.update(V2_USER_PREFERENCES_ID, (draft) => {
-				draft.sidebarLabelFilterId = next;
+				draft.sidebarLabelFilterIds = next;
 			});
 		},
 		[collections],
@@ -444,7 +444,7 @@ export function useUserPreferences(): UserPreferencesApi {
 		setSidebarProjectListSortMode,
 		setSidebarProjectHostFilter,
 		setSidebarRecentView,
-		setSidebarLabelFilterId,
+		setSidebarLabelFilterIds,
 		setBuiltinPresetHidden,
 		setTagFolderHidden,
 	};

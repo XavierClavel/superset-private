@@ -13059,6 +13059,9 @@ msgstr "Nenhuma chave no sandbox"
 msgid "No known creators"
 msgstr "Nenhum criador conhecido"
 
+msgid "No label"
+msgstr "Sem marcador"
+
 msgid "No labels"
 msgstr "Sem labels"
 
@@ -13438,12 +13441,15 @@ msgstr "Nenhum comando de execução configurado para a área de trabalho"
 msgid "No workspaces found."
 msgstr "Nenhuma área de trabalho encontrada."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Nenhuma área de trabalho tem o marcador {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Este projeto ainda não tem espaços de trabalho."
+
+msgid "No workspaces match the label filter"
+msgstr "Nenhuma área de trabalho corresponde ao filtro de marcadores"
 
 msgid "No workspaces match your filters"
 msgstr "Nenhuma área de trabalho corresponde aos seus filtros"

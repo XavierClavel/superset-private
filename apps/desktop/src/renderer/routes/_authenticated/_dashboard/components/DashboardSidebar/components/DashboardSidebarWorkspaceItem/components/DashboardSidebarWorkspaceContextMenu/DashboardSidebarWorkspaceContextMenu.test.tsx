@@ -19,8 +19,10 @@ const noop = () => {};
 const NO_LABELS = {
 	labels: [],
 	labelsByWorkspaceId: new Map(),
-	activeFilterLabel: null,
-	setActiveFilterLabelId: noop,
+	activeFilterKeys: null,
+	selectOnlyFilterKey: noop,
+	toggleFilterKey: noop,
+	clearLabelFilter: noop,
 	createLabel: async () => {
 		throw new Error("not in this test");
 	},

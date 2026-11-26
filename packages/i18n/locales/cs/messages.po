@@ -13059,6 +13059,9 @@ msgstr "Žádné klíče v sandboxu"
 msgid "No known creators"
 msgstr "Žádní známí autoři"
 
+msgid "No label"
+msgstr "Bez štítku"
+
 msgid "No labels"
 msgstr "Žádné štítky"
 
@@ -13438,12 +13441,15 @@ msgstr "Není nastavený žádný spouštěcí příkaz pracovního prostoru"
 msgid "No workspaces found."
 msgstr "Nenalezeny žádné pracovní prostory."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Žádný pracovní prostor nemá štítek {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "V tomto projektu zatím nejsou žádné pracovní prostory."
+
+msgid "No workspaces match the label filter"
+msgstr "Filtru štítků neodpovídá žádný pracovní prostor"
 
 msgid "No workspaces match your filters"
 msgstr "Vašim filtrům neodpovídá žádný pracovní prostor"

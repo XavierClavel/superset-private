@@ -13059,6 +13059,9 @@ msgstr "Geen sleutels in de sandbox"
 msgid "No known creators"
 msgstr "Geen bekende makers"
 
+msgid "No label"
+msgstr "Geen label"
+
 msgid "No labels"
 msgstr "Geen labels"
 
@@ -13438,12 +13441,15 @@ msgstr "Geen run-commando voor de werkruimte geconfigureerd"
 msgid "No workspaces found."
 msgstr "Geen werkruimtes gevonden."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Geen enkele werkruimte heeft het label {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Dit project heeft nog geen workspaces."
+
+msgid "No workspaces match the label filter"
+msgstr "Geen enkele werkruimte komt overeen met het labelfilter"
 
 msgid "No workspaces match your filters"
 msgstr "Geen werkruimtes komen overeen met je filters"

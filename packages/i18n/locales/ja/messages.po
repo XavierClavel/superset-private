@@ -13059,6 +13059,9 @@ msgstr "サンドボックスにキーを置かない"
 msgid "No known creators"
 msgstr "既知の作成者はいません"
 
+msgid "No label"
+msgstr "ラベルなし"
+
 msgid "No labels"
 msgstr "ラベルなし"
 
@@ -13438,12 +13441,15 @@ msgstr "ワークスペース実行コマンドが設定されていません"
 msgid "No workspaces found."
 msgstr "ワークスペースが見つかりません。"
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "ラベル {0} が付いたワークスペースはありません"
 
 msgid "No workspaces in this project yet."
 msgstr "このプロジェクトにはまだワークスペースがありません。"
+
+msgid "No workspaces match the label filter"
+msgstr "ラベルフィルターに一致するワークスペースはありません"
 
 msgid "No workspaces match your filters"
 msgstr "フィルターに一致するワークスペースがありません"

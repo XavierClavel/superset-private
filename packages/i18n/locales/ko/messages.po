@@ -13059,6 +13059,9 @@ msgstr "샌드박스에 키를 두지 않습니다"
 msgid "No known creators"
 msgstr "알려진 만든 사람이 없습니다"
 
+msgid "No label"
+msgstr "레이블 없음"
+
 msgid "No labels"
 msgstr "레이블 없음"
 
@@ -13438,12 +13441,15 @@ msgstr "설정된 워크스페이스 실행 명령이 없습니다"
 msgid "No workspaces found."
 msgstr "워크스페이스를 찾을 수 없습니다."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "{0} 레이블이 있는 워크스페이스가 없습니다"
 
 msgid "No workspaces in this project yet."
 msgstr "이 프로젝트에는 아직 워크스페이스가 없습니다."
+
+msgid "No workspaces match the label filter"
+msgstr "레이블 필터와 일치하는 워크스페이스가 없습니다"
 
 msgid "No workspaces match your filters"
 msgstr "필터와 일치하는 워크스페이스가 없습니다"

@@ -1,3 +1,4 @@
+import { NO_LABEL_FILTER_KEY } from "renderer/hooks/workspace-labels/useWorkspaceLabels";
 import type {
 	DashboardSidebarPinnedWorkspace,
 	DashboardSidebarProject,
@@ -78,13 +79,21 @@ export function filterProjectsByWorkspace(
 
 export function filterDashboardSidebarByLabel(
 	input: DashboardSidebarLabelFilterInput,
-	labelId: string | null,
+	activeKeys: ReadonlySet<string> | null,
 	labelIdsByWorkspaceId: LabelIndex,
 ): DashboardSidebarLabelFilterInput {
-	if (labelId === null) return input;
+	if (activeKeys === null) return input;
 
-	const hasLabel = (workspace: DashboardSidebarWorkspace): boolean =>
-		labelIdsByWorkspaceId.get(workspace.id)?.has(labelId) ?? false;
+	const hasLabel = (workspace: DashboardSidebarWorkspace): boolean => {
+		const labelIds = labelIdsByWorkspaceId.get(workspace.id);
+		if (!labelIds || labelIds.size === 0) {
+			return activeKeys.has(NO_LABEL_FILTER_KEY);
+		}
+		for (const labelId of labelIds) {
+			if (activeKeys.has(labelId)) return true;
+		}
+		return false;
+	};
 
 	return {
 		projects: filterProjectsByWorkspace(input.projects, hasLabel, {

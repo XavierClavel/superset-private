@@ -13059,6 +13059,9 @@ msgstr "Không có khóa nào trong sandbox"
 msgid "No known creators"
 msgstr "Không có người tạo nào được biết"
 
+msgid "No label"
+msgstr "Không có nhãn"
+
 msgid "No labels"
 msgstr "Không có nhãn"
 
@@ -13438,12 +13441,15 @@ msgstr "Chưa cấu hình lệnh chạy cho workspace"
 msgid "No workspaces found."
 msgstr "Không tìm thấy workspace nào."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Không có workspace nào có nhãn {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Dự án này chưa có không gian làm việc nào."
+
+msgid "No workspaces match the label filter"
+msgstr "Không có workspace nào khớp với bộ lọc nhãn"
 
 msgid "No workspaces match your filters"
 msgstr "Không có workspace nào khớp bộ lọc"

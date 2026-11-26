@@ -1,11 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { useUserPreferences } from "renderer/hooks/useUserPreferences";
 import { getHostServiceClientByUrl } from "renderer/lib/host-service-client";
 import { useLocalHostService } from "renderer/routes/_authenticated/providers/LocalHostServiceProvider";
 import {
 	indexLabelsByWorkspace,
-	resolveActiveFilterLabel,
+	resolveActiveFilterKeys,
+	selectOnlyFilterKey,
+	toggleFilterKey,
 	type WorkspaceLabel,
 	type WorkspaceLabelAssignment,
 } from "./useWorkspaceLabels.utils";
@@ -22,8 +24,11 @@ const EMPTY_DATA: WorkspaceLabelsData = { labels: [], assignments: [] };
 export interface UseWorkspaceLabelsResult {
 	labels: WorkspaceLabel[];
 	labelsByWorkspaceId: ReadonlyMap<string, WorkspaceLabel[]>;
-	activeFilterLabel: WorkspaceLabel | null;
-	setActiveFilterLabelId: (id: string | null) => void;
+	/** Label ids and NO_LABEL_FILTER_KEY the sidebar shows; null shows all. */
+	activeFilterKeys: ReadonlySet<string> | null;
+	selectOnlyFilterKey: (key: string) => void;
+	toggleFilterKey: (key: string) => void;
+	clearLabelFilter: () => void;
 	createLabel: (input: {
 		name: string;
 		color: string;
@@ -42,12 +47,8 @@ export interface UseWorkspaceLabelsResult {
 export function useWorkspaceLabels(): UseWorkspaceLabelsResult {
 	const queryClient = useQueryClient();
 	const { activeHostUrl } = useLocalHostService();
-	const { preferences, setSidebarLabelFilterId } = useUserPreferences();
-	const filterLabelId = preferences.sidebarLabelFilterId;
-	const filterLabelIdRef = useRef(filterLabelId);
-	useEffect(() => {
-		filterLabelIdRef.current = filterLabelId;
-	}, [filterLabelId]);
+	const { preferences, setSidebarLabelFilterIds } = useUserPreferences();
+	const storedFilterKeys = preferences.sidebarLabelFilterIds;
 	const queryKey = useMemo(
 		() => ["workspace-labels", activeHostUrl],
 		[activeHostUrl],
@@ -70,9 +71,24 @@ export function useWorkspaceLabels(): UseWorkspaceLabelsResult {
 		() => indexLabelsByWorkspace(data.labels, data.assignments),
 		[data],
 	);
-	const activeFilterLabel = useMemo(
-		() => resolveActiveFilterLabel(labels, filterLabelId),
-		[labels, filterLabelId],
+	const activeFilterKeys = useMemo(
+		() => resolveActiveFilterKeys(labels, storedFilterKeys),
+		[labels, storedFilterKeys],
+	);
+
+	const selectOnly = useCallback(
+		(key: string) =>
+			setSidebarLabelFilterIds(selectOnlyFilterKey(activeFilterKeys, key)),
+		[activeFilterKeys, setSidebarLabelFilterIds],
+	);
+	const toggle = useCallback(
+		(key: string) =>
+			setSidebarLabelFilterIds(toggleFilterKey(labels, activeFilterKeys, key)),
+		[labels, activeFilterKeys, setSidebarLabelFilterIds],
+	);
+	const clearLabelFilter = useCallback(
+		() => setSidebarLabelFilterIds(null),
+		[setSidebarLabelFilterIds],
 	);
 
 	const requireClient = useCallback(() => {
@@ -157,11 +173,8 @@ export function useWorkspaceLabels(): UseWorkspaceLabelsResult {
 	const deleteLabel = useCallback(
 		async (id: string) => {
 			await deleteLabelAsync(id);
-			if (filterLabelIdRef.current === id) {
-				setSidebarLabelFilterId(null);
-			}
 		},
-		[deleteLabelAsync, setSidebarLabelFilterId],
+		[deleteLabelAsync],
 	);
 
 	const setWorkspaceLabels = useCallback(
@@ -175,8 +188,10 @@ export function useWorkspaceLabels(): UseWorkspaceLabelsResult {
 		() => ({
 			labels,
 			labelsByWorkspaceId,
-			activeFilterLabel,
-			setActiveFilterLabelId: setSidebarLabelFilterId,
+			activeFilterKeys,
+			selectOnlyFilterKey: selectOnly,
+			toggleFilterKey: toggle,
+			clearLabelFilter,
 			createLabel,
 			updateLabel,
 			deleteLabel,
@@ -185,8 +200,10 @@ export function useWorkspaceLabels(): UseWorkspaceLabelsResult {
 		[
 			labels,
 			labelsByWorkspaceId,
-			activeFilterLabel,
-			setSidebarLabelFilterId,
+			activeFilterKeys,
+			selectOnly,
+			toggle,
+			clearLabelFilter,
 			createLabel,
 			updateLabel,
 			deleteLabel,

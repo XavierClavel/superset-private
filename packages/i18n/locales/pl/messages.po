@@ -13059,6 +13059,9 @@ msgstr "Żadnych kluczy w piaskownicy"
 msgid "No known creators"
 msgstr "Brak znanych twórców"
 
+msgid "No label"
+msgstr "Bez etykiety"
+
 msgid "No labels"
 msgstr "Brak etykiet"
 
@@ -13438,12 +13441,15 @@ msgstr "Nie skonfigurowano polecenia uruchamiania obszaru roboczego"
 msgid "No workspaces found."
 msgstr "Nie znaleziono obszarów roboczych."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Żaden obszar roboczy nie ma etykiety {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Ten projekt nie ma jeszcze obszarów roboczych."
+
+msgid "No workspaces match the label filter"
+msgstr "Żaden obszar roboczy nie pasuje do filtra etykiet"
 
 msgid "No workspaces match your filters"
 msgstr "Żaden obszar roboczy nie pasuje do filtrów"

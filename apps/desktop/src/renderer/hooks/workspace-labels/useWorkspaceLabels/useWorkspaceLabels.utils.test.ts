@@ -1,7 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import {
 	indexLabelsByWorkspace,
-	resolveActiveFilterLabel,
+	NO_LABEL_FILTER_KEY,
+	resolveActiveFilterKeys,
+	selectOnlyFilterKey,
+	toggleFilterKey,
 	type WorkspaceLabel,
 } from "./useWorkspaceLabels.utils";
 
@@ -34,10 +37,55 @@ describe("indexLabelsByWorkspace", () => {
 	});
 });
 
-describe("resolveActiveFilterLabel", () => {
-	it("returns null for null or a deleted label id", () => {
-		expect(resolveActiveFilterLabel([important], "gone")).toBeNull();
-		expect(resolveActiveFilterLabel([important], null)).toBeNull();
-		expect(resolveActiveFilterLabel([important], important.id)).toBe(important);
+describe("resolveActiveFilterKeys", () => {
+	it("drops deleted labels and falls back to no filter when none is left", () => {
+		expect(resolveActiveFilterKeys([important], null)).toBeNull();
+		expect(resolveActiveFilterKeys([important], ["gone"])).toBeNull();
+		expect(resolveActiveFilterKeys([important], [])).toBeNull();
+		expect([
+			...(resolveActiveFilterKeys(
+				[important],
+				["gone", important.id, NO_LABEL_FILTER_KEY],
+			) ?? []),
+		]).toEqual([important.id, NO_LABEL_FILTER_KEY]);
+	});
+});
+
+describe("selectOnlyFilterKey", () => {
+	it("keeps only the clicked key, and clears the filter on a second click", () => {
+		expect(selectOnlyFilterKey(null, "l1")).toEqual(["l1"]);
+		expect(selectOnlyFilterKey(new Set(["l1", "l2"]), "l1")).toEqual(["l1"]);
+		expect(selectOnlyFilterKey(new Set(["l1"]), "l1")).toBeNull();
+	});
+});
+
+describe("toggleFilterKey", () => {
+	const labels = [important, later];
+
+	it("turns off one key from no filter and keeps the others on", () => {
+		expect(toggleFilterKey(labels, null, later.id)).toEqual([
+			important.id,
+			NO_LABEL_FILTER_KEY,
+		]);
+	});
+
+	it("turns a key back on, and clears the filter once every key is on", () => {
+		expect(toggleFilterKey(labels, new Set([important.id]), later.id)).toEqual([
+			important.id,
+			later.id,
+		]);
+		expect(
+			toggleFilterKey(
+				labels,
+				new Set([important.id, NO_LABEL_FILTER_KEY]),
+				later.id,
+			),
+		).toBeNull();
+	});
+
+	it("clears the filter when the last key is turned off", () => {
+		expect(
+			toggleFilterKey(labels, new Set([important.id]), important.id),
+		).toBeNull();
 	});
 });

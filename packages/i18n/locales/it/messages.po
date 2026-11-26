@@ -13059,6 +13059,9 @@ msgstr "Nessuna chiave nella sandbox"
 msgid "No known creators"
 msgstr "Nessun creatore noto"
 
+msgid "No label"
+msgstr "Senza etichetta"
+
 msgid "No labels"
 msgstr "Nessuna etichetta"
 
@@ -13438,12 +13441,15 @@ msgstr "Nessun comando di esecuzione del workspace configurato"
 msgid "No workspaces found."
 msgstr "Nessun workspace trovato."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Nessun workspace ha l'etichetta {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Nessuno spazio di lavoro in questo progetto."
+
+msgid "No workspaces match the label filter"
+msgstr "Nessun workspace corrisponde al filtro delle etichette"
 
 msgid "No workspaces match your filters"
 msgstr "Nessun workspace corrisponde ai filtri"

@@ -13059,6 +13059,9 @@ msgstr "沙箱中不存放金鑰"
 msgid "No known creators"
 msgstr "沒有已知的建立者"
 
+msgid "No label"
+msgstr "無標籤"
+
 msgid "No labels"
 msgstr "無標籤"
 
@@ -13438,12 +13441,15 @@ msgstr "未配置工作區執行命令"
 msgid "No workspaces found."
 msgstr "未找到工作區。"
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "沒有工作區帶有標籤 {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "此專案尚無工作區。"
+
+msgid "No workspaces match the label filter"
+msgstr "沒有工作區符合標籤篩選"
 
 msgid "No workspaces match your filters"
 msgstr "沒有符合篩選條件的工作區"

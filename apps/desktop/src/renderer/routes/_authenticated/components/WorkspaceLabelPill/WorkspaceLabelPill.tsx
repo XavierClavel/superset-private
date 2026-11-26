@@ -1,5 +1,9 @@
 import { cn } from "@superset/ui/utils";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import {
+	type ComponentPropsWithoutRef,
+	forwardRef,
+	type MouseEvent,
+} from "react";
 import type { WorkspaceLabel } from "renderer/hooks/workspace-labels/useWorkspaceLabels";
 import { toPastelColor } from "./toPastelColor";
 
@@ -8,7 +12,7 @@ interface WorkspaceLabelPillProps
 	label: WorkspaceLabel;
 	isActive?: boolean;
 	size?: "sm" | "xs";
-	onClick?: () => void;
+	onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const WorkspaceLabelPill = forwardRef<
@@ -50,7 +54,7 @@ export const WorkspaceLabelPill = forwardRef<
 			style={style}
 			onClick={(event) => {
 				event.stopPropagation();
-				onClick();
+				onClick(event);
 			}}
 		>
 			<span className="truncate">{label.name}</span>

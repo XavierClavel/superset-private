@@ -13059,6 +13059,9 @@ msgstr "Sin claves en el sandbox"
 msgid "No known creators"
 msgstr "Sin creadores conocidos"
 
+msgid "No label"
+msgstr "Sin etiqueta"
+
 msgid "No labels"
 msgstr "Sin etiquetas"
 
@@ -13438,12 +13441,15 @@ msgstr "No hay ningún comando de ejecución configurado para el espacio de trab
 msgid "No workspaces found."
 msgstr "No se encontraron espacios de trabajo."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Ningún espacio de trabajo tiene la etiqueta {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Este proyecto aún no tiene espacios de trabajo."
+
+msgid "No workspaces match the label filter"
+msgstr "Ningún espacio de trabajo coincide con el filtro de etiquetas"
 
 msgid "No workspaces match your filters"
 msgstr "Ningún espacio de trabajo coincide con tus filtros"

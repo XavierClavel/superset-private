@@ -206,19 +206,23 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 				: sortDashboardSidebarProjects(orderedGroups, sortMode),
 		[sortMode, orderedGroups],
 	);
-	const { labelsByWorkspaceId, activeFilterLabel, setActiveFilterLabelId } =
+	const { labels, labelsByWorkspaceId, activeFilterKeys, clearLabelFilter } =
 		useDashboardSidebarLabels();
 	const labelIdsByWorkspaceId = useMemo(
 		() =>
 			new Map(
-				[...labelsByWorkspaceId].map(([workspaceId, labels]) => [
+				[...labelsByWorkspaceId].map(([workspaceId, workspaceLabels]) => [
 					workspaceId,
-					new Set(labels.map((label) => label.id)),
+					new Set(workspaceLabels.map((label) => label.id)),
 				]),
 			),
 		[labelsByWorkspaceId],
 	);
-	const activeLabelId = isCollapsed ? null : (activeFilterLabel?.id ?? null);
+	const activeLabelKeys = isCollapsed ? null : activeFilterKeys;
+	const onlyActiveFilterLabel =
+		activeLabelKeys?.size === 1
+			? (labels.find((label) => activeLabelKeys.has(label.id)) ?? null)
+			: null;
 	const labelView = useMemo(
 		() =>
 			filterDashboardSidebarByLabel(
@@ -228,7 +232,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 					sessionWorkspaces,
 					pinnedWorkspaces,
 				},
-				activeLabelId,
+				activeLabelKeys,
 				labelIdsByWorkspaceId,
 			),
 		[
@@ -236,7 +240,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 			sessionChildren,
 			sessionWorkspaces,
 			pinnedWorkspaces,
-			activeLabelId,
+			activeLabelKeys,
 			labelIdsByWorkspaceId,
 		],
 	);
@@ -278,7 +282,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		[hostFilteredGroups, projectFilterQuery],
 	);
 	const trimmedFilterQuery = projectFilterQuery.trim();
-	const isLabelFilterActive = activeLabelId !== null;
+	const isLabelFilterActive = activeLabelKeys !== null;
 	const isLabelViewEmpty =
 		displayedGroups.length === 0 &&
 		displayedPinnedWorkspaces.length === 0 &&
@@ -341,7 +345,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		onClearFilter: () => {
 			setProjectFilterQuery("");
 			setSidebarProjectHostFilter("all");
-			setActiveFilterLabelId(null);
+			clearLabelFilter();
 			setSidebarRecentView(false);
 		},
 	});
@@ -574,17 +578,19 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 							? t({
 									message: `No projects match "${trimmedFilterQuery}"`,
 								})
-							: activeFilterLabel
+							: onlyActiveFilterLabel
 								? t({
-										message: `No workspaces have the label ${activeFilterLabel.name}`,
+										message: `No workspaces have the label ${onlyActiveFilterLabel.name}`,
 									})
-								: isRecentView
-									? t({
-											message: "No agent activity in the last two weeks",
-										})
-									: hostFilter === "cloud"
-										? t({ message: "No cloud workspaces" })
-										: t({ message: "No local workspaces" })}
+								: isLabelFilterActive
+									? t({ message: "No workspaces match the label filter" })
+									: isRecentView
+										? t({
+												message: "No agent activity in the last two weeks",
+											})
+										: hostFilter === "cloud"
+											? t({ message: "No cloud workspaces" })
+											: t({ message: "No local workspaces" })}
 					</div>
 				)}
 		</>

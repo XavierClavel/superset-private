@@ -13059,6 +13059,9 @@ msgstr "Tanpa kunci di sandbox"
 msgid "No known creators"
 msgstr "Tidak ada pembuat yang diketahui"
 
+msgid "No label"
+msgstr "Tanpa label"
+
 msgid "No labels"
 msgstr "Tanpa label"
 
@@ -13438,12 +13441,15 @@ msgstr "Tidak ada perintah run workspace yang dikonfigurasi"
 msgid "No workspaces found."
 msgstr "Tidak ada workspace ditemukan."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Tidak ada workspace yang memiliki label {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "Belum ada workspace di proyek ini."
+
+msgid "No workspaces match the label filter"
+msgstr "Tidak ada workspace yang cocok dengan filter label"
 
 msgid "No workspaces match your filters"
 msgstr "Tidak ada workspace yang cocok dengan filter Anda"

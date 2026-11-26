@@ -575,7 +575,9 @@ export const userPreferencesSchema = z.object({
 	// grouping without untagging anyone). Bounded by tags a user has ever
 	// hidden; entries for tags no longer in use are harmless and cheap.
 	hiddenTagFolders: z.record(z.string(), z.array(z.string())).default({}),
-	sidebarLabelFilterId: z.string().nullable().default(null),
+	// Label ids (and NO_LABEL_FILTER_KEY) whose workspaces the sidebar shows;
+	// null shows every workspace.
+	sidebarLabelFilterIds: z.array(z.string()).nullable().default(null),
 });
 
 // The fixed set of built-in preset ids. Consumers derive their id constants
@@ -612,7 +614,7 @@ export const DEFAULT_V2_USER_PREFERENCES: UserPreferencesRow = {
 	hiddenBuiltinPresetIds: [],
 	favoritePageIds: [],
 	hiddenTagFolders: {},
-	sidebarLabelFilterId: null,
+	sidebarLabelFilterIds: null,
 };
 
 /**
@@ -675,7 +677,8 @@ export function healWorkspaceLocalState(raw: unknown): WorkspaceLocalStateRow {
 export function healUserPreferences(raw: unknown): UserPreferencesRow {
 	const r = (
 		raw && typeof raw === "object" ? raw : {}
-	) as Partial<UserPreferencesRow>;
+	) as Partial<UserPreferencesRow> & { sidebarLabelFilterId?: unknown };
+	const { sidebarLabelFilterId: legacySidebarLabelFilterId, ...current } = r;
 	const sidebarFileLinks = r.sidebarFileLinks
 		? {
 				...DEFAULT_V2_USER_PREFERENCES.sidebarFileLinks,
@@ -694,7 +697,7 @@ export function healUserPreferences(raw: unknown): UserPreferencesRow {
 		isSameLinkTierMap(r.urlLinks, DEFAULT_LINK_TIER_MAP);
 	return {
 		...DEFAULT_V2_USER_PREFERENCES,
-		...r,
+		...current,
 		fileLinks: { ...DEFAULT_V2_USER_PREFERENCES.fileLinks, ...r.fileLinks },
 		urlLinks: shouldMigrateLegacyUrlLinks
 			? DEFAULT_V2_USER_PREFERENCES.urlLinks
@@ -717,9 +720,12 @@ export function healUserPreferences(raw: unknown): UserPreferencesRow {
 			r.sidebarProjectHostFilter,
 		),
 		sidebarRecentView: r.sidebarRecentView === true,
-		sidebarLabelFilterId:
-			typeof r.sidebarLabelFilterId === "string"
-				? r.sidebarLabelFilterId
+		sidebarLabelFilterIds: Array.isArray(r.sidebarLabelFilterIds)
+			? r.sidebarLabelFilterIds.filter(
+					(id): id is string => typeof id === "string",
+				)
+			: typeof legacySidebarLabelFilterId === "string"
+				? [legacySidebarLabelFilterId]
 				: null,
 		// Prune retired/stray built-in ids so the array stays bounded.
 		hiddenBuiltinPresetIds: (Array.isArray(r.hiddenBuiltinPresetIds)

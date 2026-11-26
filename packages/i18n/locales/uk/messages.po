@@ -13053,6 +13053,9 @@ msgstr "Жодних ключів у пісочниці"
 msgid "No known creators"
 msgstr "Немає відомих авторів"
 
+msgid "No label"
+msgstr "Без мітки"
+
 msgid "No labels"
 msgstr "Немає міток"
 
@@ -13432,12 +13435,15 @@ msgstr "Не налаштовано команду запуску робочог
 msgid "No workspaces found."
 msgstr "Робочих просторів не знайдено."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Жоден робочий простір не має мітки {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "У цьому проєкті ще немає робочих просторів."
+
+msgid "No workspaces match the label filter"
+msgstr "Немає робочих просторів, що відповідають фільтру міток"
 
 msgid "No workspaces match your filters"
 msgstr "Немає робочих просторів, що відповідають фільтрам"

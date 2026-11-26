@@ -13059,6 +13059,9 @@ msgstr "Никаких ключей в песочнице"
 msgid "No known creators"
 msgstr "Нет известных создателей"
 
+msgid "No label"
+msgstr "Без метки"
+
 msgid "No labels"
 msgstr "Без меток"
 
@@ -13438,12 +13441,15 @@ msgstr "Команда запуска рабочей области не нас�
 msgid "No workspaces found."
 msgstr "Рабочие области не найдены."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "Ни у одной рабочей области нет метки {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "В этом проекте пока нет рабочих пространств."
+
+msgid "No workspaces match the label filter"
+msgstr "Нет рабочих областей, подходящих под фильтр меток"
 
 msgid "No workspaces match your filters"
 msgstr "Нет рабочих областей под ваши фильтры"

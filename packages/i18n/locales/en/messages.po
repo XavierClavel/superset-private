@@ -13059,6 +13059,9 @@ msgstr "No keys in the sandbox"
 msgid "No known creators"
 msgstr "No known creators"
 
+msgid "No label"
+msgstr "No label"
+
 msgid "No labels"
 msgstr "No labels"
 
@@ -13438,12 +13441,15 @@ msgstr "No workspace run command configured"
 msgid "No workspaces found."
 msgstr "No workspaces found."
 
-#. placeholder {0}: activeFilterLabel.name
+#. placeholder {0}: onlyActiveFilterLabel.name
 msgid "No workspaces have the label {0}"
 msgstr "No workspaces have the label {0}"
 
 msgid "No workspaces in this project yet."
 msgstr "No workspaces in this project yet."
+
+msgid "No workspaces match the label filter"
+msgstr "No workspaces match the label filter"
 
 msgid "No workspaces match your filters"
 msgstr "No workspaces match your filters"

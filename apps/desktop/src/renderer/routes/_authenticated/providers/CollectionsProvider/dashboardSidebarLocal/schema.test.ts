@@ -171,6 +171,21 @@ describe("healUserPreferences sidebarRecentView", () => {
 	});
 });
 
+describe("healUserPreferences sidebarLabelFilterIds", () => {
+	it("migrates the single-label filter and drops the legacy key", () => {
+		const healed = healUserPreferences({ sidebarLabelFilterId: "l1" });
+		expect(healed.sidebarLabelFilterIds).toEqual(["l1"]);
+		expect("sidebarLabelFilterId" in healed).toBe(false);
+		expect(healUserPreferences({}).sidebarLabelFilterIds).toBeNull();
+		expect(
+			healUserPreferences({
+				sidebarLabelFilterId: "old",
+				sidebarLabelFilterIds: ["l1", "no-label"],
+			}).sidebarLabelFilterIds,
+		).toEqual(["l1", "no-label"]);
+	});
+});
+
 describe("healUserPreferences favoritePageIds", () => {
 	it("defaults to an empty list on rows written before the field existed", () => {
 		expect(healUserPreferences({}).favoritePageIds).toEqual([]);
