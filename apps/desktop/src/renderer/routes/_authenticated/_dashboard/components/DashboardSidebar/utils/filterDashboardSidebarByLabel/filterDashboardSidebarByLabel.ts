@@ -97,9 +97,9 @@ export function filterDashboardSidebarByLabel(
 
 	return {
 		projects: filterProjectsByWorkspace(input.projects, hasLabel, {
-			expand: true,
+			expand: false,
 		}),
-		sessionChildren: filterChildren(input.sessionChildren, hasLabel, true),
+		sessionChildren: filterChildren(input.sessionChildren, hasLabel, false),
 		sessionWorkspaces: input.sessionWorkspaces.filter(hasLabel),
 		pinnedWorkspaces: input.pinnedWorkspaces.filter(hasLabel),
 	};

@@ -139,12 +139,12 @@ describe("filterDashboardSidebarByLabel", () => {
 			labels,
 		);
 		expect(result.projects.map((p) => p.id)).toEqual(["p1", "p3"]);
-		expect(result.projects[0]?.isCollapsed).toBe(false);
+		expect(result.projects[0]?.isCollapsed).toBe(true);
 		expect(result.projects[0]?.children).toHaveLength(2);
 		expect(result.projects[1]).toBe(input.projects[2]);
 	});
 
-	it("keeps a tag folder only when one of its members matches, expanded", () => {
+	it("keeps a tag folder only when one of its members matches, and keeps it collapsed", () => {
 		const result = filterDashboardSidebarByLabel(
 			input,
 			new Set(["later"]),
@@ -154,7 +154,7 @@ describe("filterDashboardSidebarByLabel", () => {
 		const child = result.projects[0]?.children[0];
 		expect(child?.type).toBe("section");
 		if (child?.type !== "section") return;
-		expect(child.section.isCollapsed).toBe(false);
+		expect(child.section.isCollapsed).toBe(true);
 		expect(child.section.workspaces.map((w) => w.id)).toEqual(["w2", "w3"]);
 
 		const urgent = filterDashboardSidebarByLabel(

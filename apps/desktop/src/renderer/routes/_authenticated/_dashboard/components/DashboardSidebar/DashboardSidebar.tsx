@@ -291,6 +291,11 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 	const isRowFilterActive =
 		trimmedFilterQuery !== "" || hostFilter !== "all" || isLabelFilterActive;
 	const isFilterActive = isRowFilterActive || isRecentView;
+	// A label filter can stay on for a long time, so it keeps the user's
+	// open and collapsed state instead of forcing every match open.
+	const isExpandingRowFilterActive =
+		trimmedFilterQuery !== "" || hostFilter !== "all";
+	const isExpandingFilterActive = isExpandingRowFilterActive || isRecentView;
 	// The sort modes only reorder rows inside a project, so the project list
 	// is still the manual order and stays draggable; only a filter, which
 	// hides projects outright, makes a project drop unsafe to commit.
@@ -315,10 +320,10 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 	// The icon rail shows projects without their folders.
 	const projectTreeRows = useMemo(() => {
 		const rows = listVisibleProjectTreeRows(displayedProjectTree, {
-			forceExpanded: isFilterActive || isCollapsed,
+			forceExpanded: isExpandingFilterActive || isCollapsed,
 		});
 		return isCollapsed ? rows.filter((row) => row.type === "project") : rows;
-	}, [displayedProjectTree, isFilterActive, isCollapsed]);
+	}, [displayedProjectTree, isExpandingFilterActive, isCollapsed]);
 	const projectTreeDndIds = useMemo(
 		() => projectTreeRows.map(projectTreeRowDndId),
 		[projectTreeRows],
@@ -326,13 +331,13 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 	const collapsedProjectFolderIds = useMemo(
 		() =>
 			new Set(
-				isFilterActive
+				isExpandingFilterActive
 					? []
 					: projectFolders
 							.filter((folder) => folder.isCollapsed)
 							.map((folder) => folder.id),
 			),
-		[projectFolders, isFilterActive],
+		[projectFolders, isExpandingFilterActive],
 	);
 	const projectFoldersById = useMemo(
 		() => new Map(projectFolders.map((folder) => [folder.id, folder])),
@@ -351,24 +356,24 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 	});
 
 	// Label-filtered but not text-filtered, so ⌘1–⌘9 targets stay put while typing a query.
-	// The filtered view expands matches through derived objects, so a jump
+	// A text or host filter expands matches through derived objects, so a jump
 	// must not toggle the persisted collapse state while it is active.
 	// Projects in a collapsed folder are off screen, so they take no ⌘1–9 slot.
 	const shortcutProjects = useMemo(
 		() =>
-			isRowFilterActive
+			isExpandingRowFilterActive
 				? recentProjects
 				: recentProjects.filter((project) =>
 						openFolderProjectIds.has(project.id),
 					),
-		[isRowFilterActive, recentProjects, openFolderProjectIds],
+		[isExpandingRowFilterActive, recentProjects, openFolderProjectIds],
 	);
 	const workspaceShortcutLabels = useDashboardSidebarShortcuts(
 		shortcutProjects,
 		labelView.sessionWorkspaces,
 		labelView.sessionChildren,
 		{
-			revealCollapsed: !isRowFilterActive,
+			revealCollapsed: !isExpandingRowFilterActive,
 			pinnedWorkspaces: labelView.pinnedWorkspaces,
 		},
 	);
@@ -551,7 +556,7 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 					) : (
 						<DashboardSidebarProjectTree
 							nodes={displayedProjectTree}
-							forceFoldersOpen={isFilterActive}
+							forceFoldersOpen={isExpandingFilterActive}
 							isDragDisabled={isProjectDragDisabled}
 							workspaceShortcutLabels={workspaceShortcutLabels}
 							onWorkspaceHover={refreshWorkspacePullRequest}
