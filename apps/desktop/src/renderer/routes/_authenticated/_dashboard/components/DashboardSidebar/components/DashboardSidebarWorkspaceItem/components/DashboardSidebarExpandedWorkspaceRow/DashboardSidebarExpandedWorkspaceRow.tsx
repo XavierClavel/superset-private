@@ -54,6 +54,7 @@ interface DashboardSidebarExpandedWorkspaceRowProps
 	renameValue: string;
 	shortcutLabel?: string;
 	workspaceStatus?: ActivePaneStatus | null;
+	isWaiting?: boolean;
 	isInSection?: boolean;
 	indentation?: DashboardSidebarWorkspaceIndentation;
 	isBulkSelectable?: boolean;
@@ -85,6 +86,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 			renameValue,
 			shortcutLabel,
 			workspaceStatus = null,
+			isWaiting = false,
 			isInSection = false,
 			indentation,
 			isBulkSelectable = false,
@@ -178,6 +180,7 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 		const leadIndicator = (
 			<DashboardSidebarWorkspaceLeadIndicator
 				workspaceStatus={workspaceStatus}
+				isWaiting={isWaiting}
 				isCreatePending={isPending}
 				sandboxStatus={sandboxStatus}
 				pullRequestState={pullRequest?.state ?? null}

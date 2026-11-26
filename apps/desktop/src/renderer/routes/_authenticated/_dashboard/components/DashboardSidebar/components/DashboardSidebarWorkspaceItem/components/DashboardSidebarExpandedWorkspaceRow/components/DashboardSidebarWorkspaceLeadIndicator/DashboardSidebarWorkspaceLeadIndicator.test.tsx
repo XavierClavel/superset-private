@@ -36,6 +36,18 @@ test("live agent state outranks the pull request", () => {
 	expect(needsInput.querySelector(".text-emerald-500")).toBeNull();
 });
 
+test("a row waiting for its next turn shows the loop spinner", () => {
+	const waiting = renderLead({
+		workspaceStatus: "review",
+		isWaiting: true,
+		pullRequestState: "open",
+	});
+	expect(waiting.querySelector("[data-lead]")?.getAttribute("data-lead")).toBe(
+		"waiting",
+	);
+	expect(waiting.querySelectorAll(".animate-loop-cell")).toHaveLength(8);
+});
+
 test("an idle row shows its pull request state, else a quiet dot", () => {
 	expect(
 		renderLead({ pullRequestState: "merged" }).querySelector(

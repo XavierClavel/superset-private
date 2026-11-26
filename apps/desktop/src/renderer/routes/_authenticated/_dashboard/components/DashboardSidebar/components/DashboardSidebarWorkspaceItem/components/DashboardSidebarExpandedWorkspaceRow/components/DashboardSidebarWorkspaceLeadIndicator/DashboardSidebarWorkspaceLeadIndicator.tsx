@@ -1,3 +1,4 @@
+import { LoopSpinner } from "@superset/ui/atoms/LoopSpinner";
 import { WaveSpinner } from "@superset/ui/atoms/WaveSpinner";
 import { cn } from "@superset/ui/utils";
 import type { ReactNode } from "react";
@@ -14,6 +15,7 @@ import {
 
 interface DashboardSidebarWorkspaceLeadIndicatorProps {
 	workspaceStatus: ActivePaneStatus | null;
+	isWaiting?: boolean;
 	isCreatePending: boolean;
 	sandboxStatus?: DashboardSidebarWorkspace["sandboxStatus"];
 	pullRequestState: DashboardSidebarWorkspacePullRequest["state"] | null;
@@ -27,12 +29,14 @@ type LeadKind =
 	| "failed"
 	| "creating"
 	| "working"
+	| "waiting"
 	| "status"
 	| "pull-request"
 	| "idle";
 
 function pickLead({
 	workspaceStatus,
+	isWaiting,
 	isCreatePending,
 	sandboxStatus,
 	pullRequestState,
@@ -47,6 +51,12 @@ function pickLead({
 		return {
 			leadKind: "creating",
 			lead: <WaveSpinner className="text-muted-foreground/60" />,
+		};
+	}
+	if (isWaiting) {
+		return {
+			leadKind: "waiting",
+			lead: <LoopSpinner className="text-foreground/80" />,
 		};
 	}
 	if (workspaceStatus === "working") {
@@ -81,12 +91,14 @@ function pickLead({
 
 export function DashboardSidebarWorkspaceLeadIndicator({
 	workspaceStatus,
+	isWaiting = false,
 	isCreatePending,
 	sandboxStatus = null,
 	pullRequestState,
 }: DashboardSidebarWorkspaceLeadIndicatorProps) {
 	const { leadKind, lead } = pickLead({
 		workspaceStatus,
+		isWaiting,
 		isCreatePending,
 		sandboxStatus,
 		pullRequestState,

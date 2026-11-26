@@ -10,6 +10,13 @@ type BackgroundWorkBinding = Pick<
 const isRunning = (task: BackgroundTask) =>
 	task.subagentStatus === undefined || task.subagentStatus === "running";
 
+export function hasBackgroundWork(binding: BackgroundWorkBinding): boolean {
+	return (
+		(binding.subagents?.length ?? 0) > 0 ||
+		(binding.backgroundTasks ?? []).some(isRunning)
+	);
+}
+
 /**
  * Subagents, shells and monitors still running under an agent that is not
  * `working` itself, one description each ("" when none is known). While the
