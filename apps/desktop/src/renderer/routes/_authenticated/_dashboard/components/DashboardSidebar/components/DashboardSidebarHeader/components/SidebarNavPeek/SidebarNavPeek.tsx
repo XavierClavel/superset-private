@@ -35,6 +35,7 @@ export function SidebarNavPeek() {
 			<SidebarNavIconRow onMouseEnter={scheduleUnfold} onActivate={fold} />
 			{isUnfolded && (
 				// pt-1 instead of a margin: the gap stays inside the hover area.
+				// biome-ignore lint/a11y/useKeyWithClickEvents lint/a11y/noStaticElementInteractions: catches the click of a nav item, which Enter and Space also fire
 				<div className="absolute -inset-x-1 top-full z-30 pt-1" onClick={fold}>
 					<div className="flex flex-col gap-px rounded-md border border-border bg-popover p-1 shadow-lg">
 						<SidebarNavList />
