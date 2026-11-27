@@ -278,6 +278,26 @@ export function formatElapsed(
 	return formatNarrowUnit(locale, "second", Math.floor(elapsedMs / 1000));
 }
 
+// 201 s -> "03:21", 3801 s -> "1:03:21".
+export function formatTimer(
+	start: Date | number,
+	now: Date | number = Date.now(),
+	locale = getActiveLocale(),
+): string {
+	const elapsedMs = Math.max(
+		0,
+		(now instanceof Date ? now.getTime() : now) -
+			(start instanceof Date ? start.getTime() : start),
+	);
+	const twoDigits = (value: number) =>
+		formatNumber(value, { minimumIntegerDigits: 2 }, locale);
+	const minutesAndSeconds = `${twoDigits(Math.floor((elapsedMs % HOUR_MS) / MINUTE_MS))}:${twoDigits(Math.floor((elapsedMs % MINUTE_MS) / 1000))}`;
+	const hours = Math.floor(elapsedMs / HOUR_MS);
+	return hours > 0
+		? `${formatNumber(hours, undefined, locale)}:${minutesAndSeconds}`
+		: minutesAndSeconds;
+}
+
 export function formatRelativePeriod(
 	{ unit, count }: { unit: "day" | "week" | "month" | "year"; count: number },
 	locale = getActiveLocale(),

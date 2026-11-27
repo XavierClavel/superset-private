@@ -14,6 +14,7 @@ import {
 	formatPrice,
 	formatRelativePeriod,
 	formatRelativeTime,
+	formatTimer,
 	getActiveLocale,
 } from "./index";
 
@@ -156,6 +157,20 @@ describe("formatRelativeTime", () => {
 		] as const;
 		for (const [elapsed, expected] of cases) {
 			expect(formatElapsed(start, start + elapsed)).toBe(expected);
+		}
+	});
+
+	test("timer shows minutes and seconds, and hours once there are any", () => {
+		const start = new Date("2026-08-28T12:00:00Z").getTime();
+		const second = 1000;
+		const cases = [
+			[5 * second, "00:05"],
+			[201 * second, "03:21"],
+			[3801 * second, "1:03:21"],
+			[26 * 3600 * second, "26:00:00"],
+		] as const;
+		for (const [elapsed, expected] of cases) {
+			expect(formatTimer(start, start + elapsed)).toBe(expected);
 		}
 	});
 
