@@ -48,6 +48,23 @@ test("a row waiting for its next turn shows the loop spinner", () => {
 	expect(waiting.querySelectorAll(".animate-loop-cell")).toHaveLength(8);
 });
 
+test("a stale row shows the hourglass over its pull request, under live state", () => {
+	const stale = renderLead({ isStale: true, pullRequestState: "open" });
+	expect(stale.querySelector("[data-lead]")?.getAttribute("data-lead")).toBe(
+		"stale",
+	);
+	expect(stale.querySelector(".text-emerald-500")).toBeNull();
+	cleanup();
+
+	const needsInput = renderLead({
+		isStale: true,
+		workspaceStatus: "permission",
+	});
+	expect(
+		needsInput.querySelector("[data-lead]")?.getAttribute("data-lead"),
+	).toBe("status");
+});
+
 test("an idle row shows its pull request state, else a quiet dot", () => {
 	expect(
 		renderLead({ pullRequestState: "merged" }).querySelector(

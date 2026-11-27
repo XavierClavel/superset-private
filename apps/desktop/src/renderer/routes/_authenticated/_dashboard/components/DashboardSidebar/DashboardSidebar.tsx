@@ -67,6 +67,7 @@ import {
 	useDashboardSidebarProjectFolders,
 } from "./providers/DashboardSidebarProjectFoldersProvider";
 import { DashboardSidebarSelectionProvider } from "./providers/DashboardSidebarSelectionProvider";
+import { DashboardSidebarStaleSessionsProvider } from "./providers/DashboardSidebarStaleSessionsProvider";
 import {
 	DashboardSidebarWorkspaceStatusProvider,
 	type SidebarStatusWorkspaceRef,
@@ -85,6 +86,7 @@ import {
 	filterDashboardSidebarProjectsByHost,
 	matchesHostFilter,
 } from "./utils/filterDashboardSidebarProjectsByHost";
+import { getStaleSessionIds } from "./utils/getStaleSessionIds";
 import { getProjectChildrenWorkspaces } from "./utils/projectChildren";
 import { sortDashboardSidebarProjects } from "./utils/sortDashboardSidebarProjects";
 
@@ -450,6 +452,15 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 		return [...byId.values()];
 	}, [pinnedWorkspaces, sessionWorkspaces, orderedGroups, cloudWorkspaces]);
 
+	const staleSessionIds = useMemo(
+		() =>
+			getStaleSessionIds([
+				...sessionWorkspaces,
+				...pinnedWorkspaces.filter((workspace) => workspace.projectId === null),
+			]),
+		[sessionWorkspaces, pinnedWorkspaces],
+	);
+
 	const activeProject = useMemo(() => {
 		if (!activeWorkspaceId) return null;
 		// A pinned active workspace renders outside its project group, so
@@ -626,128 +637,130 @@ const DashboardSidebarContent = memo(function DashboardSidebarContent({
 						workspaces={statusWorkspaces}
 						activeWorkspaceId={activeWorkspaceId}
 					>
-						{/* Port data comes from the single DashboardSidebarPortsProvider in the
+						<DashboardSidebarStaleSessionsProvider value={staleSessionIds}>
+							{/* Port data comes from the single DashboardSidebarPortsProvider in the
 						    dashboard layout, which wraps this sidebar. */}
-						<DashboardSidebarHoverCardOverlay>
-							<DashboardSidebarDndProvider
-								projects={displayedGroups}
-								pinnedWorkspaces={labelView.pinnedWorkspaces}
-								sessionChildren={labelView.sessionChildren}
-								isSidebarCollapsed={isCollapsed}
-								workspaceShortcutLabels={workspaceShortcutLabels}
-								projectTreeRows={projectTreeRows}
-								collapsedProjectFolderIds={collapsedProjectFolderIds}
-								projectListSortMode={projectListSortMode}
-								projectFoldersById={projectFoldersById}
-								onMoveProjectTreeItem={moveProjectTreeItem}
-								isProjectDragDisabled={isProjectDragDisabled}
-								isChildDragDisabled={isChildDragDisabled}
-							>
-								{isParadevShell ? (
-									!isCollapsed && (
-										<div className="flex h-full flex-col">
-											{!isChatSection && <DashboardSidebarShellHeader />}
+							<DashboardSidebarHoverCardOverlay>
+								<DashboardSidebarDndProvider
+									projects={displayedGroups}
+									pinnedWorkspaces={labelView.pinnedWorkspaces}
+									sessionChildren={labelView.sessionChildren}
+									isSidebarCollapsed={isCollapsed}
+									workspaceShortcutLabels={workspaceShortcutLabels}
+									projectTreeRows={projectTreeRows}
+									collapsedProjectFolderIds={collapsedProjectFolderIds}
+									projectListSortMode={projectListSortMode}
+									projectFoldersById={projectFoldersById}
+									onMoveProjectTreeItem={moveProjectTreeItem}
+									isProjectDragDisabled={isProjectDragDisabled}
+									isChildDragDisabled={isChildDragDisabled}
+								>
+									{isParadevShell ? (
+										!isCollapsed && (
+											<div className="flex h-full flex-col">
+												{!isChatSection && <DashboardSidebarShellHeader />}
+												<OverflowFadeContainer
+													fadeEdges={["top", "bottom"]}
+													className="flex-1 overflow-y-auto hide-scrollbar"
+												>
+													{isChannelsEnabled && isChatSection && (
+														<>
+															<DashboardSidebarChannelsSection />
+															<DashboardSidebarDevsSection />
+														</>
+													)}
+													{!isChatSection && (
+														<>
+															<DashboardSidebarGithubNotice
+																status={githubStatus}
+																isCollapsed={isCollapsed}
+															/>
+															{workspaceList}
+														</>
+													)}
+												</OverflowFadeContainer>
+												{cardSlot}
+											</div>
+										)
+									) : (
+										<div className="flex h-full flex-col border-r border-border bg-sidebar dark:bg-muted/35">
+											<DashboardSidebarHeader isCollapsed={isCollapsed} />
+
 											<OverflowFadeContainer
 												fadeEdges={["top", "bottom"]}
 												className="flex-1 overflow-y-auto hide-scrollbar"
 											>
-												{isChannelsEnabled && isChatSection && (
+												<DashboardSidebarGithubNotice
+													status={githubStatus}
+													isCollapsed={isCollapsed}
+												/>
+												{isChannelsEnabled && !isCollapsed && (
 													<>
 														<DashboardSidebarChannelsSection />
 														<DashboardSidebarDevsSection />
 													</>
 												)}
-												{!isChatSection && (
-													<>
-														<DashboardSidebarGithubNotice
-															status={githubStatus}
-															isCollapsed={isCollapsed}
-														/>
-														{workspaceList}
-													</>
-												)}
+												{workspaceList}
 											</OverflowFadeContainer>
 											{cardSlot}
-										</div>
-									)
-								) : (
-									<div className="flex h-full flex-col border-r border-border bg-sidebar dark:bg-muted/35">
-										<DashboardSidebarHeader isCollapsed={isCollapsed} />
+											<div
+												ref={footerRef}
+												className={cn(
+													isCollapsed
+														? "flex flex-col items-center gap-2 py-2"
+														: "flex items-center gap-1 p-2",
+												)}
+											>
+												{isCollapsed ? (
+													<OrganizationDropdown variant="collapsed" />
+												) : (
+													<div className="min-w-0 flex-1">
+														<OrganizationDropdown variant="expanded" />
+													</div>
+												)}
 
-										<OverflowFadeContainer
-											fadeEdges={["top", "bottom"]}
-											className="flex-1 overflow-y-auto hide-scrollbar"
-										>
-											<DashboardSidebarGithubNotice
-												status={githubStatus}
-												isCollapsed={isCollapsed}
-											/>
-											{isChannelsEnabled && !isCollapsed && (
-												<>
-													<DashboardSidebarChannelsSection />
-													<DashboardSidebarDevsSection />
-												</>
-											)}
-											{workspaceList}
-										</OverflowFadeContainer>
-										{cardSlot}
-										<div
-											ref={footerRef}
-											className={cn(
-												isCollapsed
-													? "flex flex-col items-center gap-2 py-2"
-													: "flex items-center gap-1 p-2",
-											)}
-										>
-											{isCollapsed ? (
-												<OrganizationDropdown variant="collapsed" />
-											) : (
-												<div className="min-w-0 flex-1">
-													<OrganizationDropdown variant="expanded" />
-												</div>
-											)}
-
-											<UpdatesPill isCollapsed={isCollapsed} />
-											<ParadevAnywhereButton
-												variant="footer"
-												side={isCollapsed ? "right" : "top"}
-												anchorRef={isCollapsed ? undefined : footerRef}
-											/>
-											<Tooltip delayDuration={300}>
-												<TooltipTrigger asChild>
-													<button
-														type="button"
-														aria-label={t({
-															message: "Settings",
-														})}
-														onClick={() =>
-															navigate({ to: "/settings/account" })
-														}
-														className={cn(
-															"flex size-8 shrink-0 items-center justify-center rounded-md transition-colors",
-															isSettingsOpen
-																? "bg-fill-selected text-muted-foreground"
-																: "text-muted-foreground hover:bg-fill-hover",
-														)}
-													>
-														<HiOutlineCog6Tooth className="size-3.5" />
-													</button>
-												</TooltipTrigger>
-												<TooltipContent side={isCollapsed ? "right" : "top"}>
-													{settingsHotkey !== "Unassigned"
-														? t({
-																message: `Settings (${settingsHotkey})`,
-															})
-														: t({
+												<UpdatesPill isCollapsed={isCollapsed} />
+												<ParadevAnywhereButton
+													variant="footer"
+													side={isCollapsed ? "right" : "top"}
+													anchorRef={isCollapsed ? undefined : footerRef}
+												/>
+												<Tooltip delayDuration={300}>
+													<TooltipTrigger asChild>
+														<button
+															type="button"
+															aria-label={t({
 																message: "Settings",
 															})}
-												</TooltipContent>
-											</Tooltip>
+															onClick={() =>
+																navigate({ to: "/settings/account" })
+															}
+															className={cn(
+																"flex size-8 shrink-0 items-center justify-center rounded-md transition-colors",
+																isSettingsOpen
+																	? "bg-fill-selected text-muted-foreground"
+																	: "text-muted-foreground hover:bg-fill-hover",
+															)}
+														>
+															<HiOutlineCog6Tooth className="size-3.5" />
+														</button>
+													</TooltipTrigger>
+													<TooltipContent side={isCollapsed ? "right" : "top"}>
+														{settingsHotkey !== "Unassigned"
+															? t({
+																	message: `Settings (${settingsHotkey})`,
+																})
+															: t({
+																	message: "Settings",
+																})}
+													</TooltipContent>
+												</Tooltip>
+											</div>
 										</div>
-									</div>
-								)}
-							</DashboardSidebarDndProvider>
-						</DashboardSidebarHoverCardOverlay>
+									)}
+								</DashboardSidebarDndProvider>
+							</DashboardSidebarHoverCardOverlay>
+						</DashboardSidebarStaleSessionsProvider>
 					</DashboardSidebarWorkspaceStatusProvider>
 				</DashboardSidebarHoverProvider>
 			</DashboardSidebarSectionRenameProvider>
