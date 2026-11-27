@@ -7,3 +7,4 @@ export {
 	useSidebarWorkspaceStatus,
 	useSidebarWorkspaceStatuses,
 } from "./DashboardSidebarWorkspaceStatusProvider";
+export type { BackgroundWorkItem } from "./utils/listBackgroundWork";

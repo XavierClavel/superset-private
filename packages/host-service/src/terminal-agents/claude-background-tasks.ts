@@ -261,7 +261,7 @@ export class ClaudeBackgroundTasks {
 			kind: "process",
 			name: launchName ?? "",
 			canStop: false,
-			startedAtMs: this.now(),
+			startedAtMs: Date.parse(asString(entry.timestamp) ?? ""),
 		});
 		this.revision++;
 		dropOldest(this.running);

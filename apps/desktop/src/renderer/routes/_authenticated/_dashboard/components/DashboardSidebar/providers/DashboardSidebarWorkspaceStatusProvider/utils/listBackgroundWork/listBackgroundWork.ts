@@ -17,23 +17,32 @@ export function hasBackgroundWork(binding: BackgroundWorkBinding): boolean {
 	);
 }
 
+export type BackgroundWorkItem = {
+	/** "" when none is known. */
+	description: string;
+	startedAtMs: number;
+};
+
 /**
  * Subagents, shells and monitors still running under an agent that is not
- * `working` itself, one description each ("" when none is known). While the
- * agent works, its spinner already shows activity.
+ * `working` itself. While the agent works, its spinner already shows activity.
  */
 export function listBackgroundWork(
 	bindings: Iterable<BackgroundWorkBinding>,
 	statuses: ReadonlyMap<string, PaneStatus>,
-): string[] {
-	const work: string[] = [];
+): BackgroundWorkItem[] {
+	const work: BackgroundWorkItem[] = [];
 	for (const binding of bindings) {
 		if (statuses.get(binding.terminalId) === "working") continue;
 		for (const subagent of binding.subagents ?? []) {
-			work.push(subagent.description ?? subagent.agentType ?? "");
+			work.push({
+				description: subagent.description ?? subagent.agentType ?? "",
+				startedAtMs: subagent.startedAt,
+			});
 		}
 		for (const task of binding.backgroundTasks ?? []) {
-			if (isRunning(task)) work.push(task.name);
+			if (isRunning(task))
+				work.push({ description: task.name, startedAtMs: task.startedAtMs });
 		}
 	}
 	return work;

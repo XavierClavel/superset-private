@@ -26,9 +26,14 @@ const launch = (id: string, name: string, input: Record<string, unknown>) =>
 		message: { content: [{ type: "tool_use", id, name, input }] },
 	});
 
-const result = (toolUseId: string, toolUseResult: Record<string, unknown>) =>
+const result = (
+	toolUseId: string,
+	toolUseResult: Record<string, unknown>,
+	timestamp = "2026-11-27T10:00:00.000Z",
+) =>
 	line({
 		type: "user",
+		timestamp,
 		message: { content: [{ type: "tool_result", tool_use_id: toolUseId }] },
 		toolUseResult,
 	});
@@ -43,7 +48,8 @@ const notification = (...taskIds: string[]) =>
 describe("ClaudeBackgroundTasks", () => {
 	test("tracks a background shell and a monitor until they report", async () => {
 		const file = transcript();
-		const reader = new ClaudeBackgroundTasks(() => 1);
+		const reader = new ClaudeBackgroundTasks();
+		const shellStartedAt = "2026-11-27T09:15:00.000Z";
 		appendFileSync(
 			file,
 			launch("tool-1", "Bash", {
@@ -51,7 +57,7 @@ describe("ClaudeBackgroundTasks", () => {
 				description: "Start the dev server",
 				run_in_background: true,
 			}) +
-				result("tool-1", { backgroundTaskId: "b1" }) +
+				result("tool-1", { backgroundTaskId: "b1" }, shellStartedAt) +
 				launch("tool-2", "Monitor", { description: "errors in dev.log" }) +
 				result("tool-2", { taskId: "m1", timeoutMs: 60000 }),
 		);
@@ -62,7 +68,7 @@ describe("ClaudeBackgroundTasks", () => {
 				kind: "process",
 				name: "Start the dev server",
 				canStop: false,
-				startedAtMs: 1,
+				startedAtMs: Date.parse(shellStartedAt),
 			},
 			expect.objectContaining({ id: "m1", name: "errors in dev.log" }),
 		]);
