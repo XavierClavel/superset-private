@@ -117,7 +117,7 @@ describe("filterDashboardSidebarByLabel", () => {
 			"s1",
 			"bare",
 		]);
-		expect(urgentOrNone.projects.map((p) => p.id)).toEqual(["p1", "p3"]);
+		expect(urgentOrNone.projects.map((p) => p.id)).toEqual(["p1", "p2", "p3"]);
 
 		const noneOnly = filterDashboardSidebarByLabel(
 			withUnlabeled,
@@ -125,23 +125,24 @@ describe("filterDashboardSidebarByLabel", () => {
 			labels,
 		);
 		expect(noneOnly.sessionWorkspaces.map((w) => w.id)).toEqual(["bare"]);
-		expect(noneOnly.projects).toEqual([]);
+		expect(noneOnly.projects.map((p) => p.children)).toEqual([[], [], []]);
 	});
 
 	it("returns the same object when no label is active", () => {
 		expect(filterDashboardSidebarByLabel(input, null, labels)).toBe(input);
 	});
 
-	it("keeps only matching workspaces across several projects and drops empty projects", () => {
+	it("keeps only matching workspaces and keeps every project, even emptied", () => {
 		const result = filterDashboardSidebarByLabel(
 			input,
 			new Set(["urgent"]),
 			labels,
 		);
-		expect(result.projects.map((p) => p.id)).toEqual(["p1", "p3"]);
+		expect(result.projects.map((p) => p.id)).toEqual(["p1", "p2", "p3"]);
 		expect(result.projects[0]?.isCollapsed).toBe(true);
 		expect(result.projects[0]?.children).toHaveLength(2);
-		expect(result.projects[1]).toBe(input.projects[2]);
+		expect(result.projects[1]?.children).toEqual([]);
+		expect(result.projects[2]).toBe(input.projects[2]);
 	});
 
 	it("keeps a tag folder only when one of its members matches, and keeps it collapsed", () => {
@@ -150,7 +151,8 @@ describe("filterDashboardSidebarByLabel", () => {
 			new Set(["later"]),
 			labels,
 		);
-		expect(result.projects.map((p) => p.id)).toEqual(["p1", "p2"]);
+		expect(result.projects.map((p) => p.id)).toEqual(["p1", "p2", "p3"]);
+		expect(result.projects[2]?.children).toEqual([]);
 		const child = result.projects[0]?.children[0];
 		expect(child?.type).toBe("section");
 		if (child?.type !== "section") return;
@@ -171,7 +173,7 @@ describe("filterDashboardSidebarByLabel", () => {
 			new Set(["missing"]),
 			labels,
 		);
-		expect(none.projects).toEqual([]);
+		expect(none.projects.map((p) => p.children)).toEqual([[], [], []]);
 	});
 
 	it("filters Sessions children, the flat session list and Pinned", () => {

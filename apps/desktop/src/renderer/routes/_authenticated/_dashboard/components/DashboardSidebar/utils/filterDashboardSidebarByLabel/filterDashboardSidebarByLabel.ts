@@ -53,16 +53,20 @@ function filterChildren(
 
 /**
  * Keeps the projects and folders holding a matching workspace. `expand` opens
- * them, for a filter that should show every match.
+ * them, for a filter that should show every match. `keepEmptyProjects` keeps
+ * a project that has no matching workspace.
  */
 export function filterProjectsByWorkspace(
 	projects: DashboardSidebarProject[],
 	keep: (workspace: DashboardSidebarWorkspace) => boolean,
-	{ expand }: { expand: boolean },
+	{
+		expand,
+		keepEmptyProjects = false,
+	}: { expand: boolean; keepEmptyProjects?: boolean },
 ): DashboardSidebarProject[] {
 	const filtered = projects.flatMap((project): DashboardSidebarProject[] => {
 		const children = filterChildren(project.children, keep, expand);
-		if (children.length === 0) return [];
+		if (children.length === 0 && !keepEmptyProjects) return [];
 		if (children === project.children && !(expand && project.isCollapsed)) {
 			return [project];
 		}
@@ -98,6 +102,7 @@ export function filterDashboardSidebarByLabel(
 	return {
 		projects: filterProjectsByWorkspace(input.projects, hasLabel, {
 			expand: false,
+			keepEmptyProjects: true,
 		}),
 		sessionChildren: filterChildren(input.sessionChildren, hasLabel, false),
 		sessionWorkspaces: input.sessionWorkspaces.filter(hasLabel),
