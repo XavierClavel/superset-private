@@ -6,6 +6,7 @@ import {
 	LuGitPullRequest,
 	LuGitPullRequestClosed,
 	LuGitPullRequestDraft,
+	LuHourglass,
 	LuListChecks,
 } from "react-icons/lu";
 import { RxDot } from "react-icons/rx";
@@ -27,6 +28,7 @@ interface DashboardSidebarWorkspaceIconProps {
 	variant: "collapsed" | "expanded";
 	workspaceStatus?: ActivePaneStatus | null;
 	isWaiting?: boolean;
+	isStale?: boolean;
 	isCreatePending: boolean;
 	pullRequestState?: DashboardSidebarWorkspacePullRequest["state"] | null;
 }
@@ -60,6 +62,7 @@ export function DashboardSidebarWorkspaceIcon({
 	variant,
 	workspaceStatus = null,
 	isWaiting = false,
+	isStale = false,
 	isCreatePending,
 	pullRequestState = null,
 }: DashboardSidebarWorkspaceIconProps) {
@@ -72,6 +75,15 @@ export function DashboardSidebarWorkspaceIcon({
 		hostType === "remote-device" && hostIsOnline === false;
 
 	const renderPrimaryIcon = () => {
+		if (isStale) {
+			return (
+				<LuHourglass
+					className={cn("size-3.5 transition-colors", iconColor)}
+					strokeWidth={1.75}
+				/>
+			);
+		}
+
 		if (pullRequestState) {
 			const PrIcon = PR_ICON_BY_STATE[pullRequestState];
 			return (

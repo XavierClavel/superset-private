@@ -2,6 +2,7 @@ import { LoopSpinner } from "@superset/ui/atoms/LoopSpinner";
 import { WaveSpinner } from "@superset/ui/atoms/WaveSpinner";
 import { cn } from "@superset/ui/utils";
 import type { ReactNode } from "react";
+import { LuHourglass } from "react-icons/lu";
 import { StatusIndicator } from "renderer/screens/main/components/StatusIndicator";
 import type { ActivePaneStatus } from "shared/tabs-types";
 import type {
@@ -16,6 +17,7 @@ import {
 interface DashboardSidebarWorkspaceLeadIndicatorProps {
 	workspaceStatus: ActivePaneStatus | null;
 	isWaiting?: boolean;
+	isStale?: boolean;
 	isCreatePending: boolean;
 	sandboxStatus?: DashboardSidebarWorkspace["sandboxStatus"];
 	pullRequestState: DashboardSidebarWorkspacePullRequest["state"] | null;
@@ -23,7 +25,8 @@ interface DashboardSidebarWorkspaceLeadIndicatorProps {
 
 /**
  * One glyph by precedence: the sandbox's own state (nothing runs in a dead
- * or unborn box), then live agent state, then PR state, then idle.
+ * or unborn box), then live agent state, then staleness, then PR state, then
+ * idle.
  */
 type LeadKind =
 	| "failed"
@@ -31,12 +34,14 @@ type LeadKind =
 	| "working"
 	| "waiting"
 	| "status"
+	| "stale"
 	| "pull-request"
 	| "idle";
 
 function pickLead({
 	workspaceStatus,
 	isWaiting,
+	isStale,
 	isCreatePending,
 	sandboxStatus,
 	pullRequestState,
@@ -71,6 +76,14 @@ function pickLead({
 			lead: <StatusIndicator status={workspaceStatus} />,
 		};
 	}
+	if (isStale) {
+		return {
+			leadKind: "stale",
+			lead: (
+				<LuHourglass className="size-3 text-muted-foreground" strokeWidth={2} />
+			),
+		};
+	}
 	if (pullRequestState) {
 		const PrIcon = PR_ICON_BY_STATE[pullRequestState];
 		return {
@@ -92,6 +105,7 @@ function pickLead({
 export function DashboardSidebarWorkspaceLeadIndicator({
 	workspaceStatus,
 	isWaiting = false,
+	isStale = false,
 	isCreatePending,
 	sandboxStatus = null,
 	pullRequestState,
@@ -99,6 +113,7 @@ export function DashboardSidebarWorkspaceLeadIndicator({
 	const { leadKind, lead } = pickLead({
 		workspaceStatus,
 		isWaiting,
+		isStale,
 		isCreatePending,
 		sandboxStatus,
 		pullRequestState,

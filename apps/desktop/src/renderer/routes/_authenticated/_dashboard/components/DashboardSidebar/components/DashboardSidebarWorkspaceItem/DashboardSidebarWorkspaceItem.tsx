@@ -18,6 +18,7 @@ import {
 } from "../../providers/DashboardSidebarHoverProvider";
 import { useDashboardSidebarLabelsByWorkspace } from "../../providers/DashboardSidebarLabelsProvider";
 import type { WorkspaceSelectionEvent } from "../../providers/DashboardSidebarSelectionProvider";
+import { useIsStaleSession } from "../../providers/DashboardSidebarStaleSessionsProvider";
 import { useSidebarWorkspaceStatus } from "../../providers/DashboardSidebarWorkspaceStatusProvider";
 import type {
 	DashboardSidebarWorkspace,
@@ -90,6 +91,7 @@ export function DashboardSidebarWorkspaceItem({
 				}
 			: undefined;
 	const { status: workspaceStatus, isWaiting } = useSidebarWorkspaceStatus(id);
+	const isStale = useIsStaleSession(id);
 	const labelsByWorkspaceId = useDashboardSidebarLabelsByWorkspace();
 	const labels = labelsByWorkspaceId.get(id) ?? EMPTY_LABELS;
 	const {
@@ -258,6 +260,7 @@ export function DashboardSidebarWorkspaceItem({
 					isActive={isActive}
 					workspaceStatus={workspaceStatus}
 					isWaiting={isWaiting}
+					isStale={isStale}
 					onClick={handleClick}
 					isCreatePending={isPending}
 					pullRequestState={pullRequest?.state ?? null}
@@ -346,6 +349,7 @@ export function DashboardSidebarWorkspaceItem({
 				pinnedContext={pinnedContext}
 				workspaceStatus={workspaceStatus}
 				isWaiting={isWaiting}
+				isStale={isStale}
 				isInSection={isInSection}
 				indentation={indentation}
 				isBulkSelectable={onSelectionClick != null}
