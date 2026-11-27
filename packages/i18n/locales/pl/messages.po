@@ -14421,6 +14421,9 @@ msgstr "Otwórz plik, aby zobaczyć całość lub go edytować."
 msgid "Open the global command palette"
 msgstr "Otwórz globalną paletę poleceń"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Otwiera menu etykiet obszaru roboczego pod wskaźnikiem na pasku bocznym, a w przeciwnym razie bieżącego obszaru roboczego"
+
 msgid "Open the new workspace modal"
 msgstr "Otwórz okno nowego obszaru roboczego"
 
@@ -14447,6 +14450,9 @@ msgstr "Otwórz obszar roboczy tego uruchomienia"
 
 msgid "Open workspace"
 msgstr "Otwórz obszar roboczy"
+
+msgid "Open Workspace Labels"
+msgstr "Otwórz etykiety obszaru roboczego"
 
 msgid "Open your app."
 msgstr "Otwórz swoją aplikację."

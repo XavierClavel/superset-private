@@ -42,7 +42,8 @@ export function DashboardSidebarWorkspaceLabelsButton({
 			onKeyDown={stopPropagation}
 			onDoubleClick={stopPropagation}
 		>
-			<DropdownMenu open={open} onOpenChange={onOpenChange}>
+			{/* Not modal: a click on another workspace must open it, not only close the menu. */}
+			<DropdownMenu open={open} onOpenChange={onOpenChange} modal={false}>
 				<DropdownMenuTrigger asChild>
 					<button
 						type="button"

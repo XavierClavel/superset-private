@@ -985,6 +985,19 @@ export const HOTKEYS_REGISTRY = {
 				"Terminal font size when a terminal is focused, page zoom in a browser pane, otherwise the whole app",
 		}),
 	},
+	OPEN_WORKSPACE_LABELS: {
+		key: {
+			mac: L("ctrl+t"),
+			windows: L("ctrl+t"),
+			linux: L("ctrl+t"),
+		},
+		label: msg({ message: "Open Workspace Labels" }),
+		category: "Workspace",
+		description: msg({
+			message:
+				"Open the labels menu of the sidebar workspace under the pointer, or of the current workspace",
+		}),
+	},
 	OPEN_IN_APP: {
 		key: {
 			mac: L("meta+o"),

@@ -14421,6 +14421,9 @@ msgstr "Otevřete soubor, abyste ho viděli celý nebo ho upravili."
 msgid "Open the global command palette"
 msgstr "Otevřít globální paletu příkazů"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Otevře nabídku štítků pracovního prostoru pod ukazatelem v postranním panelu, jinak aktuálního pracovního prostoru"
+
 msgid "Open the new workspace modal"
 msgstr "Otevřít okno nového pracovního prostoru"
 
@@ -14447,6 +14450,9 @@ msgstr "Otevřít pracovní prostor tohoto běhu"
 
 msgid "Open workspace"
 msgstr "Otevřít pracovní prostor"
+
+msgid "Open Workspace Labels"
+msgstr "Otevřít štítky pracovního prostoru"
 
 msgid "Open your app."
 msgstr "Otevřete aplikaci."

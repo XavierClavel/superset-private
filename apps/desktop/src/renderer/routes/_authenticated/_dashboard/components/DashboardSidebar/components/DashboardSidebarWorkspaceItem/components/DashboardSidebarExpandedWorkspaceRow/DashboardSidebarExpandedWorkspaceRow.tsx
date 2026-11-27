@@ -10,6 +10,7 @@ import {
 	type KeyboardEventHandler,
 	type MouseEventHandler,
 	useEffect,
+	useId,
 	useRef,
 	useState,
 } from "react";
@@ -18,7 +19,7 @@ import { LuArchive } from "react-icons/lu";
 import { WorkspaceNameMarquee } from "renderer/components/WorkspaceNameMarquee";
 import { useFocusVisible } from "renderer/hooks/useFocusVisible";
 import type { WorkspaceLabel } from "renderer/hooks/workspace-labels/useWorkspaceLabels";
-import { HotkeyLabel } from "renderer/hotkeys";
+import { HotkeyLabel, useHotkey } from "renderer/hotkeys";
 import { usePullRequestLinkPolicy } from "renderer/lib/clickPolicy";
 import { openPullRequestLink } from "renderer/lib/github/openPullRequestLink";
 import { useDashboardSidebarWorkspacePorts } from "renderer/routes/_authenticated/_dashboard/components/DashboardSidebar/providers/DashboardSidebarPortsProvider";
@@ -30,6 +31,7 @@ import { useBoxPressure } from "renderer/stores/box-pressure";
 import { useInlineWorkspacePortsEnabled } from "renderer/stores/inline-workspace-ports";
 import { usePullRequestPaneIntent } from "renderer/stores/pull-request-pane-intent";
 import type { ActivePaneStatus } from "shared/tabs-types";
+import { useHoveredWorkspaceRowStore } from "../../../../stores/hoveredWorkspaceRow";
 import type {
 	DashboardSidebarWorkspace,
 	DashboardSidebarWorkspaceIndentation,
@@ -105,6 +107,8 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 			onCancelRename,
 			className,
 			style,
+			onPointerEnter,
+			onPointerLeave,
 			...props
 		},
 		ref,
@@ -125,6 +129,32 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 		const isPending = pendingTransaction?.type === "insert";
 		const localRef = useRef<HTMLDivElement>(null);
 		const [isLabelsMenuOpen, setIsLabelsMenuOpen] = useState(false);
+		const rowKey = useId();
+		const isHovered = useHoveredWorkspaceRowStore(
+			(state) => state.hoveredRowKey === rowKey,
+		);
+		const isAnyRowHovered = useHoveredWorkspaceRowStore(
+			(state) => state.hoveredRowKey !== null,
+		);
+		const enterRow = useHoveredWorkspaceRowStore((state) => state.enterRow);
+		const leaveRow = useHoveredWorkspaceRowStore((state) => state.leaveRow);
+		useEffect(() => () => leaveRow(rowKey), [leaveRow, rowKey]);
+		// Without a hovered row, the active one. A pinned copy of it would open
+		// a second menu for the same workspace.
+		const isLabelsHotkeyTarget = isAnyRowHovered
+			? isHovered
+			: isActive && !pinnedContext;
+		const canOpenLabelsFromHotkey =
+			isLabelsHotkeyTarget &&
+			!isPending &&
+			!isSelected &&
+			hostType === "local-device";
+		useHotkey("OPEN_WORKSPACE_LABELS", () => setIsLabelsMenuOpen(true), {
+			enabled: canOpenLabelsFromHotkey,
+		});
+		useEffect(() => {
+			if (!isActive) setIsLabelsMenuOpen(false);
+		}, [isActive]);
 		const navigate = useNavigate();
 		const linkPolicy = usePullRequestLinkPolicy();
 		// Drives the name's hover-reveal for keyboard users: the row, not the
@@ -221,6 +251,14 @@ export const DashboardSidebarExpandedWorkspaceRow = forwardRef<
 				)}
 				data-selected={isSelected || undefined}
 				style={{ ...labelStyle, ...style }}
+				onPointerEnter={(event) => {
+					enterRow(rowKey);
+					onPointerEnter?.(event);
+				}}
+				onPointerLeave={(event) => {
+					leaveRow(rowKey);
+					onPointerLeave?.(event);
+				}}
 				{...props}
 			>
 				{/* biome-ignore lint/a11y/useSemanticElements: The row contains nested action buttons, so it cannot be a native button. */}

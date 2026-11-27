@@ -14421,6 +14421,9 @@ msgstr "Buka file untuk melihat seluruhnya atau mengeditnya."
 msgid "Open the global command palette"
 msgstr "Buka command palette global"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Membuka menu label workspace di bawah penunjuk di bilah samping, atau workspace saat ini"
+
 msgid "Open the new workspace modal"
 msgstr "Buka modal workspace baru"
 
@@ -14447,6 +14450,9 @@ msgstr "Buka workspace run ini"
 
 msgid "Open workspace"
 msgstr "Buka workspace"
+
+msgid "Open Workspace Labels"
+msgstr "Buka label workspace"
 
 msgid "Open your app."
 msgstr "Buka aplikasi Anda."

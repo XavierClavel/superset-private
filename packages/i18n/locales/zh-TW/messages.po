@@ -14421,6 +14421,9 @@ msgstr "開啟檔案以檢視完整內容或進行編輯。"
 msgid "Open the global command palette"
 msgstr "開啟全域性命令面板"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "開啟側邊欄中指標下方工作區的標籤選單，若無則開啟目前工作區的標籤選單"
+
 msgid "Open the new workspace modal"
 msgstr "開啟新建工作區彈窗"
 
@@ -14447,6 +14450,9 @@ msgstr "開啟此次執行的工作區"
 
 msgid "Open workspace"
 msgstr "開啟工作區"
+
+msgid "Open Workspace Labels"
+msgstr "開啟工作區標籤"
 
 msgid "Open your app."
 msgstr "開啟你的應用程式。"

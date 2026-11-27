@@ -14421,6 +14421,9 @@ msgstr "Open het bestand om het volledig te zien of te bewerken."
 msgid "Open the global command palette"
 msgstr "Het globale opdrachtenpalet openen"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Opent het labelmenu van de werkruimte onder de aanwijzer in de zijbalk, anders van de huidige werkruimte"
+
 msgid "Open the new workspace modal"
 msgstr "Het venster voor een nieuwe werkruimte openen"
 
@@ -14447,6 +14450,9 @@ msgstr "Werkruimte van deze run openen"
 
 msgid "Open workspace"
 msgstr "Werkruimte openen"
+
+msgid "Open Workspace Labels"
+msgstr "Werkruimtelabels openen"
 
 msgid "Open your app."
 msgstr "Open je app."

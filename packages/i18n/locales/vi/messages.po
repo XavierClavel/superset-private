@@ -14421,6 +14421,9 @@ msgstr "Mở tệp để xem toàn bộ hoặc chỉnh sửa."
 msgid "Open the global command palette"
 msgstr "Mở bảng lệnh toàn cục"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Mở menu nhãn của workspace dưới con trỏ trên thanh bên, hoặc của workspace hiện tại"
+
 msgid "Open the new workspace modal"
 msgstr "Mở hộp thoại tạo workspace mới"
 
@@ -14447,6 +14450,9 @@ msgstr "Mở workspace của lần chạy này"
 
 msgid "Open workspace"
 msgstr "Mở workspace"
+
+msgid "Open Workspace Labels"
+msgstr "Mở nhãn của workspace"
 
 msgid "Open your app."
 msgstr "Mở ứng dụng của bạn."

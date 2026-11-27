@@ -14421,6 +14421,9 @@ msgstr "Откройте файл, чтобы увидеть его целико
 msgid "Open the global command palette"
 msgstr "Открыть глобальную палитру команд"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Открывает меню меток рабочей области под указателем на боковой панели, иначе — текущей рабочей области"
+
 msgid "Open the new workspace modal"
 msgstr "Открыть окно создания рабочей области"
 
@@ -14447,6 +14450,9 @@ msgstr "Открыть рабочую область этого запуска"
 
 msgid "Open workspace"
 msgstr "Открыть рабочую область"
+
+msgid "Open Workspace Labels"
+msgstr "Открыть метки рабочей области"
 
 msgid "Open your app."
 msgstr "Откройте приложение."

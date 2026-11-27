@@ -14421,6 +14421,9 @@ msgstr "Tamamını görmek veya düzenlemek için dosyayı aç."
 msgid "Open the global command palette"
 msgstr "Genel komut paletini aç"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Kenar çubuğunda işaretçinin altındaki çalışma alanının, yoksa geçerli çalışma alanının etiket menüsünü açar"
+
 msgid "Open the new workspace modal"
 msgstr "Yeni çalışma alanı penceresini aç"
 
@@ -14447,6 +14450,9 @@ msgstr "Bu çalıştırmanın çalışma alanını aç"
 
 msgid "Open workspace"
 msgstr "Çalışma alanını aç"
+
+msgid "Open Workspace Labels"
+msgstr "Çalışma alanı etiketlerini aç"
 
 msgid "Open your app."
 msgstr "Uygulamanızı açın."

@@ -14421,6 +14421,9 @@ msgstr "ファイルを開くと、全体を表示したり編集したりでき
 msgid "Open the global command palette"
 msgstr "グローバルコマンドパレットを開く"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "サイドバーでポインタの下にあるワークスペース、またはなければ現在のワークスペースのラベルメニューを開きます"
+
 msgid "Open the new workspace modal"
 msgstr "新規ワークスペースのモーダルを開く"
 
@@ -14447,6 +14450,9 @@ msgstr "この実行のワークスペースを開く"
 
 msgid "Open workspace"
 msgstr "ワークスペースを開く"
+
+msgid "Open Workspace Labels"
+msgstr "ワークスペースのラベルを開く"
 
 msgid "Open your app."
 msgstr "アプリを開きます。"

@@ -14415,6 +14415,9 @@ msgstr "Відкрийте файл, щоб побачити його повні
 msgid "Open the global command palette"
 msgstr "Відкрити глобальну палітру команд"
 
+msgid "Open the labels menu of the sidebar workspace under the pointer, or of the current workspace"
+msgstr "Відкриває меню міток робочого простору під вказівником на бічній панелі, інакше — поточного робочого простору"
+
 msgid "Open the new workspace modal"
 msgstr "Відкрити вікно нового робочого простору"
 
@@ -14441,6 +14444,9 @@ msgstr "Відкрити робочий простір цього запуску
 
 msgid "Open workspace"
 msgstr "Відкрити робочий простір"
+
+msgid "Open Workspace Labels"
+msgstr "Відкрити мітки робочого простору"
 
 msgid "Open your app."
 msgstr "Відкрийте свій застосунок."
