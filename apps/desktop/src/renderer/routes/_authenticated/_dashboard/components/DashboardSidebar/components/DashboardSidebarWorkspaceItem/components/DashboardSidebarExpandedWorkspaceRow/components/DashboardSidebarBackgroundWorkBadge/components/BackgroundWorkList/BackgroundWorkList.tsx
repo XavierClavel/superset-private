@@ -1,4 +1,4 @@
-import { formatAge } from "@superset/i18n/format";
+import { formatTimer } from "@superset/i18n/format";
 import { useNow } from "renderer/hooks/useNow";
 import type { BackgroundWorkItem } from "../../../../../../../../providers/DashboardSidebarWorkspaceStatusProvider";
 
@@ -18,7 +18,7 @@ export function BackgroundWorkList({
 				>
 					<span className="min-w-0 truncate">{description}</span>
 					<span className="ml-auto shrink-0 text-muted-foreground/70 tabular-nums">
-						{formatAge(startedAtMs, now)}
+						{formatTimer(startedAtMs, now)}
 					</span>
 				</li>
 			))}
