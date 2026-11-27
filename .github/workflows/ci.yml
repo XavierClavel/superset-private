@@ -136,7 +136,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: blacksmith-8vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Check out code
@@ -256,7 +256,7 @@ jobs:
 
   typecheck:
     name: Typecheck
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
       - name: Check out code
