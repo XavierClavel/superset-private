@@ -504,8 +504,8 @@ describe("agent-wrappers opencode tui plugin", () => {
 		const read = (): Notification[] =>
 			existsSync(log)
 				? readFileSync(log, "utf-8")
-						.trim()
 						.split("\n")
+						.filter(Boolean)
 						.map((line) => {
 							const separator = line.indexOf(" ");
 							return {
