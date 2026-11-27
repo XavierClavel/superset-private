@@ -33,11 +33,11 @@ const result = (toolUseId: string, toolUseResult: Record<string, unknown>) =>
 		toolUseResult,
 	});
 
-const notification = (taskId: string) =>
+const notification = (...taskIds: string[]) =>
 	line({
 		type: "queue-operation",
 		operation: "enqueue",
-		content: `<task-notification>\n<task-id>${taskId}</task-id>\n<status>completed</status>`,
+		content: `<task-notification>\n${taskIds.map((id) => `<task-id>${id}</task-id>\n`).join("")}<status>completed</status>`,
 	});
 
 describe("ClaudeBackgroundTasks", () => {
@@ -69,6 +69,46 @@ describe("ClaudeBackgroundTasks", () => {
 
 		appendFileSync(file, notification("b1"));
 		expect((await reader.read(file)).map((task) => task.id)).toEqual(["m1"]);
+	});
+
+	test("drops a task whose notification comes before its start", async () => {
+		const file = transcript();
+		appendFileSync(
+			file,
+			launch("tool-1", "Bash", {
+				command: "bun install",
+				run_in_background: true,
+			}) +
+				notification("b1") +
+				result("tool-1", { backgroundTaskId: "b1" }),
+		);
+
+		expect(await new ClaudeBackgroundTasks().read(file)).toEqual([]);
+	});
+
+	test("drops every task a notification names", async () => {
+		const file = transcript();
+		const reader = new ClaudeBackgroundTasks();
+		appendFileSync(
+			file,
+			launch("tool-1", "Bash", {
+				command: "bun dev",
+				run_in_background: true,
+			}) +
+				result("tool-1", { backgroundTaskId: "b1" }) +
+				launch("tool-2", "Bash", {
+					command: "bun api",
+					run_in_background: true,
+				}) +
+				result("tool-2", { backgroundTaskId: "b2" }),
+		);
+		expect((await reader.read(file)).map((task) => task.id)).toEqual([
+			"b1",
+			"b2",
+		]);
+
+		appendFileSync(file, notification("b1", "b2"));
+		expect(await reader.read(file)).toEqual([]);
 	});
 
 	test("drops a background shell that TaskStop stopped", async () => {

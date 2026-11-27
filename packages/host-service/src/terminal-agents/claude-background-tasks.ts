@@ -4,7 +4,7 @@ import type { BackgroundTask } from "@superset/chat/protocol";
 const READ_CHUNK_BYTES = 1024 * 1024;
 const MAX_TRACKED_TASKS = 64;
 const NEWLINE = 0x0a;
-const TASK_ID = /<task-id>([^<]+)<\/task-id>/;
+const TASK_IDS = /<task-id>([^<]+)<\/task-id>/g;
 const LOOP_TOOLS = ["ScheduleWakeup", "CronCreate", "CronDelete"];
 
 type Json = Record<string, unknown>;
@@ -17,6 +17,12 @@ function asObject(value: unknown): Json | null {
 
 function asString(value: unknown): string | undefined {
 	return typeof value === "string" && value ? value : undefined;
+}
+
+function dropOldest(entries: Map<string, unknown> | Set<string>): void {
+	if (entries.size <= MAX_TRACKED_TASKS) return;
+	const oldest = entries.keys().next().value;
+	if (oldest !== undefined) entries.delete(oldest);
 }
 
 function parseLine(line: string): Json | null {
@@ -32,6 +38,8 @@ function parseLine(line: string): Json | null {
  * transcript. A task starts with the tool result that names it and ends with
  * the `<task-notification>` Claude queues for it, or with the result of the
  * `TaskStop` call that stopped it, for which Claude queues no notification.
+ * The notification of a task that ends at once can come before the tool
+ * result that starts it, and one notification can name several tasks.
  * Hooks give no signal for either. Background subagents are left out: their
  * own hooks report them.
  * Only their descriptions are kept, which hooks do not carry.
@@ -47,6 +55,7 @@ export class ClaudeBackgroundTasks {
 	private remainder: Buffer = Buffer.alloc(0);
 	private readonly launches = new Map<string, string>();
 	private readonly running = new Map<string, BackgroundTask>();
+	private readonly endedBeforeStart = new Set<string>();
 	private readonly subagentDescriptions = new Map<string, string>();
 	private readonly loopCalls = new Map<string, { name: string; input: Json }>();
 	private wakeupAt = 0;
@@ -95,6 +104,7 @@ export class ClaudeBackgroundTasks {
 		this.remainder = Buffer.alloc(0);
 		this.launches.clear();
 		this.running.clear();
+		this.endedBeforeStart.clear();
 		this.subagentDescriptions.clear();
 		this.loopCalls.clear();
 		this.wakeupAt = 0;
@@ -128,8 +138,10 @@ export class ClaudeBackgroundTasks {
 			const entry = parseLine(line);
 			if (entry?.type !== "queue-operation" || entry.operation !== "enqueue")
 				return;
-			const taskId = asString(entry.content)?.match(TASK_ID)?.[1];
-			if (taskId && this.running.delete(taskId)) this.revision++;
+			const content = asString(entry.content) ?? "";
+			for (const [, taskId] of content.matchAll(TASK_IDS)) {
+				if (taskId) this.end(taskId);
+			}
 			return;
 		}
 		for (const toolUseId of this.loopCalls.keys()) {
@@ -162,7 +174,16 @@ export class ClaudeBackgroundTasks {
 	private noteStop(entry: Json | null): void {
 		if (entry?.type !== "user") return;
 		const taskId = asString(asObject(entry.toolUseResult)?.task_id);
-		if (taskId && this.running.delete(taskId)) this.revision++;
+		if (taskId) this.end(taskId);
+	}
+
+	private end(taskId: string): void {
+		if (this.running.delete(taskId)) {
+			this.revision++;
+			return;
+		}
+		this.endedBeforeStart.add(taskId);
+		dropOldest(this.endedBeforeStart);
 	}
 
 	private noteLaunches(entry: Json | null): void {
@@ -185,10 +206,7 @@ export class ClaudeBackgroundTasks {
 				id,
 				asString(input.description) ?? asString(input.command) ?? "",
 			);
-			if (this.launches.size > MAX_TRACKED_TASKS) {
-				const oldest = this.launches.keys().next().value;
-				if (oldest !== undefined) this.launches.delete(oldest);
-			}
+			dropOldest(this.launches);
 		}
 	}
 
@@ -222,10 +240,7 @@ export class ClaudeBackgroundTasks {
 		if (!id || !description) return;
 		this.subagentDescriptions.set(id, description);
 		this.revision++;
-		if (this.subagentDescriptions.size > MAX_TRACKED_TASKS) {
-			const oldest = this.subagentDescriptions.keys().next().value;
-			if (oldest !== undefined) this.subagentDescriptions.delete(oldest);
-		}
+		dropOldest(this.subagentDescriptions);
 	}
 
 	private noteStart(entry: Json | null): void {
@@ -240,6 +255,7 @@ export class ClaudeBackgroundTasks {
 			(launchName === undefined ? undefined : asString(result.taskId));
 		if (!taskId) return;
 		if (toolUseId) this.launches.delete(toolUseId);
+		if (this.endedBeforeStart.delete(taskId)) return;
 		this.running.set(taskId, {
 			id: taskId,
 			kind: "process",
@@ -248,10 +264,7 @@ export class ClaudeBackgroundTasks {
 			startedAtMs: this.now(),
 		});
 		this.revision++;
-		if (this.running.size > MAX_TRACKED_TASKS) {
-			const oldest = this.running.keys().next().value;
-			if (oldest !== undefined) this.running.delete(oldest);
-		}
+		dropOldest(this.running);
 	}
 
 	private toolUseIdOf(entry: Json): string | undefined {
