@@ -3,6 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@superset/ui/tooltip";
 import { Bot } from "lucide-react";
 import { useSidebarWorkspaceStatus } from "../../../../../../providers/DashboardSidebarWorkspaceStatusProvider";
+import { BackgroundWorkList } from "./components/BackgroundWorkList";
 
 export function DashboardSidebarBackgroundWorkBadge({
 	workspaceId,
@@ -14,7 +15,7 @@ export function DashboardSidebarBackgroundWorkBadge({
 
 	const backgroundWork = work.length;
 	if (backgroundWork === 0) return null;
-	const descriptions = work.filter(Boolean);
+	const described = work.filter((item) => item.description);
 	const label = t({
 		message: plural(backgroundWork, {
 			one: "# background task running",
@@ -35,19 +36,7 @@ export function DashboardSidebarBackgroundWorkBadge({
 			</TooltipTrigger>
 			<TooltipContent side="right">
 				<p className="text-foreground">{label}</p>
-				{descriptions.length > 0 && (
-					<ul className="mt-1 space-y-0.5">
-						{descriptions.map((description, index) => (
-							<li
-								// biome-ignore lint/suspicious/noArrayIndexKey: descriptions can repeat
-								key={index}
-								className="truncate"
-							>
-								{description}
-							</li>
-						))}
-					</ul>
-				)}
+				{described.length > 0 && <BackgroundWorkList work={described} />}
 			</TooltipContent>
 		</Tooltip>
 	);

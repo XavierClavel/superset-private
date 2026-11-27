@@ -1,1 +1,5 @@
-export { hasBackgroundWork, listBackgroundWork } from "./listBackgroundWork";
+export {
+	type BackgroundWorkItem,
+	hasBackgroundWork,
+	listBackgroundWork,
+} from "./listBackgroundWork";

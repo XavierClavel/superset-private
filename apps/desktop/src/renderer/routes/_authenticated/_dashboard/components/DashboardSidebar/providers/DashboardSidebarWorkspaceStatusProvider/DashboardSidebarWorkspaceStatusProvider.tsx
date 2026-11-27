@@ -30,7 +30,10 @@ import { useNotificationStore } from "renderer/stores/notifications";
 import type { ActivePaneStatus, PaneStatus } from "shared/tabs-types";
 import { getProjectStatus } from "./utils/getProjectStatus";
 import { isWorkspaceWaiting } from "./utils/isWorkspaceWaiting";
-import { listBackgroundWork } from "./utils/listBackgroundWork";
+import {
+	type BackgroundWorkItem,
+	listBackgroundWork,
+} from "./utils/listBackgroundWork";
 
 interface SidebarWorkspaceStatusEntry {
 	/** Highest-priority attention status across the workspace's terminals. */
@@ -43,8 +46,8 @@ interface SidebarWorkspaceStatusEntry {
 	bindings: ReadonlyMap<string, TerminalAgentBinding>;
 	/** `terminalId → derived agent status` (drives the agents chip). */
 	statuses: ReadonlyMap<string, PaneStatus>;
-	/** Descriptions of the subagents, shells and monitors still running under agents that are not working. */
-	backgroundWork: readonly string[];
+	/** Subagents, shells and monitors still running under agents that are not working. */
+	backgroundWork: readonly BackgroundWorkItem[];
 	/** Populated only for the active workspace — the only row that shows it. */
 	diffStats: DiffStats | null;
 	/** When the host reported `status`, for mark-seen; null when derived from bindings. */
@@ -172,7 +175,9 @@ function entriesEqual(
 		left.reportedAt === right.reportedAt &&
 		left.backgroundWork.length === right.backgroundWork.length &&
 		left.backgroundWork.every(
-			(description, index) => description === right.backgroundWork[index],
+			(work, index) =>
+				work.description === right.backgroundWork[index]?.description &&
+				work.startedAtMs === right.backgroundWork[index]?.startedAtMs,
 		) &&
 		(left.diffStats === right.diffStats ||
 			(left.diffStats !== null &&
